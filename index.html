@@ -724,9 +724,12 @@ window.MathJax = {
       <div class="example-card">
         <span class="tag">Ex. 1 — o caso comum</span>
         <div class="steps">
-          <span>\(f(t) = e^{-2t}H(t)\) — uma exponencial que decai</span>
-          <span>Fazendo a integral: \(F(s) = \displaystyle\int_0^\infty e^{-(s+2)t}\,dt = \frac{1}{s+2}\)</span>
-          <span>só funciona quando \(\mathrm{Re}\{s\} > -2\)</span>
+          <span>\(f(t) = e^{-2t}H(t)\)</span>
+          <span>\(\displaystyle F(s) = \int_0^\infty e^{-2t}e^{-st}\,dt = \int_0^\infty e^{-(s+2)t}\,dt\)</span>
+          <span>\(\displaystyle = -\frac{1}{s+2}\Big[\lim_{t\to\infty} e^{-(s+2)t} - e^{0}\Big]\)</span>
+          <span>se \(\mathrm{Re}\{s\}>-2\) (ou seja, \(\mathrm{Re}\{-(s+2)\}<0\)), esse limite vai a zero</span>
+          <span>\(\displaystyle F(s) = \frac{1}{s+2}\), válido para \(\mathrm{Re}\{s\}>-2\)</span>
+          <span>conferindo pela ordem exponencial: com \(\alpha=-2\) exato, \(\lim f(t)e^{2t}=1\) (fica limitado, não diverge); já com \(\alpha=-2+\varepsilon\) (\(\varepsilon>0\)), o limite já vai a zero — isso confirma que \(\sigma_0=-2\) é exatamente a fronteira</span>
         </div>
         <div class="result">σ₀ = −2  →  converge para Re{s} &gt; −2</div>
         <button class="view" data-ex="ex1">Ver no plano-s ↑</button>
@@ -735,9 +738,11 @@ window.MathJax = {
       <div class="example-card">
         <span class="tag">Ex. 2 — cresce, mas devagar</span>
         <div class="steps">
-          <span>\(f(t) = t\) — cresce sem parar, só que devagarzinho</span>
-          <span>Usando L'Hôpital pra resolver o limite: qualquer \(\alpha > 0\) já dá conta de zerar \(t\,e^{-\alpha t}\)</span>
-          <span>com \(\alpha = 0\) exato, o limite explode (vai a infinito)</span>
+          <span>\(f(t) = t\)</span>
+          <span>para \(\alpha>0\): \(\displaystyle L = \lim_{t\to\infty} t\,e^{-\alpha t} = \lim_{t\to\infty}\frac{t}{e^{\alpha t}}\)</span>
+          <span>é \(\infty/\infty\), então aplica L'Hôpital (deriva em cima e embaixo): \(\displaystyle L = \lim_{t\to\infty}\frac{1}{\alpha\,e^{\alpha t}} = 0\)</span>
+          <span>já com \(\alpha=0\) exato: \(\displaystyle L = \lim_{t\to\infty} t = \infty\) — diverge</span>
+          <span>ou seja: qualquer \(\alpha>0\) resolve, mas \(\alpha=0\) não</span>
         </div>
         <div class="result">σ₀ = 0  →  converge para Re{s} &gt; 0</div>
         <button class="view" data-ex="ex2">Ver no plano-s ↑</button>
@@ -746,9 +751,10 @@ window.MathJax = {
       <div class="example-card diverge">
         <span class="tag">Ex. 3 — quando não dá certo</span>
         <div class="steps">
-          <span>\(f(t) = e^{t^2}\) — cresce rápido demais</span>
-          <span>Não importa o quão grande você escolha \(\alpha\): \(e^{t^2}\) sempre cresce mais rápido que \(e^{\alpha t}\)</span>
-          <span>ou seja: nenhum "freio" \(e^{-\alpha t}\) segura essa função</span>
+          <span>\(f(t) = e^{t^2}\)</span>
+          <span>\(\displaystyle L = \lim_{t\to\infty}\big[e^{t^2}e^{-\alpha t}\big] = \lim_{t\to\infty} e^{-(-t^2+\alpha t)}\)</span>
+          <span>chamando \(l = \lim_{t\to\infty}(-t^2+\alpha t)\): como \(-t^2\) domina qualquer \(\alpha t\), \(l=-\infty\)</span>
+          <span>logo \(L = e^{-l} = e^{\infty} \to \infty\) — diverge, não importa o \(\alpha\) escolhido</span>
         </div>
         <div class="result">Não existe α₀ — a transformada simplesmente não existe</div>
         <button class="view" data-ex="ex4">Ver no plano-s ↑</button>
@@ -757,9 +763,10 @@ window.MathJax = {
       <div class="example-card">
         <span class="tag">Ex. 4 — o extremo oposto</span>
         <div class="steps">
-          <span>\(f(t) = e^{-t^2}\) — cai rapidíssimo</span>
-          <span>Essa função já cai tão rápido sozinha que nem precisa de ajuda: \(f(t)e^{\alpha t} \to 0\) pra <em>qualquer</em> \(\alpha\), até negativo</span>
-          <span>ela vence qualquer exponencial que cresça</span>
+          <span>\(f(t) = e^{-t^2}\)</span>
+          <span>\(\displaystyle L = \lim_{t\to\infty}\big[f(t)e^{\alpha t}\big] = \lim_{t\to\infty} e^{-(t^2-\alpha t)}\)</span>
+          <span>chamando \(l = \lim_{t\to\infty}(t^2-\alpha t)\): como \(t^2\) domina qualquer \(\alpha t\), \(l=\infty\)</span>
+          <span>logo \(L = e^{-l} = e^{-\infty} = 0\), pra <em>qualquer</em> \(\alpha\) — até negativo</span>
         </div>
         <div class="result">σ₀ = −∞  →  converge em todo o plano complexo</div>
         <button class="view" data-ex="ex5">Ver no plano-s ↑</button>
