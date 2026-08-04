@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformada de Laplace · Circuitos Elétricos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<style>
+  :root{
+    --bg: #0a1614;
+    --bg-panel: #0f1f1c;
+    --bg-panel-2: #0c1a17;
+    --line: rgba(122, 199, 170, 0.18);
+    --line-strong: rgba(122, 199, 170, 0.35);
+    --ink: #e7ede9;
+    --ink-dim: #8fa39a;
+    --ink-dimmer: #5d6e67;
+    --phosphor: #4ade9a;
+    --phosphor-dim: rgba(74, 222, 154, 0.14);
+    --amber: #f5b942;
+    --red: #e0625a;
+    --radius: 3px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.6;
+    position: relative;
+  }
+
+  .grid-overlay{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 42px 42px;
+    opacity: 0.35;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  a { color: var(--phosphor); }
+
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--phosphor);
+    margin-bottom: 0.6rem;
+    display: inline-block;
+  }
+
+  h1, h2, h3{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    letter-spacing: -0.01em;
+  }
+
+  /* ---- app shell: sidebar + content column ---- */
+  .app-shell{
+    display: flex;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+
+  .sidebar{
+    flex: 0 0 264px;
+    width: 264px;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 2rem 1.5rem 2rem;
+    border-right: 1px solid var(--line);
+    background: var(--bg-panel-2);
+    z-index: 30;
+  }
+  .brand{
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 1.15rem;
+    letter-spacing: -0.01em;
+  }
+  .brand-sub{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dimmer);
+    margin-top: 0.35rem;
+    line-height: 1.4;
+  }
+  .side-group{ margin-top: 2rem; }
+  .side-label{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-dimmer);
+    margin-bottom: 0.6rem;
+  }
+  .side-item{
+    display: flex;
+    align-items: baseline;
+    gap: 0.7rem;
+    padding: 0.55rem 0.6rem;
+    border-radius: 2px;
+    text-decoration: none;
+    margin-bottom: 0.15rem;
+  }
+  .side-item .side-num{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--ink-dimmer);
+    flex: 0 0 auto;
+  }
+  .side-item .side-title{
+    font-size: 0.88rem;
+    color: var(--ink-dim);
+    line-height: 1.35;
+  }
+  .side-item.active{
+    background: var(--phosphor-dim);
+    border: 1px solid var(--line-strong);
+  }
+  .side-item.active .side-num{ color: var(--amber); }
+  .side-item.active .side-title{ color: var(--ink); font-weight: 500; }
+  .side-item.disabled{
+    cursor: default;
+    opacity: 0.5;
+  }
+  .side-item.disabled .side-title em{ color: var(--ink-dimmer); font-style: normal; }
+  a.side-item:hover{ background: rgba(122,199,170,0.08); }
+
+  .content-col{
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .topbar{
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.4rem;
+    padding: 0.9rem 2rem;
+    background: rgba(10, 22, 20, 0.88);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .topbar::-webkit-scrollbar{ display: none; }
+  .topbar .crumb-group{ display: flex; align-items: center; gap: 1rem; flex: 0 0 auto; }
+  .topbar .crumb{ color: var(--ink-dim); }
+  .topbar .tabs{ display: flex; gap: 1.4rem; }
+  .topbar .tabs a{
+    color: var(--ink-dim);
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+  .topbar .tabs a:hover{ color: var(--phosphor); }
+
+  .menu-toggle{
+    flex: 0 0 auto;
+    width: 30px;
+    height: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  .menu-toggle span{
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--ink-dim);
+    border-radius: 2px;
+    transition: background 0.15s ease;
+  }
+  .menu-toggle:hover span{ background: var(--phosphor); }
+
+  .sidebar{ transition: width 0.22s ease, padding 0.22s ease, opacity 0.18s ease; }
+  body.nav-collapsed .sidebar{
+    width: 0;
+    flex-basis: 0;
+    padding-left: 0;
+    padding-right: 0;
+    opacity: 0;
+    overflow: hidden;
+    border-right: none;
+    pointer-events: none;
+  }
+
+  .hero{
+    position: relative;
+    z-index: 1;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 3.6rem 2rem 2.4rem;
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .hero-text{ text-align: left; }
+  .hero h1{
+    font-size: clamp(2rem, 4.4vw, 3.1rem);
+    line-height: 1.12;
+    margin-bottom: 1.1rem;
+  }
+  .hero h1 .tone-a{ color: var(--ink); }
+  .hero h1 .tone-b{ color: var(--phosphor); }
+  .hero-sub{
+    max-width: 540px;
+    color: var(--ink-dim);
+    font-size: 1.02rem;
+  }
+  .hero-meta{
+    display: flex;
+    gap: 2.2rem;
+    flex-wrap: wrap;
+    margin-top: 1.6rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--ink-dimmer);
+  }
+  .hero-meta b{ color: var(--ink-dim); font-weight: 600; margin-right: 0.35rem; }
+  .hero-visual{ min-width: 0; }
+
+  @media (max-width: 880px){
+    .app-shell{ flex-direction: column; }
+    .sidebar{
+      position: static;
+      width: auto;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+    }
+    body.nav-collapsed .sidebar{ display: none; }
+    .hero{ grid-template-columns: 1fr; padding-top: 2.4rem; }
+    .hero-text{ text-align: left; }
+  }
+
+  /* ---- s-plane signature widget ---- */
+  .splane-widget{
+    background: var(--bg-panel);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.4rem 1.1rem;
+    text-align: left;
+  }
+  .splane-header{
+    display:flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+    margin-bottom: 0.8rem;
+  }
+  .splane-header b{ color: var(--ink); font-weight: 500; }
+  #splane{
+    width: 100%;
+    height: 260px;
+    display: block;
+    border-radius: 2px;
+    background: #08120f;
+  }
+  .splane-controls{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .splane-controls button{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    background: transparent;
+    color: var(--ink-dim);
+    border: 1px solid var(--line-strong);
+    padding: 0.45rem 0.8rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .splane-controls button:hover{ color: var(--ink); border-color: var(--phosphor); }
+  .splane-controls button.active{
+    color: #08120f;
+    background: var(--phosphor);
+    border-color: var(--phosphor);
+  }
+  .splane-readout{
+    margin-top: 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+    min-height: 2.6em;
+  }
+  .splane-readout .roc-formula{ color: var(--phosphor); }
+
+  main{
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 1rem 2rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.6rem;
+  }
+
+  .panel{
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2.2rem 2.2rem;
+    scroll-margin-top: 4.5rem;
+  }
+  .panel h2{ font-size: 1.6rem; }
+  .panel p{ color: #cdd8d2; }
+  .panel p.dim{ color: var(--ink-dim); }
+
+  .problem-list{
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    margin: 1.2rem 0;
+  }
+  .problem-item{
+    display: grid;
+    grid-template-columns: 2rem 1fr;
+    gap: 0.8rem;
+    padding: 0.9rem 1rem;
+    background: var(--bg-panel-2);
+    border-left: 2px solid var(--line-strong);
+    border-radius: 2px;
+  }
+  .problem-item .num{
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--amber);
+  }
+  .problem-item p{ margin: 0; color: #cdd8d2; font-size: 0.95rem; }
+
+  .callout{
+    margin-top: 1.4rem;
+    padding: 1rem 1.2rem;
+    border: 1px dashed var(--line-strong);
+    border-radius: 2px;
+    color: var(--ink);
+    font-size: 0.95rem;
+  }
+  .callout b{ color: var(--phosphor); }
+
+  /* ---- flow diagram ---- */
+  .flow-diagram{
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    overflow-x: auto;
+    padding: 1.6rem 0.2rem;
+    margin: 0.6rem 0;
+  }
+  .flow-box{
+    flex: 0 0 auto;
+    min-width: 92px;
+    text-align: center;
+    padding: 1rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 2px;
+    background: var(--bg-panel-2);
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .flow-box .big{ font-size: 1.3rem; color: var(--phosphor); }
+  .flow-box .small{ font-size: 0.7rem; color: var(--ink-dim); margin-top: 0.3rem; }
+  .flow-arrow{
+    flex: 0 0 auto;
+    color: var(--ink-dimmer);
+    font-family: 'IBM Plex Mono', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.68rem;
+    gap: 0.2rem;
+  }
+  .flow-arrow .line{ width: 32px; height: 1px; background: var(--line-strong); position: relative; }
+  .flow-arrow .line::after{
+    content: '';
+    position: absolute; right: 0; top: -3px;
+    border: 4px solid transparent;
+    border-left-color: var(--line-strong);
+  }
+  .flow-note{ font-size: 0.9rem; color: var(--ink-dim); margin-top: 0.4rem;}
+  .history-note{
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid var(--line);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.82rem;
+    color: var(--ink-dimmer);
+    display: flex;
+    gap: 1.6rem;
+    flex-wrap: wrap;
+  }
+  .history-note span b{ color: var(--ink-dim); font-weight: 500; }
+
+  .eq-block{
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1.2rem 1.4rem;
+    margin: 1.1rem 0;
+    overflow-x: auto;
+  }
+
+  .roc-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  @media (max-width: 640px){ .roc-grid{ grid-template-columns: 1fr; } }
+  .roc-card{
+    padding: 1rem 1.1rem;
+    background: var(--bg-panel-2);
+    border-radius: 2px;
+    border: 1px solid var(--line);
+  }
+  .roc-card .tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--amber);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .roc-card p{ margin: 0.4rem 0 0; font-size: 0.92rem; }
+
+  /* ---- examples ---- */
+  .examples-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+  @media (max-width: 700px){ .examples-grid{ grid-template-columns: 1fr; } }
+
+  .example-card{
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1.2rem 1.3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .example-card .tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--phosphor);
+    letter-spacing: 0.08em;
+  }
+  .example-card .steps{
+    font-size: 0.88rem;
+    color: #cdd8d2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  .example-card .result{
+    margin-top: 0.3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink);
+    padding: 0.5rem 0.7rem;
+    background: rgba(74, 222, 154, 0.08);
+    border-left: 2px solid var(--phosphor);
+  }
+  .example-card.diverge .result{
+    background: rgba(224, 98, 90, 0.08);
+    border-left-color: var(--red);
+  }
+  .example-card button.view{
+    align-self: flex-start;
+    margin-top: 0.3rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-dim);
+    padding: 0.4rem 0.7rem;
+    border-radius: 2px;
+    cursor: pointer;
+  }
+  .example-card button.view:hover{ color: var(--phosphor); border-color: var(--phosphor); }
+
+  footer{
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+  }
+  .agenda{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    padding: 1.2rem 1.4rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-dim);
+  }
+  .agenda div b{ color: var(--ink); font-weight: 500; display:block; margin-bottom: 0.15rem; }
+  .foot-note{ text-align: center; color: var(--ink-dimmer); font-size: 0.78rem; margin-top: 1.4rem; font-family: 'IBM Plex Mono', monospace; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ transition: none !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item active" href="#top">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <div class="side-item disabled">
+        <span class="side-num">02</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+      <div class="side-item disabled">
+        <span class="side-num">03</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <div class="side-item disabled">
+        <span class="side-num">01</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Transformada de Laplace</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">Introdução</a>
+        <a href="#fluxo">Cálculo operacional</a>
+        <a href="#def">Definição</a>
+        <a href="#oe">Ordem exponencial</a>
+        <a href="#exemplos">Exemplos</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 01 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Uma equação diferencial aparece.</span> <span class="tone-b">Existe um jeito bem mais simples de resolvê-la?</span></h1>
+        <p class="hero-sub">Esse módulo cobre a ideia por trás da transformada de Laplace: como ela pega um problema de circuito — uma equação diferencial com condições iniciais — e transforma isso num problema de álgebra, lá no domínio da frequência complexa <em>s</em>. A gente vê a motivação, o fluxo do cálculo operacional, a definição formal, e quando essa transformada realmente existe.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>Transformada de Laplace</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>PLANO-<b>s</b> — REGIÃO DE CONVERGÊNCIA</span>
+            <span id="sigmaReadout">σ₀ = −2</span>
+          </div>
+          <canvas id="splane" width="640" height="260"></canvas>
+          <div class="splane-controls">
+            <button class="active" data-ex="ex1">f(t) = e⁻²ᵗH(t)</button>
+            <button data-ex="ex2">f(t) = t</button>
+            <button data-ex="ex4">f(t) = eᵗ²</button>
+            <button data-ex="ex5">f(t) = e⁻ᵗ²</button>
+          </div>
+          <div class="splane-readout" id="splaneText"></div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel">
+    <span class="eyebrow">1.1</span>
+    <h2>Introdução</h2>
+    <p>Em Circuitos Elétricos I você aprendeu o jeito "tradicional" de resolver uma equação diferencial: primeiro acha a solução da parte homogênea, depois soma uma solução particular, e por fim usa as condições iniciais pra descobrir as constantes que faltam. Esse pacote todo — equação diferencial mais condições iniciais — tem um nome: <strong>Problema de Valor Inicial (PVI)</strong>.</p>
+    <p>Esse método funciona, mas some rápido quando o circuito complica um pouco. Três motivos:</p>
+
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="num">i</span>
+        <p>Achar a solução particular só é fácil pra alguns tipos específicos de excitação — corrente contínua, degrau, impulso, senoide em regime permanente. Se a excitação for qualquer outra coisa, não tem receita pronta pra seguir.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">ii</span>
+        <p>Dependendo de como você monta as equações do circuito, pode aparecer uma mistura de integral com derivada na mesma equação — e isso é bem mais chato de resolver.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">iii</span>
+        <p>Quando a excitação dá um salto (uma descontinuidade), fica difícil até aplicar direito as condições iniciais.</p>
+      </div>
+    </div>
+
+    <div class="callout">A boa notícia: dá pra contornar essas três dores de cabeça de uma vez, trabalhando num domínio diferente — o <b>domínio da frequência complexa</b> — usando a Transformada de Laplace.</div>
+  </section>
+
+  <section id="fluxo" class="panel">
+    <span class="eyebrow">Cálculo operacional</span>
+    <h2>Do PVI à resposta no tempo</h2>
+    <p class="dim">Pensa assim: em vez de brigar com a equação diferencial no tempo, a gente "traduz" o problema inteiro pra outro domínio — um lugar onde ele vira só álgebra, bem mais fácil de mexer.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">PVI</div><div class="small">{ED, C.I.s}<br>x(t)</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">ℒ</div><div class="small">Laplace</div></div>
+      <div class="flow-arrow"><span class="line"></span><span>E.P.</span></div>
+      <div class="flow-box"><div class="big">Extração</div><div class="small">álgebra em s</div></div>
+      <div class="flow-arrow"><span class="line"></span><span>X(s)</span></div>
+      <div class="flow-box"><div class="big">ℒ⁻¹</div><div class="small">Bromwich</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">x(t)</div><div class="small">resposta</div></div>
+    </div>
+
+    <p class="flow-note">O caminho é esse: você começa com o PVI (a equação diferencial + as condições iniciais). Aplica <b style="color:var(--ink)">ℒ</b> e, como mágica, aquilo vira uma <b style="color:var(--ink)">equação polinomial em s</b> — sem derivada, sem integral, só soma e multiplicação. Você isola X(s) usando álgebra de ensino médio. Se quiser saber como isso se comporta no tempo, aplica a transformada inversa <b style="color:var(--ink)">ℒ⁻¹</b> e chega em x(t). E olha que interessante: muitas vezes nem precisa desse último passo — só de olhar pra X(s) já dá pra entender bastante coisa sobre o circuito.</p>
+
+    <div class="history-note">
+      <span><b>Quem inventou isso</b> — o engenheiro Oliver Heaviside</span>
+      <span><b>A "volta" pro tempo</b> — fórmula de Bromwich</span>
+    </div>
+  </section>
+
+  <section id="def" class="panel">
+    <span class="eyebrow">1.2</span>
+    <h2>Transformada de Laplace: definição e linearidade</h2>
+    <p>A transformada de Laplace pega uma função do tempo, \(f(t)\), e devolve uma função nova, \(F(s)\), que depende de uma variável complexa \(s\). A receita pra fazer isso é essa integral aqui:</p>
+
+    <div class="eq-block">
+      \[ F(s) = \mathcal{L}[f(t)] = \int_{0}^{\infty} f(t)\, e^{-st}\, dt, \qquad s \in \mathbb{C} \]
+    </div>
+
+    <p>Não se assuste com a cara dela. O que essa fórmula faz é: multiplicar \(f(t)\) por um "freio" exponencial, \(e^{-st}\), e depois somar (integrar) tudo, de \(t=0\) até o infinito. Esse freio é a peça-chave: ele consegue segurar até funções que crescem sem parar, desde que \(s\) seja "forte" o bastante — e é justamente isso que faz a integral, que vai até o infinito, chegar num resultado finito.</p>
+    <p class="dim">Um detalhe fino: começamos a contar de um pontinho logo antes de \(t=0\) (por isso às vezes você vê o limite escrito como \(0^-\)) — assim, se houver um impulso bem em cima de \(t=0\), ele não escapa da conta. Essa versão que começa em zero se chama <em>unilateral</em>, e é a que usamos quase sempre em circuitos, já que tudo que aconteceu antes de \(t=0\) já está resumido nas condições iniciais.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Convergência</span>
+        <p>Essa integral não converge pra qualquer \(s\) — só converge dentro de uma certa região do plano complexo, chamada <b>Região de Convergência (ROC)</b>. Geralmente é tudo que fica à direita de um certo valor: \(\mathrm{Re}\{s\} > \sigma_0\).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Linearidade</span>
+        <p>\(\mathcal{L}[a\,f(t) + b\,g(t)] = a\,F(s) + b\,G(s)\) — ou seja, transformar uma soma dá no mesmo que transformar cada pedaço separado e somar depois. Isso é ótimo pra circuitos: você pode quebrar um sinal complicado em pedaços simples.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="oe" class="panel">
+    <span class="eyebrow">Ordem exponencial</span>
+    <h2>Quando a transformada existe?</h2>
+    <p>Nem toda função tem transformada de Laplace. Se ela crescer rápido demais, o "freio" \(e^{-st}\) não dá conta de segurá-la, e a integral nunca converge — não importa o quão grande você escolha \(s\).</p>
+    <p>Pra descobrir se uma função "se comporta bem" o suficiente, a gente pergunta: existe algum número \(\alpha\) que, multiplicado assim, faz o resultado ir a zero lá no infinito?</p>
+    <div class="eq-block">
+      \[ \lim_{t \to \infty} \big[f(t)\, e^{-\alpha t}\big] = 0, \quad \text{para } \alpha \ge \alpha_0 \]
+    </div>
+    <p>Se esse \(\alpha\) existe, dizemos que \(f(t)\) tem <b style="color:var(--ink)">ordem exponencial</b>, e o menor valor de \(\alpha\) que funciona é chamado \(\alpha_0 = OE[f(t)]\) — também conhecido como <b style="color:var(--ink)">abscissa de convergência</b>, \(\sigma_0\). Na prática, \(\sigma_0\) é uma linha divisória no plano-s: tudo à direita dela (\(\mathrm{Re}\{s\}>\sigma_0\)) faz a transformada convergir; tudo à esquerda, diverge.</p>
+    <div class="callout">Regra prática: se uma função não crescer mais rápido do que alguma exponencial — isto é, se ela tiver ordem exponencial finita — já garantimos que a transformada de Laplace dela existe.</div>
+
+    <p style="margin-top:1.4rem">Quatro funções, quatro comportamentos bem diferentes — clique em "ver no plano-s" pra comparar com o gráfico lá em cima:</p>
+
+    <div id="exemplos" class="examples-grid">
+
+      <div class="example-card">
+        <span class="tag">Ex. 1 — o caso comum</span>
+        <div class="steps">
+          <span>\(f(t) = e^{-2t}H(t)\) — uma exponencial que decai</span>
+          <span>Fazendo a integral: \(F(s) = \displaystyle\int_0^\infty e^{-(s+2)t}\,dt = \frac{1}{s+2}\)</span>
+          <span>só funciona quando \(\mathrm{Re}\{s\} > -2\)</span>
+        </div>
+        <div class="result">σ₀ = −2  →  converge para Re{s} &gt; −2</div>
+        <button class="view" data-ex="ex1">Ver no plano-s ↑</button>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Ex. 2 — cresce, mas devagar</span>
+        <div class="steps">
+          <span>\(f(t) = t\) — cresce sem parar, só que devagarzinho</span>
+          <span>Usando L'Hôpital pra resolver o limite: qualquer \(\alpha > 0\) já dá conta de zerar \(t\,e^{-\alpha t}\)</span>
+          <span>com \(\alpha = 0\) exato, o limite explode (vai a infinito)</span>
+        </div>
+        <div class="result">σ₀ = 0  →  converge para Re{s} &gt; 0</div>
+        <button class="view" data-ex="ex2">Ver no plano-s ↑</button>
+      </div>
+
+      <div class="example-card diverge">
+        <span class="tag">Ex. 3 — quando não dá certo</span>
+        <div class="steps">
+          <span>\(f(t) = e^{t^2}\) — cresce rápido demais</span>
+          <span>Não importa o quão grande você escolha \(\alpha\): \(e^{t^2}\) sempre cresce mais rápido que \(e^{\alpha t}\)</span>
+          <span>ou seja: nenhum "freio" \(e^{-\alpha t}\) segura essa função</span>
+        </div>
+        <div class="result">Não existe α₀ — a transformada simplesmente não existe</div>
+        <button class="view" data-ex="ex4">Ver no plano-s ↑</button>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Ex. 4 — o extremo oposto</span>
+        <div class="steps">
+          <span>\(f(t) = e^{-t^2}\) — cai rapidíssimo</span>
+          <span>Essa função já cai tão rápido sozinha que nem precisa de ajuda: \(f(t)e^{\alpha t} \to 0\) pra <em>qualquer</em> \(\alpha\), até negativo</span>
+          <span>ela vence qualquer exponencial que cresça</span>
+        </div>
+        <div class="result">σ₀ = −∞  →  converge em todo o plano complexo</div>
+        <button class="view" data-ex="ex5">Ver no plano-s ↑</button>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula de 03/08/2026 — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const canvas = document.getElementById('splane');
+const ctx = canvas.getContext('2d');
+const sigmaReadout = document.getElementById('sigmaReadout');
+const splaneText = document.getElementById('splaneText');
+
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+function fitCanvas(){
+  const rect = canvas.getBoundingClientRect();
+  const ratio = window.devicePixelRatio || 1;
+  canvas.width = rect.width * ratio;
+  canvas.height = 260 * ratio;
+  ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  canvas.style.height = '260px';
+}
+
+const EXAMPLES = {
+  ex1: { sigma: -2, mode: 'half', pole: -2,
+    sigmaLabel: 'σ₀ = −2',
+    text: 'Dá <span class="roc-formula">F(s) = 1/(s+2)</span>, com um polo em s = −2. À direita dessa linha, tudo converge; à esquerda, não.' },
+  ex2: { sigma: 0, mode: 'half', pole: null,
+    sigmaLabel: 'σ₀ = 0',
+    text: 'f(t) = t cresce pra sempre, mas devagar — devagar o bastante pra qualquer s à direita de zero já resolver.' },
+  ex4: { sigma: null, mode: 'none', pole: null,
+    sigmaLabel: 'σ₀ = não existe',
+    text: '<span style="color:var(--red)">Aqui nada funciona</span> — e^(t²) cresce mais rápido que qualquer exponencial. A transformada dessa função não existe.' },
+  ex5: { sigma: -Infinity, mode: 'all', pole: null,
+    sigmaLabel: 'σ₀ = −∞',
+    text: 'e^(−t²) cai tão rápido que a integral converge <span class="roc-formula">pra qualquer s, no plano inteiro</span>.' },
+};
+
+function drawSPlane(key){
+  const cfg = EXAMPLES[key];
+  fitCanvas();
+  const W = canvas.getBoundingClientRect().width;
+  const H = 260;
+  const originX = W * 0.32;
+  const originY = H * 0.5;
+  const unit = 34; // px per unit on Re axis
+
+  ctx.clearRect(0,0,W,H);
+
+  // background grid (fine)
+  ctx.strokeStyle = 'rgba(122,199,170,0.08)';
+  ctx.lineWidth = 1;
+  for(let x = originX % unit; x < W; x += unit){
+    ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke();
+  }
+  for(let y = originY % unit; y < H; y += unit){
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+
+  // ROC shading
+  if(cfg.mode === 'half'){
+    const boundaryX = originX + cfg.sigma * unit;
+    const grad = ctx.createLinearGradient(boundaryX, 0, W, 0);
+    grad.addColorStop(0, 'rgba(74,222,154,0.22)');
+    grad.addColorStop(1, 'rgba(74,222,154,0.05)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(boundaryX, 0, W - boundaryX, H);
+
+    ctx.strokeStyle = 'rgba(74,222,154,0.65)';
+    ctx.setLineDash([5,4]);
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(boundaryX,0); ctx.lineTo(boundaryX,H); ctx.stroke();
+    ctx.setLineDash([]);
+  } else if(cfg.mode === 'all'){
+    ctx.fillStyle = 'rgba(74,222,154,0.16)';
+    ctx.fillRect(0,0,W,H);
+  } else if(cfg.mode === 'none'){
+    ctx.save();
+    ctx.strokeStyle = 'rgba(224,98,90,0.35)';
+    ctx.lineWidth = 1;
+    for(let i = -H; i < W; i += 10){
+      ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i+H,H); ctx.stroke();
+    }
+    ctx.restore();
+  }
+
+  // axes
+  ctx.strokeStyle = 'rgba(231,237,233,0.55)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath(); ctx.moveTo(0, originY); ctx.lineTo(W, originY); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(originX, 0); ctx.lineTo(originX, H); ctx.stroke();
+
+  ctx.fillStyle = 'rgba(231,237,233,0.55)';
+  ctx.font = "11px 'IBM Plex Mono', monospace";
+  ctx.fillText('Re{s}', W - 44, originY - 8);
+  ctx.fillText('Im{s}', originX + 8, 14);
+
+  // tick marks on Re axis
+  ctx.fillStyle = 'rgba(143,163,154,0.8)';
+  for(let n = -6; n <= 6; n++){
+    if(n === 0) continue;
+    const x = originX + n * unit;
+    if(x < 0 || x > W) continue;
+    ctx.beginPath(); ctx.moveTo(x, originY-3); ctx.lineTo(x, originY+3); ctx.stroke();
+    if(n % 2 === 0) ctx.fillText(String(n), x - 4, originY + 16);
+  }
+
+  // pole marker
+  if(cfg.pole !== null && cfg.pole !== undefined){
+    const px = originX + cfg.pole * unit;
+    ctx.strokeStyle = '#f5b942';
+    ctx.lineWidth = 2;
+    const r = 6;
+    ctx.beginPath();
+    ctx.moveTo(px-r, originY-r); ctx.lineTo(px+r, originY+r);
+    ctx.moveTo(px+r, originY-r); ctx.lineTo(px-r, originY+r);
+    ctx.stroke();
+    ctx.fillStyle = '#f5b942';
+    ctx.font = "11px 'IBM Plex Mono', monospace";
+    ctx.fillText('s = ' + cfg.pole, px - 14, originY + 24);
+  }
+
+  sigmaReadout.textContent = cfg.sigmaLabel;
+  splaneText.innerHTML = cfg.text;
+}
+
+function setActive(key){
+  document.querySelectorAll('[data-ex]').forEach(el => {
+    if(el.tagName === 'BUTTON' && el.parentElement.classList.contains('splane-controls')){
+      el.classList.toggle('active', el.dataset.ex === key);
+    }
+  });
+  drawSPlane(key);
+}
+
+document.querySelectorAll('[data-ex]').forEach(el => {
+  el.addEventListener('click', () => {
+    setActive(el.dataset.ex);
+    document.querySelector('.splane-widget').scrollIntoView({behavior:'smooth', block:'center'});
+  });
+});
+
+window.addEventListener('resize', () => {
+  const active = document.querySelector('.splane-controls button.active');
+  drawSPlane(active ? active.dataset.ex : 'ex1');
+});
+
+setActive('ex1');
+</script>
+
+</body>
+</html>
