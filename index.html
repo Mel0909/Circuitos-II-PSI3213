@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Transformada de Laplace · Circuitos Elétricos II</title>
+<title>Circuitos II</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script>
@@ -521,6 +521,106 @@ window.MathJax = {
   }
   .example-card button.view:hover{ color: var(--phosphor); border-color: var(--phosphor); }
 
+  /* ---- theorem / property cards ---- */
+  .theorem-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-top: 1.4rem;
+  }
+  @media (max-width: 700px){ .theorem-grid{ grid-template-columns: 1fr; } }
+  .theorem-card{
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1.2rem 1.3rem;
+  }
+  .theorem-card .tag{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--phosphor);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .theorem-card p{ margin: 0.5rem 0 0; font-size: 0.92rem; color: #cdd8d2; }
+  .theorem-card .eq-block{ margin: 0.7rem 0 0; padding: 0.9rem 1rem; }
+
+  /* ---- demonstração toggle ---- */
+  .demo-btn{
+    margin-top: 0.9rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    background: none;
+    border: 1px solid var(--line-strong);
+    color: var(--ink-dim);
+    padding: 0.4rem 0.75rem;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .demo-btn:hover{ color: var(--phosphor); border-color: var(--phosphor); }
+  .demo-btn.open{ color: #08120f; background: var(--phosphor); border-color: var(--phosphor); }
+  .proof-block{
+    display: none;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line-strong);
+  }
+  .proof-block.open{ display: block; }
+  .proof-block .proof-steps{
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    font-size: 0.9rem;
+    color: #cdd8d2;
+  }
+  .proof-block .proof-steps .proof-eq{ color: var(--ink); }
+
+  /* ---- laplace transform table ---- */
+  .ltable{
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.2rem;
+    font-size: 0.95rem;
+  }
+  .ltable th{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+    text-align: left;
+    padding: 0.6rem 0.9rem;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .ltable td{
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .ltable tr:last-child td{ border-bottom: none; }
+
+  /* ---- pole-zero diagram ---- */
+  .pz-widget{
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1rem;
+    margin-top: 1.2rem;
+    display: flex;
+    justify-content: center;
+  }
+  .pz-widget svg{ max-width: 100%; height: auto; }
+  .pz-legend{
+    display: flex;
+    gap: 1.4rem;
+    flex-wrap: wrap;
+    margin-top: 0.8rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--ink-dim);
+  }
+
   footer{
     position: relative;
     z-index: 1;
@@ -598,7 +698,13 @@ window.MathJax = {
         <a href="#fluxo">Cálculo operacional</a>
         <a href="#def">Definição</a>
         <a href="#oe">Ordem exponencial</a>
-        <a href="#exemplos">Exemplos</a>
+        <a href="#tabela">Tabela</a>
+        <a href="#propriedades">Propriedades</a>
+        <a href="#derivada-integral">Derivada/Integral</a>
+        <a href="#elementos">L e C em s</a>
+        <a href="#inversao">Inversão</a>
+        <a href="#fracoes">Frações parciais</a>
+        <a href="#exemplos2">Exemplos II</a>
       </div>
     </nav>
 
@@ -606,7 +712,7 @@ window.MathJax = {
       <div class="hero-text">
         <div class="eyebrow">P1 · Módulo 01 · PSI3213 Circuitos Elétricos II</div>
         <h1><span class="tone-a">Uma equação diferencial aparece.</span> <span class="tone-b">Existe um jeito bem mais simples de resolvê-la?</span></h1>
-        <p class="hero-sub">Esse módulo cobre a ideia por trás da transformada de Laplace: como ela pega um problema de circuito — uma equação diferencial com condições iniciais — e transforma isso num problema de álgebra, lá no domínio da frequência complexa <em>s</em>. A gente vê a motivação, o fluxo do cálculo operacional, a definição formal, e quando essa transformada realmente existe.</p>
+        <p class="hero-sub">Esse módulo cobre a ideia por trás da transformada de Laplace: como ela pega um problema de circuito — uma equação diferencial com condições iniciais — e transforma isso num problema de álgebra, lá no domínio da frequência complexa <em>s</em>. A gente vê a motivação, o fluxo do cálculo operacional, a definição formal, quando essa transformada realmente existe, o repertório de teoremas operacionais (derivada, integral, deslocamento, escala), como indutor e capacitor viram álgebra em <em>s</em>, e como voltar pro domínio do tempo com frações parciais.</p>
         <div class="hero-meta">
           <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
           <span><b>Módulo</b>Transformada de Laplace</span>
@@ -625,6 +731,8 @@ window.MathJax = {
             <button data-ex="ex2">f(t) = t</button>
             <button data-ex="ex4">f(t) = eᵗ²</button>
             <button data-ex="ex5">f(t) = e⁻ᵗ²</button>
+            <button data-ex="ex6">f(t) = sen/cos ωt</button>
+            <button data-ex="ex7">f(t) = δ(t)</button>
           </div>
           <div class="splane-readout" id="splaneText"></div>
         </div>
@@ -717,7 +825,7 @@ window.MathJax = {
     <p>Se esse \(\alpha\) existe, dizemos que \(f(t)\) tem <b style="color:var(--ink)">ordem exponencial</b>, e o menor valor de \(\alpha\) que funciona é chamado \(\alpha_0 = OE[f(t)]\) — também conhecido como <b style="color:var(--ink)">abscissa de convergência</b>, \(\sigma_0\). Na prática, \(\sigma_0\) é uma linha divisória no plano-s: tudo à direita dela (\(\mathrm{Re}\{s\}>\sigma_0\)) faz a transformada convergir; tudo à esquerda, diverge.</p>
     <div class="callout">Regra prática: se uma função não crescer mais rápido do que alguma exponencial — isto é, se ela tiver ordem exponencial finita — já garantimos que a transformada de Laplace dela existe.</div>
 
-    <p style="margin-top:1.4rem">Quatro funções, quatro comportamentos bem diferentes — clique em "ver no plano-s" pra comparar com o gráfico lá em cima:</p>
+    <p style="margin-top:1.4rem">Seis funções, seis comportamentos bem diferentes — clique em "ver no plano-s" pra comparar com o gráfico lá em cima:</p>
 
     <div id="exemplos" class="examples-grid">
 
@@ -772,6 +880,338 @@ window.MathJax = {
         <button class="view" data-ex="ex5">Ver no plano-s ↑</button>
       </div>
 
+      <div class="example-card">
+        <span class="tag">Ex. 5 — oscila, mas não escapa</span>
+        <div class="steps">
+          <span>\(f(t) = \cos \omega t\) ou \(\mathrm{sen}\,\omega t\), com \(|f(t)| \le 1\) pra todo \(t\)</span>
+          <span>ordem exponencial: pra qualquer \(\alpha>0\), \(\displaystyle \lim_{t\to\infty} |f(t)|\,e^{-\alpha t} \le \lim_{t\to\infty} e^{-\alpha t} = 0\) (com \(\alpha=0\) exato, a função só oscila e o limite nem existe — mesma pegadinha do Ex. 2)</span>
+          <span>pra calcular \(F(s)\) de fato, escreve \(\cos\omega t\) pela fórmula de Euler: \(\displaystyle \cos\omega t = \frac{e^{j\omega t}+e^{-j\omega t}}{2}\)</span>
+          <span>aplica \(\mathcal{L}\) e linearidade: \(\displaystyle F(s) = \frac{1}{2}\Big[\mathcal{L}[e^{j\omega t}] + \mathcal{L}[e^{-j\omega t}]\Big]\)</span>
+          <span>usa \(\mathcal{L}[e^{at}] = \dfrac{1}{s-a}\) (válida pra \(\mathrm{Re}\{s\}>\mathrm{Re}\{a\}\)), com \(a=\pm j\omega\): \(\displaystyle F(s) = \frac{1}{2}\left[\frac{1}{s-j\omega} + \frac{1}{s+j\omega}\right]\)</span>
+          <span>soma as frações (denominador comum \((s-j\omega)(s+j\omega)=s^2+\omega^2\)): \(\displaystyle F(s) = \frac{1}{2}\cdot\frac{2s}{s^2+\omega^2} = \frac{s}{s^2+\omega^2}\)</span>
+          <span>o mesmo truque com \(\mathrm{sen}\,\omega t = \dfrac{e^{j\omega t}-e^{-j\omega t}}{2j}\) dá \(\displaystyle \mathcal{L}[\mathrm{sen}\,\omega t] = \frac{1}{2j}\left[\frac{1}{s-j\omega}-\frac{1}{s+j\omega}\right] = \frac{\omega}{s^2+\omega^2}\)</span>
+          <span>como \(\mathrm{Re}\{\pm j\omega\}=0\), cada parcela exige \(\mathrm{Re}\{s\}>0\) pra convergir — os polos ficam exatamente em \(s=\pm j\omega\), sobre o eixo imaginário</span>
+        </div>
+        <div class="result">σ₀ = 0  →  converge para Re{s} &gt; 0 (mesmo σ₀ do Ex. 2, agora com um par de polos complexos conjugados)</div>
+        <button class="view" data-ex="ex6">Ver no plano-s ↑</button>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Ex. 6 — o impulso: um caso à parte</span>
+        <div class="steps">
+          <span>\(\delta(t)\) não é uma função no sentido usual — é uma distribuição, definida pela <b style="color:var(--ink)">propriedade da amostragem</b>: \(\displaystyle \int \delta(t-t_0)\,g(t)\,dt = g(t_0)\), desde que \(t_0\) esteja dentro do intervalo de integração</span>
+          <span>por isso, o critério de ordem exponencial (que pressupõe uma função "de verdade") nem se aplica direito aqui — a existência precisa ser checada calculando a integral na mão</span>
+          <span>aplicando a definição da transformada com \(t_0=0\): \(\displaystyle F(s) = \int_{0^-}^{\infty} \delta(t)\,e^{-st}\,dt\)</span>
+          <span>o limite inferior é \(0^-\) — um instante antes de zero — então o impulso, que está bem em cima de \(t=0\), cai <em>inteiro</em> dentro do intervalo de integração</span>
+          <span>pela amostragem, a integral só avalia \(e^{-st}\) no ponto \(t=0\): \(\displaystyle F(s) = e^{-s\cdot 0} = 1\)</span>
+          <span>se a integral começasse em \(0^+\) (excluindo a origem), o impulso ficaria de fora e essa conta não fecharia — é por isso que a transformada unilateral usada em circuitos parte de \(0^-\)</span>
+          <span>como não sobrou nenhum polo (\(F(s)=1\) é constante), a integral converge trivialmente pra qualquer \(s\) — não há fronteira nenhuma</span>
+        </div>
+        <div class="result">ℒ[δ(t)] = 1  →  converge em todo o plano complexo, σ₀ = −∞</div>
+        <button class="view" data-ex="ex7">Ver no plano-s ↑</button>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="tabela" class="panel">
+    <span class="eyebrow">1.3</span>
+    <h2>Transformada de funções elementares</h2>
+    <p>Antes de sair calculando integral toda vez, vale montar um repertório básico. Essas são as transformadas mais usadas em circuitos — e valem a pena decorar, porque vão aparecer o tempo todo:</p>
+    <table class="ltable">
+      <thead><tr><th>f(t)</th><th>F(s) = ℒ[f(t)]</th></tr></thead>
+      <tbody>
+        <tr><td>\(H(t)\) — degrau unitário</td><td>\(\dfrac{1}{s}\)</td></tr>
+        <tr><td>\(e^{at}\)</td><td>\(\dfrac{1}{s-a}\)</td></tr>
+        <tr><td>\(\mathrm{sen}\,\omega t\)</td><td>\(\dfrac{\omega}{s^2+\omega^2}\)</td></tr>
+        <tr><td>\(\cos \omega t\)</td><td>\(\dfrac{s}{s^2+\omega^2}\)</td></tr>
+        <tr><td>\(\delta(t)\) — impulso unitário</td><td>\(1\)</td></tr>
+      </tbody>
+    </table>
+    <p class="dim" style="margin-top:1rem">Todas essas funções do tempo estão implicitamente multiplicadas por \(H(t)\) — ou seja, valem só para \(t \ge 0\), como já era de se esperar da transformada unilateral.</p>
+  </section>
+
+  <section id="propriedades" class="panel">
+    <span class="eyebrow">1.4</span>
+    <h2>Mais teoremas operacionais</h2>
+    <p class="dim">Além da linearidade, tem um punhado de teoremas que fazem a transformada de Laplace valer a pena de verdade — cada um traduz uma operação no tempo pra uma operação bem mais simples lá no domínio de \(s\).</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Derivada da transformada</span>
+        <p>Multiplicar por \(t\) no tempo vira derivar em \(s\) (com um sinal de menos):</p>
+        <div class="eq-block">\[ \mathcal{L}[f(t)] = F(s) \;\Rightarrow\; \mathcal{L}[t\,f(t)] = -\frac{d}{ds}F(s) \]</div>
+        <p>Aplicando repetidamente à função degrau: \(\mathcal{L}[H(t)]=1/s\), \(\mathcal{L}[t\,H(t)]=1/s^2\), \(\mathcal{L}[t^2 H(t)]=2/s^3\)… até chegar em \(\mathcal{L}[t^n H(t)] = n!/s^{n+1}\).</p>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Parte da própria definição: \(\displaystyle F(s) = \int_0^\infty f(t)\,e^{-st}\,dt\)</span>
+            <span>Deriva os dois lados em relação a \(s\), passando a derivada pra dentro da integral (a variável de integração é \(t\), não \(s\)):</span>
+            <span class="proof-eq">\(\displaystyle \frac{d}{ds}F(s) = \int_0^\infty f(t)\,\frac{\partial}{\partial s}\big[e^{-st}\big]\,dt\)</span>
+            <span>Como \(\dfrac{\partial}{\partial s}e^{-st} = -t\,e^{-st}\), sobra:</span>
+            <span class="proof-eq">\(\displaystyle \frac{d}{ds}F(s) = -\int_0^\infty t\,f(t)\,e^{-st}\,dt = -\mathcal{L}[t\,f(t)]\)</span>
+            <span>Isolando \(\mathcal{L}[t\,f(t)]\), chega no teorema: \(\displaystyle \mathcal{L}[t\,f(t)] = -\frac{d}{ds}F(s)\)</span>
+            <span>Aplicando em \(f(t)=H(t)\) (\(F(s)=1/s\)) repetidas vezes: \(\mathcal{L}[tH(t)]=-\frac{d}{ds}\big(\frac1s\big)=\frac{1}{s^2}\), depois \(\mathcal{L}[t^2H(t)]=-\frac{d}{ds}\big(\frac{1}{s^2}\big)=\frac{2}{s^3}\), e por indução \(\mathcal{L}[t^nH(t)]=\dfrac{n!}{s^{n+1}}\)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Deslocamento no tempo</span>
+        <p>Atrasar o sinal em \(a\) segundos multiplica a transformada por um fator exponencial:</p>
+        <div class="eq-block">\[ \mathcal{L}[f(t-a)] = e^{-as}\,F(s) \]</div>
+        <p>Exemplo: se \(f(t)=\cos(\omega t)H(t)\) tem \(F(s) = s/(s^2+\omega^2)\), então \(f(t-a) = \cos[\omega(t-a)]H(t-a)\) tem transformada \(e^{-as}\,s/(s^2+\omega^2)\).</p>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Parte da definição aplicada a \(f(t-a)\), com \(a>0\): \(\displaystyle \mathcal{L}[f(t-a)] = \int_0^\infty f(t-a)\,e^{-st}\,dt\)</span>
+            <span>Como o sinal é causal, \(f(t-a)=0\) pra \(t<a\) — então a integral só "começa a valer" em \(t=a\):</span>
+            <span class="proof-eq">\(\displaystyle \mathcal{L}[f(t-a)] = \int_a^\infty f(t-a)\,e^{-st}\,dt\)</span>
+            <span>Faz a troca de variável \(\tau = t-a\) (logo \(t=\tau+a\), \(dt=d\tau\), e quando \(t=a\), \(\tau=0\)):</span>
+            <span class="proof-eq">\(\displaystyle = \int_0^\infty f(\tau)\,e^{-s(\tau+a)}\,d\tau = e^{-as}\int_0^\infty f(\tau)\,e^{-s\tau}\,d\tau\)</span>
+            <span>E essa última integral é exatamente \(F(s)\), sobrando \(\mathcal{L}[f(t-a)] = e^{-as}F(s)\).</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Translação no campo complexo</span>
+        <p>Multiplicar por uma exponencial no tempo desloca a transformada em \(s\):</p>
+        <div class="eq-block">\[ \mathcal{L}[e^{-at}f(t)] = F(s+a) \]</div>
+        <p>É o "espelho" do teorema anterior: lá o deslocamento era no tempo, aqui é em \(s\).</p>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Parte da definição aplicada a \(e^{-at}f(t)\): \(\displaystyle \mathcal{L}[e^{-at}f(t)] = \int_0^\infty e^{-at}f(t)\,e^{-st}\,dt\)</span>
+            <span>Junta as duas exponenciais, já que têm a mesma variável \(t\):</span>
+            <span class="proof-eq">\(\displaystyle = \int_0^\infty f(t)\,e^{-(s+a)t}\,dt\)</span>
+            <span>Essa é exatamente a definição de \(F(\cdot)\) avaliada em \(s+a\) no lugar de \(s\) — então \(\mathcal{L}[e^{-at}f(t)] = F(s+a)\).</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Mudança de escala</span>
+        <p>Comprimir ou esticar o eixo do tempo comprime/estica o eixo de \(s\) na direção oposta:</p>
+        <div class="eq-block">\[ \mathcal{L}[f(\omega t)] = \frac{1}{\omega}\,F\!\left(\frac{s}{\omega}\right) \]</div>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Parte da definição aplicada a \(f(\omega t)\), com \(\omega>0\): \(\displaystyle \mathcal{L}[f(\omega t)] = \int_0^\infty f(\omega t)\,e^{-st}\,dt\)</span>
+            <span>Troca de variável \(u=\omega t\) (logo \(t=u/\omega\), \(dt = du/\omega\)):</span>
+            <span class="proof-eq">\(\displaystyle = \int_0^\infty f(u)\,e^{-s u/\omega}\,\frac{du}{\omega} = \frac{1}{\omega}\int_0^\infty f(u)\,e^{-(s/\omega)\,u}\,du\)</span>
+            <span>Essa integral é \(F(\cdot)\) avaliada em \(s/\omega\) — logo \(\mathcal{L}[f(\omega t)] = \dfrac{1}{\omega}F\!\left(\dfrac{s}{\omega}\right)\).</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Funções periódicas</b> — se \(f(t)\) se repete com período \(T\), você só precisa transformar um período e dividir pelo fator \(1-e^{-sT}\):
+      <div class="eq-block" style="margin-top:0.8rem">\[ \mathcal{L}[f(t)] = \frac{1}{1-e^{-sT}}\int_{0^-}^{T} e^{-st} f(t)\, dt \]</div>
+      <button class="demo-btn">Ver demonstração ↓</button>
+      <div class="proof-block">
+        <div class="proof-steps">
+          <span>Como \(f(t)\) se repete a cada \(T\), a integral de \(0\) a \(\infty\) pode ser quebrada num "empilhado" de integrais, um período de cada vez:</span>
+          <span class="proof-eq">\(\displaystyle F(s) = \int_0^\infty f(t)e^{-st}dt = \sum_{n=0}^{\infty}\int_{nT}^{(n+1)T} f(t)\,e^{-st}\,dt\)</span>
+          <span>Em cada pedaço, troca \(t=\tau+nT\) com \(\tau\) variando de \(0\) a \(T\). Como \(f\) é periódica, \(f(\tau+nT)=f(\tau)\):</span>
+          <span class="proof-eq">\(\displaystyle = \sum_{n=0}^{\infty} e^{-snT}\int_0^T f(\tau)\,e^{-s\tau}\,d\tau\)</span>
+          <span>O termo com \(n\) some pra fora da integral porque não depende de \(\tau\). Sobra uma série geométrica de razão \(e^{-sT}\):</span>
+          <span class="proof-eq">\(\displaystyle \sum_{n=0}^{\infty} e^{-snT} = \frac{1}{1-e^{-sT}}, \qquad \text{válido para } \mathrm{Re}\{s\}>0\)</span>
+          <span>Juntando tudo: \(\displaystyle F(s) = \frac{1}{1-e^{-sT}}\int_0^T f(\tau)\,e^{-s\tau}\,d\tau\) — só precisa integrar um período.</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="derivada-integral" class="panel">
+    <span class="eyebrow">1.5</span>
+    <h2>Derivar e integrar: onde entram as condições iniciais</h2>
+    <p>Esses dois teoremas são o motivo pelo qual a Laplace resolve o Problema de Valor Inicial de uma vez só: derivada e integral no tempo viram álgebra em \(s\) — e as condições iniciais entram sozinhas, embutidas na fórmula.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Teorema da derivada</span>
+        <p>\(\displaystyle \mathcal{L}[\dot f(t)] = s\,F(s) - f(0^-)\)</p>
+        <p>\(\displaystyle \mathcal{L}[\ddot f(t)] = s^2 F(s) - s\,f(0^-) - \dot f(0^-)\)</p>
+        <p>e, no caso geral, \(\displaystyle \mathcal{L}[f^{(n)}(t)] = s^n F(s) - s^{n-1}f(0^-) - \cdots - f^{(n-1)}(0^-)\).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Teorema da integral</span>
+        <p>\(\displaystyle \mathcal{L}\!\left[\int_{-\infty}^{t} f(\tau)\,d\tau\right] = \frac{F(s)}{s} + \frac{\int_{-\infty}^{0^-} f(\tau)\,d\tau}{s}\)</p>
+        <p>O segundo termo é só o "estoque" acumulado antes de \(t=0\) — a condição inicial da integral.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>c.i.q. — condições iniciais quiescentes (nulas)</b>: se tudo começa zerado, os dois teoremas ficam bem mais limpos: \(\mathcal{L}[\dot f(t)] = s\,F(s)\), \(\mathcal{L}[f^{(n)}(t)] = s^n F(s)\), e \(\displaystyle \mathcal{L}\!\left[\int_{0^-}^{t} f(\tau)\,d\tau\right] = \frac{F(s)}{s}\). É esse o caso mais comum quando você já isolou as condições iniciais como fontes separadas no circuito.</div>
+  </section>
+
+  <section id="elementos" class="panel">
+    <span class="eyebrow">1.6</span>
+    <h2>Indutor e capacitor no domínio de s</h2>
+    <p>É exatamente esses dois teoremas (derivada e integral) que transformam a equação do indutor e do capacitor — que no tempo misturam derivada com integral — em relações puramente algébricas em \(s\), com a condição inicial aparecendo como uma fontinha extra.</p>
+
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="tag">Indutor — versão derivada</span>
+        <div class="steps">
+          <span>\(\displaystyle v(t) = L\,\frac{di(t)}{dt}\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da derivada:</span>
+        </div>
+        <div class="result">\(V(s) = sL\,I(s) - L\,i(0^-)\)</div>
+        <p class="dim" style="margin:0.4rem 0 0;font-size:0.85rem">O termo \(L\,i(0^-)\) carrega o fluxo (energia) armazenado no indutor antes de \(t=0\).</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Indutor — versão integral</span>
+        <div class="steps">
+          <span>\(\displaystyle i(t) = \frac{1}{L}\int_{-\infty}^{t} v(\tau)\,d\tau\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da integral:</span>
+        </div>
+        <div class="result">\(I(s) = \dfrac{1}{sL}\,V(s) + \dfrac{i(0^-)}{s}\)</div>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Capacitor — versão derivada</span>
+        <div class="steps">
+          <span>\(\displaystyle i(t) = C\,\frac{dv(t)}{dt}\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da derivada:</span>
+        </div>
+        <div class="result">\(I(s) = sC\,V(s) - C\,v(0^-)\)</div>
+        <p class="dim" style="margin:0.4rem 0 0;font-size:0.85rem">Agora quem entra é \(C\,v(0^-)\) — a carga armazenada no capacitor antes de \(t=0\).</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Capacitor — versão integral</span>
+        <div class="steps">
+          <span>\(\displaystyle v(t) = \frac{1}{C}\int_{-\infty}^{t} i(\tau)\,d\tau\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da integral:</span>
+        </div>
+        <div class="result">\(V(s) = \dfrac{1}{sC}\,I(s) + \dfrac{v(0^-)}{s}\)</div>
+      </div>
+    </div>
+
+    <div class="callout">Pensa assim: no domínio de \(s\), indutor e capacitor viram uma "impedância" (\(sL\) ou \(1/sC\)) em série ou paralelo com uma fonte que carrega, sozinha, toda a condição inicial. É isso que permite montar o circuito equivalente em \(s\) e resolver só com álgebra — nada de EDO.</div>
+  </section>
+
+  <section id="inversao" class="panel">
+    <span class="eyebrow">1.7</span>
+    <h2>Inversão da transformada de Laplace</h2>
+    <p>Depois de resolver o problema em \(s\), falta o último passo do fluxograma lá do início: voltar pro domínio do tempo. Essa operação se chama <b style="color:var(--ink)">antitransformada</b>:</p>
+    <div class="eq-block">\[ f(t) = \mathcal{L}^{-1}[F(s)] \]</div>
+    <p>E existe <b style="color:var(--ink)">unicidade</b>: cada \(F(s)\) corresponde a exatamente um \(f(t)\) (dentro da mesma região de convergência) — por isso dá pra "ir e voltar" sem ambiguidade.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">1º método</span>
+        <p>Tabelas + linearidade + os teoremas que acabamos de ver. Na prática, é o que você usa 90% do tempo: decompor \(F(s)\) em pedaços que já estão na tabela.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">2º método — fórmula de inversão</span>
+        <p>A definição "oficial", via integral de contorno no plano complexo (fórmula de Bromwich):</p>
+        <div class="eq-block" style="margin-top:0.6rem">\[ f(t) = \frac{1}{2\pi j}\int_{\sigma-j\infty}^{\sigma+j\infty} F(s)\,e^{st}\,ds \]</div>
+        <p style="margin-top:0.5rem">A integral é tomada sobre uma reta vertical \(s=\sigma\), dentro da região de convergência. Na prática, quase nunca se calcula essa integral diretamente em circuitos.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:1.4rem"><b style="color:var(--ink)">3º método — antitransformação de funções racionais.</b> Esse é o que realmente se usa em circuitos, porque toda \(F(s)\) que aparece resolvendo um circuito é uma razão de polinômios:</p>
+    <div class="eq-block">\[ F(s) = \frac{N(s)}{D(s)} = \frac{b_0 s^m + b_1 s^{m-1} + \cdots + b_m}{a_0 s^n + a_1 s^{n-1} + \cdots + a_n}, \qquad a_0, b_0 \ne 0 \]</div>
+    <p>Se \(m \le n\) a função é <b style="color:var(--ink)">própria</b>; se \(m<n\), <b style="color:var(--ink)">estritamente própria</b>. Reescrevendo na forma fatorada:</p>
+    <div class="eq-block">\[ F(s) = K \cdot \frac{\displaystyle\prod_{i=1}^{m}(s-z_i)}{\displaystyle\prod_{k=1}^{n}(s-p_k)}, \qquad K = \frac{b_0}{a_0} \]</div>
+    <p>onde \(z_i\) são os <b style="color:var(--ink)">zeros</b>, \(p_k\) são os <b style="color:var(--ink)">polos</b> (simples ou múltiplos, reais ou complexos) e \(K\) é o fator de escala (ganho). Um exemplo com um pouco de tudo:</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 420 320" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0" y="0" width="420" height="320" fill="rgba(74,222,154,0.06)"/>
+        <line x1="20" y1="160" x2="400" y2="160" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="230" y1="20" x2="230" y2="300" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <text x="392" y="150" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">σ</text>
+        <text x="238" y="32" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">jω</text>
+        <g stroke="#f5b942" stroke-width="2">
+          <line x1="224" y1="154" x2="236" y2="166"/>
+          <line x1="236" y1="154" x2="224" y2="166"/>
+        </g>
+        <text x="238" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">0 (2)</text>
+        <g stroke="#f5b942" stroke-width="2">
+          <line x1="184" y1="114" x2="196" y2="126"/>
+          <line x1="196" y1="114" x2="184" y2="126"/>
+        </g>
+        <text x="140" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">-1+j1</text>
+        <g stroke="#f5b942" stroke-width="2">
+          <line x1="184" y1="194" x2="196" y2="206"/>
+          <line x1="196" y1="194" x2="184" y2="206"/>
+        </g>
+        <text x="140" y="218" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">-1-j1</text>
+        <circle cx="190" cy="160" r="7" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <circle cx="150" cy="160" r="7" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="180" y="182" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">-1</text>
+        <text x="138" y="182" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">-2</text>
+      </svg>
+    </div>
+    <div class="pz-legend">
+      <span>✕ polos — <span style="color:#f5b942">p₁,₂ = 0 (duplo)</span>, <span style="color:#f5b942">p₃,₄ = −1 ± j1</span></span>
+      <span>○ zeros — <span style="color:var(--phosphor)">z₁ = −1, z₂ = −2</span></span>
+      <span>K = 10</span>
+    </div>
+    <div class="eq-block" style="margin-top:1rem">\[ F(s) = \frac{10\,(s^2+3s+2)}{s^4+2s^3+2s^2} = 10\cdot\frac{(s+1)(s+2)}{s^2\big[(s+1)^2+1\big]} \]</div>
+  </section>
+
+  <section id="fracoes" class="panel">
+    <span class="eyebrow">1.8</span>
+    <h2>Expansão em frações parciais</h2>
+    <p>Pra antitransformar uma \(F(s)\) racional, o truque é quebrá-la em pedacinhos simples — cada um do tipo \(1/(s-p_k)^j\), que já sabemos antitransformar:</p>
+    <div class="eq-block">\[ F(s) = \sum_{k=1}^{q}\sum_{j=1}^{m_k} A_{kj}\,\frac{1}{(s-p_k)^{j}} \]</div>
+    <p>onde \(A_{kj}\) são os <b style="color:var(--ink)">resíduos</b> (coeficientes a determinar), \(p_k\) é o \(k\)-ésimo polo, \(m_k\) é a multiplicidade dele, e \(m_1+m_2+\cdots+m_q = n\) é o grau de \(D(s)\). Cada termo se antitransforma assim:</p>
+    <div class="eq-block">\[ \mathcal{L}^{-1}\!\left[\frac{1}{(s-p_k)^j}\right] = \frac{t^{\,j-1}}{(j-1)!}\,e^{p_k t} \]</div>
+    <p class="dim">Essa fórmula sai direto de dois teoremas que você já viu: derivada da transformada (pra subir a potência \(j\)) e translação no campo complexo (pra trocar \(0\) por \(p_k\) no expoente).</p>
+
+    <p style="margin-top:1.2rem"><b style="color:var(--ink)">Exemplo com polo triplo, duplo e simples:</b></p>
+    <div class="eq-block">\[ F(s) = \frac{N(s)}{(s-p_1)(s-p_2)^2(s-p_3)^3} = \frac{A_{11}}{s-p_1} + \frac{A_{21}}{s-p_2} + \frac{A_{22}}{(s-p_2)^2} + \frac{A_{31}}{s-p_3} + \frac{A_{32}}{(s-p_3)^2} + \frac{A_{33}}{(s-p_3)^3} \]</div>
+
+    <div class="callout"><b>Polos complexos conjugados</b> sempre vêm em par — se \(p_k = \sigma_k + j\omega_k\) é polo, \(p_k^*\) também é, com resíduo \(A_k^*\). Juntando os dois termos, sobra sempre algo real:
+      <div class="eq-block" style="margin-top:0.8rem">\[ A_k e^{p_k t} + A_k^{*} e^{p_k^{*} t} = 2\,\mathrm{Re}\big[A_k e^{p_k t}\big] \]</div>
+    </div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Resíduo em forma polar</span>
+        <p>Se \(A_k = |A_k|\,e^{j\phi_k}\) e \(p_k=\sigma_k+j\omega_k\):</p>
+        <p>\(\displaystyle 2\,\mathrm{Re}\big[A_k e^{p_k t}\big] = 2|A_k|\,e^{\sigma_k t}\cos(\omega_k t + \phi_k)\)</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Resíduo em forma retangular</span>
+        <p>Se \(A_k = A_k' + jA_k''\) e \(p_k=\sigma_k+j\omega_k\):</p>
+        <p>\(\displaystyle 2\,\mathrm{Re}\big[A_k e^{p_k t}\big] = 2e^{\sigma_k t}\big[A_k'\cos(\omega_k t) - A_k''\,\mathrm{sen}(\omega_k t)\big]\)</p>
+      </div>
+    </div>
+    <p class="dim" style="margin-top:1rem">Essas duas formas usam as fórmulas de Euler: \(e^{j\Phi}=\cos\Phi+j\,\mathrm{sen}\,\Phi\), \(\cos\Phi=\tfrac12(e^{j\Phi}+e^{-j\Phi})\) e \(\mathrm{sen}\,\Phi=\tfrac{1}{2j}(e^{j\Phi}-e^{-j\Phi})\) — a ponte entre exponencial complexa e as funções trigonométricas que aparecem na resposta no tempo.</p>
+  </section>
+
+  <section id="exemplos2" class="panel">
+    <span class="eyebrow">1.9</span>
+    <h2>Dois exemplos completos, do início ao fim</h2>
+    <p class="dim">Juntando frações parciais com antitransformada termo a termo — do jeito que você vai fazer na prova.</p>
+
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="tag">Exemplo 1 — polo duplo na origem + par complexo</span>
+        <div class="steps">
+          <span>\(\displaystyle F(s) = \frac{20s^2+60s+40}{2s^4+4s^3+4s^2}\)</span>
+          <span>frações parciais: \(\displaystyle \frac{A_{11}}{s}+\frac{A_{12}}{s^2}+\frac{A_2}{s+1-j}+\frac{A_2^{*}}{s+1+j}\)</span>
+          <span>\(A_{11}=5\), \(A_{12}=10\), \(A_2 = 2{,}5(-1+j)\), \(A_2^{*}=2{,}5(-1-j)\)</span>
+        </div>
+        <div class="result">\(f(t) = 5 + 10t + 5\sqrt{2}\,e^{-t}\cos(t+135^\circ)\)<br>\(\phantom{f(t)}= 5 + 10t - 5e^{-t}[\cos t - \mathrm{sen}\,t]\)</div>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Exemplo 2 — F(s) imprópria + polos reais simples</span>
+        <div class="steps">
+          <span>\(\displaystyle F(s) = \frac{s^4+5s^3+4s^2+3s+1}{s^3+3s^2+2s}\)</span>
+          <span>como \(m>n\), primeiro faz divisão de polinômios: \(\displaystyle F(s) = s+2+\frac{A_1}{s}+\frac{A_2}{s+1}+\frac{A_3}{s+2}\)</span>
+          <span>\(A_1 = 0{,}5\), \(A_2 = 2\), \(A_3=-6{,}5\)</span>
+          <span>o termo \(s+2\) (parte não própria) antitransforma em impulso e sua derivada</span>
+        </div>
+        <div class="result">\(f(t) = \delta'(t) + 2\,\delta(t) + 0{,}5 + 2e^{-t} - 6{,}5\,e^{-2t}\)</div>
+      </div>
     </div>
   </section>
 
@@ -786,7 +1226,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Baseado nas notas de aula de 03/08/2026 — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Baseado nas notas de aula de 03/08/2026 e no Bloco 1 — Transformada de Laplace (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
 </footer>
 
   </div><!-- /content-col -->
@@ -815,18 +1255,24 @@ function fitCanvas(){
 }
 
 const EXAMPLES = {
-  ex1: { sigma: -2, mode: 'half', pole: -2,
+  ex1: { sigma: -2, mode: 'half', poles: [[-2, 0]],
     sigmaLabel: 'σ₀ = −2',
     text: 'Dá <span class="roc-formula">F(s) = 1/(s+2)</span>, com um polo em s = −2. À direita dessa linha, tudo converge; à esquerda, não.' },
-  ex2: { sigma: 0, mode: 'half', pole: null,
+  ex2: { sigma: 0, mode: 'half', poles: [],
     sigmaLabel: 'σ₀ = 0',
     text: 'f(t) = t cresce pra sempre, mas devagar — devagar o bastante pra qualquer s à direita de zero já resolver.' },
-  ex4: { sigma: null, mode: 'none', pole: null,
+  ex4: { sigma: null, mode: 'none', poles: [],
     sigmaLabel: 'σ₀ = não existe',
     text: '<span style="color:var(--red)">Aqui nada funciona</span> — e^(t²) cresce mais rápido que qualquer exponencial. A transformada dessa função não existe.' },
-  ex5: { sigma: -Infinity, mode: 'all', pole: null,
+  ex5: { sigma: -Infinity, mode: 'all', poles: [],
     sigmaLabel: 'σ₀ = −∞',
     text: 'e^(−t²) cai tão rápido que a integral converge <span class="roc-formula">pra qualquer s, no plano inteiro</span>.' },
+  ex6: { sigma: 0, mode: 'half', poles: [[0, 1], [0, -1]],
+    sigmaLabel: 'σ₀ = 0',
+    text: 'sen ωt e cos ωt dão <span class="roc-formula">ω/(s²+ω²)</span> e <span class="roc-formula">s/(s²+ω²)</span>, com polos em s = ±jω — sobre o próprio eixo imaginário, a fronteira da convergência.' },
+  ex7: { sigma: -Infinity, mode: 'all', poles: [],
+    sigmaLabel: 'σ₀ = −∞ (caso à parte)',
+    text: 'δ(t) não é uma função comum, mas como a integral unilateral começa em 0⁻, ela captura o impulso inteiro: <span class="roc-formula">F(s) = 1</span>, sem polos — converge em todo o plano.' },
 };
 
 function drawSPlane(key){
@@ -898,20 +1344,23 @@ function drawSPlane(key){
     if(n % 2 === 0) ctx.fillText(String(n), x - 4, originY + 16);
   }
 
-  // pole marker
-  if(cfg.pole !== null && cfg.pole !== undefined){
-    const px = originX + cfg.pole * unit;
+  // pole markers (each pole is [re, im]; im=0 sits on the real axis)
+  (cfg.poles || []).forEach(([re, im]) => {
+    const px = originX + re * unit;
+    const py = originY - im * unit;
     ctx.strokeStyle = '#f5b942';
     ctx.lineWidth = 2;
     const r = 6;
     ctx.beginPath();
-    ctx.moveTo(px-r, originY-r); ctx.lineTo(px+r, originY+r);
-    ctx.moveTo(px+r, originY-r); ctx.lineTo(px-r, originY+r);
+    ctx.moveTo(px-r, py-r); ctx.lineTo(px+r, py+r);
+    ctx.moveTo(px+r, py-r); ctx.lineTo(px-r, py+r);
     ctx.stroke();
     ctx.fillStyle = '#f5b942';
     ctx.font = "11px 'IBM Plex Mono', monospace";
-    ctx.fillText('s = ' + cfg.pole, px - 14, originY + 24);
-  }
+    const label = im === 0 ? `s = ${re}` : `s = ${re}${im > 0 ? '+' : '-'}j${Math.abs(im)}`;
+    const offsetY = im === 0 ? 24 : (im > 0 ? -12 : 24);
+    ctx.fillText(label, px - 22, py + offsetY);
+  });
 
   sigmaReadout.textContent = cfg.sigmaLabel;
   splaneText.innerHTML = cfg.text;
@@ -939,6 +1388,19 @@ window.addEventListener('resize', () => {
 });
 
 setActive('ex1');
+
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
 </script>
 
 </body>
