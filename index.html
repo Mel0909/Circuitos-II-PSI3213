@@ -576,6 +576,52 @@ window.MathJax = {
   }
   .proof-block .proof-steps .proof-eq{ color: var(--ink); }
 
+  /* ---- worked solution (step-by-step) ---- */
+  .solve-step{
+    display: grid;
+    grid-template-columns: 2.2rem 1fr;
+    gap: 0.9rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .solve-step:last-child{ border-bottom: none; }
+  .solve-step .step-num{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--amber);
+    padding-top: 0.15rem;
+  }
+  .solve-step .step-body{ min-width: 0; }
+  .solve-step .step-title{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--phosphor);
+    margin-bottom: 0.5rem;
+  }
+  .solve-step p{ margin: 0.4rem 0 0; font-size: 0.93rem; color: #cdd8d2; }
+  .solve-step .eq-block{ margin: 0.6rem 0 0; padding: 0.9rem 1.1rem; }
+  .given-box{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.6rem;
+    padding: 0.9rem 1.1rem;
+    margin-top: 1rem;
+    background: var(--bg-panel-2);
+    border-left: 2px solid var(--amber);
+    border-radius: 2px;
+    font-size: 0.95rem;
+  }
+  .final-answer{
+    margin-top: 1.2rem;
+    padding: 1.1rem 1.3rem;
+    background: rgba(74, 222, 154, 0.10);
+    border: 1px solid var(--phosphor);
+    border-radius: 2px;
+    text-align: center;
+  }
+
   /* ---- laplace transform table ---- */
   .ltable{
     width: 100%;
@@ -705,6 +751,7 @@ window.MathJax = {
         <a href="#inversao">Inversão</a>
         <a href="#fracoes">Frações parciais</a>
         <a href="#exemplos2">Exemplos II</a>
+        <a href="#circuito">Circuito RC</a>
       </div>
     </nav>
 
@@ -952,13 +999,29 @@ window.MathJax = {
             <span class="proof-eq">\(\displaystyle \frac{d}{ds}F(s) = -\int_0^\infty t\,f(t)\,e^{-st}\,dt = -\mathcal{L}[t\,f(t)]\)</span>
             <span>Isolando \(\mathcal{L}[t\,f(t)]\), chega no teorema: \(\displaystyle \mathcal{L}[t\,f(t)] = -\frac{d}{ds}F(s)\)</span>
             <span>Aplicando em \(f(t)=H(t)\) (\(F(s)=1/s\)) repetidas vezes: \(\mathcal{L}[tH(t)]=-\frac{d}{ds}\big(\frac1s\big)=\frac{1}{s^2}\), depois \(\mathcal{L}[t^2H(t)]=-\frac{d}{ds}\big(\frac{1}{s^2}\big)=\frac{2}{s^3}\), e por indução \(\mathcal{L}[t^nH(t)]=\dfrac{n!}{s^{n+1}}\)</span>
+            <span style="margin-top:0.4rem"><b style="color:var(--ink)">A mesma cadeia partindo de \(e^{at}\)</b> — essa é a versão que realmente importa pra polos múltiplos. Começando de \(\mathcal{L}[e^{at}]=\dfrac{1}{s-a}\) e derivando em \(s\) repetidamente:</span>
+          </div>
+          <table class="ltable" style="margin-top:0.8rem">
+            <thead><tr><th>f(t)</th><th>F(s)</th></tr></thead>
+            <tbody>
+              <tr><td>\(e^{at}\)</td><td>\(\dfrac{1}{s-a}\)</td></tr>
+              <tr><td>\(-t\,e^{at}\)</td><td>\(-\dfrac{1}{(s-a)^2}\)</td></tr>
+              <tr><td>\(t^2 e^{at}\)</td><td>\(\dfrac{2!}{(s-a)^3}\)</td></tr>
+              <tr><td>\(-t^3 e^{at}\)</td><td>\(-\dfrac{3!}{(s-a)^4}\)</td></tr>
+              <tr><td>\(\pm\,t^{k-1} e^{at}\)</td><td>\(\pm\dfrac{(k-1)!}{(s-a)^{k}}\)</td></tr>
+            </tbody>
+          </table>
+          <div class="proof-steps" style="margin-top:0.8rem">
+            <span>Note o sinal alternando: cada derivada em \(s\) traz um \(-1\), e o \(-\) da fórmula do teorema cancela ou reforça esse sinal conforme a paridade de \(k\).</span>
+            <span>Invertendo a última linha, chega-se na fórmula usada na expansão em frações parciais (seção 1.8):</span>
+            <span class="proof-eq">\(\displaystyle \mathcal{L}^{-1}\!\left[\frac{1}{(s-a)^{k}}\right] = \frac{t^{\,k-1}}{(k-1)!}\,e^{at}\)</span>
           </div>
         </div>
       </div>
 
       <div class="theorem-card">
-        <span class="tag">Deslocamento no tempo</span>
-        <p>Atrasar o sinal em \(a\) segundos multiplica a transformada por um fator exponencial:</p>
+        <span class="tag">Deslocamento no tempo <span style="color:var(--ink-dimmer)">(campo real)</span></span>
+        <p>Sendo \(F(s)=\mathcal{L}[f(t)]\), com \(f(t)\) tal que <b style="color:var(--ink)">\(f(t)=0\) para \(t \le 0\)</b> e <b style="color:var(--ink)">\(a \ge 0\)</b>, atrasar o sinal em \(a\) segundos multiplica a transformada por um fator exponencial:</p>
         <div class="eq-block">\[ \mathcal{L}[f(t-a)] = e^{-as}\,F(s) \]</div>
         <p>Exemplo: se \(f(t)=\cos(\omega t)H(t)\) tem \(F(s) = s/(s^2+\omega^2)\), então \(f(t-a) = \cos[\omega(t-a)]H(t-a)\) tem transformada \(e^{-as}\,s/(s^2+\omega^2)\).</p>
         <button class="demo-btn">Ver demonstração ↓</button>
@@ -978,6 +1041,8 @@ window.MathJax = {
         <span class="tag">Translação no campo complexo</span>
         <p>Multiplicar por uma exponencial no tempo desloca a transformada em \(s\):</p>
         <div class="eq-block">\[ \mathcal{L}[e^{-at}f(t)] = F(s+a) \]</div>
+        <p>Lendo de trás pra frente — que é como você vai usar na antitransformação — sendo \(F(s)=\mathcal{L}[f(t)]\), a antitransformada de \(F(s+a)\) é:</p>
+        <div class="eq-block">\[ \mathcal{L}^{-1}[F(s+a)] = e^{-at}\,f(t) \]</div>
         <p>É o "espelho" do teorema anterior: lá o deslocamento era no tempo, aqui é em \(s\).</p>
         <button class="demo-btn">Ver demonstração ↓</button>
         <div class="proof-block">
@@ -1028,21 +1093,81 @@ window.MathJax = {
     <h2>Derivar e integrar: onde entram as condições iniciais</h2>
     <p>Esses dois teoremas são o motivo pelo qual a Laplace resolve o Problema de Valor Inicial de uma vez só: derivada e integral no tempo viram álgebra em \(s\) — e as condições iniciais entram sozinhas, embutidas na fórmula.</p>
 
-    <div class="roc-grid">
-      <div class="roc-card">
-        <span class="tag">Teorema da derivada</span>
-        <p>\(\displaystyle \mathcal{L}[\dot f(t)] = s\,F(s) - f(0^-)\)</p>
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Teorema da derivada no domínio do tempo</span>
+        <p>Seja \(f(t)\) uma função \(\mathcal{L}\)-transformável, de ordem exponencial, com transformada \(F(s)\). Então a transformada da sua derivada primeira é:</p>
+        <div class="eq-block">\[ \mathcal{L}[\dot f(t)] = s\,F(s) - f(0^-) \]</div>
         <p>\(\displaystyle \mathcal{L}[\ddot f(t)] = s^2 F(s) - s\,f(0^-) - \dot f(0^-)\)</p>
-        <p>e, no caso geral, \(\displaystyle \mathcal{L}[f^{(n)}(t)] = s^n F(s) - s^{n-1}f(0^-) - \cdots - f^{(n-1)}(0^-)\).</p>
+        <p>e, no caso geral, \(\displaystyle \mathcal{L}[f^{(n)}(t)] = s^n F(s) - s^{n-1}f(0^-) - s^{n-2}\dot f(0^-) - \cdots - f^{(n-1)}(0^-)\).</p>
+        <p><b style="color:var(--ink)">Região de convergência:</b> derivar não muda a ROC — \(\mathcal{R}[\dot f(t)] = \mathcal{R}[f(t)] = \{s \in \mathbb{C} \mid \mathrm{Re}\{s\} > \alpha_0\}\).</p>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Seja \(f(t)\) de ordem exponencial \(\alpha_0\), com \(\mathcal{R}[f(t)] = \{s\in\mathbb{C} \mid \mathrm{Re}\{s\}>\alpha_0\}\) e \(\displaystyle F(s) = \int_{0^-}^{\infty} f(t)\,e^{-st}\,dt\).</span>
+            <span>Queremos \(\displaystyle G(s) = \int_{0^-}^{\infty} \dot f(t)\,e^{-st}\,dt\). Vamos integrar por partes, partindo de \(d(uv) = u\,dv + v\,du\):</span>
+            <span class="proof-eq">\(\displaystyle \int_a^b u\,dv = \big[uv\big]_a^b - \int_a^b v\,du\)</span>
+            <span>Escolhendo \(u = e^{-st} \Rightarrow du = -s\,e^{-st}dt\) &nbsp;e&nbsp; \(dv = \dot f(t)\,dt \Rightarrow v = f(t)\):</span>
+            <span class="proof-eq">\(\displaystyle G(s) = \Big[f(t)\,e^{-st}\Big]_{0^-}^{\infty} + s\int_{0^-}^{\infty} f(t)\,e^{-st}\,dt\)</span>
+            <span>A segunda integral é justamente \(F(s)\). Abrindo o colchete:</span>
+            <span class="proof-eq">\(\displaystyle G(s) = \lim_{t\to\infty}\Big[f(t)e^{-st}\Big] - f(0^-)\,e^{-s\cdot 0^-} + s\,F(s)\)</span>
+            <span>Como \(e^{-s\cdot 0^-} = 1\), o termo do meio é simplesmente \(f(0^-)\).</span>
+            <span>E o limite morre: por definição, \(OE[f(t)] = \alpha_0 \iff \displaystyle\lim_{t\to\infty}\big[f(t)\,e^{-st}\big] = 0\) para \(\mathrm{Re}\{s\}>\alpha_0\).</span>
+            <span>Então, para todo \(s\in\mathbb{C}\) com \(\mathrm{Re}\{s\}>\alpha_0\):</span>
+            <span class="proof-eq">\(\displaystyle \mathcal{L}[\dot f(t)] = s\,F(s) - f(0^-)\)</span>
+            <span>E como a condição de convergência usada foi exatamente a mesma de \(f(t)\), a região de convergência não muda: \(\mathcal{R}[\dot f(t)] = \mathcal{R}[f(t)]\).</span>
+          </div>
+        </div>
       </div>
-      <div class="roc-card">
-        <span class="tag">Teorema da integral</span>
-        <p>\(\displaystyle \mathcal{L}\!\left[\int_{-\infty}^{t} f(\tau)\,d\tau\right] = \frac{F(s)}{s} + \frac{\int_{-\infty}^{0^-} f(\tau)\,d\tau}{s}\)</p>
+
+      <div class="theorem-card">
+        <span class="tag">Teorema da integral no domínio do tempo</span>
+        <p>Seja \(f(t)\) \(\mathcal{L}\)-transformável com transformada \(F(s)\), e seja \(\displaystyle \varphi(t) = \int_{-\infty}^{t} f(\lambda)\,d\lambda\) a sua integral. Então:</p>
+        <div class="eq-block">\[ \Phi(s) = \frac{F(s)}{s} + \frac{\varphi(0^-)}{s} \]</div>
         <p>O segundo termo é só o "estoque" acumulado antes de \(t=0\) — a condição inicial da integral.</p>
+        <button class="demo-btn">Ver demonstração ↓</button>
+        <div class="proof-block">
+          <div class="proof-steps">
+            <span>Embora não seja necessária, vamos supor a hipótese de que \(f(t)\) seja de ordem exponencial \(\alpha_0 < \infty\), pra ter uma demonstração mais simples.</span>
+            <span>Pela definição da transformada:</span>
+            <span class="proof-eq">\(\displaystyle \Phi(s) = \int_{0^-}^{\infty}\left[\int_{-\infty}^{t} f(\lambda)\,d\lambda\right] e^{-st}\,dt\)</span>
+            <span>Integrando por partes, com \(\displaystyle u = \int_{-\infty}^{t} f(\lambda)d\lambda \Rightarrow du = f(t)\,dt\) &nbsp;e&nbsp; \(dv = e^{-st}dt \Rightarrow v = -\tfrac{1}{s}e^{-st}\):</span>
+            <span class="proof-eq">\(\displaystyle \Phi(s) = -\frac{1}{s}\Big[\varphi(t)\,e^{-st}\Big]_{0^-}^{\infty} + \frac{1}{s}\underbrace{\int_{0^-}^{\infty} f(t)\,e^{-st}\,dt}_{F(s)}\)</span>
+            <span class="proof-eq">\(\displaystyle = -\frac{1}{s}\lim_{t\to\infty}\Big[\varphi(t)e^{-st}\Big] + \frac{1}{s}\varphi(0^-) + \frac{F(s)}{s}\)</span>
+            <span>Falta mostrar que esse limite é zero — ou seja, que \(\varphi(t)\) <em>também</em> é de ordem exponencial \(\alpha_0\). Como \(f(t)\) é de OE \(\alpha_0\), dado \(\varepsilon>0\) existe \(T_0\) tal que, para \(t>T_0\):</span>
+            <span class="proof-eq">\(|f(t)|\,|e^{-st}| < \varepsilon \;\Rightarrow\; |f(t)| < \varepsilon\,e^{\mathrm{Re}\{s\}t}\)</span>
+            <span>Quebrando a integral em duas partes, com \(I_0\) constante:</span>
+            <span class="proof-eq">\(\displaystyle \varphi(t) = \underbrace{\int_{-\infty}^{T_0} f(\lambda)d\lambda}_{I_0} + \int_{T_0}^{t} f(\lambda)\,d\lambda \;\Rightarrow\; |\varphi(t)| < |I_0| + \varepsilon\int_{T_0}^{t} e^{\mathrm{Re}\{s\}\lambda}\,d\lambda\)</span>
+            <span>Multiplicando por \(|e^{-st}|\) e tomando o limite, chamando \(L_\infty = \lim_{t\to\infty}\big[|\varphi(t)|\,|e^{-st}|\big]\):</span>
+            <span class="proof-eq">\(\displaystyle L_\infty \le |I_0|\underbrace{\lim_{t\to\infty} e^{-\mathrm{Re}\{s\}t}}_{\to\,0} + \frac{\varepsilon}{\mathrm{Re}\{s\}}\left[1 - \underbrace{\lim_{t\to\infty} e^{-\mathrm{Re}\{s\}(t-T_0)}}_{\to\,0}\right]\)</span>
+            <span>Logo \(\displaystyle L_\infty \le \frac{\varepsilon}{\mathrm{Re}\{s\}}\); mas como \(\mathrm{Re}\{s\}>\alpha_0\), vale \(\displaystyle L_\infty < \frac{\varepsilon}{\alpha_0}\) — e sendo \(\varepsilon\) arbitrariamente pequeno, \(L_\infty = 0\).</span>
+            <span>Portanto \(\varphi(t)\) também é de OE \(\alpha_0\), o limite morre, e sobra:</span>
+            <span class="proof-eq">\(\displaystyle \Phi(s) = \frac{F(s)}{s} + \frac{\varphi(0^-)}{s}\)</span>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class="callout" style="margin-top:1.4rem"><b>Os dois teoremas são a mesma equação lida ao contrário.</b> Do teorema da derivada, \(G(s) = s\,F(s) - f(0^-)\); isolando \(F(s)\):
+      <div class="eq-block" style="margin-top:0.8rem">\[ F(s) = \frac{G(s)}{s} + \frac{f(0^-)}{s} \]</div>
+      que é exatamente a forma do teorema da integral — derivar multiplica por \(s\), integrar divide por \(s\), e em ambos os casos a condição inicial entra como um termo \(\text{(valor em }0^-)/s\).
+    </div>
+
     <div class="callout"><b>c.i.q. — condições iniciais quiescentes (nulas)</b>: se tudo começa zerado, os dois teoremas ficam bem mais limpos: \(\mathcal{L}[\dot f(t)] = s\,F(s)\), \(\mathcal{L}[f^{(n)}(t)] = s^n F(s)\), e \(\displaystyle \mathcal{L}\!\left[\int_{0^-}^{t} f(\tau)\,d\tau\right] = \frac{F(s)}{s}\). É esse o caso mais comum quando você já isolou as condições iniciais como fontes separadas no circuito.</div>
+
+    <div class="example-card diverge" style="margin-top:1.4rem">
+      <span class="tag">Contraexemplo importante — ordem exponencial é suficiente, não necessária</span>
+      <div class="steps">
+        <span>Seja \(f(t) = \cos\!\left(e^{t^2}\right)\).</span>
+        <span>Como \(|\cos(\cdot)| \le 1\), \(f(t)\) é de ordem exponencial \(\alpha_0 = 0\) \(\Rightarrow\) existe \(F(s)\), e o teorema da derivada garante que \(\displaystyle \mathcal{L}[\dot f(t)] = s\,F(s) - \underbrace{f(0^-)}_{\cos(1)}\).</span>
+        <span>Mas olha o que acontece com a derivada. Pela regra da cadeia:</span>
+        <span>\(\displaystyle \dot f(t) = \frac{d}{d\,e^{t^2}}\cos\!\left(e^{t^2}\right)\cdot\frac{d\,e^{t^2}}{d\,t^2}\cdot\frac{d\,t^2}{dt} = -\mathrm{sen}\!\left(e^{t^2}\right)\cdot e^{t^2}\cdot 2t\)</span>
+        <span>\(\displaystyle \therefore\; \dot f(t) = -2t\,e^{t^2}\,\mathrm{sen}\!\left(e^{t^2}\right)\)</span>
+        <span>Esse \(e^{t^2}\) multiplicando cresce mais rápido que qualquer exponencial — então \(\dot f(t)\) <b style="color:var(--red)">não é de ordem exponencial</b>. Pelo critério do Ex. 3 lá atrás, isso normalmente condenaria a função.</span>
+        <span>Entretanto, \(\dot f(t)\) <b style="color:var(--phosphor)">tem transformada de Laplace</b> — e a gente até já sabe qual é: \(s\,F(s) - \cos(1)\).</span>
+      </div>
+      <div class="result" style="background:rgba(74,222,154,0.08);border-left-color:var(--phosphor)">Moral: ordem exponencial é condição <b>suficiente</b> para a transformada existir, mas <b>não necessária</b>. Uma função pode falhar no teste da OE e ainda assim ser ℒ-transformável.</div>
+    </div>
   </section>
 
   <section id="elementos" class="panel">
@@ -1164,6 +1289,23 @@ window.MathJax = {
     <div class="eq-block">\[ \mathcal{L}^{-1}\!\left[\frac{1}{(s-p_k)^j}\right] = \frac{t^{\,j-1}}{(j-1)!}\,e^{p_k t} \]</div>
     <p class="dim">Essa fórmula sai direto de dois teoremas que você já viu: derivada da transformada (pra subir a potência \(j\)) e translação no campo complexo (pra trocar \(0\) por \(p_k\) no expoente).</p>
 
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Como calcular os resíduos</h3>
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Polo simples — método do "tapa"</span>
+        <p>Multiplica \(F(s)\) pelo fator do polo (o que "tapa" ele) e avalia no próprio polo:</p>
+        <div class="eq-block">\[ A_k = \Big[(s-p_k)\,F(s)\Big]_{s\,=\,p_k} \]</div>
+        <p class="dim">Funciona porque multiplicar por \((s-p_k)\) cancela o denominador daquele termo, e todos os outros termos zeram quando \(s\to p_k\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Polo múltiplo (multiplicidade \(m_k\))</span>
+        <p>Mesma ideia, mas antes de avaliar você precisa derivar pra "descascar" as potências mais altas:</p>
+        <div class="eq-block">\[ A_{kj} = \frac{1}{(m_k-j)!}\,\frac{d^{\,m_k-j}}{ds^{\,m_k-j}}\Big[(s-p_k)^{m_k}\,F(s)\Big]_{s\,=\,p_k} \]</div>
+        <p class="dim">Para \(j=m_k\) (a potência mais alta) não deriva nada — cai no método do tapa. Para \(j\) menor, deriva \(m_k-j\) vezes.</p>
+      </div>
+    </div>
+    <div class="callout"><b>Atalho pra polos complexos</b> — como eles vêm em par conjugado, você só precisa calcular <em>um</em> dos dois resíduos: o outro é \(A_k^{*}\) (mesmo módulo, ângulo oposto). Na prática, dá pra economizar metade do trabalho.</div>
+
     <p style="margin-top:1.2rem"><b style="color:var(--ink)">Exemplo com polo triplo, duplo e simples:</b></p>
     <div class="eq-block">\[ F(s) = \frac{N(s)}{(s-p_1)(s-p_2)^2(s-p_3)^3} = \frac{A_{11}}{s-p_1} + \frac{A_{21}}{s-p_2} + \frac{A_{22}}{(s-p_2)^2} + \frac{A_{31}}{s-p_3} + \frac{A_{32}}{(s-p_3)^2} + \frac{A_{33}}{(s-p_3)^3} \]</div>
 
@@ -1213,6 +1355,170 @@ window.MathJax = {
         <div class="result">\(f(t) = \delta'(t) + 2\,\delta(t) + 0{,}5 + 2e^{-t} - 6{,}5\,e^{-2t}\)</div>
       </div>
     </div>
+  </section>
+
+  <section id="circuito" class="panel">
+    <span class="eyebrow">1.10</span>
+    <h2>Aplicação: resolvendo um circuito de verdade</h2>
+    <p>Agora junta tudo. Esse é o exemplo que fecha o módulo: um circuito RC série, com condição inicial no capacitor e excitação senoidal. Vamos achar \(v_R(t)\) sem escrever uma única equação diferencial.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+        <!-- wires -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M70 70 L150 70"/>
+          <path d="M210 70 L360 70"/>
+          <path d="M360 70 L360 95"/>
+          <path d="M360 145 L360 175"/>
+          <path d="M360 175 L70 175"/>
+          <path d="M70 175 L70 115"/>
+          <path d="M70 55 L70 70"/>
+        </g>
+        <!-- source -->
+        <circle cx="70" cy="85" r="30" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="60" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="62" y="103" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+        <text x="6" y="90" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">e</text>
+        <text x="15" y="94" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="10">s</text>
+        <text x="21" y="90" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <!-- capacitor plates -->
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="170" y1="50" x2="170" y2="90"/>
+          <line x1="190" y1="50" x2="190" y2="90"/>
+        </g>
+        <line x1="150" y1="70" x2="170" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <line x1="190" y1="70" x2="210" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="196" y="42" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="150" y="112" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="159" y="116" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="10">C</text>
+        <text x="166" y="112" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <!-- resistor -->
+        <rect x="348" y="95" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2.5"/>
+        <text x="382" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="382" y="136" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="391" y="140" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="10">R</text>
+        <text x="398" y="136" fill="var(--ink)" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <!-- current arrow -->
+        <g stroke="#f5b942" stroke-width="1.6" fill="none">
+          <path d="M105 58 L135 58"/>
+          <path d="M130 54 L136 58 L130 62" fill="#f5b942"/>
+        </g>
+        <text x="112" y="48" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i(t)</text>
+      </svg>
+    </div>
+
+    <div class="given-box">
+      <span>\(v_C(0^-) = 2\;\mathrm{V}\)</span>
+      <span>\(RC = 1\;\mathrm{s}\)</span>
+      <span>\(e_s(t) = 5\cos t\) &nbsp;(V, s)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª Lei de Kirchhoff na malha (que é única)</div>
+          <div class="eq-block">\[ -e_s(t) + v_C(t) + v_R(t) = 0 \;\Longrightarrow\; v_C(t) + v_R(t) = e_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Transforma a malha inteira</div>
+          <p>Aplicando \(\mathcal{L}\) e usando linearidade: \(V_C(s) + V_R(s) = E_s(s)\). Escrevendo \(v_C\) como a integral da corrente (relação constitutiva do capacitor):</p>
+          <div class="eq-block">\[ \mathcal{L}\!\left[\frac{1}{C}\int_{-\infty}^{t} i(\lambda)\,d\lambda + v_R(t)\right] = \mathcal{L}\big[5\cos t\big] \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Teorema da integral — a c.i. entra sozinha</div>
+          <p>É aqui que o trabalho da seção 1.5 paga: a integral vira divisão por \(s\), e a carga inicial aparece como um termo extra.</p>
+          <div class="eq-block">\[ \frac{1}{C}\left[\frac{I(s)}{s} + \frac{q_C(0^-)}{s}\right] + V_R(s) = \frac{5s}{s^2+1} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Relação constitutiva do resistor + condição inicial</div>
+          <p>Do resistor: \(V_R(s) = R\,I(s) \iff I(s) = \dfrac{1}{R}V_R(s)\).</p>
+          <p>Da c.i.: \(v_C(0^-) = \dfrac{q_C(0^-)}{C} \iff q_C(0^-) = C\,v_C(0^-)\).</p>
+          <p>Substituindo as duas, tudo passa a ser função só de \(V_R(s)\):</p>
+          <div class="eq-block">\[ \frac{1}{C}\left[\frac{V_R(s)}{Rs} + \frac{C\,v_C(0^-)}{s}\right] + V_R(s) = \frac{5s}{s^2+1} \]</div>
+          <div class="eq-block">\[ \frac{V_R(s)}{RCs} + \frac{v_C(0^-)}{s} + V_R(s) = \frac{5s}{s^2+1} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Entra com os números e isola V<sub>R</sub>(s)</div>
+          <p>Com \(RC=1\) e \(v_C(0^-)=2\):</p>
+          <div class="eq-block">\[ \left(\frac{1}{s}+1\right)V_R(s) = \frac{5s}{s^2+1} - \frac{2}{s} \]</div>
+          <div class="eq-block">\[ \frac{s+1}{s}\,V_R(s) = \frac{5s^2 - 2s^2 - 2}{s\,(s^2+1)} = \frac{3s^2-2}{s\,(s^2+1)} \]</div>
+          <p>O \(s\) cancela dos dois lados, e sobra puro algebrismo — nenhuma equação diferencial foi resolvida:</p>
+          <div class="eq-block">\[ V_R(s) = \frac{3s^2-2}{(s+1)(s^2+1)}, \qquad s^2+1 = (s-j)(s+j) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">Frações parciais — três polos simples</div>
+          <div class="eq-block">\[ V_R(s) = \frac{A_{11}}{s+1} + \frac{A_{12}}{s-j} + \frac{A_{13}}{s+j} \]</div>
+          <p>Pelo método do tapa, no polo real \(s=-1\):</p>
+          <div class="eq-block">\[ A_{11} = \left[(s+1)\,V_R(s)\right]_{s=-1} = \left[\frac{3s^2-2}{s^2+1}\right]_{s=-1} = \frac{3-2}{1+1} = \frac{1}{2} \]</div>
+          <p>No polo complexo \(s=j\):</p>
+          <div class="eq-block">\[ A_{12} = \left[\frac{3s^2-2}{(s+1)(s+j)}\right]_{s=j} = \frac{-3-2}{(1+j)(2j)} = \frac{-5}{2j\,(1+j)} \]</div>
+          <p>Passando pra forma polar (módulos dividem, ângulos subtraem):</p>
+          <div class="eq-block">\[ A_{12} = \frac{5}{2\sqrt{2}}\,\underline{/\,180^\circ - 90^\circ - 45^\circ} = \frac{5}{2\sqrt{2}}\,\underline{/\,45^\circ} = \frac{5}{2\sqrt{2}}\,e^{j45^\circ} \]</div>
+          <p>E o terceiro sai de graça, pelo atalho do par conjugado:</p>
+          <div class="eq-block">\[ A_{13} = A_{12}^{*} = \frac{5}{2\sqrt{2}}\,\underline{/\,-45^\circ} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">07</span>
+        <div class="step-body">
+          <div class="step-title">Antitransforma termo a termo</div>
+          <div class="eq-block">\[ v_R(t) = \mathcal{L}^{-1}\big[V_R(s)\big] = \frac{1}{2}e^{-t} + \frac{5}{2\sqrt{2}}\left[e^{\,j(t+45^\circ)} + e^{-j(t+45^\circ)}\right] \]</div>
+          <p>O par conjugado colapsa num cosseno (é a fórmula de Euler de volta), com o fator 2 dobrando o resíduo:</p>
+          <div class="final-answer">
+            \[ v_R(t) = \underbrace{\frac{1}{2}e^{-t}}_{v_{RT}(t)} + \underbrace{\frac{5}{\sqrt{2}}\cos\left(t+45^\circ\right)}_{v_{RP}(t)} \;\;\mathrm{V}, \quad t \ge 0 \]
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Duas formas de fatiar a mesma resposta</h3>
+    <p>A resposta que achamos pode ser decomposta de <em>duas maneiras diferentes</em> — e é fácil confundir as duas. Elas não são a mesma coisa.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Transitória + Permanente</span>
+        <p>Critério: <b style="color:var(--ink)">o termo morre ou não morre</b> quando \(t\to\infty\)?</p>
+        <p>\(\displaystyle v_{RT}(t) = \frac{1}{2}e^{-t}\) — transitória, decai a zero.</p>
+        <p>\(\displaystyle v_{RP}(t) = \frac{5}{\sqrt{2}}\cos(t+45^\circ)\) — permanente, oscila pra sempre.</p>
+        <p class="dim">É a leitura que sai direto da resposta final: separa por comportamento assintótico.</p>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Livre + Forçada</span>
+        <p>Critério: <b style="color:var(--ink)">de onde vem a energia</b> — da condição inicial ou da fonte?</p>
+        <p><b style="color:var(--ink)">Resposta livre</b> — desliga a fonte, mantém só a c.i.:</p>
+        <div class="eq-block">\[ \frac{s+1}{s}\,V_{RL}(s) = -\frac{2}{s} \;\Rightarrow\; V_{RL}(s) = \frac{-2}{s+1} \]</div>
+        <div class="eq-block">\[ v_{RL}(t) = -2\,e^{-t}\;\mathrm{V}, \quad t \ge 0 \]</div>
+        <p><b style="color:var(--ink)">Resposta forçada</b> — o que sobra, \(v_{RF}(t) = v_R(t) - v_{RL}(t)\):</p>
+        <div class="eq-block">\[ v_{RF}(t) = \frac{5}{2}e^{-t} + \frac{5}{\sqrt{2}}\cos(t+45^\circ) \]</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Cuidado — livre ≠ transitória e forçada ≠ permanente.</b> Olha os números: a resposta livre é \(-2e^{-t}\), mas a transitória é \(+\tfrac12 e^{-t}\). E a resposta forçada carrega um \(\tfrac52 e^{-t}\) que decai — ou seja, a excitação também produz transitório. As duas decomposições somam a mesma coisa (\(-2 + \tfrac52 = \tfrac12\) ✓), mas fatiam por critérios diferentes: uma pergunta "isso morre?", a outra pergunta "de onde isso veio?".</div>
   </section>
 
 </main>
