@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <div class="side-item disabled">
+        <span class="side-num">03</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <div class="side-item disabled">
+        <span class="side-num">01</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Laplace aplicada a circuitos</span>
+      </div>
+      <div class="tabs">
+        <a href="#elementos">L e C em s</a>
+        <a href="#equivalente">Circuito equivalente</a>
+        <a href="#exemplo">Exemplo RC</a>
+        <a href="#decomposicoes">Decomposições</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 02 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Agora a ferramenta encontra o circuito.</span> <span class="tone-b">Resolvendo sem escrever nenhuma equação diferencial.</span></h1>
+        <p class="hero-sub">No <a href="index.html">módulo 01</a> a transformada de Laplace era matemática pura. Aqui ela vira ferramenta de engenharia: indutor e capacitor deixam de ser derivada e integral e passam a ser <em>impedância em s</em>, com a condição inicial entrando como uma fonte a mais. Aí o circuito inteiro se resolve por álgebra — e no fim a gente discute as duas formas de fatiar a resposta.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Pré-requisito</b>Módulo 01</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>CIRCUITO RC — DOMÍNIO DO TEMPO</span>
+            <span>v<sub>C</sub>(0⁻) = 2 V</span>
+          </div>
+          <div style="display:flex;justify-content:center;padding:0.6rem 0">
+            <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M70 70 L150 70"/>
+                <path d="M210 70 L360 70"/>
+                <path d="M360 70 L360 95"/>
+                <path d="M360 145 L360 175"/>
+                <path d="M360 175 L70 175"/>
+                <path d="M70 175 L70 115"/>
+                <path d="M70 55 L70 70"/>
+              </g>
+              <circle cx="70" cy="85" r="30" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <text x="60" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+              <text x="62" y="103" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+              <text x="6" y="90" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e</text>
+              <text x="15" y="94" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">s</text>
+              <text x="21" y="90" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+              <g stroke="#4ade9a" stroke-width="2.5">
+                <line x1="170" y1="50" x2="170" y2="90"/>
+                <line x1="190" y1="50" x2="190" y2="90"/>
+              </g>
+              <line x1="150" y1="70" x2="170" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <line x1="190" y1="70" x2="210" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <text x="196" y="42" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+              <text x="150" y="112" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+              <text x="159" y="116" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">C</text>
+              <text x="166" y="112" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+              <rect x="348" y="95" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2.5"/>
+              <text x="382" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+              <text x="382" y="136" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+              <text x="391" y="140" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">R</text>
+              <text x="398" y="136" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+              <g stroke="#f5b942" stroke-width="1.6" fill="none">
+                <path d="M105 58 L135 58"/>
+                <path d="M130 54 L136 58 L130 62" fill="#f5b942"/>
+              </g>
+              <text x="112" y="48" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i(t)</text>
+            </svg>
+          </div>
+          <div class="splane-readout">É esse o circuito que vamos resolver na seção 2.3 — <span class="roc-formula">e<sub>s</sub>(t) = 5 cos t</span>, com carga inicial no capacitor.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="elementos" class="panel">
+    <span class="eyebrow">2.1</span>
+    <h2>Indutor e capacitor no domínio de s</h2>
+    <p>São os teoremas da derivada e da integral (módulo 01, seção 1.5) que transformam a equação do indutor e do capacitor — que no tempo misturam derivada com integral — em relações puramente algébricas em \(s\), com a condição inicial aparecendo como uma fontinha extra.</p>
+    <p class="dim">Cada elemento tem duas formas equivalentes, dependendo de qual grandeza você quer isolar. Vale conhecer as duas: às vezes você quer \(V(s)\) em função de \(I(s)\), às vezes o contrário.</p>
+
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="tag">Indutor — via teorema da derivada</span>
+        <div class="steps">
+          <span>\(\displaystyle v(t) = L\,\frac{di(t)}{dt}\)</span>
+          <span>aplicando \(\mathcal{L}\) com \(\mathcal{L}[\dot f] = sF(s)-f(0^-)\):</span>
+        </div>
+        <div class="result">\(V(s) = sL\,I(s) - L\,i(0^-)\)</div>
+        <p class="dim" style="margin:0.4rem 0 0;font-size:0.85rem">O termo \(L\,i(0^-)\) carrega o <b style="color:var(--ink)">fluxo</b> armazenado no indutor em \(t=0^-\).</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Indutor — via teorema da integral</span>
+        <div class="steps">
+          <span>\(\displaystyle i(t) = \frac{1}{L}\int_{-\infty}^{t} v(\tau)\,d\tau\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da integral:</span>
+          <span>\(\displaystyle I(s) = \frac{1}{sL}V(s) + \frac{1}{sL}\underbrace{\int_{-\infty}^{0^-}\!\!v(\tau)d\tau}_{L\,i(0^-)}\)</span>
+        </div>
+        <div class="result">\(I(s) = \dfrac{1}{sL}\,V(s) + \dfrac{i(0^-)}{s}\)</div>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Capacitor — via teorema da derivada</span>
+        <div class="steps">
+          <span>\(\displaystyle i(t) = C\,\frac{dv(t)}{dt}\)</span>
+          <span>aplicando \(\mathcal{L}\) com \(\mathcal{L}[\dot f] = sF(s)-f(0^-)\):</span>
+        </div>
+        <div class="result">\(I(s) = sC\,V(s) - C\,v(0^-)\)</div>
+        <p class="dim" style="margin:0.4rem 0 0;font-size:0.85rem">Agora quem entra é \(C\,v(0^-)\) — a <b style="color:var(--ink)">carga</b> \(q_C(0^-)\) armazenada no capacitor.</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">Capacitor — via teorema da integral</span>
+        <div class="steps">
+          <span>\(\displaystyle v(t) = \frac{1}{C}\int_{-\infty}^{t} i(\tau)\,d\tau\)</span>
+          <span>aplicando \(\mathcal{L}\) com o teorema da integral:</span>
+          <span>\(\displaystyle V(s) = \frac{1}{sC}I(s) + \frac{1}{sC}\underbrace{\int_{-\infty}^{0^-}\!\!i(\tau)d\tau}_{q_C(0^-)\,=\,C\,v(0^-)}\)</span>
+        </div>
+        <div class="result">\(V(s) = \dfrac{1}{sC}\,I(s) + \dfrac{v(0^-)}{s}\)</div>
+      </div>
+    </div>
+
+    <div class="callout">Repara no padrão: em todas as quatro, a condição inicial aparece como um termo <b>independente de \(I(s)\) e \(V(s)\)</b> — ou seja, como uma <b>fonte</b>. E note que \(v_C(0^-) = q_C(0^-)/C\), então dá na mesma falar em carga ou em tensão inicial.</div>
+  </section>
+
+  <section id="equivalente" class="panel">
+    <span class="eyebrow">2.2</span>
+    <h2>Circuito equivalente em s</h2>
+    <p>É aqui que a coisa fica bonita. Como cada relação tem a forma "impedância × corrente + termo de condição inicial", você pode desenhar um <b style="color:var(--ink)">circuito equivalente no domínio de \(s\)</b>: cada elemento vira uma impedância, e a condição inicial vira uma fonte independente ao lado dela.</p>
+
+    <table class="ltable">
+      <thead><tr><th>Elemento</th><th>Impedância Z(s)</th><th>Fonte da condição inicial</th></tr></thead>
+      <tbody>
+        <tr><td>Resistor \(R\)</td><td>\(R\)</td><td>— (não armazena energia)</td></tr>
+        <tr><td>Indutor \(L\)</td><td>\(sL\)</td><td>fonte de tensão \(L\,i(0^-)\) &nbsp;ou&nbsp; de corrente \(i(0^-)/s\)</td></tr>
+        <tr><td>Capacitor \(C\)</td><td>\(\dfrac{1}{sC}\)</td><td>fonte de tensão \(\dfrac{v(0^-)}{s}\) &nbsp;ou&nbsp; de corrente \(C\,v(0^-)\)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout"><b>Consequência prática:</b> no domínio de \(s\), um circuito com indutores e capacitores se comporta exatamente como um circuito resistivo — só com "resistências" que dependem de \(s\) e algumas fontes extras. Tudo que você aprendeu em Circuitos I para redes resistivas (Kirchhoff, divisor de tensão, Thévenin, superposição) volta a valer, <b>sem nenhuma equação diferencial</b>.</div>
+
+    <p style="margin-top:1.4rem">Isso dá dois caminhos possíveis pra resolver qualquer circuito. Ambos chegam no mesmo lugar:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Caminho longo — pela definição</span>
+        <p>Escreve as equações íntegro-diferenciais no tempo, aplica \(\mathcal{L}\) na malha inteira, e usa os teoremas da derivada e da integral termo a termo.</p>
+        <p class="dim">Mais trabalhoso, mas mostra de onde tudo vem. É o caminho que vamos seguir no exemplo, justamente pra você ver o mecanismo.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Caminho curto — pelo equivalente</span>
+        <p>Já desenha o circuito em \(s\) com as impedâncias e as fontes de c.i. da tabela acima, e aplica Kirchhoff direto no domínio da frequência.</p>
+        <p class="dim">É o que você vai querer usar na prova, quando já confiar nas fórmulas. Pula direto para a equação algébrica.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="exemplo" class="panel">
+    <span class="eyebrow">2.3</span>
+    <h2>Exemplo completo: circuito RC com carga inicial</h2>
+    <p>Um RC série, com condição inicial no capacitor e excitação senoidal. Queremos \(v_R(t)\).</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 460 240" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M70 70 L150 70"/>
+          <path d="M210 70 L360 70"/>
+          <path d="M360 70 L360 95"/>
+          <path d="M360 145 L360 175"/>
+          <path d="M360 175 L70 175"/>
+          <path d="M70 175 L70 115"/>
+          <path d="M70 55 L70 70"/>
+        </g>
+        <circle cx="70" cy="85" r="30" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="60" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="62" y="103" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+        <text x="6" y="90" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e</text>
+        <text x="15" y="94" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">s</text>
+        <text x="21" y="90" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="170" y1="50" x2="170" y2="90"/>
+          <line x1="190" y1="50" x2="190" y2="90"/>
+        </g>
+        <line x1="150" y1="70" x2="170" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <line x1="190" y1="70" x2="210" y2="70" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="196" y="42" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="150" y="112" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="159" y="116" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">C</text>
+        <text x="166" y="112" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <rect x="348" y="95" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2.5"/>
+        <text x="382" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="382" y="136" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="391" y="140" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">R</text>
+        <text x="398" y="136" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <g stroke="#f5b942" stroke-width="1.6" fill="none">
+          <path d="M105 58 L135 58"/>
+          <path d="M130 54 L136 58 L130 62" fill="#f5b942"/>
+        </g>
+        <text x="112" y="48" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i(t)</text>
+      </svg>
+    </div>
+
+    <div class="given-box">
+      <span>\(v_C(0^-) = 2\;\mathrm{V}\)</span>
+      <span>\(RC = 1\;\mathrm{s}\)</span>
+      <span>\(e_s(t) = 5\cos t\) &nbsp;(V, s)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª Lei de Kirchhoff na malha (que é única)</div>
+          <div class="eq-block">\[ -e_s(t) + v_C(t) + v_R(t) = 0 \;\Longrightarrow\; v_C(t) + v_R(t) = e_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Transforma a malha inteira</div>
+          <p>Aplicando \(\mathcal{L}\) e usando linearidade: \(V_C(s) + V_R(s) = E_s(s)\). Escrevendo \(v_C\) como a integral da corrente (relação constitutiva do capacitor):</p>
+          <div class="eq-block">\[ \mathcal{L}\!\left[\frac{1}{C}\int_{-\infty}^{t} i(\lambda)\,d\lambda + v_R(t)\right] = \mathcal{L}\big[5\cos t\big] \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Teorema da integral — a c.i. entra sozinha</div>
+          <p>A integral vira divisão por \(s\), e a carga inicial aparece como um termo extra:</p>
+          <div class="eq-block">\[ \frac{1}{C}\left[\frac{I(s)}{s} + \frac{q_C(0^-)}{s}\right] + V_R(s) = \frac{5s}{s^2+1} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Relação constitutiva do resistor + condição inicial</div>
+          <p>Do resistor: \(V_R(s) = R\,I(s) \iff I(s) = \dfrac{1}{R}V_R(s)\).</p>
+          <p>Da c.i.: \(v_C(0^-) = \dfrac{q_C(0^-)}{C} \iff q_C(0^-) = C\,v_C(0^-)\).</p>
+          <p>Substituindo as duas, tudo passa a ser função só de \(V_R(s)\):</p>
+          <div class="eq-block">\[ \frac{1}{C}\left[\frac{V_R(s)}{Rs} + \frac{C\,v_C(0^-)}{s}\right] + V_R(s) = \frac{5s}{s^2+1} \]</div>
+          <div class="eq-block">\[ \frac{V_R(s)}{RCs} + \frac{v_C(0^-)}{s} + V_R(s) = \frac{5s}{s^2+1} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Entra com os números e isola V<sub>R</sub>(s)</div>
+          <p>Com \(RC=1\) e \(v_C(0^-)=2\):</p>
+          <div class="eq-block">\[ \left(\frac{1}{s}+1\right)V_R(s) = \frac{5s}{s^2+1} - \frac{2}{s} \]</div>
+          <div class="eq-block">\[ \frac{s+1}{s}\,V_R(s) = \frac{5s^2 - 2s^2 - 2}{s\,(s^2+1)} = \frac{3s^2-2}{s\,(s^2+1)} \]</div>
+          <p>O \(s\) cancela dos dois lados, e sobra puro algebrismo — nenhuma equação diferencial foi resolvida:</p>
+          <div class="eq-block">\[ V_R(s) = \frac{3s^2-2}{(s+1)(s^2+1)}, \qquad s^2+1 = (s-j)(s+j) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">Frações parciais — três polos simples</div>
+          <div class="eq-block">\[ V_R(s) = \frac{A_{11}}{s+1} + \frac{A_{12}}{s-j} + \frac{A_{13}}{s+j} \]</div>
+          <p>Pelo método do tapa, no polo real \(s=-1\):</p>
+          <div class="eq-block">\[ A_{11} = \left[(s+1)\,V_R(s)\right]_{s=-1} = \left[\frac{3s^2-2}{s^2+1}\right]_{s=-1} = \frac{3-2}{1+1} = \frac{1}{2} \]</div>
+          <p>No polo complexo \(s=j\):</p>
+          <div class="eq-block">\[ A_{12} = \left[\frac{3s^2-2}{(s+1)(s+j)}\right]_{s=j} = \frac{-3-2}{(1+j)(2j)} = \frac{-5}{2j\,(1+j)} \]</div>
+          <p>Passando pra forma polar (módulos dividem, ângulos subtraem — módulo 01, seção 1.6):</p>
+          <div class="eq-block">\[ A_{12} = \frac{5}{2\sqrt{2}}\,\underline{/\,180^\circ - 90^\circ - 45^\circ} = \frac{5}{2\sqrt{2}}\,\underline{/\,45^\circ} = \frac{5}{2\sqrt{2}}\,e^{j45^\circ} \]</div>
+          <p>E o terceiro sai de graça, pelo atalho do par conjugado:</p>
+          <div class="eq-block">\[ A_{13} = A_{12}^{*} = \frac{5}{2\sqrt{2}}\,\underline{/\,-45^\circ} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">07</span>
+        <div class="step-body">
+          <div class="step-title">Antitransforma termo a termo</div>
+          <div class="eq-block">\[ v_R(t) = \mathcal{L}^{-1}\big[V_R(s)\big] = \frac{1}{2}e^{-t} + \frac{5}{2\sqrt{2}}\left[e^{\,j(t+45^\circ)} + e^{-j(t+45^\circ)}\right] \]</div>
+          <p>O par conjugado colapsa num cosseno (é a fórmula de Euler de volta), com o fator 2 dobrando o resíduo:</p>
+          <div class="final-answer">
+            \[ v_R(t) = \underbrace{\frac{1}{2}e^{-t}}_{v_{RT}(t)} + \underbrace{\frac{5}{\sqrt{2}}\cos\left(t+45^\circ\right)}_{v_{RP}(t)} \;\;\mathrm{V}, \quad t \ge 0 \]
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout"><b>O atalho que a gente não usou.</b> Olha os passos 03 e 04 de novo: o que eles produzem, juntos, é exatamente a relação pronta do capacitor da seção 2.1 —
+      <div class="eq-block" style="margin-top:0.8rem">\[ V_C(s) = \frac{1}{sC}\,I(s) + \frac{v_C(0^-)}{s} \]</div>
+      Se você já confia nessa fórmula, escreve a 2ª LK direto em \(s\) — \(\frac{1}{sC}I(s) + \frac{v_C(0^-)}{s} + R\,I(s) = E_s(s)\) — e cai no passo 05 de uma vez, economizando dois passos. Fizemos pelo caminho longo só pra mostrar de onde a fórmula vem.
+    </div>
+  </section>
+
+  <section id="decomposicoes" class="panel">
+    <span class="eyebrow">2.4</span>
+    <h2>Duas formas de fatiar a mesma resposta</h2>
+    <p>A resposta que achamos pode ser decomposta de <em>duas maneiras diferentes</em> — e é fácil confundir as duas. Elas não são a mesma coisa.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Transitória + Permanente</span>
+        <p>Critério: <b style="color:var(--ink)">o termo morre ou não morre</b> quando \(t\to\infty\)?</p>
+        <p>\(\displaystyle v_{RT}(t) = \frac{1}{2}e^{-t}\) — transitória, decai a zero.</p>
+        <p>\(\displaystyle v_{RP}(t) = \frac{5}{\sqrt{2}}\cos(t+45^\circ)\) — permanente, oscila pra sempre.</p>
+        <p class="dim">É a leitura que sai direto da resposta final: separa por comportamento assintótico.</p>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Livre + Forçada</span>
+        <p>Critério: <b style="color:var(--ink)">de onde vem a energia</b> — da condição inicial ou da fonte?</p>
+        <p><b style="color:var(--ink)">Resposta livre</b> — desliga a fonte, mantém só a c.i.:</p>
+        <div class="eq-block">\[ \frac{s+1}{s}\,V_{RL}(s) = -\frac{2}{s} \;\Rightarrow\; V_{RL}(s) = \frac{-2}{s+1} \]</div>
+        <div class="eq-block">\[ v_{RL}(t) = -2\,e^{-t}\;\mathrm{V}, \quad t \ge 0 \]</div>
+        <p><b style="color:var(--ink)">Resposta forçada</b> — zera a c.i. e mantém só a fonte:</p>
+        <div class="eq-block">\[ V_{RF}(s) = \frac{5s^2}{(s+1)(s^2+1)} \]</div>
+        <div class="eq-block">\[ v_{RF}(t) = \frac{5}{2}e^{-t} + \frac{5}{\sqrt{2}}\cos(t+45^\circ) \]</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Cuidado — livre ≠ transitória e forçada ≠ permanente.</b> Olha os números: a resposta livre é \(-2e^{-t}\), mas a transitória é \(+\tfrac12 e^{-t}\). E a resposta forçada carrega um \(\tfrac52 e^{-t}\) que decai — ou seja, a excitação também produz transitório. As duas decomposições somam a mesma coisa (\(-2 + \tfrac52 = \tfrac12\) ✓), mas fatiam por critérios diferentes: uma pergunta "isso morre?", a outra pergunta "de onde isso veio?".</div>
+
+    <p style="margin-top:1.4rem" class="dim">Note também que a decomposição livre/forçada é só <b style="color:var(--ink)">superposição</b> aplicada no domínio de \(s\): a c.i. e a fonte são duas excitações independentes, então dá pra calcular a contribuição de cada uma separadamente e somar. Foi exatamente isso que fizemos.</p>
+  </section>
+
+  <a class="next-module" href="index.html">
+    <div>
+      <span class="nm-label">Módulo anterior</span>
+      <span class="nm-title">01 · Transformada de Laplace</span>
+    </div>
+    <span class="nm-arrow">←</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula e no Bloco 1 — Transformada de Laplace (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+});
+
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
