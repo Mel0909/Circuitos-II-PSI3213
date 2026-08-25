@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <div class="side-item disabled">
+        <span class="side-num">01</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Periódicas e ponta de prova</span>
+      </div>
+      <div class="tabs">
+        <a href="#periodicas">Funções periódicas</a>
+        <a href="#onda">Onda quadrada</a>
+        <a href="#ponta">Ponta de prova</a>
+        <a href="#fcp">FCP e redutibilidade</a>
+        <a href="#ganho">Função de transferência</a>
+        <a href="#compensacao">Compensação</a>
+        <a href="#numeros">Ponta 10×</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 04 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Um sinal que se repete para sempre tem transformada?</span> <span class="tone-b">Tem — e basta olhar para o primeiro período.</span></h1>
+        <p class="hero-sub">Duas coisas nesta página. Primeiro, o truque das <em>funções periódicas</em>: a transformada do sinal inteiro sai da transformada de um único período, dividida por \(1-e^{-sT}\). Depois, o exemplo que amarra tudo — a <em>ponta de prova do osciloscópio</em>, onde aparecem frequências complexas próprias, redutibilidade, degeneração e a famosa condição de compensação \(R_1C_1 = R_2C_2\).</p>
+        <div class="hero-meta">
+          <span><b>Aula</b>19/08/2026</span>
+          <span><b>Pré-requisito</b>Módulos 02 e 03</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>PONTA DE PROVA — MODELO DE CIRCUITO</span>
+            <span>atenuação 10×</span>
+          </div>
+          <div style="display:flex;justify-content:center;padding:0.8rem 0">
+            <svg viewBox="0 0 480 250" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <!-- fio superior -->
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M40 60 L110 60"/>
+                <path d="M230 60 L300 60"/>
+                <path d="M300 60 L400 60"/>
+                <path d="M40 200 L400 200"/>
+                <path d="M40 90 L40 200"/>
+                <path d="M40 60 L40 70"/>
+                <path d="M300 60 L300 105"/>
+                <path d="M300 160 L300 200"/>
+              </g>
+              <!-- fonte ve -->
+              <circle cx="40" cy="80" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <text x="34" y="74" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+</text>
+              <text x="35" y="94" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+              <text x="2" y="130" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">vₑ(t)</text>
+              <!-- R1 -->
+              <rect x="130" y="48" width="80" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <line x1="110" y1="60" x2="130" y2="60" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <line x1="210" y1="60" x2="230" y2="60" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <text x="163" y="90" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+              <!-- C1 em paralelo (arco por cima) -->
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M120 60 L120 20 L158 20"/>
+                <path d="M182 20 L220 20 L220 60"/>
+              </g>
+              <g stroke="#4ade9a" stroke-width="2.5">
+                <line x1="160" y1="8" x2="160" y2="32"/>
+                <line x1="180" y1="8" x2="180" y2="32"/>
+              </g>
+              <text x="186" y="16" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+              <text x="150" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₁(t)</text>
+              <!-- corrente i1 -->
+              <g stroke="#f5b942" stroke-width="1.5" fill="none">
+                <path d="M244 46 L272 46"/><path d="M267 42 L274 46 L267 50" fill="#f5b942"/>
+              </g>
+              <text x="246" y="38" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t)</text>
+              <!-- R2 -->
+              <rect x="288" y="105" width="24" height="55" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="256" y="138" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+              <!-- C2 -->
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M370 60 L370 118"/>
+                <path d="M370 142 L370 200"/>
+              </g>
+              <g stroke="#4ade9a" stroke-width="2.5">
+                <line x1="356" y1="118" x2="384" y2="118"/>
+                <line x1="356" y1="142" x2="384" y2="142"/>
+              </g>
+              <text x="390" y="110" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+              <!-- corrente i2 -->
+              <g stroke="#f5b942" stroke-width="1.5" fill="none">
+                <path d="M328 80 L328 106"/><path d="M324 101 L328 108 L332 101" fill="#f5b942"/>
+              </g>
+              <text x="332" y="94" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₂(t)</text>
+              <circle cx="400" cy="60" r="3.5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="1.6"/>
+              <circle cx="400" cy="200" r="3.5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="1.6"/>
+              <text x="412" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+              <text x="412" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+              <text x="410" y="136" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">v₂(t)</text>
+            </svg>
+          </div>
+          <div class="splane-readout">\(R_1 \parallel C_1\) é a ponta; \(R_2 \parallel C_2\) é a entrada do osciloscópio. O ajuste do <span class="roc-formula">trimmer C₁</span> serve para cancelar o polo com o zero — é isso que a compensação faz.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="periodicas" class="panel">
+    <span class="eyebrow">4.1</span>
+    <h2>Transformada de Laplace de funções periódicas</h2>
+    <p>Uma função \(f(t)\) é <b style="color:var(--ink)">periódica</b> se</p>
+    <div class="eq-block">\[ f(t+kT) = f(t), \quad \forall t \in \mathbb{R},\ \forall k \in \mathbb{Z}\ \big|\ T > 0 \]</div>
+    <p>sendo o <b style="color:var(--ink)">período</b> o menor \(T\) que satisfaz essa condição. À primeira vista, calcular a transformada de um sinal que nunca acaba parece trabalhoso — mas há um truque que reduz tudo a um único período.</p>
+
+    <p>Partindo da definição e quebrando a integral no instante \(T\):</p>
+    <div class="eq-block">\[ F(s) = \int_{0^-}^{\infty} f(t)\,e^{-st}\,dt = \underbrace{\int_{0^-}^{T^-} f(t)\,e^{-st}\,dt}_{\textstyle I_0(s)} + \int_{T^-}^{\infty} f(t)\,e^{-st}\,dt \]</div>
+    <p>O primeiro pedaço, \(I_0(s)\), é a transformada de <b style="color:var(--ink)">um período só</b>. Agora o truque: na segunda integral, mude a variável.</p>
+
+    <button class="demo-btn">Ver demonstração ↓</button>
+    <div class="proof-block">
+      <div class="proof-steps">
+        <div class="proof-eq">
+          <p>Substituição na segunda integral:</p>
+          \[ u = t - T \iff t = u + T, \qquad du = dt \]
+          <p class="dim">Os limites acompanham: \(t \to T^-\) dá \(u \to 0\) (pela direita), e \(t\to\infty\) dá \(u\to\infty\).</p>
+        </div>
+        <div class="proof-eq">
+          \[ F(s) = I_0(s) + \int_{0}^{\infty} f(u+T)\,e^{-s(u+T)}\,du \]
+        </div>
+        <div class="proof-eq">
+          <p>Como \(f(t)\) é periódica de período \(T\), temos \(f(u+T) \equiv f(u)\). E \(e^{-sT}\) não depende de \(u\), então sai da integral:</p>
+          \[ F(s) = I_0(s) + e^{-sT}\underbrace{\int_{0^-}^{\infty} f(u)\,e^{-su}\,du}_{\textstyle F(s)} \]
+        </div>
+        <div class="proof-eq">
+          <p>A integral que sobrou é a própria \(F(s)\) — é uma equação em \(F(s)\), não uma integral a calcular. Isolando:</p>
+          \[ \big(1 - e^{-sT}\big)F(s) = I_0(s) \]
+        </div>
+      </div>
+    </div>
+
+    <div class="final-answer">\[ F(s) = \frac{1}{1-e^{-sT}}\;I_0(s), \qquad I_0(s) = \int_{0^-}^{T^-} f(t)\,e^{-st}\,dt \]</div>
+
+    <div class="callout"><b>A leitura do resultado:</b> o fator \(\dfrac{1}{1-e^{-sT}}\) é o "repetidor". Ele é a soma da série geométrica \(1 + e^{-sT} + e^{-2sT} + \cdots\), ou seja, a superposição de infinitas cópias do período, cada uma atrasada de \(T\) a mais que a anterior — exatamente o teorema do deslocamento no tempo aplicado infinitas vezes.</div>
+  </section>
+
+  <section id="onda" class="panel">
+    <span class="eyebrow">4.2</span>
+    <h2>Exemplo: onda quadrada</h2>
+    <p>Seja \(f(t)\) uma onda quadrada de período \(T=4\), valor máximo \(2\) e valor mínimo \(0\), com subida de \(0\) a \(2\) na origem.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 480 200" xmlns="http://www.w3.org/2000/svg">
+        <line x1="30" y1="150" x2="460" y2="150" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="50" y1="30" x2="50" y2="180" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <text x="450" y="142" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">t</text>
+        <text x="20" y="70" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+        <text x="58" y="42" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">f(t)</text>
+        <!-- primeiro periodo destacado -->
+        <rect x="50" y="70" width="80" height="80" fill="rgba(74,222,154,0.14)"/>
+        <path d="M50 150 L50 70 L130 70 L130 150 L210 150 L210 70 L290 70 L290 150 L370 150 L370 70 L450 70"
+              fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <line x1="130" y1="146" x2="130" y2="154" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+        <line x1="210" y1="146" x2="210" y2="154" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+        <line x1="290" y1="146" x2="290" y2="154" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+        <line x1="370" y1="146" x2="370" y2="154" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+        <text x="126" y="170" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+        <text x="206" y="170" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="12">4</text>
+        <text x="286" y="170" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="12">6</text>
+        <text x="366" y="170" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="12">8</text>
+        <text x="56" y="192" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">primeiro período</text>
+      </svg>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Transformada de um período</div>
+          <p>Dentro de \([0,4)\), a função vale \(2\) em \([0,2)\) e \(0\) em \([2,4)\). Então a integral só existe até \(t=2\):</p>
+          <div class="eq-block">\[ I_0(s) = \int_{0^-}^{4^-} f(t)\,e^{-st}\,dt = \int_{0^-}^{2^-} 2\,e^{-st}\,dt \]</div>
+          <div class="eq-block">\[ = 2\,\frac{e^{-st}}{-s}\bigg|_{0^-}^{2^-} = -\frac{2}{s}\big(e^{-2s}-1\big) \]</div>
+          <div class="eq-block">\[ I_0(s) = \frac{2}{s}\big(1 - e^{-2s}\big) \]</div>
+          <p class="dim">Nota: no quadro esse resultado saiu escrito como \(2s(1-e^{-2s})\) — é deslize de notação, o fator correto é \(2/s\) (a integral da exponencial divide por \(s\), não multiplica). Dá para conferir pelo teorema do valor inicial ou simplesmente notando que \(\mathcal{L}[2H(t)] = 2/s\).</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Aplicar a fórmula das periódicas</div>
+          <p>Com \(T=4\):</p>
+          <div class="eq-block">\[ F(s) = \frac{I_0(s)}{1-e^{-4s}} = \frac{2\big(1-e^{-2s}\big)}{s\big(1-e^{-4s}\big)} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Simplificar</div>
+          <p>Reconhecendo a diferença de quadrados \(1-e^{-4s} = \big(1-e^{-2s}\big)\big(1+e^{-2s}\big)\), o fator do numerador cancela:</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="final-answer">\[ F(s) = \frac{2}{s\big(1+e^{-2s}\big)} \]</div>
+
+    <div class="callout"><b>Sanidade:</b> em \(s\to 0\), \(sF(s) \to 2/2 = 1\) — que é exatamente o valor médio da onda (metade do tempo em 2, metade em 0). O teorema do valor final aplicado a \(F(s)\) devolve a média do sinal periódico, como esperado.</div>
+  </section>
+
+  <section id="ponta" class="panel">
+    <span class="eyebrow">4.3</span>
+    <h2>Exemplo completo: a ponta de prova do osciloscópio</h2>
+    <p>Considere o modelo de circuito da ponta de prova conectada à entrada do osciloscópio: um bloco \(R_1 \parallel C_1\) (a ponta) em série com um bloco \(R_2 \parallel C_2\) (a entrada do instrumento). Queremos saber o que o osciloscópio realmente mostra, \(v_2(t)\), quando o sinal de interesse é \(v_e(t)\).</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 540 290" xmlns="http://www.w3.org/2000/svg">
+        <!-- malha externa destacada (2a LK) — recuada para nao encobrir os condutores -->
+        <path d="M88 112 L478 112 L478 218 L88 218 Z" fill="rgba(74,222,154,0.05)" stroke="rgba(74,222,154,0.35)" stroke-width="1.4" stroke-dasharray="6 5"/>
+        <text x="100" y="206" fill="rgba(74,222,154,0.85)" font-family="IBM Plex Mono, monospace" font-size="11">malha externa — 2ª LK, eq. (1)</text>
+
+        <!-- condutores -->
+        <g stroke="rgba(231,237,233,0.8)" stroke-width="2" fill="none">
+          <path d="M70 95 L130 95"/>
+          <path d="M250 95 L340 95"/>
+          <path d="M340 95 L500 95"/>
+          <path d="M500 95 L500 152"/>
+          <path d="M500 178 L500 235"/>
+          <path d="M70 235 L500 235"/>
+          <path d="M70 125 L70 235"/>
+          <path d="M70 95 L70 105"/>
+          <path d="M340 95 L340 130"/>
+          <path d="M340 200 L340 235"/>
+        </g>
+
+        <!-- fonte ve -->
+        <circle cx="70" cy="115" r="21" fill="none" stroke="rgba(231,237,233,0.8)" stroke-width="2"/>
+        <text x="64" y="110" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+</text>
+        <text x="65" y="129" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+        <text x="6" y="120" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">vₑ(t)</text>
+
+        <!-- bloco 1: R1 || C1 -->
+        <rect x="150" y="83" width="80" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <line x1="130" y1="95" x2="150" y2="95" stroke="rgba(231,237,233,0.8)" stroke-width="2"/>
+        <line x1="230" y1="95" x2="250" y2="95" stroke="rgba(231,237,233,0.8)" stroke-width="2"/>
+        <text x="183" y="124" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+        <g stroke="rgba(231,237,233,0.8)" stroke-width="2" fill="none">
+          <path d="M140 95 L140 45 L178 45"/>
+          <path d="M202 45 L240 45 L240 95"/>
+        </g>
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="180" y1="32" x2="180" y2="58"/>
+          <line x1="200" y1="32" x2="200" y2="58"/>
+        </g>
+        <text x="206" y="40" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+        <!-- tensao v1 -->
+        <path d="M140 145 L240 145" stroke="rgba(245,185,66,0.6)" stroke-width="1.3" fill="none"/>
+        <path d="M140 140 L140 150" stroke="rgba(245,185,66,0.6)" stroke-width="1.3"/>
+        <path d="M240 140 L240 150" stroke="rgba(245,185,66,0.6)" stroke-width="1.3"/>
+        <text x="130" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+</text>
+        <text x="236" y="163" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+        <text x="172" y="163" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+
+        <!-- corrente i1 -->
+        <g stroke="#f5b942" stroke-width="1.6" fill="none">
+          <path d="M266 78 L300 78"/><path d="M294 73 L303 78 L294 83" fill="#f5b942"/>
+        </g>
+        <text x="268" y="70" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₁(t)</text>
+
+        <!-- no da 1a LK -->
+        <circle cx="340" cy="95" r="4.5" fill="#e0625a"/>
+        <circle cx="340" cy="95" r="13" fill="none" stroke="rgba(224,98,90,0.5)" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="356" y="72" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="11">nó — 1ª LK, eq. (2)</text>
+
+        <!-- corrente i2 -->
+        <g stroke="#f5b942" stroke-width="1.6" fill="none">
+          <path d="M318 118 L318 152"/><path d="M313 146 L318 155 L323 146" fill="#f5b942"/>
+        </g>
+        <text x="286" y="140" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₂(t)</text>
+
+        <!-- bloco 2: R2 || C2 -->
+        <rect x="328" y="130" width="24" height="70" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="300" y="172" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="486" y1="152" x2="514" y2="152"/>
+          <line x1="486" y1="178" x2="514" y2="178"/>
+        </g>
+        <text x="512" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+        <!-- tensao v2 -->
+        <path d="M418 130 L418 200" stroke="rgba(245,185,66,0.6)" stroke-width="1.3" fill="none"/>
+        <path d="M413 130 L423 130" stroke="rgba(245,185,66,0.6)" stroke-width="1.3"/>
+        <path d="M413 200 L423 200" stroke="rgba(245,185,66,0.6)" stroke-width="1.3"/>
+        <text x="426" y="136" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+</text>
+        <text x="426" y="204" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+        <text x="426" y="172" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+
+        <text x="150" y="22" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">PONTA (R₁ ∥ C₁)</text>
+        <text x="352" y="266" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">OSCILOSCÓPIO (R₂ ∥ C₂)</text>
+      </svg>
+    </div>
+    <div class="pz-legend">
+      <span><span style="color:#4ade9a">malha externa</span> — de onde sai a equação (1)</span>
+      <span><span style="color:#e0625a">nó superior direito</span> — de onde sai a equação (2)</span>
+      <span>incógnitas: \(v_1(t)\) e \(v_2(t)\)</span>
+    </div>
+
+    <div class="given-box">
+      <span>condições iniciais nulas</span>
+      <span>\(G_1 = 1/R_1\), \(G_2 = 1/R_2\)</span>
+      <span>incógnitas: \(v_1(t)\), \(v_2(t)\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª Lei de Kirchhoff na malha externa</div>
+          <div class="eq-block">\[ -v_e(t) + v_1(t) + v_2(t) = 0 \;\Longrightarrow\; v_1(t) + v_2(t) = v_e(t) \tag{1} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">1ª Lei de Kirchhoff no nó superior direito</div>
+          <div class="eq-block">\[ -i_1(t) + i_2(t) = 0 \tag{2} \]</div>
+          <p class="dim">Ou seja, a mesma corrente atravessa os dois blocos — é um divisor de tensão.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Relações constitutivas dos blocos RC paralelo</div>
+          <p>Em cada bloco, a corrente se divide entre resistor e capacitor:</p>
+          <div class="eq-block">\[ i_1(t) = G_1 v_1(t) + C_1\frac{d}{dt}v_1(t), \qquad i_2(t) = G_2 v_2(t) + C_2\frac{d}{dt}v_2(t) \tag{3} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Substituir (3) em (2)</div>
+          <div class="eq-block">\[ -G_1v_1(t) - C_1\frac{d}{dt}v_1(t) + G_2v_2(t) + C_2\frac{d}{dt}v_2(t) = 0 \tag{4} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Transformar (1) e (4) por Laplace</div>
+          <p>Com condições iniciais nulas, derivar vira multiplicar por \(s\):</p>
+          <div class="eq-block">\[ V_1(s) + V_2(s) = V_e(s) \]</div>
+          <div class="eq-block">\[ -\big(G_1 + sC_1\big)V_1(s) + \big(G_2 + sC_2\big)V_2(s) = 0 \]</div>
+          <p class="dim">Nota: no quadro o primeiro parêntese saiu como \(G_1+sC_2\) — deslize de escrita. O capacitor do bloco 1 é o \(C_1\), então o termo correto é \(G_1+sC_1\), como vem direto de (3).</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">Forma matricial</div>
+          <div class="eq-block">\[ \underbrace{\begin{bmatrix} 1 & 1 \\ -\big(G_1+sC_1\big) & G_2+sC_2 \end{bmatrix}}_{\textstyle T(s)} \begin{bmatrix} V_1(s) \\ V_2(s)\end{bmatrix} = \begin{bmatrix} V_e(s) \\ 0 \end{bmatrix} \]</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="fcp" class="panel">
+    <span class="eyebrow">4.4</span>
+    <h2>O determinante, as FCPs e a redutibilidade</h2>
+    <p>O determinante da matriz do sistema é o polinômio que governa o comportamento natural do circuito:</p>
+    <div class="eq-block">\[ \det\big(T(s)\big) = \big(G_2+sC_2\big) + \big(G_1+sC_1\big) = \big(G_1+G_2\big) + s\big(C_1+C_2\big) \]</div>
+    <div class="eq-block">\[ \det\big(T(s)\big) = \big(C_1+C_2\big)\left(s + \frac{G_1+G_2}{C_1+C_2}\right) = D(s) \]</div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Polinômio característico</span>
+        <p>\(D(s)\) é o <b>polinômio característico do circuito</b>, e \(D(s)=0\) é a <b>equação característica</b>.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Frequências complexas próprias</span>
+        <p>As raízes de \(D(s)\) são as <b>frequências complexas próprias (FCPs)</b> do circuito — os modos naturais que ele consegue exibir sozinho, sem excitação.</p>
+      </div>
+    </div>
+
+    <p style="margin-top:1.3rem">Neste caso só existe <b style="color:var(--ink)">uma</b> FCP:</p>
+    <div class="eq-block">\[ p_1 = -\,\frac{G_1+G_2}{C_1+C_2} \]</div>
+
+    <div class="callout"><b>O circuito é redutível.</b> São dois capacitores, mas só uma FCP. Isso acontece porque os elementos armazenadores não são independentes: percorrendo a malha, \(C_1\) e \(C_2\) ficam em série com a fonte de tensão, então as duas tensões estão amarradas por (1). O número de FCPs conta os armazenadores <em>independentes</em>, não os armazenadores. Quando esse número é menor que a contagem ingênua, dizemos que o circuito é <b>redutível</b>.</div>
+  </section>
+
+  <section id="ganho" class="panel">
+    <span class="eyebrow">4.5</span>
+    <h2>A função de transferência ganho de tensão</h2>
+    <p>Resolvendo por Cramer para \(V_2(s)\):</p>
+    <div class="eq-block">\[ V_2(s) = \frac{\begin{vmatrix} 1 & V_e(s) \\ -\big(G_1+sC_1\big) & 0 \end{vmatrix}}{\det\big(T(s)\big)} = \frac{\big(G_1+sC_1\big)V_e(s)}{\big(G_1+G_2\big)+s\big(C_1+C_2\big)} \]</div>
+    <p>Colocando \(C_1\) e \(C_1+C_2\) em evidência, aparece a forma canônica com zero e polo explícitos:</p>
+    <div class="eq-block">\[ V_2(s) = \frac{C_1}{C_1+C_2}\cdot\frac{s + \dfrac{G_1}{C_1}}{s + \dfrac{G_1+G_2}{C_1+C_2}}\;V_e(s) \]</div>
+    <p>o que evidencia a <b style="color:var(--ink)">função de transferência ganho de tensão</b>:</p>
+    <div class="eq-block">\[ G_v(s) = \frac{V_2(s)}{V_e(s)}\bigg|_{\text{c.i. nulas}} = \frac{C_1}{C_1+C_2}\cdot\frac{s + \dfrac{G_1}{C_1}}{s + \dfrac{G_1+G_2}{C_1+C_2}} \]</div>
+
+    <p style="margin-top:1.3rem">A resposta impulsiva associada é \(g_v(t) = \mathcal{L}^{-1}[G_v(s)]\). Como \(G_v(s)\) é própria mas não estritamente própria (grau 1 sobre grau 1), <b style="color:var(--ink)">precisa de divisão de polinômios</b> — exatamente o caso do módulo 03:</p>
+
+    <div class="codeblock"><span class="cmd">  s + G₁/C₁              |  s + (G₁+G₂)/(C₁+C₂) = D(s)</span>
+<span class="out"> −s − (G₁+G₂)/(C₁+C₂)   |  ─────────────────────────</span>
+<span class="cmt"> ─────────────────────  |  1 = Q(s)</span>
+<span class="cmd">      G₁/C₁ − (G₁+G₂)/(C₁+C₂) = R(s)</span></div>
+
+    <div class="eq-block">\[ R(s) = \frac{G_1}{C_1} - \frac{G_1+G_2}{C_1+C_2} = \frac{G_1C_1 + G_1C_2 - G_1C_1 - G_2C_1}{C_1\big(C_1+C_2\big)} = \frac{G_1C_2 - G_2C_1}{C_1\big(C_1+C_2\big)} \]</div>
+
+    <div class="eq-block">\[ G_v(s) = \frac{C_1}{C_1+C_2}\left[1 + \frac{\big(G_1C_2-G_2C_1\big)\big/\big[C_1(C_1+C_2)\big]}{s + \dfrac{G_1+G_2}{C_1+C_2}}\right] \]</div>
+
+    <p>Antitransformando — o \(1\) vira impulso, o termo de primeira ordem vira exponencial:</p>
+
+    <div class="final-answer">\[ g_v(t) = \frac{C_1}{C_1+C_2}\,\delta(t) + \frac{G_1C_2 - G_2C_1}{\big(C_1+C_2\big)^2}\,\exp\!\left[-\frac{G_1+G_2}{C_1+C_2}\,t\right] \]</div>
+
+    <div class="callout"><b>É essa exponencial que estraga a medida.</b> Ela significa que o osciloscópio <em>não</em> entrega \(v_e(t)\) apenas escalado: entrega uma versão distorcida — linearmente distorcida, mas distorcida. Um degrau na entrada aparece na tela com uma "barriga" exponencial de constante de tempo \(\tau = (C_1+C_2)/(G_1+G_2)\).</div>
+  </section>
+
+  <section id="compensacao" class="panel">
+    <span class="eyebrow">4.6</span>
+    <h2>A condição de compensação</h2>
+    <p>Queremos que a resposta em frequência \(G_v(j\omega) = G_v(s)\big|_{s=j\omega}\) seja <b style="color:var(--ink)">independente de \(\omega\)</b> — ou seja, que todas as frequências do sinal sejam atenuadas igualmente. Isso equivale a exigir que \(G_v(s)\) não dependa de \(s\), o que só acontece se o <b style="color:var(--ink)">zero cancelar o polo</b>:</p>
+
+    <div class="eq-block">\[ \frac{G_1}{C_1} = \frac{G_1+G_2}{C_1+C_2} \]</div>
+    <div class="eq-block">\[ G_1C_1 + G_1C_2 = G_1C_1 + G_2C_1 \;\Longrightarrow\; G_1C_2 = G_2C_1 \]</div>
+
+    <div class="final-answer">\[ \frac{G_1}{G_2} = \frac{C_1}{C_2} \qquad \text{ou} \qquad \frac{R_2}{R_1} = \frac{C_1}{C_2} \qquad \text{ou ainda} \qquad R_1C_1 = R_2C_2 \]</div>
+
+    <p>Repare que essa é exatamente a condição que anula o numerador \(G_1C_2 - G_2C_1\) do termo exponencial de \(g_v(t)\) — a distorção some junto com o polo. O que sobra é só o impulso:</p>
+    <div class="eq-block">\[ g_v(t) = \frac{C_1}{C_1+C_2}\,\delta(t) \;\Longrightarrow\; v_2(t) = \frac{C_1}{C_1+C_2}\,v_e(t) \]</div>
+
+    <p>Com essa condição, o ganho vira uma constante pura, que pode ser escrita de duas formas equivalentes:</p>
+    <div class="eq-block">\[ G_v(s) = \frac{C_1}{C_1+C_2} = \frac{R_2}{R_1+R_2} \]</div>
+    <div class="eq-block">\[ \frac{C_1}{C_1+C_2} = \frac{1}{\dfrac{C_1+C_2}{C_1}} = \frac{1}{1+\dfrac{C_2}{C_1}} = \frac{1}{1+\dfrac{R_1}{R_2}} = \frac{R_2}{R_1+R_2} \]</div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">O que se vê na tela</h3>
+    <p>É por isso que todo osciloscópio tem um gerador de onda quadrada de teste no painel: a onda quadrada revela a compensação de imediato. Duas leituras explicam as três telas abaixo:</p>
+    <div class="roc-grid" style="margin-bottom:1.2rem">
+      <div class="roc-card">
+        <span class="tag">No instante do degrau</span>
+        <p>Os capacitores mandam — quem divide é o <b style="color:var(--ink)">divisor capacitivo</b>:</p>
+        <div class="eq-block">\[ v_2(0^+) = \frac{C_1}{C_1+C_2}\,v_e \]</div>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Depois de acomodar</span>
+        <p>Os capacitores viram circuito aberto — quem divide é o <b style="color:var(--ink)">divisor resistivo</b>:</p>
+        <div class="eq-block">\[ v_2(\infty) = \frac{R_2}{R_1+R_2}\,v_e \]</div>
+      </div>
+    </div>
+    <p class="dim">Compensar é justamente fazer os dois divisores darem o mesmo número. Se derem valores diferentes, o sinal precisa "andar" de um para o outro com constante de tempo \(\tau = (C_1+C_2)/(G_1+G_2)\) — e é esse trecho de exponencial que aparece na tela.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 520 178" xmlns="http://www.w3.org/2000/svg">
+        <g font-family="IBM Plex Mono, monospace" font-size="10">
+
+          <!-- ===== tela 1: subcompensada ===== -->
+          <g transform="translate(0,0)">
+            <rect x="12" y="24" width="136" height="124" fill="rgba(74,222,154,0.04)" stroke="rgba(231,237,233,0.18)" stroke-width="1"/>
+            <path d="M14 104 L58 104 L58 49 L102 49 L102 104 L146 104" fill="none" stroke="rgba(231,237,233,0.28)" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <path d="M14 104 L16.6 104 L19.3 104 L21.9 104 L24.6 104 L27.2 104 L29.8 104 L32.5 104 L35.1 104 L37.8 104 L40.4 104 L43 104 L45.7 104 L48.3 104 L51 104 L53.6 104 L56.2 104 L58.9 87.1 L61.5 85.2 L64.2 83.7 L66.8 82.4 L69.4 81.3 L72.1 80.5 L74.7 79.8 L77.4 79.2 L80 78.7 L82.6 78.3 L85.3 78 L87.9 77.7 L90.6 77.5 L93.2 77.3 L95.8 77.2 L98.5 77.1 L101.1 77 L103.8 94.4 L106.4 96.1 L109 97.5 L111.7 98.7 L114.3 99.6 L117 100.4 L119.6 101.1 L122.2 101.6 L124.9 102 L127.5 102.4 L130.2 102.7 L132.8 102.9 L135.4 103.1 L138.1 103.3 L140.7 103.4 L143.4 103.5 L146 103.6"
+                  fill="none" stroke="#e0625a" stroke-width="2.2"/>
+            <text x="12" y="18" fill="#e0625a" font-size="11">SUBCOMPENSADA</text>
+            <text x="12" y="164" fill="rgba(143,163,154,0.95)" font-size="9">C₁ pequeno · afunda</text>
+          </g>
+
+          <!-- ===== tela 2: compensada ===== -->
+          <g transform="translate(172,0)">
+            <rect x="12" y="24" width="136" height="124" fill="rgba(74,222,154,0.04)" stroke="rgba(231,237,233,0.18)" stroke-width="1"/>
+            <path d="M14 104 L58 104 L58 49 L102 49 L102 104 L146 104" fill="none" stroke="rgba(231,237,233,0.28)" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <path d="M14 104 L56.2 104 L58.9 76.5 L101.1 76.5 L103.8 104 L146 104"
+                  fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="12" y="18" fill="#4ade9a" font-size="11">COMPENSADA ✓</text>
+            <text x="12" y="164" fill="rgba(143,163,154,0.95)" font-size="9">R₁C₁ = R₂C₂ · fiel</text>
+          </g>
+
+          <!-- ===== tela 3: sobrecompensada ===== -->
+          <g transform="translate(344,0)">
+            <rect x="12" y="24" width="136" height="124" fill="rgba(74,222,154,0.04)" stroke="rgba(231,237,233,0.18)" stroke-width="1"/>
+            <path d="M14 104 L58 104 L58 49 L102 49 L102 104 L146 104" fill="none" stroke="rgba(231,237,233,0.28)" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <path d="M14 104 L16.6 104 L19.3 104 L21.9 104 L24.6 104 L27.2 104 L29.8 104 L32.5 104 L35.1 104 L37.8 104 L40.4 104 L43 104 L45.7 104 L48.3 104 L51 104 L53.6 104 L56.2 104 L58.9 50.5 L61.5 54.5 L64.2 57.9 L66.8 60.7 L69.4 63.1 L72.1 65.2 L74.7 66.9 L77.4 68.4 L80 69.6 L82.6 70.7 L85.3 71.6 L87.9 72.3 L90.6 73 L93.2 73.5 L95.8 74 L98.5 74.4 L101.1 74.7 L103.8 127.1 L106.4 123.5 L109 120.5 L111.7 118 L114.3 115.8 L117 114 L119.6 112.5 L122.2 111.2 L124.9 110.1 L127.5 109.1 L130.2 108.4 L132.8 107.7 L135.4 107.1 L138.1 106.6 L140.7 106.2 L143.4 105.9 L146 105.6"
+                  fill="none" stroke="#f5b942" stroke-width="2.2"/>
+            <text x="12" y="18" fill="#f5b942" font-size="11">SOBRECOMPENSADA</text>
+            <text x="12" y="164" fill="rgba(143,163,154,0.95)" font-size="9">C₁ grande · espeta</text>
+          </g>
+
+        </g>
+      </svg>
+    </div>
+    <div class="pz-legend">
+      <span>— — — onda quadrada de entrada (em escala reduzida)</span>
+      <span>Curvas calculadas com \(R_1 = 9\,\mathrm{M\Omega}\), \(R_2 = 1\,\mathrm{M\Omega}\), \(C_2 = 16\,\mathrm{pF}\)</span>
+      <span>\(C_1 = 1{,}00\) / \(1{,}78\) / \(4{,}00\;\mathrm{pF}\)</span>
+    </div>
+    <p class="dim">Nas três telas o valor final é o mesmo — \(1/10\), fixado pelas resistências. O que muda é o <b style="color:var(--ink)">salto inicial</b>: \(0{,}059\) na primeira, \(0{,}100\) na segunda e \(0{,}200\) na terceira. Ajustar o trimmer é literalmente empurrar o salto inicial até ele encostar no valor final.</p>
+
+    <div class="callout"><b>Agora o circuito fica degenerado.</b> Com o cancelamento polo-zero, a FCP some da função de transferência: o circuito compensado não tem mais nenhum modo natural visível na saída. Redutível já era (dois capacitores, uma FCP); com a compensação vira <b>degenerado</b> — comporta-se como um divisor resistivo puro, sem dinâmica.</div>
+  </section>
+
+  <section id="numeros" class="panel">
+    <span class="eyebrow">4.7</span>
+    <h2>Números: ponta de prova de atenuação 10×</h2>
+    <p>Os valores típicos de um osciloscópio com ponta de prova \(10\times\):</p>
+
+    <div class="given-box">
+      <span>\(R_1 = 9\;\mathrm{M\Omega}\)</span>
+      <span>\(R_2 = 1\;\mathrm{M\Omega}\)</span>
+      <span>\(C_1 = \tfrac{16}{9}\;\mathrm{pF}\)</span>
+      <span>\(C_2 = 16\;\mathrm{pF}\)</span>
+    </div>
+
+    <div class="theorem-grid" style="margin-top:1.4rem">
+      <div class="theorem-card">
+        <span class="tag">Compensação — confere?</span>
+        <div class="eq-block">\[ R_1C_1 = 9\times10^6 \cdot \tfrac{16}{9}\times10^{-12} = 16\;\mathrm{\mu s} \]</div>
+        <div class="eq-block">\[ R_2C_2 = 1\times10^6 \cdot 16\times10^{-12} = 16\;\mathrm{\mu s} \]</div>
+        <p>Iguais — a ponta está compensada. Na prática é isso que o parafuso de ajuste (o <em>trimmer</em> de \(C_1\)) faz: varia \(C_1\) até bater com \(R_2C_2\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Ganho resultante</span>
+        <div class="eq-block">\[ G_v = \frac{R_2}{R_1+R_2} = \frac{1}{10} \]</div>
+        <div class="eq-block">\[ \frac{C_1}{C_1+C_2} = \frac{16/9}{16/9+16} = \frac{1}{10} \quad\checkmark \]</div>
+        <p>Daí o nome \(10\times\): o sinal chega ao osciloscópio dividido por 10, e o instrumento multiplica de volta na leitura.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">O polo que foi cancelado</span>
+        <div class="eq-block">\[ p_1 = -\frac{G_1+G_2}{C_1+C_2} = -6{,}25\times10^{4}\;\mathrm{rad/s} \]</div>
+        <p>Constante de tempo de \(16\;\mathrm{\mu s}\) — é o transitório que apareceria na tela se a ponta estivesse descompensada. Numa onda quadrada de teste, ele aparece como cantos arredondados ou espetados.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Por que 9 MΩ e não algo menor?</b> A resistência alta é o que garante que a ponta não carregue o circuito sob teste. O preço é que, junto com a capacitância de entrada do osciloscópio, ela formaria um filtro passa-baixas bem lento — e é justamente esse filtro que a compensação neutraliza.</div>
+  </section>
+
+  <a class="next-module" href="modulo-05.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">05 · Redes de 2ª ordem</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula de 19/08/2026 — item 1.7, Transformada de Laplace de funções periódicas, e exemplo da ponta de prova (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+});
+
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

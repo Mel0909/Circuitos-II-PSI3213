@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <div class="side-item disabled">
+        <span class="side-num">01</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Redes de 2ª ordem</span>
+      </div>
+      <div class="tabs">
+        <a href="#rlc">RLC paralelo</a>
+        <a href="#homogenea">ED homogênea</a>
+        <a href="#casos">Os três casos</a>
+        <a href="#super">Δ &gt; 0</a>
+        <a href="#sub">Δ &lt; 0</a>
+        <a href="#critico">Δ = 0</a>
+        <a href="#pvi">Solução do PVI</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 05 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Dois elementos reativos, um discriminante.</span> <span class="tone-b">E três comportamentos completamente diferentes.</span></h1>
+        <p class="hero-sub">Uma rede de 2ª ordem tem dois elementos armazenadores de energia — e um polinômio característico de grau 2. Toda a riqueza do comportamento (decaimento manso, oscilação amortecida, ou o ponto exato entre os dois) sai de uma pergunta só: <em>qual o sinal de \(\Delta\)?</em> Mexa no slider abaixo e veja os polos andarem.</p>
+        <div class="hero-meta">
+          <span><b>Aula</b>24/08/2026</span>
+          <span><b>Pré-requisito</b>Módulos 02 e 03</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>RLC PARALELO — POLOS E RESPOSTA NATURAL</span>
+            <span id="regimeReadout">—</span>
+          </div>
+          <canvas id="dampCanvas" width="640" height="300"></canvas>
+          <div style="padding:0.5rem 0.9rem 0.2rem">
+            <label style="display:flex;align-items:center;gap:0.8rem;font-family:'IBM Plex Mono',monospace;font-size:0.78rem;color:var(--dim,#8fa39a)">
+              <span style="white-space:nowrap">R =&nbsp;<b id="rVal" style="color:var(--phosphor,#4ade9a)">0,50</b>&nbsp;Ω</span>
+              <input type="range" id="rSlider" min="10" max="400" value="50" step="1" style="flex:1;accent-color:#4ade9a;cursor:pointer">
+            </label>
+          </div>
+          <div class="splane-controls">
+            <button data-preset="super">superamortecida</button>
+            <button class="active" data-preset="critico">crítica</button>
+            <button data-preset="sub">subamortecida</button>
+          </div>
+          <div class="splane-readout" id="dampText"></div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="rlc" class="panel">
+    <span class="eyebrow">5.1</span>
+    <h2>Redes de 2ª ordem e o circuito RLC paralelo</h2>
+    <p>As redes de 2ª ordem possuem <b style="color:var(--ink)">dois elementos reativos</b>. Para resolver o problema de valor inicial (PVI) associado à equação diferencial, são necessárias <b style="color:var(--ink)">duas</b> condições iniciais — uma para cada armazenador.</p>
+
+    <p>O caso canônico é o RLC paralelo, excitado por uma fonte de corrente:</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 520 240" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 50 L440 50"/>
+          <path d="M60 190 L440 190"/>
+          <path d="M60 50 L60 68"/>
+          <path d="M60 112 L60 190"/>
+          <path d="M180 50 L180 78"/><path d="M180 138 L180 190"/>
+          <path d="M290 50 L290 78"/><path d="M290 138 L290 190"/>
+          <path d="M400 50 L400 100"/><path d="M400 130 L400 190"/>
+        </g>
+        <!-- fonte de corrente -->
+        <circle cx="60" cy="90" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M60 102 L60 78" stroke="#f5b942" stroke-width="2"/>
+        <path d="M55 84 L60 76 L65 84" fill="#f5b942"/>
+        <text x="4" y="94" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+        <!-- R -->
+        <rect x="168" y="78" width="24" height="60" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="140" y="114" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="129" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j_R(t)</text>
+        <path d="M180 26 L180 44" stroke="#f5b942" stroke-width="1.5"/>
+        <path d="M176 38 L180 46 L184 38" fill="#f5b942"/>
+        <!-- L (bobina) -->
+        <path d="M290 78 q 12 8 0 16 q 12 8 0 16 q 12 8 0 16 q 12 8 0 12" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <text x="252" y="114" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L</text>
+        <text x="239" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j_L(t)</text>
+        <path d="M290 26 L290 44" stroke="#f5b942" stroke-width="1.5"/>
+        <path d="M286 38 L290 46 L294 38" fill="#f5b942"/>
+        <!-- C -->
+        <g stroke="#4ade9a" stroke-width="2.6">
+          <line x1="384" y1="100" x2="416" y2="100"/>
+          <line x1="384" y1="130" x2="416" y2="130"/>
+        </g>
+        <text x="426" y="120" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="349" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j_C(t)</text>
+        <path d="M400 26 L400 44" stroke="#f5b942" stroke-width="1.5"/>
+        <path d="M396 38 L400 46 L404 38" fill="#f5b942"/>
+        <!-- terminais de saida (abertos) e medida de v(t) -->
+        <circle cx="440" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.8)" stroke-width="1.8"/>
+        <circle cx="440" cy="190" r="4" fill="none" stroke="rgba(231,237,233,0.8)" stroke-width="1.8"/>
+        <text x="458" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="458" y="164" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+        <text x="452" y="126" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v(t)</text>
+      </svg>
+    </div>
+
+    <div class="given-box">
+      <span>\(j_L(0^-) = i_0\)</span>
+      <span>\(v(0^-) = v_0\)</span>
+      <span>incógnita: \(v(t)\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">1ª Lei de Kirchhoff no nó de cima</div>
+          <div class="eq-block">\[ -i_s(t) + j_R(t) + j_L(t) + j_C(t) = 0 \]</div>
+          <div class="eq-block">\[ j_C(t) + j_L(t) + j_R(t) = i_s(t) \]</div>
+          <p class="dim">Como os quatro ramos estão em paralelo, todos compartilham a mesma tensão \(v(t)\) — por isso ela é a incógnita natural aqui.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Inserir as relações constitutivas</div>
+          <p>Capacitor deriva, indutor integra, resistor só escala:</p>
+          <div class="eq-block">\[ C\frac{d}{dt}v(t) + \frac{1}{L}\int_{-\infty}^{t} v(\lambda)\,d\lambda + \frac{1}{R}v(t) = i_s(t) \]</div>
+          <p>Repare no incômodo que o módulo 01 já tinha antecipado: <b style="color:var(--ink)">derivada e integral na mesma equação</b>. A saída clássica é derivar tudo uma vez:</p>
+          <div class="eq-block">\[ C\frac{d^2}{dt^2}v(t) + \frac{1}{L}v(t) + \frac{1}{R}\frac{d}{dt}v(t) = \frac{d}{dt}i_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Normalizar (dividir por C)</div>
+          <div class="eq-block">\[ \frac{d^2}{dt^2}v(t) + \frac{1}{RC}\frac{d}{dt}v(t) + \frac{1}{LC}v(t) = \frac{1}{C}\frac{d}{dt}i_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Estilizar — a forma canônica de 2ª ordem</div>
+          <div class="eq-block">\[ \frac{d^2}{dt^2}v(t) + 2\alpha\,\frac{d}{dt}v(t) + \omega_0^2\,v(t) = f(t) \]</div>
+          <div class="roc-grid" style="margin-top:1rem">
+            <div class="roc-card">
+              <span class="tag">Fator de amortecimento</span>
+              <div class="eq-block">\[ \alpha \triangleq \frac{1}{2RC} \]</div>
+              <p class="dim">Unidade de \(\mathrm{s}^{-1}\) (neper por segundo). Mede a rapidez com que a energia se dissipa no resistor.</p>
+            </div>
+            <div class="roc-card">
+              <span class="tag">Frequência própria não-amortecida</span>
+              <div class="eq-block">\[ \omega_0 \triangleq \frac{1}{\sqrt{LC}} \]</div>
+              <p class="dim">É a frequência de oscilação que o circuito teria se \(R \to \infty\) (sem perdas). Nota: no quadro ela saiu rotulada como "amortecida" — deslize; a amortecida é \(\omega_d\), que aparece na seção 5.4.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout"><b>O que a forma canônica compra.</b> Escrita assim, a equação não sabe mais de onde veio: qualquer rede de 2ª ordem — RLC série, RLC paralelo, um sistema mecânico massa-mola-amortecedor — cai nessa mesma forma. Só mudam as expressões de \(\alpha\) e \(\omega_0\). Tudo que a gente deduzir daqui em diante vale para todas elas.</div>
+  </section>
+
+  <section id="homogenea" class="panel">
+    <span class="eyebrow">5.2</span>
+    <h2>A equação homogênea e os dois polinômios</h2>
+    <p>Para estudar os <b style="color:var(--ink)">modos naturais</b> — o que a rede faz sozinha, sem excitação — zeramos o lado direito:</p>
+    <div class="eq-block">\[ \frac{d^2}{dt^2}v(t) + 2\alpha\,\frac{d}{dt}v(t) + \omega_0^2\,v(t) = 0 \]</div>
+
+    <p>Aplicando a transformada de Laplace, com os teoremas da derivada (que trazem as condições iniciais junto):</p>
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">1ª derivada</span>
+        <div class="eq-block">\[ \mathcal{L}\!\left[\frac{d}{dt}v(t)\right] = sV(s) - v(0^-) \]</div>
+      </div>
+      <div class="roc-card">
+        <span class="tag">2ª derivada</span>
+        <div class="eq-block">\[ \mathcal{L}\!\left[\frac{d^2}{dt^2}v(t)\right] = s^2V(s) - v(0^-)\,s - \dot v(0^-) \]</div>
+      </div>
+    </div>
+
+    <div class="eq-block" style="margin-top:1.2rem">\[ s^2V(s) - v(0^-)s - \dot v(0^-) + 2\alpha\big[sV(s) - v(0^-)\big] + \omega_0^2 V(s) = 0 \]</div>
+
+    <p>Agrupando os termos em \(V(s)\) de um lado e os termos de condição inicial do outro:</p>
+    <div class="eq-block">\[ \underbrace{\Big[s^2 + 2\alpha s + \omega_0^2\Big]}_{\textstyle D(s)}V(s) \;-\; \underbrace{\Big[v(0^-)s + \dot v(0^-) + 2\alpha\,v(0^-)\Big]}_{\textstyle P_{ci}(s)} = 0 \]</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">\(D(s)\) — polinômio característico</span>
+        <div class="eq-block">\[ D(s) = s^2 + 2\alpha s + \omega_0^2 \]</div>
+        <p>O polinômio característico <b style="color:var(--ink)">da rede</b> — só depende de \(R\), \(L\) e \(C\). É ele que decide se a rede oscila ou não. Suas raízes são as FCPs.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">\(P_{ci}(s)\) — polinômio das c.i.</span>
+        <div class="eq-block">\[ P_{ci}(s) = v(0^-)\,s + \dot v(0^-) + 2\alpha\,v(0^-) \]</div>
+        <p>Só depende do <b style="color:var(--ink)">estado inicial</b>. Ele não muda os polos — só os resíduos, ou seja, o "quanto" de cada modo natural aparece.</p>
+      </div>
+    </div>
+
+    <div class="final-answer">\[ V(s) = \frac{P_{ci}(s)}{D(s)} \]</div>
+
+    <div class="callout">É a mesma estrutura que apareceu na ponta de prova do <a href="modulo-04.html">módulo 04</a>: o determinante do sistema é o polinômio característico, e suas raízes são as frequências complexas próprias. A diferença é que agora \(D(s)\) tem grau 2 — e é aí que a história fica interessante.</div>
+  </section>
+
+  <section id="casos" class="panel">
+    <span class="eyebrow">5.3</span>
+    <h2>Fatorar \(D(s)\): tudo depende do discriminante</h2>
+    <p>Para fatorar \(D(s)\), dependemos dos valores dos coeficientes — ou seja, de \(\alpha\) e de \(\omega_0^2\). Ou ainda: dependemos do <b style="color:var(--ink)">discriminante</b>.</p>
+
+    <div class="eq-block">\[ \Delta = (2\alpha)^2 - 4\omega_0^2 = 4\alpha^2 - 4\omega_0^2 = 4\big(\alpha^2 - \omega_0^2\big) \]</div>
+    <div class="eq-block">\[ s_{1,2} = \frac{-2\alpha \pm \sqrt{\Delta}}{2} \]</div>
+
+    <p>O sinal de \(\Delta\) é decidido por uma comparação simples: <b style="color:var(--ink)">\(\alpha\) contra \(\omega_0\)</b> — dissipação contra oscilação. Três desfechos:</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">α &gt; ω₀</div><div class="small">Δ &gt; 0<br>superamortecida</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">α = ω₀</div><div class="small">Δ = 0<br>criticamente amortecida</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">α &lt; ω₀</div><div class="small">Δ &lt; 0<br>subamortecida</div></div>
+    </div>
+    <p class="flow-note">Lendo em termos de componentes: \(\alpha = 1/(2RC)\) cresce quando \(R\) <b style="color:var(--ink)">diminui</b>. Um \(R\) pequeno em paralelo é um caminho fácil para a corrente, drena a energia rápido e mata a oscilação — daí superamortecida. Um \(R\) grande quase não dissipa, e a energia fica indo e voltando entre \(L\) e \(C\) — daí subamortecida. Use o slider lá em cima para ver isso acontecer.</p>
+  </section>
+
+  <section id="super" class="panel">
+    <span class="eyebrow">5.4 · caso (a)</span>
+    <h2>\(\Delta &gt; 0\) — rede superamortecida</h2>
+
+    <div class="eq-block">\[ \sqrt{\Delta} = 2\sqrt{\alpha^2 - \omega_0^2} \triangleq 2\beta, \qquad \beta = \sqrt{\alpha^2-\omega_0^2} \]</div>
+
+    <p>Temos então <b style="color:var(--ink)">duas frequências complexas próprias (FCPs)</b>:</p>
+    <div class="eq-block">\[ s_{1,2} = \frac{-2\alpha \pm 2\beta}{2} \;\Longrightarrow\; \begin{cases} s_1 = -\alpha + \beta \\[0.2em] s_2 = -\alpha - \beta \end{cases} \]</div>
+
+    <p>que são <b style="color:var(--ink)">reais e negativas</b> — negativas porque \(\beta = \sqrt{\alpha^2-\omega_0^2} < \alpha\) sempre (já que \(\omega_0^2 > 0\)), então mesmo \(s_1\) fica à esquerda da origem. Este é o caso de <b style="color:var(--ink)">rede superamortecida</b>.</p>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Quais são os modos naturais da rede?</h3>
+    <p>Expandimos \(V(s)\) em frações parciais — dois polos simples, tapa direto:</p>
+    <div class="eq-block">\[ V(s) = \frac{A_{11}}{s-s_1} + \frac{A_{21}}{s-s_2} \]</div>
+    <div class="eq-block">\[ v(t) = \mathcal{L}^{-1}\big[V(s)\big] \]</div>
+
+    <div class="final-answer">\[ v(t) = A_{11}e^{s_1t} + A_{21}e^{s_2t}, \qquad t \ge 0 \]</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Modo natural 1</span>
+        <div class="eq-block">\[ h_1(t) = A_{11}\,e^{s_1t} \]</div>
+        <p>Decaimento lento (\(s_1\) é o polo mais próximo da origem) — é ele que domina a cauda da resposta.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Modo natural 2</span>
+        <div class="eq-block">\[ h_2(t) = A_{21}\,e^{s_2t} \]</div>
+        <p>Decaimento rápido — some cedo, e só importa nos primeiros instantes.</p>
+      </div>
+    </div>
+
+    <div class="callout">Duas exponenciais reais decrescentes, sem nenhum termo oscilatório: a resposta sobe (ou desce) e volta ao repouso <b>sem passar do ponto</b>. É o comportamento que se busca, por exemplo, no amortecedor de um carro ou no braço de um toca-discos — chegar rápido, mas sem balançar.</div>
+  </section>
+
+  <section id="sub" class="panel">
+    <span class="eyebrow">5.5 · caso (b)</span>
+    <h2>\(\Delta &lt; 0\) — rede subamortecida (oscilatória)</h2>
+
+    <p>Agora \(\alpha < \omega_0\), então o conteúdo da raiz fica negativo. Reescrevendo com o sinal para fora:</p>
+    <div class="eq-block">\[ \Delta = 4\big(\alpha^2-\omega_0^2\big) = -4\big(\underbrace{\omega_0^2-\alpha^2}_{\textstyle \omega_d^2}\big) \]</div>
+
+    <div class="callout"><b>Frequência própria amortecida:</b>
+      <div class="eq-block" style="margin-top:0.7rem">\[ \omega_d = \sqrt{\omega_0^2 - \alpha^2} \]</div>
+      É a frequência com que o circuito realmente oscila. Sempre <em>menor</em> que \(\omega_0\): o amortecimento não só encolhe a amplitude, também alenta a oscilação.
+    </div>
+
+    <div class="eq-block">\[ \sqrt{\Delta} = 2j\omega_d \]</div>
+    <p>As FCPs são então <b style="color:var(--ink)">complexas conjugadas</b>:</p>
+    <div class="eq-block">\[ s_{1,2} = \frac{-2\alpha \pm 2j\omega_d}{2} \;\Longrightarrow\; \begin{cases} s_1 = -\alpha + j\omega_d \\[0.2em] s_2 = -\alpha - j\omega_d = s_1^{*} \end{cases} \]</div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Do par conjugado até o cosseno amortecido</h3>
+    <div class="eq-block">\[ V(s) = \frac{A_{11}}{s-s_1} + \frac{A_{11}^{*}}{s-s_2} \]</div>
+    <div class="eq-block">\[ v(t) = A_{11}e^{s_1t} + A_{11}^{*}e^{s_2t} = A_{11}e^{-\alpha t}e^{\,j\omega_d t} + A_{11}^{*}e^{-\alpha t}e^{-j\omega_d t} \]</div>
+
+    <p>Seja o resíduo escrito na forma polar, \(A_{11} = A\,e^{\,j\psi}\), de modo que \(A_{11}^{*} = A\,e^{-j\psi}\):</p>
+    <div class="eq-block">\[ v(t) = A\,e^{-\alpha t}\Big[e^{\,j(\omega_d t+\psi)} + e^{-j(\omega_d t+\psi)}\Big] \]</div>
+    <p>e o colchete é exatamente \(2\cos(\omega_d t + \psi)\), pela fórmula de Euler:</p>
+
+    <div class="final-answer">\[ v(t) = 2A\,e^{-\alpha t}\cos\!\big(\omega_d t + \psi\big), \qquad t \ge 0 \]</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Os dois modos naturais complexos</span>
+        <div class="eq-block">\[ h_1(t) = A_{11}\,e^{-\alpha t}e^{\,j\omega_d t} \]</div>
+        <div class="eq-block">\[ h_2(t) = A_{11}^{*}\,e^{-\alpha t}e^{-j\omega_d t} \]</div>
+        <p class="dim">Individualmente, cada um é complexo — não corresponde a nenhuma tensão mensurável.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">O modo natural "real"</span>
+        <div class="eq-block">\[ 2A\,e^{-\alpha t}\cos(\omega_d t + \psi) \]</div>
+        <p>Este sim é o que se mede no osciloscópio. Na verdade ele é uma <b style="color:var(--ink)">composição de dois modos naturais complexos conjugados</b> — as partes imaginárias se cancelam quando somadas.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Lendo os dois pedaços:</b> \(e^{-\alpha t}\) é a envoltória que aperta a oscilação, e \(\cos(\omega_d t+\psi)\) é a oscilação em si. A parte real do polo (\(-\alpha\)) controla a <em>rapidez do decaimento</em>; a parte imaginária (\(\pm\omega_d\)) controla a <em>frequência</em>. Polo mais alto no plano-s ⇒ oscila mais rápido; polo mais à esquerda ⇒ decai mais rápido.</div>
+  </section>
+
+  <section id="critico" class="panel">
+    <span class="eyebrow">5.6 · caso (c)</span>
+    <h2>\(\Delta = 0\) — rede criticamente amortecida</h2>
+
+    <div class="eq-block">\[ \Delta = 4\big(\alpha^2-\omega_0^2\big) = 0 \qquad \text{ou} \qquad \omega_0 = \alpha \]</div>
+    <div class="eq-block">\[ \sqrt{\Delta} = 0 \;\Longrightarrow\; s_{1,2} = \frac{-2\alpha \pm 0}{2} \;\Longrightarrow\; s_1 = s_2 = -\alpha \]</div>
+
+    <p>Um único valor, mas com <b style="color:var(--ink)">multiplicidade 2</b> — é o caso do polo múltiplo do <a href="modulo-03.html">módulo 03</a>. O denominador vira um quadrado perfeito:</p>
+    <div class="eq-block">\[ V(s) = \frac{P_{ci}(s)}{(s+\alpha)^2} \]</div>
+
+    <p>e a expansão em frações parciais precisa dos dois termos:</p>
+    <div class="eq-block">\[ V(s) = \frac{A_{11}}{s+\alpha} + \frac{A_{12}}{(s+\alpha)^2} \]</div>
+
+    <p>Antitransformando com a regra \(\dfrac{1}{(s-p)^{\ell}} \to \dfrac{t^{\ell-1}}{(\ell-1)!}e^{pt}\):</p>
+    <div class="eq-block">\[ v(t) = A_{11}e^{-\alpha t} + A_{12}\frac{t^{\,2-1}}{(2-1)!}e^{-\alpha t} \]</div>
+
+    <div class="final-answer">\[ v(t) = A_{11}e^{-\alpha t} + A_{12}\,t\,e^{-\alpha t}, \qquad t \ge 0 \]</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Modos naturais</span>
+        <div class="eq-block">\[ h_1(t) = A_{11}e^{-\alpha t} \]</div>
+        <div class="eq-block">\[ h_2(t) = A_{12}\,t\,e^{-\alpha t} \]</div>
+        <p>O segundo modo é a novidade: uma exponencial <b style="color:var(--ink)">multiplicada por \(t\)</b>. Ela sobe no começo (por causa do \(t\)) e depois cai (por causa da exponencial).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Por que "crítica"</span>
+        <p>É a fronteira exata entre oscilar e não oscilar. Qualquer \(R\) um pouquinho maior já produz oscilação; qualquer \(R\) menor já cai no caso superamortecido.</p>
+        <p>Na prática é o ajuste mais rápido possível <em>sem</em> ultrapassar o valor final — por isso é o alvo de projeto em muitos sistemas de controle.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Cuidado com o nome.</b> "Criticamente amortecida" não significa amortecimento máximo — a superamortecida tem <em>mais</em> amortecimento. Crítica é o ponto de transição, e é justamente ela a mais <em>rápida</em> das três a se acomodar.</div>
+  </section>
+
+  <section id="pvi" class="panel">
+    <span class="eyebrow">5.7</span>
+    <h2>Solução do PVI completo</h2>
+    <p class="dim">Tomando o caso (a), \(\Delta &gt; 0\), com FCPs \(s_1 = -\alpha+\beta\) e \(s_2 = -\alpha-\beta\). O roteiro vale para os três casos, trocando só a forma dos modos naturais.</p>
+
+    <h3 style="margin-top:1.4rem;font-size:1.1rem">(i) Solução permanente \(v_p(t)\)</h3>
+    <p>Depende do tipo de excitação. Três situações cobrem quase tudo que aparece:</p>
+
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="tag">(i.1) fonte contínua</span>
+        <div class="steps">
+          <span>Se \(i_s(t) = I\) e o circuito tiver <b style="color:var(--ink)">RPCC</b> (regime permanente de corrente contínua):</span>
+        </div>
+        <div class="result">\(v_p(t) = 0\)</div>
+        <p class="dim" style="margin-top:0.6rem">Em regime contínuo o indutor vira curto-circuito e prende a tensão do paralelo em zero — toda a corrente da fonte escoa por ele.</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">(i.2) fonte senoidal</span>
+        <div class="steps">
+          <span>Se \(i_s(t) = I_s\cos(\omega t + \theta)\) e houver <b style="color:var(--ink)">RPS</b> (regime permanente senoidal), passa-se para fasores:</span>
+          <span>\(\hat I_s = I_s\,\underline{/\theta}\)</span>
+          <span>\(\displaystyle \hat V_p = V_p\,\underline{/\psi} = \frac{1}{G + j\omega C + \dfrac{1}{j\omega L}}\;\hat I_s\)</span>
+        </div>
+        <div class="result">\(v_p(t) = V_p\cos(\omega t + \psi)\)</div>
+        <p class="dim" style="margin-top:0.6rem">O denominador é a admitância do paralelo RLC — resistor, capacitor e indutor somando em paralelo, como em Circuitos I.</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">(i.3) fonte impulsiva</span>
+        <div class="steps">
+          <span>Se \(i_s(t) = Q_s\,\delta(t)\):</span>
+          <span>não há regime permanente a calcular — o impulso <b style="color:var(--ink)">pode ser resolvido junto com as condições iniciais</b>.</span>
+        </div>
+        <p class="dim" style="margin-top:0.6rem">Ele age só em \(t=0\), depositando carga instantaneamente. Depois disso o circuito está livre, e o efeito da fonte já está todo embutido no novo estado inicial.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">(ii) Condições iniciais: integrar o circuito entre \(0^-\) e \(0^+\)</h3>
+    <p>Quando há impulso, o estado <em>salta</em> em \(t=0\). Para descobrir o quanto, integra-se o circuito entre \(t=0^-\) e \(t=0^+\), acompanhando as duas variáveis de estado: o <b style="color:var(--ink)">fluxo</b> \(\Lambda\) no indutor e a <b style="color:var(--ink)">carga</b> \(Q\) no capacitor.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 460 210" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 45 L370 45"/>
+          <path d="M60 170 L370 170"/>
+          <path d="M60 45 L60 62"/><path d="M60 106 L60 170"/>
+          <path d="M180 45 L180 70"/><path d="M180 126 L180 170"/>
+          <path d="M280 45 L280 70"/><path d="M280 124 L280 170"/>
+          <path d="M370 45 L370 84"/><path d="M370 112 L370 170"/>
+        </g>
+        <circle cx="60" cy="84" r="21" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M60 96 L60 72" stroke="#f5b942" stroke-width="2"/>
+        <path d="M55 78 L60 70 L65 78" fill="#f5b942"/>
+        <text x="4" y="88" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">Qₛ</text>
+        <rect x="168" y="70" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="142" y="104" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+        <path d="M280 70 q 11 7 0 14 q 11 7 0 14 q 11 7 0 14 q 11 7 0 12" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+        <text x="250" y="104" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+        <text x="306" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Λ</text>
+        <path d="M304 92 L288 84" stroke="rgba(245,185,66,0.8)" stroke-width="1.2" fill="none"/>
+        <g stroke="#4ade9a" stroke-width="2.4">
+          <line x1="356" y1="84" x2="384" y2="84"/>
+          <line x1="356" y1="112" x2="384" y2="112"/>
+        </g>
+        <text x="396" y="80" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Q</text>
+        <path d="M394 76 L380 82" stroke="rgba(245,185,66,0.8)" stroke-width="1.2" fill="none"/>
+        <text x="60" y="200" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="12">circuito integrado entre t = 0⁻ e t = 0⁺   ·   Λ = 0</text>
+      </svg>
+    </div>
+    <p class="dim">Como o impulso de corrente entra no capacitor (o indutor, integrando tensão finita, não muda de fluxo num intervalo nulo), tem-se \(\Delta\Lambda = 0\) e toda a carga \(Q_s\) vai parar em \(C\) — ou seja, \(v(0^+) = v(0^-) + Q_s/C\) e \(j_L(0^+) = j_L(0^-)\).</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">(iii) Solução geral e o sistema das constantes</h3>
+    <p>A solução completa é a soma dos modos naturais com a permanente:</p>
+    <div class="eq-block">\[ v(t) = V_1e^{s_1t} + V_2e^{s_2t} + v_p(t) \]</div>
+    <div class="eq-block">\[ \dot v(t) = s_1V_1e^{s_1t} + s_2V_2e^{s_2t} + \dot v_p(t) \]</div>
+
+    <p>que tomamos em \(t = 0^+\):</p>
+    <div class="eq-block">\[ \begin{cases} v(0^+) = V_1 + V_2 + v_p(0^+) \\[0.3em] \dot v(0^+) = s_1V_1 + s_2V_2 + \dot v_p(0^+) \end{cases} \]</div>
+    <p class="dim">Nota: no quadro esses dois aparecem com \(V_2\) e \(s_2\) repetidos nas duas parcelas — deslize de escrita; os índices corretos são \(V_1,s_1\) na primeira parcela e \(V_2,s_2\) na segunda, como acima.</p>
+
+    <p>Passando as parcelas conhecidas para o outro lado, chega-se a um sistema linear \(2\times2\):</p>
+    <div class="eq-block">\[ \begin{bmatrix} 1 & 1 \\ s_1 & s_2 \end{bmatrix}\begin{bmatrix} V_1 \\ V_2 \end{bmatrix} = \begin{bmatrix} a \\ b \end{bmatrix}, \qquad \begin{aligned} a &\triangleq v(0^+) - v_p(0^+) \\ b &\triangleq \dot v(0^+) - \dot v_p(0^+) \end{aligned} \]</div>
+
+    <p>Invertendo a matriz (\(2\times2\), determinante \(s_2-s_1\)):</p>
+    <div class="eq-block">\[ \begin{bmatrix} V_1 \\ V_2 \end{bmatrix} = \frac{1}{s_2-s_1}\begin{bmatrix} s_2 & -1 \\ -s_1 & 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} = \frac{1}{s_2-s_1}\begin{bmatrix} as_2 - b \\ -as_1 + b \end{bmatrix} \]</div>
+
+    <div class="final-answer">\[ V_1 = \frac{a\,s_2 - b}{s_2-s_1}, \qquad V_2 = \frac{-a\,s_1 + b}{s_2-s_1} \]</div>
+
+    <div class="callout"><b>Por que \(0^+\) e não \(0^-\).</b> As constantes \(V_1\) e \(V_2\) descrevem a solução <em>depois</em> do instante zero. Se houver impulso na excitação, o estado salta entre \(0^-\) e \(0^+\), e usar o valor errado dá a resposta errada. Sem impulso, os dois coincidem e a distinção não faz diferença.</div>
+
+    <div class="roc-grid" style="margin-top:1.4rem">
+      <div class="roc-card">
+        <span class="tag">O roteiro, resumido</span>
+        <p>1. Monte a ED e identifique \(\alpha\) e \(\omega_0\). 2. Calcule \(\Delta\) e ache as FCPs. 3. Escreva a forma dos modos naturais conforme o caso. 4. Ache \(v_p(t)\) pelo tipo de fonte. 5. Determine \(v(0^+)\) e \(\dot v(0^+)\). 6. Resolva o sistema \(2\times2\).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Onde erra-se mais</span>
+        <p>Esquecer que \(\dot v(0^+)\) não é dado direto: ele sai da relação constitutiva do capacitor, \(\dot v(0^+) = j_C(0^+)/C\), com \(j_C(0^+)\) vindo da 1ª Lei de Kirchhoff aplicada em \(t=0^+\).</p>
+      </div>
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-04.html">
+    <div>
+      <span class="nm-label">Módulo anterior</span>
+      <span class="nm-title">04 · Periódicas e ponta de prova</span>
+    </div>
+    <span class="nm-arrow">←</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula de 24/08/2026 — Estudo de redes de 2ª ordem (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- widget de amortecimento ---------- */
+const cv = document.getElementById('dampCanvas');
+const cx = cv.getContext('2d');
+const rSlider = document.getElementById('rSlider');
+const rVal = document.getElementById('rVal');
+const regimeReadout = document.getElementById('regimeReadout');
+const dampText = document.getElementById('dampText');
+
+// L = 1 H, C = 1 F  =>  w0 = 1 rad/s ; alpha = 1/(2RC) = 1/(2R)
+const L = 1, C = 1, W0 = 1;
+const PRESETS = { super: 25, critico: 50, sub: 260 };
+
+function fit(){
+  const rect = cv.getBoundingClientRect();
+  const ratio = window.devicePixelRatio || 1;
+  cv.width = rect.width * ratio;
+  cv.height = 300 * ratio;
+  cx.setTransform(ratio, 0, 0, ratio, 0, 0);
+  cv.style.height = '300px';
+}
+
+// resposta natural com v(0)=1, vdot(0)=0
+function vnat(t, alpha){
+  const d = alpha*alpha - W0*W0;
+  if (Math.abs(d) < 1e-9) return Math.exp(-alpha*t) * (1 + alpha*t);
+  if (d > 0){
+    const b = Math.sqrt(d), s1 = -alpha + b, s2 = -alpha - b;
+    const A1 = -s2/(s1-s2), A2 = s1/(s1-s2);
+    return A1*Math.exp(s1*t) + A2*Math.exp(s2*t);
+  }
+  const wd = Math.sqrt(-d);
+  return Math.exp(-alpha*t) * (Math.cos(wd*t) + (alpha/wd)*Math.sin(wd*t));
+}
+
+function draw(){
+  fit();
+  const W = cv.getBoundingClientRect().width, H = 300;
+  const R = parseInt(rSlider.value, 10) / 100;
+  const alpha = 1/(2*R*C);
+  const d = alpha*alpha - W0*W0;
+  cx.clearRect(0, 0, W, H);
+
+  const padL = 12, gap = 14;
+  const planeW = Math.min(220, W*0.40);
+  const plotX = padL + planeW + gap;
+  const plotW = W - plotX - 16;
+
+  /* ---- plano-s (esquerda) ---- */
+  const ox = padL + planeW*0.68, oy = H*0.5, unit = planeW*0.26;
+  cx.strokeStyle = 'rgba(122,199,170,0.10)'; cx.lineWidth = 1;
+  for(let x = ox % unit; x < padL+planeW; x += unit){ cx.beginPath(); cx.moveTo(x,20); cx.lineTo(x,H-20); cx.stroke(); }
+  cx.strokeStyle = 'rgba(231,237,233,0.5)'; cx.lineWidth = 1.2;
+  cx.beginPath(); cx.moveTo(padL, oy); cx.lineTo(padL+planeW, oy); cx.stroke();
+  cx.beginPath(); cx.moveTo(ox, 22); cx.lineTo(ox, H-22); cx.stroke();
+  cx.font = "10px 'IBM Plex Mono', monospace";
+  cx.fillStyle = 'rgba(231,237,233,0.55)';
+  cx.fillText('σ', padL+planeW-12, oy-6);
+  cx.fillText('jω', ox+6, 32);
+
+  // circulo de raio w0 (lugar geometrico dos polos complexos)
+  cx.strokeStyle = 'rgba(245,185,66,0.30)'; cx.setLineDash([4,4]); cx.lineWidth = 1.2;
+  cx.beginPath(); cx.arc(ox, oy, W0*unit, 0, Math.PI*2); cx.stroke();
+  cx.setLineDash([]);
+
+  function mark(re, im, color){
+    const px = ox + re*unit, py = oy - im*unit, r = 6;
+    cx.strokeStyle = color; cx.lineWidth = 2.2;
+    cx.beginPath();
+    cx.moveTo(px-r, py-r); cx.lineTo(px+r, py+r);
+    cx.moveTo(px+r, py-r); cx.lineTo(px-r, py+r);
+    cx.stroke();
+  }
+
+  let s1txt, s2txt, regime, cor, texto;
+  if (Math.abs(d) < 2e-3){
+    regime = 'CRITICAMENTE AMORTECIDA'; cor = '#f5b942';
+    mark(-alpha, 0, cor);
+    cx.fillStyle = cor; cx.fillText('polo duplo', ox - alpha*unit - 26, oy + 22);
+    s1txt = 's₁ = s₂ = −' + alpha.toFixed(2);
+    texto = 'Δ = 0 · o zero exato entre oscilar e não oscilar. Os dois polos colidem em <span class="roc-formula">s = −α</span> e o segundo modo natural ganha o fator t.';
+  } else if (d > 0){
+    const b = Math.sqrt(d); regime = 'SUPERAMORTECIDA'; cor = '#4ade9a';
+    mark(-alpha+b, 0, cor); mark(-alpha-b, 0, cor);
+    s1txt = 's₁ = −' + (alpha-b).toFixed(2) + '   s₂ = −' + (alpha+b).toFixed(2);
+    texto = 'Δ > 0 · dois polos reais negativos. A resposta é soma de duas exponenciais — <span class="roc-formula">sem nenhuma oscilação</span>. Quanto menor o R, mais separados eles ficam.';
+  } else {
+    const wd = Math.sqrt(-d); regime = 'SUBAMORTECIDA'; cor = '#e0625a';
+    mark(-alpha, wd, cor); mark(-alpha, -wd, cor);
+    s1txt = 's₁,₂ = −' + alpha.toFixed(2) + ' ± j' + wd.toFixed(2);
+    texto = 'Δ &lt; 0 · par complexo conjugado sobre o círculo de raio ω₀. A resposta oscila em <span class="roc-formula">ω_d = ' + wd.toFixed(2) + ' rad/s</span> dentro de uma envoltória e<sup>−αt</sup>.';
+  }
+  cx.fillStyle = cor; cx.font = "10px 'IBM Plex Mono', monospace";
+  cx.fillText(s1txt, padL + 2, H - 12);
+
+  /* ---- resposta no tempo (direita) ---- */
+  const t0 = plotX, tW = plotW, base = H*0.72, amp = H*0.30, TMAX = 14;
+  cx.strokeStyle = 'rgba(231,237,233,0.5)'; cx.lineWidth = 1.2;
+  cx.beginPath(); cx.moveTo(t0, base); cx.lineTo(t0+tW, base); cx.stroke();
+  cx.beginPath(); cx.moveTo(t0, base-amp-16); cx.lineTo(t0, H-22); cx.stroke();
+  cx.fillStyle = 'rgba(231,237,233,0.55)';
+  cx.fillText('t', t0+tW-8, base-6);
+  cx.fillText('v(t)', t0+6, base-amp-6);
+
+  // envoltoria e^{-at} no caso oscilatorio
+  if (d < 0){
+    cx.strokeStyle = 'rgba(224,98,90,0.35)'; cx.setLineDash([4,4]); cx.lineWidth = 1.2;
+    for (const sg of [1,-1]){
+      cx.beginPath();
+      for (let i = 0; i <= 240; i++){
+        const t = TMAX*i/240, y = base - sg*amp*Math.exp(-alpha*t);
+        i ? cx.lineTo(t0 + tW*i/240, y) : cx.moveTo(t0, y);
+      }
+      cx.stroke();
+    }
+    cx.setLineDash([]);
+  }
+
+  cx.strokeStyle = cor; cx.lineWidth = 2.2; cx.beginPath();
+  for (let i = 0; i <= 480; i++){
+    const t = TMAX*i/480;
+    const y = Math.max(-1.4, Math.min(1.4, vnat(t, alpha)));
+    const px = t0 + tW*i/480, py = base - amp*y;
+    i ? cx.lineTo(px, py) : cx.moveTo(px, py);
+  }
+  cx.stroke();
+
+  rVal.textContent = R.toFixed(2).replace('.', ',');
+  regimeReadout.textContent = 'α = ' + alpha.toFixed(2) + ' · ω₀ = 1,00';
+  dampText.innerHTML = '<b style="color:' + cor + '">' + regime + '</b> — ' + texto;
+
+  document.querySelectorAll('[data-preset]').forEach(b => {
+    b.classList.toggle('active', parseInt(rSlider.value,10) === PRESETS[b.dataset.preset]);
+  });
+}
+
+rSlider.addEventListener('input', draw);
+document.querySelectorAll('[data-preset]').forEach(b => {
+  b.addEventListener('click', () => { rSlider.value = PRESETS[b.dataset.preset]; draw(); });
+});
+window.addEventListener('resize', draw);
+draw();
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

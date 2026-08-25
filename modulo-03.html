@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <div class="side-item disabled">
+        <span class="side-num">01</span>
+        <span class="side-title"><em>em breve</em></span>
+      </div>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Antitransformada e doublet</span>
+      </div>
+      <div class="tabs">
+        <a href="#geral">Caso geral</a>
+        <a href="#doublet">Função doublet</a>
+        <a href="#amostragem">Amostragem</a>
+        <a href="#derivador">Derivador</a>
+        <a href="#ex1">Exemplo 1</a>
+        <a href="#ex2">Exemplo 2</a>
+        <a href="#inversao-integral">Integral de inversão</a>
+        <a href="#receita">Receita de prova</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 03 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">E se o grau de cima for maior que o de baixo?</span> <span class="tone-b">Aí aparece o impulso — e a derivada dele.</span></h1>
+        <p class="hero-sub">O <a href="index.html">módulo 01</a> montou a máquina de frações parciais para \(F(s)\) estritamente própria. Aqui a gente fecha o caso geral: quando \(\mathrm{gr}\{N\} \ge \mathrm{gr}\{D\}\) sobra um polinômio quociente \(Q(s)\), e antitransformar polinômio em \(s\) obriga a inventar um bicho novo — o <em>doublet</em> \(\delta^{(1)}(t)\), a derivada do impulso. Depois, dois exemplos resolvidos linha por linha, do jeito que cai na prova.</p>
+        <div class="hero-meta">
+          <span><b>Aula</b>17/08/2026</span>
+          <span><b>Pré-requisito</b>Módulos 01 e 02</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>O DOUBLET COMO DERIVADOR IDEAL</span>
+            <span>H(s) = s</span>
+          </div>
+          <div style="display:flex;justify-content:center;padding:0.9rem 0">
+            <svg viewBox="0 0 460 210" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <!-- eixos do doublet -->
+              <line x1="30" y1="120" x2="185" y2="120" stroke="rgba(231,237,233,0.55)" stroke-width="1.2"/>
+              <line x1="105" y1="30" x2="105" y2="180" stroke="rgba(231,237,233,0.55)" stroke-width="1.2"/>
+              <text x="172" y="112" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="11">t</text>
+              <text x="112" y="40" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="11">δ⁽¹⁾(t)</text>
+              <!-- seta para cima em 0- -->
+              <g stroke="#4ade9a" stroke-width="2.5" fill="none">
+                <line x1="97" y1="120" x2="97" y2="52"/>
+                <path d="M92 60 L97 50 L102 60" fill="#4ade9a"/>
+              </g>
+              <!-- seta para baixo em 0+ -->
+              <g stroke="#e0625a" stroke-width="2.5" fill="none">
+                <line x1="113" y1="120" x2="113" y2="188"/>
+                <path d="M108 180 L113 190 L118 180" fill="#e0625a"/>
+              </g>
+              <text x="34" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">+∞</text>
+              <text x="122" y="186" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="11">−∞</text>
+
+              <!-- bloco derivador -->
+              <text x="228" y="98" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">x(t)</text>
+              <line x1="264" y1="105" x2="300" y2="105" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <path d="M294 100 L302 105 L294 110" fill="rgba(231,237,233,0.75)"/>
+              <rect x="302" y="78" width="72" height="54" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="318" y="104" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">δ⁽¹⁾(t)</text>
+              <text x="308" y="150" fill="rgba(143,163,154,0.9)" font-family="IBM Plex Mono, monospace" font-size="10">resposta impulsiva</text>
+              <line x1="374" y1="105" x2="410" y2="105" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <path d="M404 100 L412 105 L404 110" fill="rgba(231,237,233,0.75)"/>
+              <text x="414" y="98" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ẋ(t)</text>
+            </svg>
+          </div>
+          <div class="splane-readout">Convoluir com o doublet é <span class="roc-formula">derivar</span>. Por isso a transferência do derivador ideal é simplesmente <span class="roc-formula">H(s) = s</span> — e todo termo \(s^k\) que sobra de uma \(F(s)\) imprópria vira derivada de impulso no tempo.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="geral" class="panel">
+    <span class="eyebrow">3.1</span>
+    <h2>O caso geral: quando sobra um polinômio</h2>
+    <p>Dada a transformada, uma função racional</p>
+    <div class="eq-block">\[ F(s) = \frac{N(s)}{D(s)}, \qquad \mathrm{gr}\{D(s)\} = n \]</div>
+    <p>a primeira pergunta é sempre a mesma: <b style="color:var(--ink)">ela é própria?</b> Se \(\mathrm{gr}\{N\} \ge \mathrm{gr}\{D\}\), não dá para expandir direto em frações parciais — antes é preciso fazer a <b style="color:var(--ink)">divisão de polinômios</b> e separar a parte inteira:</p>
+    <div class="eq-block">\[ F(s) = Q(s) + \frac{R(s)}{D(s)}, \qquad \mathrm{gr}\{R(s)\} < \mathrm{gr}\{D(s)\} \]</div>
+    <p>O resto \(R(s)/D(s)\) já é estritamente próprio e vai para frações parciais normalmente. O quociente \(Q(s)\) é um polinômio em \(s\) — e é ele que traz o assunto novo desta aula.</p>
+
+    <div class="callout"><b>A fórmula-mestra.</b> Juntando tudo, o par transformada/antitransformada de uma função racional qualquer fica assim:
+      <div class="eq-block" style="margin-top:0.9rem">\[ F(s) = Q(s) + \sum_{k=1}^{r}\sum_{\ell=1}^{m_k} A_{k\ell}\,\frac{1}{(s-p_k)^{\ell}} \]</div>
+      <div style="text-align:center;font-size:1.2rem;color:var(--phosphor);margin:0.2rem 0">\(\mathcal{L}\updownarrow\)</div>
+      <div class="eq-block" style="margin-top:0.2rem">\[ f(t) = q(t) + \sum_{k=1}^{r}\sum_{\ell=1}^{m_k} A_{k\ell}\,\frac{t^{\,\ell-1}}{(\ell-1)!}\,e^{p_k t} \]</div>
+    </div>
+
+    <p>Aqui \(r\) é o número de polos <em>distintos</em>, \(m_k\) é a multiplicidade do polo \(p_k\) (com \(m_1+\cdots+m_r=n\)), e \(A_{k\ell}\) são os resíduos, calculados pela fórmula geral</p>
+    <div class="eq-block">\[ A_{k\ell} = \frac{1}{(m_k-\ell)!}\,\frac{d^{\,m_k-\ell}}{ds^{\,m_k-\ell}}\Big[(s-p_k)^{m_k}\,F(s)\Big]_{s\,=\,p_k} \]</div>
+    <p class="dim">O somatório duplo é só uma forma compacta de dizer: para cada polo, um termo por potência do denominador. O termo de maior potência (\(\ell=m_k\)) sai pelo método do tapa; os de baixo exigem derivar.</p>
+
+    <div class="callout"><b>E o \(q(t)\)?</b> É a antitransformada do polinômio quociente. Como \(\mathcal{L}[\delta(t)] = 1\), um termo constante em \(Q(s)\) vira impulso. Mas e \(s\)? E \(s^2\)? Para antitransformar \(Q(s)\) é interessante considerar a "função" <b>doublet</b> — a próxima seção.</div>
+  </section>
+
+  <section id="doublet" class="panel">
+    <span class="eyebrow">3.2</span>
+    <h2>A função doublet \(\delta^{(1)}(t)\)</h2>
+    <p>O doublet é definido pelo mesmo tipo de contrato que define o impulso: não pelo valor pontual, mas pelo que ele faz dentro de uma integral. Três propriedades bastam:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">i · suporte</span>
+        <p>Vale zero em todo lugar, menos na origem:</p>
+        <div class="eq-block">\[ \delta^{(1)}(t) = 0, \quad t \ne 0 \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">ii · área nula</span>
+        <p>A área total é zero — o "sobe" cancela o "desce":</p>
+        <div class="eq-block">\[ \int_{-\infty}^{\infty} \delta^{(1)}(t)\,dt = 0 \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">iii · integral acumulada</span>
+        <p>Integrando até \(t\), recupera-se o impulso:</p>
+        <div class="eq-block">\[ \int_{-\infty}^{t} \delta^{(1)}(\lambda)\,d\lambda = \delta(t) \]</div>
+      </div>
+    </div>
+
+    <p style="margin-top:1.3rem">A propriedade (iii) é a definição de verdade, lida ao contrário: <b style="color:var(--ink)">o doublet é a derivada do impulso</b>.</p>
+    <div class="eq-block">\[ \frac{d}{dt}\,\delta(t) = \delta^{(1)}(t) \]</div>
+
+    <p>Dá para visualizar isso pelo caminho usual: aproxime \(\delta(t)\) por um pulso retangular de largura \(\Delta\) e altura \(1/\Delta\). A derivada desse pulso é um par de pulsos — um positivo na subida, um negativo na descida. Quando \(\Delta \to 0\), esse par vira duas setas infinitas de sinais opostos, coladas na origem. Daí o nome <em>doublet</em>.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg">
+        <!-- painel 1: pulso -->
+        <line x1="20" y1="150" x2="170" y2="150" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="70" y1="45" x2="70" y2="185" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <path d="M52 150 L52 80 L88 80 L88 150" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+        <text x="94" y="74" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">1/Δ</text>
+        <path d="M52 160 L88 160" stroke="rgba(143,163,154,0.8)" stroke-width="1"/>
+        <path d="M52 156 L52 164" stroke="rgba(143,163,154,0.8)" stroke-width="1"/>
+        <path d="M88 156 L88 164" stroke="rgba(143,163,154,0.8)" stroke-width="1"/>
+        <text x="66" y="176" fill="rgba(143,163,154,0.9)" font-family="IBM Plex Mono, monospace" font-size="10">Δ</text>
+        <text x="20" y="205" fill="rgba(231,237,233,0.7)" font-family="IBM Plex Mono, monospace" font-size="11">pulso → δ(t)</text>
+        <text x="158" y="142" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="11">t</text>
+
+        <!-- seta -->
+        <text x="186" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">d/dt</text>
+        <path d="M186 130 L228 130" stroke="#4ade9a" stroke-width="1.6"/>
+        <path d="M222 125 L230 130 L222 135" fill="#4ade9a"/>
+
+        <!-- painel 2: par de pulsos -->
+        <line x1="250" y1="115" x2="400" y2="115" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="310" y1="35" x2="310" y2="195" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <path d="M296 115 L296 55 L306 55 L306 115" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+        <path d="M320 115 L320 175 L330 175 L330 115" fill="none" stroke="#e0625a" stroke-width="2.2"/>
+        <text x="250" y="205" fill="rgba(231,237,233,0.7)" font-family="IBM Plex Mono, monospace" font-size="11">par de pulsos</text>
+        <text x="388" y="107" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="11">t</text>
+
+        <!-- seta -->
+        <text x="416" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Δ→0</text>
+        <path d="M414 130 L456 130" stroke="#4ade9a" stroke-width="1.6"/>
+        <path d="M450 125 L458 130 L450 135" fill="#4ade9a"/>
+
+        <!-- painel 3: doublet -->
+        <line x1="470" y1="115" x2="548" y2="115" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="505" y1="35" x2="505" y2="195" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <g stroke="#4ade9a" stroke-width="2.4" fill="none">
+          <line x1="499" y1="115" x2="499" y2="46"/>
+          <path d="M494 54 L499 44 L504 54" fill="#4ade9a"/>
+        </g>
+        <g stroke="#e0625a" stroke-width="2.4" fill="none">
+          <line x1="511" y1="115" x2="511" y2="184"/>
+          <path d="M506 176 L511 186 L516 176" fill="#e0625a"/>
+        </g>
+        <text x="470" y="210" fill="rgba(231,237,233,0.7)" font-family="IBM Plex Mono, monospace" font-size="11">δ⁽¹⁾(t)</text>
+      </svg>
+    </div>
+    <div class="pz-legend">
+      <span>A área do pulso é sempre 1 — no limite, \(\delta(t)\)</span>
+      <span>A área do par é sempre 0 — no limite, \(\delta^{(1)}(t)\)</span>
+    </div>
+  </section>
+
+  <section id="amostragem" class="panel">
+    <span class="eyebrow">3.3</span>
+    <h2>Propriedade da amostragem do doublet</h2>
+    <p>O impulso, dentro de uma integral, "colhe" o valor da função no ponto: \(\int \delta(t-t_0)f(t)\,dt = f(t_0)\). O doublet faz algo parecido, mas colhe a <b style="color:var(--ink)">derivada</b> — e com sinal trocado. Seja \(f(t)\) contínua:</p>
+
+    <div class="eq-block">\[ A = \int_{-\infty}^{\infty} \delta^{(1)}(t-t_0)\,f(t)\,dt \;=\; -\,\dot f(t_0) \]</div>
+
+    <button class="demo-btn">Ver demonstração ↓</button>
+    <div class="proof-block">
+      <div class="proof-steps">
+        <div class="proof-eq">
+          <p>Integração por partes, escolhendo:</p>
+          \[ u = f(t) \;\Longrightarrow\; du = \dot f(t)\,dt \]
+          \[ dv = \delta^{(1)}(t-t_0)\,dt \;\Longrightarrow\; v = \delta(t-t_0) \]
+        </div>
+        <div class="proof-eq">
+          <p>Aplicando \(\int u\,dv = [uv] - \int v\,du\):</p>
+          \[ A = \Big[f(t)\,\delta(t-t_0)\Big]_{-\infty}^{\infty} - \int_{-\infty}^{\infty} \dot f(t)\,\delta(t-t_0)\,dt \]
+        </div>
+        <div class="proof-eq">
+          <p>O termo de contorno é zero: em \(t = \pm\infty\) o impulso \(\delta(t-t_0)\) vale zero, porque ele só é não-nulo em \(t=t_0\).</p>
+          \[ \Big[f(t)\,\delta(t-t_0)\Big]_{-\infty}^{\infty} = 0 \]
+        </div>
+        <div class="proof-eq">
+          <p>E a integral que sobrou é a amostragem do impulso aplicada a \(\dot f\):</p>
+          \[ \int_{-\infty}^{\infty} \dot f(t)\,\delta(t-t_0)\,dt = \dot f(t_0) \]
+        </div>
+        <div class="proof-eq">
+          <p>Logo:</p>
+          \[ \boxed{\,A = -\,\dot f(t_0)\,} \]
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">O sinal negativo não é detalhe decorativo — ele vem da integração por partes e aparece toda vez que o doublet age sobre uma função. Guarde: <b>impulso amostra o valor, doublet amostra menos a derivada</b>.</div>
+  </section>
+
+  <section id="derivador" class="panel">
+    <span class="eyebrow">3.4</span>
+    <h2>O doublet é o derivador ideal</h2>
+    <p>Considere um sistema linear invariante no tempo cuja resposta impulsiva seja \(h(t) = \delta^{(1)}(t)\). O que ele faz com uma entrada \(x(t)\)? A saída é a convolução:</p>
+    <div class="eq-block">\[ y(t) = \delta^{(1)}(t) * x(t) = \int_{-\infty}^{\infty} \delta^{(1)}(\tau)\,x(t-\tau)\,d\tau \]</div>
+
+    <button class="demo-btn">Ver demonstração ↓</button>
+    <div class="proof-block">
+      <div class="proof-steps">
+        <div class="proof-eq">
+          <p>De novo por partes, agora integrando em \(\tau\):</p>
+          \[ u = x(t-\tau) \;\Longrightarrow\; du = -\dot x(t-\tau)\,d\tau \]
+          \[ dv = \delta^{(1)}(\tau)\,d\tau \;\Longrightarrow\; v = \delta(\tau) \]
+        </div>
+        <div class="proof-eq">
+          <p class="dim">Atenção ao sinal em \(du\): a regra da cadeia dá \(\dfrac{d(t-\tau)}{d\tau} = -1\).</p>
+          \[ y(t) = \Big[x(t-\tau)\,\delta(\tau)\Big]_{-\infty}^{\infty} + \int_{-\infty}^{\infty} \dot x(t-\tau)\,\delta(\tau)\,d\tau \]
+        </div>
+        <div class="proof-eq">
+          <p>O termo de contorno some, e a integral restante amostra em \(\tau=0\):</p>
+          \[ y(t) = \dot x(t) \]
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:1.2rem">Ou seja: passar um sinal por esse bloco é o mesmo que derivá-lo. Confirmando pela transformada — a função de transferência é a transformada da resposta impulsiva:</p>
+    <div class="eq-block">\[ H(s) = \int_{0^-}^{\infty} \delta^{(1)}(t)\,e^{-st}\,dt \]</div>
+    <p>Pela propriedade da amostragem que acabamos de provar, com \(f(t)=e^{-st}\) e \(t_0=0\):</p>
+    <div class="eq-block">\[ H(s) = -\frac{d}{dt}e^{-st}\bigg|_{t=0} = -\big(-s\,e^{-st}\big)\bigg|_{t=0} \;\Longrightarrow\; \boxed{H(s) = s} \]</div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">A leitura em s</span>
+        <p>Multiplicar por \(s\) no domínio da frequência = derivar no tempo. É o teorema da derivada com condições iniciais nulas — agora visto do lado da resposta impulsiva.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">A leitura prática</span>
+        <p>Todo termo do quociente \(Q(s)\) tem antitransformada conhecida: \(1 \to \delta(t)\), \(s \to \delta^{(1)}(t)\), \(s^2 \to \delta^{(2)}(t)\) e assim por diante — derivadas sucessivas do impulso.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="ex1" class="panel">
+    <span class="eyebrow">3.5</span>
+    <h2>Exemplo 1: polo duplo na origem + par complexo conjugado</h2>
+    <p>Antitransformar:</p>
+    <div class="given-box">
+      <span>\(\displaystyle F(s) = \frac{5\,(s+2)(s+3)}{s^2\,(s^2+2s+2)} = \frac{N(s)}{D(s)}\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Ela é própria?</div>
+          <p>\(\mathrm{gr}\{N(s)\} = 2\) e \(\mathrm{gr}\{D(s)\} = 4\). Como \(2 < 4\), \(F(s)\) é <b style="color:var(--ink)">estritamente própria</b> — não precisa de divisão de polinômios, vai direto para frações parciais.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Achar os polos</div>
+          <p>O fator \(s^2\) dá \(p_1 = 0\) com multiplicidade \(m_1 = 2\). Para o outro fator, fatoramos \(s^2+2s+2 = (s-p_2)(s-p_3)\):</p>
+          <div class="eq-block">\[ \Delta = 4 - 8 = -4 \;\Longrightarrow\; p_{2,3} = \frac{-2 \pm j2}{2} \]</div>
+          <div class="eq-block">\[ p_2 = -1+j, \qquad p_3 = -1-j = p_2^{*} \]</div>
+          <p class="dim">Confere pelas relações de soma e produto: \(p_2+p_3 = -2\) e \(p_2 p_3 = 2\), exatamente os coeficientes do trinômio.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Escrever a forma da expansão</div>
+          <div class="eq-block">\[ F(s) = \frac{A_{11}}{s} + \frac{A_{12}}{s^2} + \frac{A_{21}}{s-p_2} + \frac{A_{21}^{*}}{s-p_3} \]</div>
+          <p class="dim">Quatro resíduos para quatro polos — mas como \(p_3 = p_2^*\), o quarto sai de graça: é o conjugado do terceiro.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">\(A_{12}\) — método do tapa no polo duplo</div>
+          <p>É a potência mais alta do polo em \(s=0\), então não precisa derivar:</p>
+          <div class="eq-block">\[ A_{12} = \Big[s^2 F(s)\Big]_{s=0} = \left[\frac{5(s+2)(s+3)}{s^2+2s+2}\right]_{s=0} = \frac{5 \cdot 2 \cdot 3}{2} \]</div>
+          <div class="eq-block">\[ A_{12} = 15 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">\(A_{21}\) — o resíduo complexo</div>
+          <p>Tapa no fator \((s-p_2)\) e avalia em \(s=p_2=-1+j\):</p>
+          <div class="eq-block">\[ A_{21} = \Big[(s-p_2)F(s)\Big]_{s=p_2} = \left[\frac{5(s+2)(s+3)}{s^2\,(s-p_3)}\right]_{s=p_2} \]</div>
+          <p>Substituindo pedaço por pedaço: \(p_2+2 = 1+j\), \(p_2+3 = 2+j\), \(p_2^2 = (-1+j)^2 = 1-2j-1 = -2j\) e \(p_2-p_3 = 2j\).</p>
+          <div class="eq-block">\[ A_{21} = \frac{5(1+j)(2+j)}{(-2j)(2j)} = \frac{5(1+3j)}{4} \]</div>
+          <div class="eq-block">\[ A_{21} = 1{,}25 + j3{,}75 = 3{,}9528\,e^{\,j71{,}57^\circ} \]</div>
+          <p class="dim">E, de brinde, \(A_{21}^{*} = 3{,}9528\,e^{-j71{,}57^\circ}\) — mesmo módulo, ângulo trocado de sinal.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">\(A_{11}\) — dois caminhos possíveis</div>
+          <p>Esse é o resíduo da potência mais baixa do polo duplo. Existem dois jeitos de achá-lo, e vale conhecer os dois: às vezes um é bem mais rápido que o outro.</p>
+
+          <div class="theorem-grid" style="margin-top:1rem">
+            <div class="theorem-card">
+              <span class="tag">Método 1 — identificação de polinômios</span>
+              <p>Multiplica a expansão inteira por \(D(s)\) e compara coeficientes com \(N(s)\):</p>
+              <div class="eq-block">\[ N(s) = A_{11}\,s\,(s^2{+}2s{+}2) + A_{12}(s^2{+}2s{+}2) + A_{21}s^2(s-p_3) + A_{21}^{*}s^2(s-p_2) \]</div>
+              <p>Do lado esquerdo, \(N(s) = 5s^2+25s+30\) — não tem termo em \(s^3\). Igualando os coeficientes de \(s^3\):</p>
+              <div class="eq-block">\[ A_{11} + A_{21} + A_{21}^{*} = 0 \]</div>
+              <div class="eq-block">\[ A_{11} + \tfrac{5}{4}(1+3j) + \tfrac{5}{4}(1-3j) = 0 \]</div>
+              <p>As partes imaginárias se cancelam e sobra \(A_{11} + \tfrac{10}{4} = 0\):</p>
+              <div class="eq-block">\[ A_{11} = -\tfrac{5}{2} \]</div>
+            </div>
+
+            <div class="theorem-card">
+              <span class="tag">Método 2 — fórmula da derivada</span>
+              <p>Direto pela fórmula geral, com \(m_1 = 2\) e \(\ell = 1\) (uma derivada só):</p>
+              <div class="eq-block">\[ A_{11} = \frac{1}{(m_1-1)!}\,\frac{d^{\,m_1-1}}{ds^{\,m_1-1}}\Big[s^{m_1}F(s)\Big]_{s=p_1} = \frac{d}{ds}\Big[s^2F(s)\Big]_{s=0} \]</div>
+              <div class="eq-block">\[ = \frac{d}{ds}\left[\frac{5(s^2+5s+6)}{s^2+2s+2}\right]_{s=0} \]</div>
+              <p>Regra do quociente:</p>
+              <div class="eq-block">\[ = \left[\frac{10s+25}{s^2+2s+2} - \frac{5(s^2+5s+6)}{(s^2+2s+2)^2}(2s+2)\right]_{s=0} \]</div>
+              <div class="eq-block">\[ = \frac{25}{2} - \frac{30}{4}\cdot 2 = \frac{25-30}{2} \;\Longrightarrow\; A_{11} = -\tfrac{5}{2} \]</div>
+              <p class="dim">Os dois métodos batem — bom sinal de que a conta está certa.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">07</span>
+        <div class="step-body">
+          <div class="step-title">Antitransformar termo a termo</div>
+          <p>Cada pedaço já está na tabela: \(1/s \to H(t)\), \(1/s^2 \to t\,H(t)\), e o par complexo se junta em cosseno amortecido (\(2\,\mathrm{Re}[A_{21}e^{p_2t}] = 2|A_{21}|e^{\sigma t}\cos(\omega t + \phi)\), com \(\sigma=-1\) e \(\omega=1\)):</p>
+          <div class="eq-block">\[ f(t) = -\tfrac{5}{2} + 15t + 3{,}9528\,e^{\,j71{,}57^\circ}e^{(-1+j)t} + 3{,}9528\,e^{-j71{,}57^\circ}e^{(-1-j)t} \]</div>
+          <p>Somando os dois conjugados (\(2|A_{21}| = 7{,}9056\)):</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="final-answer">\[ f(t) = \left[-\frac{5}{2} + 15t + 7{,}9056\,e^{-t}\cos\!\left(t + 71{,}57^\circ\right)\right]H(t) \]</div>
+
+    <div class="callout"><b>Lendo a resposta:</b> o polo duplo na origem produziu o degrau \(-5/2\) e a rampa \(15t\) — termos que não somem. Já o par complexo em \(-1\pm j\) produziu uma oscilação de frequência \(1\;\mathrm{rad/s}\) que decai como \(e^{-t}\). A parte real negativa dos polos é justamente o que garante o amortecimento.</div>
+  </section>
+
+  <section id="ex2" class="panel">
+    <span class="eyebrow">3.6</span>
+    <h2>Exemplo 2: \(F(s)\) imprópria — aqui aparece o doublet</h2>
+    <p>Antitransformar:</p>
+    <div class="given-box">
+      <span>\(\displaystyle F(s) = \frac{s^4+5s^3+4s^2+3s+1}{s^3+3s^2+2s} = \frac{N(s)}{D(s)}\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Ela é própria? Não.</div>
+          <p>\(\mathrm{gr}\{N(s)\} = 4\) e \(\mathrm{gr}\{D(s)\} = 3\). Como \(4 > 3\), \(F(s)\) é uma função racional <b style="color:var(--ink)">imprópria</b> — antes de qualquer coisa, divisão de polinômios.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Divisão de polinômios</div>
+          <div class="codeblock"><span class="cmd">  s⁴ + 5s³ + 4s² + 3s + 1  |  s³ + 3s² + 2s</span>
+<span class="out"> −s⁴ − 3s³ − 2s²          |  ─────────────</span>
+<span class="cmt"> ──────────────────────   |  s + 2  = Q(s)</span>
+<span class="out">       2s³ + 2s² + 3s + 1</span>
+<span class="out">      −2s³ − 6s² − 4s</span>
+<span class="cmt">      ────────────────────</span>
+<span class="cmd">           −4s² −  s + 1  = R(s)</span></div>
+          <div class="eq-block">\[ Q(s) = s+2, \qquad R(s) = -4s^2 - s + 1 \]</div>
+          <div class="eq-block">\[ F(s) = s + 2 + \frac{R(s)}{D(s)} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Fatorar \(D(s)\) e montar a expansão</div>
+          <div class="eq-block">\[ s^3+3s^2+2s = s\,(s^2+3s+2) = s\,(s+1)(s+2) \]</div>
+          <p>Três polos reais e simples: \(p_1 = 0\), \(p_2 = -1\), \(p_3 = -2\). Então:</p>
+          <div class="eq-block">\[ F(s) = s + 2 + \frac{A_{11}}{s} + \frac{A_{21}}{s+1} + \frac{A_{31}}{s+2} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Os três resíduos, todos pelo tapa</div>
+
+          <div class="callout" style="margin-bottom:1.1rem"><b>Tanto faz usar \(F(s)\) ou \(R(s)/D(s)\).</b> Aplicando o tapa sobre a expansão inteira, o termo do quociente contribui com
+            <div class="eq-block" style="margin-top:0.7rem">\[ \Big[Q(s)\,(s-p_k)\Big]_{s\,=\,p_k} = 0 \]</div>
+            porque \(Q(s)\) é polinômio — não tem polo em \(p_k\), então o produto simplesmente zera na avaliação. Logo o resíduo pode ser calculado com a fração original ou com a parte estritamente própria, o que for mais confortável:
+            <div class="eq-block" style="margin-top:0.7rem">\[ A_{11} = \left[s\,\frac{R(s)}{D(s)}\right]_{s=0} = \left[\frac{-4s^2-s+1}{(s+1)(s+2)}\right]_{s=0} = \frac{1}{2} \]</div>
+            <div class="eq-block" style="margin-top:0.4rem">\[ A_{11} = \Big[s\,F(s)\Big]_{s=0} = \left[\frac{s^4+5s^3+4s^2+3s+1}{(s+1)(s+2)}\right]_{s=0} = \frac{1}{2} \quad\checkmark \]</div>
+          </div>
+
+          <p class="dim">Abaixo, os três pelo caminho direto (sobre a \(F(s)\) original):</p>
+          <div class="eq-block">\[ A_{11} = \Big[s\,F(s)\Big]_{s=0} = \left[\frac{s^4+5s^3+4s^2+3s+1}{s^2+3s+2}\right]_{s=0} = \frac{1}{2} \]</div>
+          <div class="eq-block">\[ A_{21} = \Big[(s+1)F(s)\Big]_{s=-1} = \left[\frac{s^4+5s^3+4s^2+3s+1}{s(s+2)}\right]_{s=-1} = \frac{1-5+4-3+1}{-1} = 2 \]</div>
+          <div class="eq-block">\[ A_{31} = \Big[(s+2)F(s)\Big]_{s=-2} = \left[\frac{s^4+5s^3+4s^2+3s+1}{s(s+1)}\right]_{s=-2} = \frac{16-40+16-6+1}{(-2)(-1)} = -\frac{13}{2} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Expansão completa</div>
+          <div class="eq-block">\[ F(s) = s + 2 + \frac{1}{2}\cdot\frac{1}{s} + 2\,\frac{1}{s+1} - \frac{13}{2}\cdot\frac{1}{s+2} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">Antitransformar — e agora o quociente entra</div>
+          <p>Os três últimos termos são tabela pura. Os dois primeiros vêm do \(Q(s)\): a constante \(2\) vira \(2\delta(t)\), e o termo \(s\) vira o doublet.</p>
+          <div class="eq-block">\[ s \;\longrightarrow\; \delta^{(1)}(t), \qquad 2 \;\longrightarrow\; 2\,\delta(t) \]</div>
+          <div class="eq-block">\[ f(t) = \delta^{(1)}(t) + 2\delta(t) + \tfrac{1}{2}H(t) + 2e^{-t}H(t) - \tfrac{13}{2}e^{-2t}H(t) \]</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="final-answer">\[ f(t) = \delta^{(1)}(t) + 2\,\delta(t) + \left[\frac{1}{2} + 2e^{-t} - \frac{13}{2}e^{-2t}\right]H(t) \]</div>
+
+    <div class="callout">Repare na estrutura da resposta: as <b>singularidades em \(t=0\)</b> (impulso e doublet) vêm inteiramente da parte imprópria \(Q(s)\); a parte "suave" para \(t>0\) vem dos polos. Se \(F(s)\) fosse estritamente própria, não haveria nenhum termo singular — foi o caso do exemplo anterior.</div>
+  </section>
+
+  <section id="inversao-integral" class="panel">
+    <span class="eyebrow">3.7</span>
+    <h2>A antitransformada pela integral de inversão</h2>
+    <p>Frações parciais resolvem o caso racional — que é o que aparece em circuitos. Mas no <b style="color:var(--ink)">caso geral</b>, para obter \(f(t)\) a partir de uma \(F(s)\) qualquer, existe a definição formal: a integral de inversão.</p>
+
+    <div class="eq-block">\[ f(t) = \frac{1}{2\pi j}\oint_{Br} F(s)\,e^{st}\,ds \]</div>
+
+    <p>onde \(Br\) é um <b style="color:var(--ink)">contorno de Bromwich</b>, com abscissa \(\sigma > \sigma_0\), sendo \(\sigma_0\) a abscissa de convergência de \(f(t)\). O contorno é uma reta vertical em \(\mathrm{Re}\{s\}=\sigma\), fechada por um semicírculo que se fecha à esquerda quando o raio vai a infinito:</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 460 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- eixos -->
+        <line x1="20" y1="160" x2="440" y2="160" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <line x1="265" y1="20" x2="265" y2="290" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+        <text x="424" y="152" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">σ</text>
+        <text x="273" y="32" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">jω</text>
+
+        <!-- semicirculo fechando a esquerda, raio grande o bastante para conter os polos -->
+        <path d="M300 45 A 115 115 0 0 0 300 275" fill="rgba(74,222,154,0.06)" stroke="#4ade9a" stroke-width="1.6" stroke-dasharray="6 4"/>
+        <!-- reta de Bromwich -->
+        <line x1="300" y1="45" x2="300" y2="275" stroke="#4ade9a" stroke-width="2.4"/>
+        <path d="M295 120 L300 108 L305 120" fill="#4ade9a"/>
+        <text x="308" y="41" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Br</text>
+        <text x="308" y="178" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">σ</text>
+
+        <!-- abscissa de convergencia -->
+        <line x1="250" y1="30" x2="250" y2="284" fill="none" stroke="rgba(245,185,66,0.75)" stroke-width="1.4" stroke-dasharray="4 4"/>
+        <text x="226" y="178" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">σ₀</text>
+
+        <!-- polos: a esquerda de σ₀ e dentro do contorno -->
+        <g stroke="#f5b942" stroke-width="2.2">
+          <line x1="194" y1="154" x2="206" y2="166"/><line x1="206" y1="154" x2="194" y2="166"/>
+          <line x1="229" y1="104" x2="241" y2="116"/><line x1="241" y1="104" x2="229" y2="116"/>
+          <line x1="229" y1="204" x2="241" y2="216"/><line x1="241" y1="204" x2="229" y2="216"/>
+        </g>
+        <text x="26" y="262" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">raio → ∞</text>
+        <text x="26" y="280" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">os polos ficam dentro</text>
+      </svg>
+    </div>
+    <div class="pz-legend">
+      <span>✕ polos de \(F(s)\) — todos à esquerda de \(\sigma_0\)</span>
+      <span>A reta \(Br\) tem que passar à direita de todos eles</span>
+    </div>
+
+    <p style="margin-top:1.3rem">Integrais de funções analíticas (complexas), sendo integrais de linha ao longo de curvas fechadas como \(Br\), resolvem-se por dois ingredientes da variável complexa:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">i · série de Laurent do integrando</span>
+        <p>No caso, o integrando é \(F(s)\,e^{st}\). Para obter a série de Laurent, costuma-se começar pela série de Taylor. A diferença entre as duas:</p>
+        <p><b style="color:var(--ink)">Taylor</b> é uma série de potências não-negativas; <b style="color:var(--ink)">Laurent</b> é uma série de potências inteiras — inclusive negativas.</p>
+        <p>O coeficiente de Laurent da potência \(-1\) é, por definição, o <b style="color:var(--ink)">resíduo</b> do integrando naquele ponto.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">ii · resíduos + teorema de Cauchy</span>
+        <p>Com os resíduos em mãos, o teorema dos resíduos de Cauchy entrega a integral de uma vez: ela vale \(2\pi j\) vezes a soma dos resíduos dentro do contorno.</p>
+        <div class="eq-block">\[ f(t) = \sum_{k} \mathrm{Res}\Big[F(s)e^{st}\Big]_{s=p_k} \]</div>
+        <p class="dim">O \(1/2\pi j\) da definição cancela exatamente o \(2\pi j\) do teorema.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Por que isso fecha o círculo.</b> Se você aplicar o teorema dos resíduos a uma \(F(s)\) racional, os resíduos de \(F(s)e^{st}\) nos polos devolvem exatamente os termos \(A_{k\ell}\,\frac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\) da expansão em frações parciais. Os dois métodos são o mesmo método — frações parciais é só o atalho para o caso racional.</div>
+  </section>
+
+  <section id="receita" class="panel">
+    <span class="eyebrow">3.8</span>
+    <h2>A receita, em ordem</h2>
+    <p class="dim">O roteiro completo para antitransformar qualquer \(F(s)\) racional que aparecer na prova.</p>
+
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="num">1</span>
+        <p><b style="color:var(--ink)">Compare os graus.</b> Se \(\mathrm{gr}\{N\} \ge \mathrm{gr}\{D\}\), divida os polinômios e separe \(Q(s) + R(s)/D(s)\). Senão, siga direto.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">2</span>
+        <p><b style="color:var(--ink)">Fatore \(D(s)\)</b> e identifique cada polo \(p_k\) com sua multiplicidade \(m_k\). Confira que \(\sum m_k = n\).</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">3</span>
+        <p><b style="color:var(--ink)">Escreva a forma da expansão</b> antes de calcular qualquer coisa — um termo por potência de cada polo. Isso evita esquecer o \(A_{k1}\) dos polos múltiplos.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">4</span>
+        <p><b style="color:var(--ink)">Calcule os resíduos.</b> Potência mais alta de cada polo: tapa. Potências mais baixas: derive. Polos complexos: calcule só um do par e conjugue o outro.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">5</span>
+        <p><b style="color:var(--ink)">Antitransforme termo a termo.</b> \(\dfrac{1}{(s-p_k)^\ell} \to \dfrac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\); pares conjugados viram \(2|A|e^{\sigma t}\cos(\omega t+\phi)\); \(Q(s)\) vira impulso e derivadas dele.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">6</span>
+        <p><b style="color:var(--ink)">Confira.</b> A resposta tem que ser real (nenhum \(j\) sobrando) e, se \(F(s)\) for estritamente própria, não pode ter impulso nem doublet.</p>
+      </div>
+    </div>
+
+    <div class="roc-grid" style="margin-top:1.4rem">
+      <div class="roc-card">
+        <span class="tag">Onde erra-se mais</span>
+        <p>Esquecer de checar se \(F(s)\) é própria. Sem a divisão de polinômios, o método do tapa dá resíduos que não fecham — e a expansão simplesmente não reproduz \(F(s)\).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Teste rápido de sanidade</span>
+        <p>Escolha um valor qualquer de \(s\) (por exemplo \(s=1\)), calcule \(F(s)\) pela expressão original e pela expansão. Se der diferente, algum resíduo está errado.</p>
+      </div>
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-04.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">04 · Periódicas e ponta de prova</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula de 17/08/2026 — item 1.5, Antitransformada de Laplace pela expansão em frações parciais (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+});
+
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
