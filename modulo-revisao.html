@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II · Revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+<style>
+  /* ---------- folha de revisão ---------- */
+  .rev-grid{
+    column-count: 2;
+    column-gap: 1.4rem;
+    margin-top: 1.4rem;
+  }
+  @media (max-width: 1100px){ .rev-grid{ column-count: 1; } }
+
+  .rev-card{
+    break-inside: avoid;
+    page-break-inside: avoid;
+    background: var(--bg-panel-2);
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 0.9rem 1.05rem 1rem;
+    margin: 0 0 1.1rem;
+    display: inline-block;
+    width: 100%;
+    font-size: 0.9rem;
+  }
+  .rev-card h3{
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    color: var(--phosphor);
+    margin: 0 0 0.55rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid var(--line-strong);
+    font-weight: 600;
+  }
+  .rev-card h4{
+    font-size: 0.86rem;
+    color: var(--ink);
+    margin: 0.85rem 0 0.35rem;
+    font-weight: 600;
+  }
+  .rev-card h4:first-of-type{ margin-top: 0.2rem; }
+  .rev-card p{ margin: 0.35rem 0; line-height: 1.5; }
+  .rev-card ul, .rev-card ol{ margin: 0.35rem 0; padding-left: 1.1rem; }
+  .rev-card li{ margin: 0.16rem 0; line-height: 1.45; }
+  .rev-card .mj{ margin: 0.5rem 0; overflow-x: auto; }
+
+  .rev-t{ width:100%; border-collapse: collapse; margin: 0.4rem 0; font-size: 0.88rem; }
+  .rev-t td{ padding: 0.22rem 0.5rem 0.22rem 0; border-bottom: 1px solid var(--line); vertical-align: middle; }
+  .rev-t tr:last-child td{ border-bottom: none; }
+  .rev-t th{ padding: 0.2rem 0.5rem 0.3rem 0; text-align:left; color: var(--ink-dim);
+    font-family:'IBM Plex Mono',monospace; font-size:0.68rem; text-transform:uppercase;
+    letter-spacing:0.06em; border-bottom: 1px solid var(--line-strong); font-weight:500; }
+
+  .rev-warn{ color: var(--amber); margin: 0.5rem 0; line-height:1.45; }
+  .rev-warn b{ color: var(--amber); }
+  .rev-note{ color: var(--ink-dim); font-size: 0.85rem; margin: 0.45rem 0; line-height:1.45; }
+  .rev-key{ border-left: 2px solid var(--phosphor); padding: 0.4rem 0 0.4rem 0.7rem; margin: 0.55rem 0;
+    background: var(--phosphor-dim); }
+
+  .rev-dl{
+    display:inline-flex; align-items:center; gap:0.5rem;
+    border:1px solid var(--phosphor); color: var(--phosphor);
+    padding: 0.55rem 1rem; border-radius:2px; text-decoration:none;
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem;
+    text-transform:uppercase; letter-spacing:0.07em; margin-top: 0.4rem;
+  }
+  .rev-dl:hover{ background: var(--phosphor-dim); }
+
+  /* ---------- impressão A4 frente e verso ---------- */
+  @media print{
+    @page{ size: A4; margin: 8mm; }
+    .grid-overlay, .sidebar, .topbar, .hero, .next-module, .rev-noprint, .foot-note{ display:none !important; }
+    .app-shell, .content-col{ display:block !important; margin:0 !important; padding:0 !important; max-width:none !important; }
+    body{ background:#fff !important; color:#000 !important; font-size: 7.4pt !important; }
+    .panel{ background:#fff !important; border:none !important; padding:0 !important; }
+    .rev-grid{ column-count: 3 !important; column-gap: 5mm !important; column-rule: 0.4pt solid #bbb; }
+    .rev-card{ background:#fff !important; border:none !important; border-top:1px solid #000 !important;
+      border-radius:0 !important; padding:0.2rem 0 0.5rem !important; margin:0 0 0.45rem !important;
+      font-size: 7.4pt !important; }
+    .rev-card h3{ color:#000 !important; border-bottom:none !important; font-size:7pt !important;
+      margin:0.15rem 0 0.25rem !important; padding:0 !important; }
+    .rev-card h4{ color:#000 !important; font-size:7.4pt !important; margin:0.4rem 0 0.15rem !important; }
+    .rev-card p, .rev-card li{ margin:0.12rem 0 !important; line-height:1.25 !important; }
+    .rev-note, .rev-warn{ color:#444 !important; font-size:7pt !important; }
+    .rev-key{ background:#f2f2f2 !important; border-left:1.5pt solid #000 !important; }
+    .rev-t td, .rev-t th{ border-color:#ccc !important; color:#000 !important; padding:0.1rem 0.4rem 0.1rem 0 !important; }
+    a{ color:#000 !important; text-decoration:none !important; }
+    h1, h2{ color:#000 !important; }
+    .rev-printhead{ display:block !important; }
+  }
+  .rev-printhead{ display:none; }
+</style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · Folha de revisão</span>
+      </div>
+      <div class="tabs">
+        <a href="#laplace">Laplace</a>
+        <a href="#inversao">Antitransformada</a>
+        <a href="#circuitos">Circuitos em s</a>
+        <a href="#segunda">2ª ordem</a>
+        <a href="#extras">Extras</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Revisão · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Tudo o que precisa ser lembrado.</span> <span class="tone-b">Uma folha A4, frente e verso.</span></h1>
+        <p class="hero-sub">Condensado dos módulos <a href="modulo-00.html">00</a> a <a href="modulo-05.html">05</a>: fórmulas, tabelas e as receitas em passos. Sem demonstração, sem texto explicativo — para isso, volte ao módulo de origem. A versão em PDF já está paginada para caber em exatamente duas faces de A4.</p>
+        <div class="hero-meta">
+          <span><b>Cobertura</b>Módulos 00 – 05</span>
+          <span><b>Formato</b>A4 frente e verso</span>
+        </div>
+        <a class="rev-dl" href="revisao-p1-folha-a4.pdf" download>↓ Baixar o PDF (A4, 2 páginas)</a>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="rev-printhead" style="text-align:center;margin-bottom:4mm">
+        <b style="font-size:10pt">PSI3213 — Circuitos Elétricos II · Folha de Revisão P1</b><br>
+        <span style="font-size:7pt;color:#666">Módulos 00–05 · fórmulas e receitas</span>
+      </div>
+
+      <p class="rev-noprint rev-note">As seções numeradas (1–16) saem direto dos módulos; as seções <b style="color:var(--ink)">A a F</b> são consolidações — mesmo conteúdo, reorganizado para consulta rápida.</p>
+      <p class="rev-noprint rev-note">Dica: <b style="color:var(--ink)">Ctrl/Cmd + P</b> imprime esta página já em três colunas no A4. Se quiser a diagramação garantida em duas faces exatas, use o PDF acima.</p>
+
+      <div class="rev-grid">
+
+<!-- ============ LAPLACE ============ -->
+<div class="rev-card" id="laplace">
+<h3>1 · Laplace — definição</h3>
+<div class="mj">\[ F(s)=\mathcal{L}[f]=\int_{0^-}^{\infty} f(t)\,e^{-st}\,dt \]</div>
+<p>Converge para \(\mathrm{Re}\{s\}>\sigma_0\). Linearidade: \(\mathcal{L}[af+bg]=aF+bG\).</p>
+<p>Ordem exponencial: \(\lim_{t\to\infty}f(t)e^{-\alpha t}=0\) para \(\alpha\ge\alpha_0=\sigma_0\).</p>
+<p class="rev-note">Condição suficiente, não necessária.</p>
+</div>
+
+<div class="rev-card">
+<h3>2 · Tabela de pares</h3>
+<table class="rev-t">
+<tr><th>\(f(t)\,H(t)\)</th><th>\(F(s)\)</th></tr>
+<tr><td>\(\delta(t)\)</td><td>\(1\)</td></tr>
+<tr><td>\(\delta(t-a)\)</td><td>\(e^{-as}\)</td></tr>
+<tr><td>\(\delta^{(n)}(t)\)</td><td>\(s^n\)</td></tr>
+<tr><td>\(H(t)\)</td><td>\(1/s\)</td></tr>
+<tr><td>\(e^{at}\)</td><td>\(\dfrac{1}{s-a}\)</td></tr>
+<tr><td>\(t^n\)</td><td>\(\dfrac{n!}{s^{n+1}}\)</td></tr>
+<tr><td>\(\dfrac{t^{k-1}}{(k-1)!}e^{at}\)</td><td>\(\dfrac{1}{(s-a)^k}\)</td></tr>
+<tr><td>\(\operatorname{sen}\omega t\)</td><td>\(\dfrac{\omega}{s^2+\omega^2}\)</td></tr>
+<tr><td>\(\cos\omega t\)</td><td>\(\dfrac{s}{s^2+\omega^2}\)</td></tr>
+<tr><td>\(\operatorname{senh}at\)</td><td>\(\dfrac{a}{s^2-a^2}\)</td></tr>
+<tr><td>\(\cosh at\)</td><td>\(\dfrac{s}{s^2-a^2}\)</td></tr>
+</table>
+<p class="rev-note">Trigonométricas \(\to s^2+\omega^2\) (polos imaginários); hiperbólicas \(\to s^2-a^2\) (polos reais).</p>
+<h4>Senoides com fase</h4>
+<div class="mj">\[ \mathcal{L}[A\cos(\omega t+\varphi)H]=A\,\frac{s\cos\varphi-\omega\operatorname{sen}\varphi}{s^2+\omega^2} \]</div>
+<div class="mj">\[ \mathcal{L}[A\operatorname{sen}(\omega t+\varphi)H]=A\,\frac{s\operatorname{sen}\varphi+\omega\cos\varphi}{s^2+\omega^2} \]</div>
+<p>Amortecidas: \(s\to s+a\) no numerador e \(s^2+\omega^2\to(s+a)^2+\omega^2\).</p>
+</div>
+
+<div class="rev-card">
+<h3>3 · Teoremas operacionais</h3>
+<table class="rev-t">
+<tr><th>tempo</th><th>domínio \(s\)</th></tr>
+<tr><td>\(c_1f_1+c_2f_2\)</td><td>\(c_1F_1+c_2F_2\)</td></tr>
+<tr><td>\(t\,f(t)\)</td><td>\(-F'(s)\)</td></tr>
+<tr><td>\(t^n f(t)\)</td><td>\((-1)^nF^{(n)}(s)\)</td></tr>
+<tr><td>\(e^{-at}f(t)\)</td><td>\(F(s+a)\)</td></tr>
+<tr><td>\(e^{at}f(t)\)</td><td>\(F(s-a)\)</td></tr>
+<tr><td>\(f(t-a)H(t-a)\)</td><td>\(e^{-as}F(s)\)</td></tr>
+<tr><td>\(f(at),\ a>0\)</td><td>\(a^{-1}F(s/a)\)</td></tr>
+<tr><td>\(f'(t)\)</td><td>\(sF(s)-f(0^-)\)</td></tr>
+<tr><td>\(\int_0^t f\)</td><td>\(F(s)/s\)</td></tr>
+</table>
+<div class="mj">\[ \mathcal{L}[\ddot f]=s^2F-s\,f(0^-)-\dot f(0^-) \]</div>
+<div class="mj">\[ \mathcal{L}[f^{(n)}]=s^nF-s^{n-1}f(0^-)-\cdots-f^{(n-1)}(0^-) \]</div>
+<p>Integral com c.i.: \(\Phi(s)=\dfrac{F(s)}{s}+\dfrac{\varphi(0^-)}{s}\), com \(\varphi=\int_{-\infty}^{t}f\).</p>
+<h4>Periódica de período \(T\)</h4>
+<div class="mj">\[ F(s)=\frac{1}{1-e^{-sT}}\int_{0^-}^{T^-} f(t)e^{-st}dt \]</div>
+<p class="rev-warn"><b>!</b> Ordem de aplicação: resolva \(t^n\) e multiplicação por polinômio <b>antes</b> da translação em \(s\). Já os atrasos \(e^{-as}\) saem de cena no início e voltam no <b>último</b> passo.</p>
+</div>
+
+<div class="rev-card">
+<h3>4 · Impulso e doublet</h3>
+<p>\(\int f(t)\delta(t-t_0)dt=f(t_0)\)</p>
+<p>\(\int f(t)\delta^{(n)}(t-t_0)dt=(-1)^n f^{(n)}(t_0)\)</p>
+<h4>Doublet \(\delta^{(1)}\)</h4>
+<p>\(\int_{-\infty}^{\infty}\delta^{(1)}=0\); \(\int_{-\infty}^{t}\delta^{(1)}=\delta(t)\); \(\frac{d}{dt}\delta=\delta^{(1)}\)</p>
+<p>Amostragem: \(\int f\,\delta^{(1)}(t-t_0)\,dt=-\dot f(t_0)\)</p>
+<p>Derivador ideal: \(\delta^{(1)}*x=\dot x\), logo \(H(s)=s\)</p>
+<h4>Família rampa–degrau–impulso</h4>
+<p>\(\frac{dr}{dt}=H\), \(\frac{dH}{dt}=\delta\), \(r(t)=t\,H(t)\)</p>
+<p>\(\frac{d}{dt}[g(t)H(t-a)]=g'H(t-a)+g(a)\delta(t-a)\)</p>
+<p class="rev-warn"><b>!</b> \(\delta(at-b)=\frac{1}{|a|}\delta\!\left(t-\frac{b}{a}\right)\)</p>
+</div>
+
+<div class="rev-card">
+<h3>5 · Complexos</h3>
+<div class="mj">\[ e^{j\Phi}=\cos\Phi+j\operatorname{sen}\Phi \]</div>
+<p>\(\cos\Phi=\frac{1}{2}(e^{j\Phi}+e^{-j\Phi})\), \(\operatorname{sen}\Phi=\frac{1}{2j}(e^{j\Phi}-e^{-j\Phi})\)</p>
+<p>Divisão em polar: <b style="color:var(--ink)">módulos dividem, ângulos subtraem</b>.</p>
+<p class="rev-warn"><b>!</b> \(\psi=\operatorname{atan2}(y,x)\) — \(\arctan\) puro erra 180° quando \(x<0\).</p>
+</div>
+
+<!-- ============ ANTITRANSFORMADA ============ -->
+<div class="rev-card" id="inversao">
+<h3>6 · Antitransformada — racionais</h3>
+<div class="mj">\[ F(s)=\frac{N(s)}{D(s)}=K\frac{\prod(s-z_i)}{\prod(s-p_k)},\quad K=\frac{b_0}{a_0} \]</div>
+<h4>Passo 1: é própria?</h4>
+<table class="rev-t">
+<tr><td>\(\mathrm{gr}N<\mathrm{gr}D\)</td><td>estritamente própria → direto</td></tr>
+<tr><td>\(\mathrm{gr}N=\mathrm{gr}D\)</td><td>divide; \(Q\) constante → \(\delta(t)\)</td></tr>
+<tr><td>\(\mathrm{gr}N>\mathrm{gr}D\)</td><td>imprópria; \(Q\) tem \(s^k\)</td></tr>
+</table>
+<p>\(F=Q(s)+\dfrac{R(s)}{D(s)}\), com \(\mathrm{gr}R<\mathrm{gr}D\).</p>
+<p class="rev-note">Excesso de \(k\) graus ⇒ singularidades até \(\delta^{(k)}(t)\). O grau te diz o resultado antes da conta.</p>
+<h4>Expansão e resíduos</h4>
+<div class="mj">\[ F=\sum_{k=1}^{r}\sum_{\ell=1}^{m_k}\frac{A_{k\ell}}{(s-p_k)^{\ell}},\qquad \sum m_k=n \]</div>
+<div class="mj">\[ \mathcal{L}^{-1}\!\left[\frac{1}{(s-p_k)^{\ell}}\right]=\frac{t^{\ell-1}}{(\ell-1)!}e^{p_kt} \]</div>
+<p>Polo simples (tapa): \(A_k=\big[(s-p_k)F\big]_{s=p_k}\)</p>
+<div class="mj">\[ A_{k\ell}=\frac{1}{(m_k-\ell)!}\frac{d^{\,m_k-\ell}}{ds^{\,m_k-\ell}}\Big[(s-p_k)^{m_k}F\Big]_{s=p_k} \]</div>
+<p class="rev-note">Nº de derivadas \(=m_k-\ell\). Expoente máximo (\(\ell=m_k\)) → tapa. É o coeficiente de Taylor de \((s-p_k)^{m_k}F\) em torno de \(p_k\).</p>
+<p><i>Alternativa:</i> multiplicar tudo por \(D(s)\) e igualar coeficientes.</p>
+</div>
+
+<div class="rev-card">
+<h3>6b · Par conjugado — a regra de ouro</h3>
+<div class="mj">\[ Ae^{pt}+A^{*}e^{p^{*}t}=2\,\mathrm{Re}\big[Ae^{pt}\big] \]</div>
+<div class="rev-key">
+<div class="mj">\[ p=\sigma\pm j\omega,\ A=|A|e^{j\phi} \;\Longrightarrow\; 2|A|\,e^{\sigma t}\cos(\omega t+\phi) \]</div>
+</div>
+<p class="rev-note">Calcule só o resíduo do polo de cima; o outro é o conjugado. O fator 2 vem de \(e^{j\theta}+e^{-j\theta}=2\cos\theta\).</p>
+<p>Retangular (\(A=A'+jA''\)): \(2e^{\sigma t}\big[A'\cos\omega t-A''\operatorname{sen}\omega t\big]\)</p>
+<h4>Forma real (evita complexos)</h4>
+<div class="mj">\[ \frac{Bs+C}{(s+a)^2+\omega^2}\to e^{-at}\!\left[B\cos\omega t+\frac{C-aB}{\omega}\operatorname{sen}\omega t\right] \]</div>
+<p class="rev-note">Sobre quadrático irredutível o numerador é <b style="color:var(--ink)">linear</b>. Completar quadrado: \(s^2+s+1=(s+\frac12)^2+(\frac{\sqrt3}{2})^2\).</p>
+</div>
+
+<div class="rev-card">
+<h3>7 · Receita de antitransformação</h3>
+<ol>
+<li>Separe os atrasos \(e^{-as}\); voltam no fim.</li>
+<li>Cancele fatores comuns (singularidade removível ≠ polo).</li>
+<li>Compare graus; se \(\mathrm{gr}N\ge\mathrm{gr}D\), divida.</li>
+<li>Fatore \(D\); ache \(p_k\) e \(m_k\); confira \(\sum m_k=n\).</li>
+<li>Escreva a forma completa <b style="color:var(--ink)">antes</b> de calcular.</li>
+<li>Resíduos: tapa no expoente máximo, derive nos menores, conjugue os complexos.</li>
+<li>Antitransforme termo a termo; \(Q(s)\to\delta\) e derivadas.</li>
+<li>Recombine conjugados em cosseno real.</li>
+<li>Reaplique atrasos: \(t\to t-a\), \(\times H(t-a)\).</li>
+<li>Confira: nada de \(j\) sobrando; se estritamente própria, sem \(\delta\).</li>
+</ol>
+<p class="rev-note">Teste rápido: avalie \(F(1)\) pela expressão original e pela expansão. Se der diferente, algum resíduo está errado.</p>
+</div>
+
+<div class="rev-card">
+<h3>8 · Valor inicial (TVI)</h3>
+<div class="mj">\[ f(0^+)=\lim_{s\to\infty}s\,F(s) \]</div>
+<div class="mj">\[ \dot f(0^+)=\lim_{s\to\infty}s\big[s\,F(s)-f(0^-)\big] \]</div>
+<p class="rev-note">Resolve item inteiro sem antitransformar. Bromwich, \(f(t)=\frac{1}{2\pi j}\int_{\sigma-j\infty}^{\sigma+j\infty}F(s)e^{st}ds\), existe mas não se usa.</p>
+</div>
+
+<!-- ============ CIRCUITOS EM S ============ -->
+<div class="rev-card" id="circuitos">
+<h3>9 · Indutor e capacitor em \(s\)</h3>
+<h4>Indutor \(v=L\,di/dt\)</h4>
+<p>\(V(s)=sL\,I(s)-L\,i(0^-)\)</p>
+<p>\(I(s)=\dfrac{1}{sL}V(s)+\dfrac{i(0^-)}{s}\)</p>
+<h4>Capacitor \(i=C\,dv/dt\)</h4>
+<p>\(I(s)=sC\,V(s)-C\,v(0^-)\)</p>
+<p>\(V(s)=\dfrac{1}{sC}I(s)+\dfrac{v(0^-)}{s}\)</p>
+<p class="rev-note">\(q_C(0^-)=C\,v_C(0^-)\) — carga ou tensão, tanto faz.</p>
+<h4>Equivalentes (fonte de c.i.)</h4>
+<table class="rev-t">
+<tr><th>Thévenin</th><th>\(Z(s)\)</th><th>fonte de tensão</th></tr>
+<tr><td>\(L\)</td><td>\(sL\)</td><td>\(-\,L\,i(0^-)\)</td></tr>
+<tr><td>\(C\)</td><td>\(\dfrac{1}{sC}\)</td><td>\(+\,\dfrac{v(0^-)}{s}\)</td></tr>
+<tr><th>Norton</th><th>\(Y(s)\)</th><th>fonte de corrente</th></tr>
+<tr><td>\(L\)</td><td>\(\dfrac{1}{sL}\)</td><td>\(+\,\dfrac{i(0^-)}{s}\)</td></tr>
+<tr><td>\(C\)</td><td>\(sC\)</td><td>\(-\,C\,v(0^-)\)</td></tr>
+</table>
+<p class="rev-warn"><b>!</b> <b>Sinal:</b> indutor entra <b>negativo</b> (\(-Li(0^-)\)), capacitor <b>positivo</b> (\(+v(0^-)/s\)). Trocar a polaridade é o erro mais comum.</p>
+<p class="rev-note">Em \(s\) o circuito é resistivo: Kirchhoff, divisor, Thévenin e superposição valem, sem nenhuma equação diferencial.</p>
+</div>
+
+<div class="rev-card">
+<h3>10 · Duas decomposições</h3>
+<p><b style="color:var(--ink)">Transitória / Permanente</b> — <i>esse termo morre quando \(t\to\infty\)?</i></p>
+<p><b style="color:var(--ink)">Livre / Forçada</b> — <i>de onde veio a energia?</i></p>
+<p><b style="color:var(--ink)">Livre</b>: apaga a fonte externa, mantém a c.i.<br>
+<b style="color:var(--ink)">Forçada</b>: zera a c.i., mantém a fonte.</p>
+<p class="rev-warn"><b>!</b> livre ≠ transitória. A resposta <i>forçada</i> também contém transitório — a fonte precisa carregar o capacitor com o \(\tau\) do circuito.</p>
+<p class="rev-note">Como distinguir as duas fontes: a real já está no desenho <i>no tempo</i>; a de c.i. só nasce depois de transformar, nunca tem a forma de onda da excitação (é constante ou constante\(/s\)), e carrega literalmente um \((0^-)\). Não substitua números cedo.</p>
+</div>
+
+<!-- ============ 2a ORDEM ============ -->
+<div class="rev-card" id="segunda">
+<h3>11 · EDO — método clássico</h3>
+<p>\(x=x_h+x_p\). Característica: \(a_n\lambda^n+\cdots+a_0=0\).</p>
+<ul>
+<li>Raízes distintas: \(\sum C_ie^{\lambda_it}\)</li>
+<li>Repetida (mult. \(m\)): \((C_0+C_1t+\cdots)e^{\lambda t}\)</li>
+<li>Par \(\alpha\pm j\beta\): \(e^{\alpha t}(C_1\cos\beta t+C_2\operatorname{sen}\beta t)\)</li>
+</ul>
+<p>Por Laplace: \(X(s)=\dfrac{b_0U(s)}{D(s)}+\dfrac{P_{ci}(s)}{D(s)}\), com \(D(s)\) = polinômio característico (\(\lambda\to s\)).</p>
+<p>Salto por impulso: \(\dot x+ax=K\delta(t)\Rightarrow x(0^+)-x(0^-)=K\).</p>
+</div>
+
+<div class="rev-card">
+<h3>12 · Redes de 2ª ordem</h3>
+<div class="mj">\[ \ddot v+2\alpha\dot v+\omega_0^2 v=f(t) \]</div>
+<div class="mj">\[ D(s)=s^2+2\alpha s+\omega_0^2 \]</div>
+<table class="rev-t">
+<tr><th></th><th>\(\alpha\)</th><th>\(\omega_0\)</th></tr>
+<tr><td>RLC <b style="color:var(--ink)">paralelo</b></td><td>\(\dfrac{1}{2RC}=\dfrac{G}{2C}\)</td><td>\(\dfrac{1}{\sqrt{LC}}\)</td></tr>
+<tr><td>RLC <b style="color:var(--ink)">série</b></td><td>\(\dfrac{R}{2L}\)</td><td>\(\dfrac{1}{\sqrt{LC}}\)</td></tr>
+</table>
+<p class="rev-warn"><b>!</b> \(\alpha\) <b>invertido</b>: no série cresce com \(R\); no paralelo diminui com \(R\). Mesmo \(\omega_0\).</p>
+<p>\(\Delta=4(\alpha^2-\omega_0^2)\), \(s_{1,2}=-\alpha\pm\sqrt{\alpha^2-\omega_0^2}\)</p>
+<h4>Os três regimes</h4>
+<table class="rev-t">
+<tr><td>\(\alpha>\omega_0\)</td><td><b style="color:var(--ink)">super</b>amortecida</td></tr>
+<tr><td>\(\alpha=\omega_0\)</td><td><b style="color:var(--ink)">crítica</b></td></tr>
+<tr><td>\(\alpha<\omega_0\)</td><td><b style="color:var(--ink)">sub</b>amortecida</td></tr>
+</table>
+<p><b style="color:var(--ink)">Super</b>: \(\beta=\sqrt{\alpha^2-\omega_0^2}\), \(s_{1,2}=-\alpha\pm\beta\) (reais negativas)</p>
+<div class="mj">\[ v=V_1e^{s_1t}+V_2e^{s_2t}+v_p \]</div>
+<p><b style="color:var(--ink)">Sub</b>: \(\omega_d=\sqrt{\omega_0^2-\alpha^2}\), \(s_{1,2}=-\alpha\pm j\omega_d\)</p>
+<div class="mj">\[ v=V e^{-\alpha t}\cos(\omega_d t+\psi)+v_p \]</div>
+<p><b style="color:var(--ink)">Crítica</b>: \(s_1=s_2=-\alpha\)</p>
+<div class="mj">\[ v=\big[a+(\alpha a+b)t\big]e^{-\alpha t}+v_p \]</div>
+<p class="rev-note">\(\omega_0\) é a <i>não</i>-amortecida; \(\omega_d<\omega_0\) é a amortecida. Crítica ≠ amortecimento máximo — é a <b style="color:var(--ink)">mais rápida</b> a acomodar.</p>
+</div>
+
+<div class="rev-card">
+<h3>13 · PVI de 2ª ordem</h3>
+<p>C.i. líquidas: \(a\triangleq v(0^+)-v_p(0^+)\), \(b\triangleq\dot v(0^+)-\dot v_p(0^+)\)</p>
+<div class="mj">\[ \begin{bmatrix}1&1\\ s_1&s_2\end{bmatrix}\begin{bmatrix}V_1\\V_2\end{bmatrix}=\begin{bmatrix}a\\b\end{bmatrix} \]</div>
+<div class="mj">\[ V_1=\frac{as_2-b}{s_2-s_1},\qquad V_2=\frac{b-as_1}{s_2-s_1} \]</div>
+<p>Crítica: \(\begin{bmatrix}1&0\\-\alpha&1\end{bmatrix}\Rightarrow V_1=a,\ V_2=\alpha a+b\)</p>
+<h4>Sub — amplitude e fase direto de \(a,b\)</h4>
+<div class="mj">\[ V=\sqrt{a^2+\Big(\tfrac{\alpha a+b}{\omega_d}\Big)^{2}},\qquad \psi=\operatorname{atan2}\!\Big(\!-\tfrac{\alpha a+b}{\omega_d},\ a\Big) \]</div>
+<p>Equivalente sem fasor:</p>
+<div class="mj">\[ v_T=e^{-\alpha t}\!\left[a\cos\omega_d t+\tfrac{\alpha a+b}{\omega_d}\operatorname{sen}\omega_d t\right] \]</div>
+</div>
+
+<div class="rev-card">
+<h3>13b · Circuito instantâneo — achar \(\dot v(0^+)\)</h3>
+<p class="rev-warn"><b>!</b> \(\dot v(0^+)\) nunca é dado. Sai da relação constitutiva.</p>
+<p>Em \(0^+\): indutor → fonte de corrente \(i_L(0^+)\); capacitor → fonte de tensão \(v_C(0^+)\). Resolve-se um circuito <b style="color:var(--ink)">resistivo</b>.</p>
+<p>\(\dot v_C(0^+)=\dfrac{i_C(0^+)}{C}\), \(\dot i_L(0^+)=\dfrac{v_L(0^+)}{L}\)</p>
+<p>RLC paralelo: \(\dot v(0^+)=\dfrac{i_s(0^+)-G\,v(0^+)-i_0}{C}\)</p>
+<p>Impulso \(Q_s\delta(t)\): \(v(0^+)=v(0^-)+Q_s/C\), \(j_L(0^+)=j_L(0^-)\).</p>
+<p class="rev-warn"><b>!</b> A parcela impulsiva <b>não</b> entra em \(i_s(0^+)\) — ela já foi contabilizada no salto.</p>
+<h4>\(v_p\) conforme a fonte</h4>
+<ul>
+<li>Contínua (RPCC): \(v_p\) constante; impõe \(\dot v=\ddot v=0\). No paralelo com fonte de corrente, \(v_p=0\) (indutor vira curto).</li>
+<li>Senoidal (RPS, fasores): \(\hat V_p=\dfrac{\hat I_s}{G+j\omega C+\frac{1}{j\omega L}}\)</li>
+<li>Impulsiva: sem permanente — resolve junto com as c.i.</li>
+</ul>
+<h4>Roteiro</h4>
+<ol>
+<li>Monte a ED; identifique \(\alpha\) e \(\omega_0\).</li>
+<li>\(\Delta\) → FCPs \(s_{1,2}\).</li>
+<li>Escreva a forma dos modos do caso.</li>
+<li>Ache \(v_p\) pelo tipo de fonte.</li>
+<li>Determine \(v(0^+)\) e \(\dot v(0^+)\).</li>
+<li>Resolva o sistema \(2\times2\).</li>
+</ol>
+</div>
+
+<!-- ============ PERIODICAS / FT ============ -->
+<div class="rev-card" id="extras">
+<h3>14 · Funções periódicas</h3>
+<div class="mj">\[ F(s)=\frac{I_0(s)}{1-e^{-sT}},\qquad I_0(s)=\int_{0^-}^{T^-}f(t)e^{-st}dt \]</div>
+<p>Integre <b style="color:var(--ink)">um</b> período; divida por \(1-e^{-sT}\); simplifique por diferença de potências, ex. \(1-e^{-4s}=(1-e^{-2s})(1+e^{-2s})\).</p>
+<p class="rev-note">Onda quadrada \(T=4\), amplitude 2: \(F=\frac{2}{s(1+e^{-2s})}\). Checagem: \(\lim_{s\to0}sF(s)\) = valor médio do sinal.</p>
+</div>
+
+<div class="rev-card">
+<h3>15 · Função de transferência</h3>
+<div class="mj">\[ G_v(s)=\left.\frac{V_2(s)}{V_e(s)}\right|_{\text{c.i. nulas}},\qquad g_v(t)=\mathcal{L}^{-1}[G_v] \]</div>
+<p>\(D(s)=\det T(s)\) = polinômio característico; raízes = <b style="color:var(--ink)">FCPs</b> (modos naturais).</p>
+<p><b style="color:var(--ink)">Redutível</b>: nº de FCPs &lt; nº de armazenadores (não são independentes).<br>
+<b style="color:var(--ink)">Degenerado</b>: zero cancela polo → a FCP some da saída.</p>
+<h4>Ponta de prova (\(R_1\|C_1\) + \(R_2\|C_2\))</h4>
+<div class="mj">\[ G_v(s)=\frac{C_1}{C_1+C_2}\cdot\frac{s+G_1/C_1}{s-p_1},\quad p_1=-\frac{G_1+G_2}{C_1+C_2} \]</div>
+<div class="mj">\[ g_v(t)=\frac{C_1}{C_1+C_2}\delta(t)+\frac{G_1C_2-G_2C_1}{(C_1+C_2)^2}e^{p_1t} \]</div>
+<div class="rev-key">
+<p><b style="color:var(--ink)">Compensação</b> (zero cancela polo):</p>
+<div class="mj">\[ R_1C_1=R_2C_2 \iff \frac{C_1}{C_2}=\frac{R_2}{R_1}=\frac{G_1}{G_2} \]</div>
+</div>
+<p>Compensada: \(G_v=\dfrac{C_1}{C_1+C_2}=\dfrac{R_2}{R_1+R_2}\), constante.</p>
+<p>Os dois divisores: \(v_2(0^+)=\frac{C_1}{C_1+C_2}v_e\) (capacitivo, no salto) e \(v_2(\infty)=\frac{R_2}{R_1+R_2}v_e\) (resistivo). Compensar = igualar os dois. \(\tau=\frac{C_1+C_2}{G_1+G_2}\).</p>
+</div>
+
+<div class="rev-card">
+<h3>A · Mapa: polo → resposta</h3>
+<table class="rev-t">
+<tr><th>polo \(p\)</th><th>termo em \(f(t)\)</th></tr>
+<tr><td>real \(<0\)</td><td>\(e^{pt}\) — decai</td></tr>
+<tr><td>real \(>0\)</td><td>\(e^{pt}\) — cresce (instável)</td></tr>
+<tr><td>\(p=0\)</td><td>constante (degrau)</td></tr>
+<tr><td>\(p=0\) duplo</td><td>rampa \(t\)</td></tr>
+<tr><td>\(\pm j\omega\)</td><td>\(\cos(\omega t+\phi)\) puro</td></tr>
+<tr><td>\(\sigma\pm j\omega\), \(\sigma<0\)</td><td>\(e^{\sigma t}\cos(\omega t+\phi)\)</td></tr>
+<tr><td>multiplicidade \(m\)</td><td>\(\times\,t^{\ell-1}/(\ell-1)!\)</td></tr>
+<tr><td>\(s^k\) em \(Q(s)\)</td><td>\(\delta^{(k)}(t)\)</td></tr>
+</table>
+<p class="rev-key" style="margin-top:0.6rem"><b style="color:var(--ink)">Re</b> \(p\) = quão rápido decai; <b style="color:var(--ink)">Im</b> \(p\) = frequência.<br>
+\(1/s\) embaixo = integra; \(s\) em cima = deriva.</p>
+</div>
+
+<div class="rev-card">
+<h3>B · Álgebra de apoio</h3>
+<p>\(s^2+bs+c=0\): \(s_{1,2}=\frac{-b\pm\sqrt{b^2-4c}}{2}\); \(s_1+s_2=-b\), \(s_1s_2=c\) (checagem rápida da fatoração).</p>
+<p>Completar quadrado: \(s^2+2as+c=(s+a)^2+(c-a^2)\)</p>
+<p>\(s^2+\omega^2=(s-j\omega)(s+j\omega)\)</p>
+<p>\(1-e^{-2xs}=(1-e^{-xs})(1+e^{-xs})\)</p>
+<p class="rev-note">Grau de produto = soma dos graus — <b style="color:var(--ink)">nunca</b> expanda só para contar grau.</p>
+<p>\(\tau=RC=L/R\); \(e^{-t/\tau}\): 37% em \(\tau\), &lt;1% em \(5\tau\).</p>
+</div>
+
+<div class="rev-card">
+<h3>C · Exemplos-modelo</h3>
+<h4>C1 · RC com c.i. (mód. 02)</h4>
+<p>\(RC=1\), \(v_C(0^-)=2\), \(e_s=5\cos t\), quer \(v_R\):</p>
+<div class="mj">\[ \frac{s+1}{s}V_R=\underbrace{\frac{5s}{s^2+1}}_{\text{fonte}}-\underbrace{\frac{2}{s}}_{\text{c.i.}} \;\Rightarrow\; V_R=\frac{3s^2-2}{(s+1)(s^2+1)} \]</div>
+<div class="mj">\[ v_R(t)=\underbrace{\tfrac12 e^{-t}}_{\text{transit.}}+\underbrace{\tfrac{5}{\sqrt2}\cos(t+45^\circ)}_{\text{perman.}} \]</div>
+<p>Livre \(=-2e^{-t}\); forçada \(=\tfrac52 e^{-t}+\tfrac{5}{\sqrt2}\cos(t+45^\circ)\).</p>
+<h4>C2 · Polo duplo + par conjugado (mód. 03)</h4>
+<div class="mj">\[ F(s)=\frac{5(s+2)(s+3)}{s^2(s^2+2s+2)}\quad(\mathrm{gr}\,2<\mathrm{gr}\,4) \]</div>
+<p>Polos: \(0\) (duplo), \(-1\pm j\). \(A_{12}=15\), \(A_{11}=-\tfrac52\), \(A_{21}=1{,}25+j3{,}75=3{,}953\,e^{j71{,}57^\circ}\).</p>
+<div class="mj">\[ f(t)=\big[-\tfrac52+15t+7{,}906\,e^{-t}\cos(t+71{,}57^\circ)\big]H(t) \]</div>
+<h4>C3 · Imprópria → doublet (mód. 03)</h4>
+<div class="mj">\[ F(s)=\frac{s^4+5s^3+4s^2+3s+1}{s^3+3s^2+2s}=s+2+\frac{0{,}5}{s}+\frac{2}{s+1}-\frac{6{,}5}{s+2} \]</div>
+<div class="mj">\[ f(t)=\delta^{(1)}(t)+2\delta(t)+0{,}5+2e^{-t}-6{,}5e^{-2t} \]</div>
+</div>
+
+<div class="rev-card">
+<h3>D · Impedâncias em \(s\) (c.i. nulas)</h3>
+<table class="rev-t">
+<tr><th></th><th>\(Z(s)\)</th><th>\(Y(s)\)</th></tr>
+<tr><td>\(R\)</td><td>\(R\)</td><td>\(G=1/R\)</td></tr>
+<tr><td>\(L\)</td><td>\(sL\)</td><td>\(1/sL\)</td></tr>
+<tr><td>\(C\)</td><td>\(1/sC\)</td><td>\(sC\)</td></tr>
+</table>
+<p>Série: \(Z=\sum Z_i\). Paralelo: \(Y=\sum Y_i\).</p>
+<p>Divisor de tensão: \(V_k=\dfrac{Z_k}{\sum Z_i}V\)</p>
+<p>Divisor de corrente: \(I_k=\dfrac{Y_k}{\sum Y_i}I\)</p>
+<p class="rev-note">Com c.i. não-nulas, some as fontes da seção 9 — depois vale tudo de Circuitos I.</p>
+</div>
+
+<div class="rev-card">
+<h3>E · Condições iniciais em circuitos</h3>
+<p>Contínuas na comutação (sem impulso): \(v_C\) e \(i_L\).</p>
+<p>\(v_C(0^+)=v_C(0^-)\), \(i_L(0^+)=i_L(0^-)\)</p>
+<h4>Derivadas saem da constitutiva</h4>
+<p>\(i_C=C\,\dot v_C \Rightarrow \dot v_C(0^+)=\dfrac{i_C(0^+)}{C}\)</p>
+<p>\(v_L=L\,\dot i_L \Rightarrow \dot i_L(0^+)=\dfrac{v_L(0^+)}{L}\)</p>
+<p><b style="color:var(--ink)">Regime contínuo</b> (\(t\to\infty\), ou \(t<0\) com fonte DC): \(C\) = circuito aberto, \(L\) = curto.</p>
+<ol>
+<li>Circuito em \(0^-\) em regime → \(v_C(0^-)\), \(i_L(0^-)\).</li>
+<li>Kirchhoff em \(0^+\) com \(L\to\) fonte de corrente e \(C\to\) fonte de tensão.</li>
+<li>Leia a corrente/tensão que dá a derivada.</li>
+</ol>
+</div>
+
+<div class="rev-card">
+<h3>F · Roteiro mestre: do circuito à resposta</h3>
+<ol>
+<li>Ache \(v_C(0^-)\) e \(i_L(0^-)\) no circuito <b style="color:var(--ink)">antes</b> da comutação (regime DC: \(C\) aberto, \(L\) curto).</li>
+<li>Redesenhe em \(s\): impedâncias + fontes de c.i. (atenção à polaridade).</li>
+<li>Kirchhoff / divisor / Thévenin — álgebra pura. Isole \(V(s)\).</li>
+<li>Cheque graus; divida se preciso; fatore \(D(s)\).</li>
+<li>Frações parciais; resíduos.</li>
+<li>Antitransforme; recombine conjugados.</li>
+<li>Confira com o TVI: \(v(0^+)=\lim_{s\to\infty}sV(s)\) deve bater com o circuito em \(0^+\).</li>
+</ol>
+<p class="rev-note">Alternativa clássica (mód. 00/05): monte a EDO, ache \(\alpha\) e \(\omega_0\), classifique pelo \(\Delta\), escreva a forma do regime e ajuste \(V_1,V_2\) pelas c.i.</p>
+</div>
+
+<div class="rev-card">
+<h3>16 · Armadilhas de prova</h3>
+<ul>
+<li>Não checar os graus → perde \(\delta\) / doublet.</li>
+<li>Polo de multiplicidade \(m\) exige <b style="color:var(--ink)">todas</b> as potências \(1\ldots m\).</li>
+<li>Numerador constante sobre quadrático irredutível (tem que ser linear).</li>
+<li>Esquecer de recombinar o par conjugado (sobra \(j\)).</li>
+<li>Ignorar \(e^{-as}\): forma certa, hora errada.</li>
+<li>Polaridade da fonte de c.i. — no <b style="color:var(--ink)">Thévenin</b>, \(L\) negativo e \(C\) positivo; no Norton inverte.</li>
+<li>Trocar o \(\alpha\) do série pelo do paralelo.</li>
+<li>Usar \(0^-\) em vez de \(0^+\) quando há impulso.</li>
+<li>\(\arctan\) no lugar de \(\operatorname{atan2}\).</li>
+<li>Existência da inversa ≠ estabilidade.</li>
+</ul>
+</div>
+
+      </div>
+    </section>
+
+    <a class="next-module rev-noprint" href="modulo-05.html">
+      <div>
+        <span class="nm-label">Módulo anterior</span>
+        <span class="nm-title">05 · Redes de 2ª ordem</span>
+      </div>
+      <span class="nm-arrow">←</span>
+    </a>
+
+  </div>
+</div>
+
+<script>
+  var mt = document.getElementById('menuToggle');
+  if (mt) {
+    mt.addEventListener('click', function(){
+      document.body.classList.toggle('nav-collapsed');
+      var open = !document.body.classList.contains('nav-collapsed');
+      mt.setAttribute('aria-expanded', open);
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -27,6 +27,10 @@ window.MathJax = {
 
     <div class="side-group">
       <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
       <a class="side-item" href="index.html">
         <span class="side-num">01</span>
         <span class="side-title">Transformada de Laplace</span>
@@ -47,14 +51,18 @@ window.MathJax = {
         <span class="side-num">05</span>
         <span class="side-title">Redes de 2ª ordem</span>
       </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
     </div>
 
     <div class="side-group">
       <div class="side-label">P2</div>
-      <div class="side-item disabled">
-        <span class="side-num">01</span>
-        <span class="side-title"><em>em breve</em></span>
-      </div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
     </div>
   </aside>
 
@@ -75,6 +83,7 @@ window.MathJax = {
         <a href="#ganho">Função de transferência</a>
         <a href="#compensacao">Compensação</a>
         <a href="#numeros">Ponta 10×</a>
+        <a href="#exercicios">Exercícios</a>
       </div>
     </nav>
 
@@ -597,6 +606,85 @@ window.MathJax = {
     <div class="callout"><b>Por que 9 MΩ e não algo menor?</b> A resistência alta é o que garante que a ponta não carregue o circuito sob teste. O preço é que, junto com a capacitância de entrada do osciloscópio, ela formaria um filtro passa-baixas bem lento — e é justamente esse filtro que a compensação neutraliza.</div>
   </section>
 
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">Exercícios</span>
+    <h2>Questões de provas — funções periódicas</h2>
+    <p class="dim">Questão de prova do PSI3213 que aplica diretamente a fórmula da transformada de uma função periódica: integrar <em>um</em> período e dividir por \(1-e^{-sT}\).</p>
+
+    <div class="q-intro">
+      <div><b>1 questão</b>1 objetiva</div>
+      <div><b>Foco</b>integração em um período</div>
+      <div><b>Período</b>2009</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 2</span>Transformada de função periódica por integração em um período</span>
+          <span class="q-prova">P2/2009 — Teste 4</span>
+        </div>
+        <p>A função \(f(t)\) é periódica de período \(2\pi\) e, em um período, vale</p>
+        <div class="eq-block">\[ f(t) = \begin{cases} \mathrm{sen}\,t, & 0 \le t < \pi, \\ 0, & \pi \le t < 2\pi. \end{cases} \]</div>
+        <p>Determine \(F(s) = \mathcal{L}\{f(t)\}\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Usar a fórmula para uma função periódica</div>
+              <p>Se \(f(t)\) tem período \(T\), então \(F(s) = \dfrac{\displaystyle\int_0^T e^{-st}f(t)\,dt}{1-e^{-sT}}\). Aqui \(T = 2\pi\), e no segundo meio-período a função é nula — então a integral só precisa ir de \(0\) a \(\pi\):</p>
+              <div class="eq-block">\[ F(s) = \frac{1}{1-e^{-2\pi s}}\int_0^{\pi} e^{-st}\,\mathrm{sen}\,t\;dt \]</div>
+              <p class="dim">Esse é o ganho da fórmula: em vez de integrar até o infinito, integramos uma única "onda" — o resto é a série geométrica escondida no denominador.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Obter a primitiva — integração por partes, primeira vez</div>
+              <p>Defina \(I = \int e^{-st}\,\mathrm{sen}\,t\,dt\). Escolha \(u = \mathrm{sen}\,t\) e \(dv = e^{-st}dt\), logo \(du = \cos t\,dt\) e \(v = -\tfrac{1}{s}e^{-st}\). Por \(\int u\,dv = uv - \int v\,du\):</p>
+              <div class="eq-block">\[ I = -\frac{e^{-st}\,\mathrm{sen}\,t}{s} + \frac{1}{s}\int e^{-st}\cos t\,dt = -\frac{e^{-st}\,\mathrm{sen}\,t}{s} + \frac{J}{s} \]</div>
+              <p>chamando \(J = \int e^{-st}\cos t\,dt\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Integrar J por partes — segunda vez, e o truque de fechar o ciclo</div>
+              <p>Para \(J\), use \(u = \cos t\) e \(dv = e^{-st}dt\), logo \(du = -\mathrm{sen}\,t\,dt\) e \(v = -\tfrac{1}{s}e^{-st}\):</p>
+              <div class="eq-block">\[ J = -\frac{e^{-st}\cos t}{s} - \frac{1}{s}\int e^{-st}\,\mathrm{sen}\,t\,dt = -\frac{e^{-st}\cos t}{s} - \frac{I}{s} \]</div>
+              <p>A integral que reapareceu é justamente \(I\) — é isso que permite resolver algebricamente. Substituindo na expressão de \(I\):</p>
+              <div class="eq-block">\[ I = -\frac{e^{-st}\,\mathrm{sen}\,t}{s} - \frac{e^{-st}\cos t}{s^2} - \frac{I}{s^2} \]</div>
+              <p>Passando o último termo para a esquerda e multiplicando por \(s^2\):</p>
+              <div class="eq-block">\[ I\left(1+\frac{1}{s^2}\right) = -e^{-st}\left(\frac{\mathrm{sen}\,t}{s}+\frac{\cos t}{s^2}\right) \;\Longrightarrow\; I(s^2+1) = -e^{-st}\big(s\,\mathrm{sen}\,t + \cos t\big) \]</div>
+              <div class="eq-block">\[ \int e^{-st}\,\mathrm{sen}\,t\,dt = \frac{e^{-st}\big(-s\,\mathrm{sen}\,t - \cos t\big)}{s^2+1} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Avaliar de 0 a π</div>
+              <p>Em \(t=\pi\): \(\mathrm{sen}\,\pi = 0\) e \(\cos\pi = -1\), portanto \(I(\pi) = \dfrac{e^{-\pi s}}{s^2+1}\).</p>
+              <p>Em \(t=0\): \(\mathrm{sen}\,0 = 0\) e \(\cos 0 = 1\), portanto \(I(0) = -\dfrac{1}{s^2+1}\).</p>
+              <div class="eq-block">\[ \int_0^{\pi} e^{-st}\,\mathrm{sen}\,t\;dt = \frac{e^{-\pi s}}{s^2+1} + \frac{1}{s^2+1} = \frac{1+e^{-\pi s}}{s^2+1} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Substituir na fórmula periódica — e simplificar</div>
+              <div class="eq-block">\[ F(s) = \frac{1+e^{-\pi s}}{(s^2+1)\left(1-e^{-2\pi s}\right)} \]</div>
+              <p>Aqui vem a parte bonita: como \(1-e^{-2\pi s} = \left(1-e^{-\pi s}\right)\left(1+e^{-\pi s}\right)\), o fator \(1+e^{-\pi s}\) cancela em cima e embaixo:</p>
+              <div class="final-answer">\[ F(s) = \frac{1}{(s^2+1)\left(1-e^{-\pi s}\right)}, \qquad \mathrm{Re}\{s\}>0 \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Leitura do resultado</b> — o \(1/(s^2+1)\) é o "molde" (a meia-onda de seno) e o \(1/(1-e^{-\pi s})\) é a máquina de repetição. Note que o expoente final é \(\pi\), não \(2\pi\): depois do cancelamento, a função se comporta como uma sequência de meias-ondas espaçadas de \(\pi\) — o que é exatamente o sinal do enunciado, um seno retificado em meia-onda.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <a class="next-module" href="modulo-05.html">
     <div>
       <span class="nm-label">Próximo módulo</span>
@@ -638,6 +726,19 @@ document.querySelectorAll('.demo-btn').forEach(btn => {
     btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
     if(window.MathJax && window.MathJax.typesetPromise){
       window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
     }
   });
 });

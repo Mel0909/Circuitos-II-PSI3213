@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item active" href="#top">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P1 · EDOs e problema de valor inicial</span>
+      </div>
+      <div class="tabs">
+        <a href="#edo">O que é uma EDO</a>
+        <a href="#homogenea">Homogênea + particular</a>
+        <a href="#caracteristica">Equação característica</a>
+        <a href="#pvi">PVI</a>
+        <a href="#zero">Por que 0⁻</a>
+        <a href="#normalizada">Forma normalizada</a>
+        <a href="#distintas">Raízes distintas</a>
+        <a href="#regimes">Três regimes</a>
+        <a href="#ci-circuitos">C.I. em circuitos</a>
+        <a href="#exemplo-rcc">Exemplo RCC</a>
+        <a href="#classico-laplace">Clássico vs Laplace</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P1 · Módulo 00 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Antes de transformar qualquer coisa,</span> <span class="tone-b">vale entender o que a equação diferencial está dizendo.</span></h1>
+        <p class="hero-sub">A transformada de Laplace só é útil porque uma classe enorme de problemas de circuitos é descrita por equações diferenciais ordinárias. Esse módulo é o pré-requisito: o que é uma EDO, por que a <em>ordem</em> importa, como as condições iniciais entram, o que caracteriza um sistema de segunda ordem e por que a gente insiste em avaliar tudo em \(0^-\). Nada de transformada aqui — só o terreno. A ferramenta em si começa no <a href="index.html">módulo 01</a>.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>EDOs lineares e PVI</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>MESMA EDO, TRÊS APARÊNCIAS TEMPORAIS</span>
+            <span>x&#776; + 2αx&#775; + ω₀²x = 0</span>
+          </div>
+          <div style="display:flex;justify-content:center;padding:0.6rem 0">
+            <svg viewBox="0 0 460 250" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto">
+              <line x1="40" y1="200" x2="440" y2="200" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+              <line x1="40" y1="20" x2="40" y2="230" stroke="rgba(231,237,233,0.5)" stroke-width="1.2"/>
+              <text x="424" y="220" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">t</text>
+              <text x="12" y="30" fill="rgba(231,237,233,0.6)" font-family="IBM Plex Mono, monospace" font-size="12">x</text>
+              <!-- superamortecida: soma de duas exponenciais -->
+              <path d="M40 60 C 90 130, 150 178, 250 194 S 380 200, 435 200" fill="none" stroke="#7ac7aa" stroke-width="2.2"/>
+              <!-- criticamente amortecida -->
+              <path d="M40 60 C 80 120, 130 172, 215 192 S 370 200, 435 200" fill="none" stroke="#f5b942" stroke-width="2.2" stroke-dasharray="6 4"/>
+              <!-- subamortecida: cosseno amortecido -->
+              <path d="M40 60 C 62 96, 76 150, 96 176 C 116 202, 134 208, 152 196 C 170 184, 178 164, 194 168 C 212 173, 220 196, 240 200 C 258 204, 268 194, 284 194 C 302 194, 312 202, 330 200 C 356 198, 400 200, 435 200" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+              <g font-family="IBM Plex Mono, monospace" font-size="11">
+                <text x="300" y="52" fill="#4ade9a">α &lt; ω₀ — subamortecida</text>
+                <text x="300" y="70" fill="#f5b942">α = ω₀ — crítica</text>
+                <text x="300" y="88" fill="#7ac7aa">α &gt; ω₀ — superamortecida</text>
+              </g>
+            </svg>
+          </div>
+          <div class="splane-readout">A ordem continua sendo dois nos três casos. O que muda é só a natureza das raízes da <b>mesma</b> equação característica: duas reais distintas, uma real dupla ou um par complexo conjugado.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="edo" class="panel">
+    <span class="eyebrow">0.1</span>
+    <h2>O que é uma equação diferencial ordinária</h2>
+    <p>Uma EDO é uma relação envolvendo uma função desconhecida de uma <b style="color:var(--ink)">única</b> variável independente e uma ou mais de suas derivadas. Usando \(t\) como variável independente e \(x(t)\) como função desconhecida, uma EDO de ordem \(n\) pode ser escrita genericamente como:</p>
+
+    <div class="eq-block">\[ \Phi\big(t,\,x,\,\dot x,\,\ddot x,\,\ldots,\,x^{(n)}\big) = 0 \]</div>
+
+    <p>A <b style="color:var(--ink)">ordem</b> é dada pela derivada de maior ordem presente na equação. Por exemplo, \(\dot x + 3x = u(t)\) é de primeira ordem, enquanto \(\ddot x + 5\dot x + 6x = u(t)\) é de segunda.</p>
+
+    <p>No escopo deste curso interessa principalmente a classe das <b style="color:var(--ink)">EDOs lineares com coeficientes constantes</b>:</p>
+
+    <div class="eq-block">\[ a_n\,x^{(n)}(t) + a_{n-1}\,x^{(n-1)}(t) + \cdots + a_1\,\dot x(t) + a_0\,x(t) = r(t), \qquad a_n \ne 0 \]</div>
+
+    <p>Os coeficientes \(a_k\) são constantes e \(r(t)\) é uma função conhecida — chamada de <b style="color:var(--ink)">excitação</b>, termo forçante ou segundo membro.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">É linear</span>
+        <p>\(x\) e suas derivadas aparecem apenas na primeira potência e não são multiplicadas entre si:</p>
+        <p>\(\ddot x + 2\dot x + 5x = r(t)\)</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Não é linear</span>
+        <p>Aqui há produto entre \(x\) e \(\dot x\), ou potência de \(x\):</p>
+        <p>\(\ddot x + x\dot x + 5x = r(t)\)&nbsp;&nbsp;·&nbsp;&nbsp;\(\ddot x + x^2 = r(t)\)</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Linearidade e superposição</b> — definindo o operador \(\mathcal{D}[x] = a_n x^{(n)} + \cdots + a_1\dot x + a_0 x\), vale
+      <div class="eq-block" style="margin-top:0.8rem">\[ \mathcal{D}[\lambda_1 x_1 + \lambda_2 x_2] = \lambda_1\,\mathcal{D}[x_1] + \lambda_2\,\mathcal{D}[x_2] \]</div>
+      É exatamente essa estrutura que permite separar a resposta em parcelas associadas às condições iniciais e à excitação — e, mais adiante, é o que garante a linearidade da própria transformada de Laplace.
+    </div>
+  </section>
+
+  <section id="homogenea" class="panel">
+    <span class="eyebrow">0.2</span>
+    <h2>Equação homogênea, solução particular e solução completa</h2>
+    <p>Quando o segundo membro é nulo, \(a_n x^{(n)} + a_{n-1}x^{(n-1)} + \cdots + a_0 x = 0\), a equação é chamada <b style="color:var(--ink)">homogênea</b>. Quando \(r(t) \ne 0\), ela é <b style="color:var(--ink)">não homogênea</b>.</p>
+    <p>Para uma EDO linear, qualquer solução completa pode ser escrita como:</p>
+    <div class="eq-block">\[ x(t) = x_h(t) + x_p(t) \]</div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">\(x_h(t)\) — parcela homogênea</span>
+        <p>É uma solução da equação homogênea associada. É ela que contém as constantes livres determinadas pelas condições iniciais. Em circuitos, corresponde à parcela <b>transitória</b>.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">\(x_p(t)\) — solução particular</span>
+        <p>Depende da excitação. Quando a excitação é senoidal e o sistema é estável, \(x_p\) coincide com a resposta de <b>regime permanente senoidal</b> obtida por fasores.</p>
+      </div>
+    </div>
+
+    <div class="callout">Essa separação é exatamente a mesma usada no material de circuitos de segunda ordem. A transformada de Laplace vai <em>reorganizar</em> essas etapas — não substituí-las por outra física.</div>
+  </section>
+
+  <section id="caracteristica" class="panel">
+    <span class="eyebrow">0.3</span>
+    <h2>Equação característica e a forma da solução homogênea</h2>
+    <p>Para EDOs lineares com coeficientes constantes, procura-se uma solução elementar da forma \(x_h(t) = e^{\lambda t}\). Como \(x_h^{(k)}(t) = \lambda^k e^{\lambda t}\), a substituição na equação homogênea fornece:</p>
+    <div class="eq-block">\[ \big(a_n\lambda^n + a_{n-1}\lambda^{n-1} + \cdots + a_1\lambda + a_0\big)\,e^{\lambda t} = 0 \]</div>
+    <p>Como \(e^{\lambda t} \ne 0\) para qualquer \(t\), resta a <b style="color:var(--ink)">equação característica</b>:</p>
+    <div class="eq-block">\[ a_n\lambda^n + a_{n-1}\lambda^{n-1} + \cdots + a_1\lambda + a_0 = 0 \]</div>
+    <p>São as raízes dessa equação que determinam a forma da solução homogênea:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Raízes reais distintas</span>
+        <p>Se \(\lambda_1,\ldots,\lambda_n\) são todas distintas:</p>
+        <div class="eq-block">\[ x_h(t) = C_1 e^{\lambda_1 t} + \cdots + C_n e^{\lambda_n t} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Raiz real repetida</span>
+        <p>Se \(\lambda\) possui multiplicidade \(m\), sua contribuição é:</p>
+        <div class="eq-block">\[ \big(C_0 + C_1 t + \cdots + C_{m-1}t^{\,m-1}\big)e^{\lambda t} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Par complexo conjugado</span>
+        <p>Para coeficientes reais, raízes complexas aparecem aos pares \(\alpha \pm j\beta\). A contribuição pode ser escrita de forma real como:</p>
+        <div class="eq-block">\[ e^{\alpha t}\big(C_1\cos\beta t + C_2\,\mathrm{sen}\,\beta t\big) \]</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Guarde isso — vai voltar.</b> Essas mesmas três estruturas reaparecem <em>literalmente</em> na antitransformação de funções racionais: polos simples geram exponenciais, polos repetidos acrescentam potências de \(t\) e pares conjugados geram senoides amortecidas. Aqui estamos só estabelecendo a conexão algébrica com a solução da EDO — a versão em \(s\) está no <a href="modulo-03.html">módulo 03</a>.</div>
+  </section>
+
+  <section id="pvi" class="panel">
+    <span class="eyebrow">0.4</span>
+    <h2>Problema de valor inicial</h2>
+    <p>Uma EDO de ordem \(n\) <b style="color:var(--ink)">não determina, sozinha, uma única função</b>. A solução geral possui \(n\) constantes independentes; para selecionar uma solução específica, são necessários \(n\) dados independentes.</p>
+    <p>Quando esses dados são fornecidos todos em um mesmo instante \(t = t_0\), temos um <b style="color:var(--ink)">problema de valor inicial (PVI)</b>:</p>
+    <div class="eq-block">\[ \begin{cases} a_n x^{(n)} + \cdots + a_0 x = r(t), \\[4pt] x(t_0) = x_0, \\[2pt] \dot x(t_0) = x_1, \\[2pt] \quad\vdots \\[2pt] x^{(n-1)}(t_0) = x_{n-1}. \end{cases} \]</div>
+
+    <div class="callout"><b>Ordem da EDO e número de dados iniciais</b> — em geral, uma EDO de ordem \(n\) requer \(n\) condições iniciais independentes. Uma EDO de segunda ordem exige dois dados, tipicamente \(x(0)\) e \(\dot x(0)\). Em circuitos, esses dois dados costumam ser obtidos a partir das variáveis de energia (tensão no capacitor, corrente no indutor) e das equações de Kirchhoff.</div>
+  </section>
+
+  <section id="zero" class="panel">
+    <span class="eyebrow">0.5</span>
+    <h2>Por que aparecem os valores em \(0^-\)</h2>
+    <p>Em problemas de chaveamento e excitações impulsivas pode existir diferença entre o valor imediatamente antes da origem e o valor imediatamente depois dela. Por isso distinguimos:</p>
+    <div class="eq-block">\[ x(0^-) = \lim_{t\to 0^-} x(t), \qquad x(0^+) = \lim_{t\to 0^+} x(t) \]</div>
+    <p>Na transformada de Laplace unilateral, \(0^-\) é particularmente conveniente porque representa o <b style="color:var(--ink)">estado conhecido imediatamente antes da ação aplicada em \(t=0\)</b>.</p>
+
+    <p style="margin-top:1.4rem">Mas atenção: <b style="color:var(--ink)">nem toda variável pode sofrer um salto arbitrário</b>. Isso depende da EDO e da presença ou não de termos singulares. Considere:</p>
+
+    <div class="example-card" style="margin-top:1rem">
+      <span class="tag">Quanto vale o salto? — derivação em um intervalo infinitesimal</span>
+      <div class="steps">
+        <span>\(\dot x(t) + a\,x(t) = K\,\delta(t)\)</span>
+        <span>integra os dois lados em um intervalo infinitesimal ao redor de \(t=0\): \(\displaystyle \int_{0^-}^{0^+}\dot x\,dt + a\int_{0^-}^{0^+} x\,dt = K\int_{0^-}^{0^+}\delta(t)\,dt\)</span>
+        <span>a integral de uma função <em>limitada</em> sobre um intervalo de largura tendendo a zero desaparece — então o termo do meio morre</span>
+        <span>já a integral do impulso vale 1 (é a definição dele), e a do lado esquerdo é a variação de \(x\):</span>
+        <span>\(x(0^+) - x(0^-) = K\)</span>
+      </div>
+      <div class="result">\(x(0^+) = x(0^-) + K\) — o impulso força um salto de altura exatamente \(K\)</div>
+    </div>
+
+    <div class="callout">Esse exemplo pequeno mostra por que a distinção entre \(0^-\) e \(0^+\) <b>não é apenas notacional</b>. Se não houver impulso na excitação, os dois valores coincidem e você pode usar o que preferir; se houver, eles diferem — e a transformada unilateral, começando em \(0^-\), usa o valor <em>antes</em> do chaveamento.</div>
+  </section>
+
+  <section id="normalizada" class="panel">
+    <span class="eyebrow">0.6</span>
+    <h2>A forma normalizada de uma EDO de segunda ordem</h2>
+    <p>A forma canônica utilizada neste curso é:</p>
+    <div class="eq-block">\[ \ddot x(t) + 2\alpha\,\dot x(t) + \omega_0^2\,x(t) = x_s(t) \]</div>
+    <p>Os parâmetros \(\alpha\) (fator de amortecimento) e \(\omega_0\) (frequência natural) são definidos a partir dos coeficientes da EDO. A equação homogênea associada é \(\ddot x + 2\alpha\dot x + \omega_0^2 x = 0\), cuja equação característica é:</p>
+    <div class="eq-block">\[ \lambda^2 + 2\alpha\lambda + \omega_0^2 = 0 \]</div>
+    <p>Pela fórmula de Bhaskara:</p>
+    <div class="eq-block">\[ \lambda_{1,2} = \frac{-2\alpha \pm \sqrt{(2\alpha)^2 - 4\omega_0^2}}{2} = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2} \]</div>
+    <p class="dim">No material de circuitos de segunda ordem, essas raízes são também chamadas <em>frequências complexas próprias</em>. Aqui vamos usá-las apenas como raízes da equação característica; a interpretação delas como propriedade de rede fica para o documento de Funções de Rede.</p>
+  </section>
+
+  <section id="distintas" class="panel">
+    <span class="eyebrow">0.7</span>
+    <h2>Solução geral para raízes distintas</h2>
+    <p>Se \(\lambda_1 \ne \lambda_2\), a solução completa é \(x(t) = X_1 e^{\lambda_1 t} + X_2 e^{\lambda_2 t} + x_p(t)\). Derivando, \(\dot x(t) = \lambda_1 X_1 e^{\lambda_1 t} + \lambda_2 X_2 e^{\lambda_2 t} + \dot x_p(t)\). Em \(t=0\):</p>
+    <div class="eq-block">\[ X_1 + X_2 = x(0) - x_p(0), \qquad \lambda_1 X_1 + \lambda_2 X_2 = \dot x(0) - \dot x_p(0) \]</div>
+    <p>É útil definir as duas <b style="color:var(--ink)">condições iniciais líquidas</b> — isto é, já descontada a parcela particular:</p>
+    <div class="eq-block">\[ a \equiv x(0) - x_p(0), \qquad b \equiv \dot x(0) - \dot x_p(0) \]</div>
+    <p>Assim o sistema fica:</p>
+    <div class="eq-block">\[ \begin{bmatrix} 1 & 1 \\ \lambda_1 & \lambda_2 \end{bmatrix}\begin{bmatrix} X_1 \\ X_2 \end{bmatrix} = \begin{bmatrix} a \\ b \end{bmatrix} \;\Longrightarrow\; X_1 = \frac{\lambda_2 a - b}{\lambda_2 - \lambda_1}, \quad X_2 = \frac{b - \lambda_1 a}{\lambda_2 - \lambda_1} \]</div>
+    <div class="final-answer">
+      \[ x(t) = \frac{\lambda_2 a - b}{\lambda_2 - \lambda_1}\,e^{\lambda_1 t} + \frac{b - \lambda_1 a}{\lambda_2 - \lambda_1}\,e^{\lambda_2 t} + x_p(t) \]
+    </div>
+    <p class="dim" style="margin-top:1rem">Essa expressão é geral para raízes distintas e é uma forma compacta de incorporar as condições iniciais. Note que \(a\) e \(b\) fazem todo o trabalho: o resto é só a dinâmica da rede.</p>
+  </section>
+
+  <section id="regimes" class="panel">
+    <span class="eyebrow">0.8</span>
+    <h2>Os três regimes de uma EDO de segunda ordem</h2>
+    <p>A natureza das raízes depende da comparação entre \(\alpha\) e \(\omega_0\) — ou, equivalentemente, do sinal de \(\alpha^2 - \omega_0^2\).</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">1 · Superamortecimento &nbsp;\(\alpha > \omega_0\)</span>
+        <p>Definindo \(\beta = \sqrt{\alpha^2 - \omega_0^2} > 0\), tem-se \(\lambda_{1,2} = -\alpha \pm \beta\): duas raízes <b style="color:var(--ink)">reais distintas</b>. A resposta transitória é uma soma de duas exponenciais reais decrescentes (quando \(\alpha>0\)).</p>
+        <p>A solução também pode ser reorganizada em funções hiperbólicas:</p>
+        <div class="eq-block">\[ x(t) = e^{-\alpha t}\!\left[a\cosh(\beta t) + \frac{\alpha a + b}{\beta}\,\mathrm{senh}(\beta t)\right] + x_p(t) \]</div>
+        <p class="dim">Isso é apenas uma reescrita da soma das duas exponenciais — pode ser conveniente em alguns cálculos, e é a razão pela qual \(\cosh\) e \(\mathrm{senh}\) aparecem na tabela de transformadas.</p>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">2 · Subamortecimento &nbsp;\(\alpha < \omega_0\)</span>
+        <p>Define-se a <b style="color:var(--ink)">frequência amortecida</b> \(\omega_d = \sqrt{\omega_0^2 - \alpha^2}\), e as raízes passam a ser \(\lambda_{1,2} = -\alpha \pm j\omega_d\).</p>
+        <p>Como os coeficientes da EDO e as condições iniciais são reais, as constantes associadas às duas exponenciais complexas são conjugadas. Ao recombinar os termos, a solução real fica:</p>
+        <div class="eq-block">\[ x(t) = e^{-\alpha t}\!\left[a\cos(\omega_d t) + \frac{\alpha a + b}{\omega_d}\,\mathrm{sen}(\omega_d t)\right] + x_p(t) \]</div>
+        <p>Vale ler essa expressão com atenção: \(e^{-\alpha t}\) controla o <b>envelope de decaimento</b>; \(\omega_d\) controla a <b>oscilação</b> observada durante o transitório; e \(a\), \(b\) incorporam as condições iniciais depois de retirar a parcela particular.</p>
+        <p>A mesma parcela oscilatória pode ser condensada em uma única cossenoide, \(X e^{-\alpha t}\cos(\omega_d t + \psi)\), porque qualquer combinação \(A\cos\omega_d t + B\,\mathrm{sen}\,\omega_d t\) tem amplitude e fase equivalentes.</p>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">3 · Amortecimento crítico &nbsp;\(\alpha = \omega_0\)</span>
+        <p>As raízes coincidem: \(\lambda_1 = \lambda_2 = -\alpha\). A segunda solução independente <b style="color:var(--ink)">não pode ser outra cópia</b> de \(e^{-\alpha t}\) — ela deve ser \(t\,e^{-\alpha t}\). Assim:</p>
+        <div class="eq-block">\[ x(t) = X_1 e^{-\alpha t} + X_2\,t\,e^{-\alpha t} + x_p(t) \]</div>
+        <p>Aplicando as condições iniciais, \(X_1 = a\) e \(X_2 = b + \alpha a\), logo:</p>
+        <div class="eq-block">\[ x(t) = e^{-\alpha t}\big[a + (b+\alpha a)\,t\big] + x_p(t) \]</div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Uma mesma EDO em três aparências temporais.</b> A ordem continua sendo dois em todos os casos. O que muda é apenas a natureza das raízes da <em>mesma</em> equação característica: duas raízes reais distintas, um par complexo conjugado ou uma raiz real dupla. O tratamento completo desses três casos aplicado ao RLC paralelo está no <a href="modulo-05.html">módulo 05</a>.</div>
+  </section>
+
+  <section id="ci-circuitos" class="panel">
+    <span class="eyebrow">0.9</span>
+    <h2>Como obter as condições iniciais em circuitos</h2>
+    <p>Uma dificuldade recorrente é saber <em>de onde</em> tirar \(x(0)\) e \(\dot x(0)\). A regra prática é simples: <b style="color:var(--ink)">procure a equação constitutiva que contém a derivada desejada.</b></p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Capacitor</span>
+        <p>\(\displaystyle i_C(t) = C\,\frac{dv_C}{dt}\)</p>
+        <p>Logo, uma derivada de tensão pode ser determinada pela <b>corrente do capacitor</b> no instante inicial.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Indutor</span>
+        <p>\(\displaystyle v_L(t) = L\,\frac{di_L}{dt}\)</p>
+        <p>Logo, uma derivada de corrente pode ser determinada pela <b>tensão no indutor</b> naquele instante.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>A "fotografia" de \(t = 0^+\)</b> — para calcular uma derivada inicial, determine primeiro as grandezas contínuas associadas aos elementos armazenadores (\(v_C\) e \(i_L\)) e então aplique Kirchhoff no circuito imediatamente após a comutação. Em outras palavras: localize onde aparece a derivada desejada e calcule a corrente ou tensão correspondente naquele instante.</div>
+  </section>
+
+  <section id="exemplo-rcc" class="panel">
+    <span class="eyebrow">0.10</span>
+    <h2>Exemplo completo: RCC de segunda ordem com dois capacitores</h2>
+    <p>A fonte de corrente \(i_s(t)\) alimenta três ramos em paralelo: um ramo \(R_1\)–\(C_1\) em série, um capacitor \(C_2\) e um resistor \(R_2\). Definimos \(v_1(t)\) como a tensão sobre \(C_1\) e \(v_2(t)\) como a tensão do nó superior — que também é a tensão sobre \(C_2\) e \(R_2\).</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 480 260" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <!-- top rail -->
+          <path d="M60 50 L420 50"/>
+          <!-- bottom rail -->
+          <path d="M60 220 L420 220"/>
+          <!-- source branch -->
+          <path d="M60 50 L60 95"/>
+          <path d="M60 145 L60 220"/>
+          <!-- R1-C1 branch -->
+          <path d="M180 50 L180 80"/>
+          <path d="M180 130 L180 150"/>
+          <path d="M180 180 L180 220"/>
+          <!-- C2 branch -->
+          <path d="M300 50 L300 105"/>
+          <path d="M300 145 L300 220"/>
+          <!-- R2 branch -->
+          <path d="M400 50 L400 95"/>
+          <path d="M400 145 L400 220"/>
+        </g>
+        <!-- current source -->
+        <circle cx="60" cy="120" r="25" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M60 135 L60 105" stroke="#f5b942" stroke-width="2" fill="none"/>
+        <path d="M55 111 L60 104 L65 111" fill="#f5b942"/>
+        <text x="2" y="124" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">i</text>
+        <text x="10" y="128" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="10">s</text>
+        <text x="16" y="124" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <!-- R1 -->
+        <rect x="168" y="80" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2.5"/>
+        <text x="200" y="100" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="211" y="104" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="10">1</text>
+        <!-- C1 -->
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="160" y1="150" x2="200" y2="150"/>
+          <line x1="160" y1="180" x2="200" y2="180"/>
+        </g>
+        <text x="208" y="162" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="219" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="10">1</text>
+        <text x="112" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="121" y="166" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="10">1</text>
+        <text x="127" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">(t)</text>
+        <!-- C2 -->
+        <g stroke="#4ade9a" stroke-width="2.5">
+          <line x1="280" y1="105" x2="320" y2="105"/>
+          <line x1="280" y1="135" x2="320" y2="135"/>
+        </g>
+        <text x="328" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="339" y="122" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="10">2</text>
+        <!-- R2 -->
+        <rect x="388" y="95" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2.5"/>
+        <text x="420" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="431" y="122" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="10">2</text>
+        <!-- v2 node label -->
+        <circle cx="300" cy="50" r="3.5" fill="#f5b942"/>
+        <text x="292" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v</text>
+        <text x="301" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="10">2</text>
+        <!-- ground -->
+        <g stroke="rgba(231,237,233,0.6)" stroke-width="1.6">
+          <line x1="240" y1="220" x2="240" y2="236"/>
+          <line x1="230" y1="236" x2="250" y2="236"/>
+          <line x1="234" y1="241" x2="246" y2="241"/>
+          <line x1="238" y1="246" x2="242" y2="246"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="given-box">
+      <span>Incógnita: \(v_1(t)\) — tensão sobre \(C_1\)</span>
+      <span>Variável auxiliar: \(v_2(t)\) — tensão do nó</span>
+      <span>Excitação: \(i_s(t)\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Equação do ramo R₁–C₁</div>
+          <p>A corrente que atravessa \(R_1\) é <em>a mesma</em> que entra em \(C_1\) — é um ramo série:</p>
+          <div class="eq-block">\[ C_1\dot v_1 = \frac{v_2 - v_1}{R_1} \;\Longrightarrow\; v_2 = v_1 + R_1 C_1 \dot v_1 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">KCL no nó de tensão v₂</div>
+          <p>A corrente em \(C_2\) é \(C_2\dot v_2\). Tomando como positivas as correntes que entram no nó a partir da fonte e do ramo \(R_1\)–\(C_1\):</p>
+          <div class="eq-block">\[ C_2\dot v_2 = \frac{v_1 - v_2}{R_1} - \frac{v_2}{R_2} + i_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Eliminar a variável auxiliar v₂</div>
+          <p>Da relação do passo 01, \(v_2 = v_1 + R_1C_1\dot v_1\) e, derivando, \(\dot v_2 = \dot v_1 + R_1C_1\ddot v_1\). Substituindo ambos na KCL:</p>
+          <div class="eq-block">\[ C_2\big(\dot v_1 + R_1C_1\ddot v_1\big) = -C_1\dot v_1 - \frac{v_1}{R_2} - \frac{R_1C_1}{R_2}\dot v_1 + i_s(t) \]</div>
+          <p>Passando tudo para o primeiro membro:</p>
+          <div class="eq-block">\[ R_1C_1C_2\,\ddot v_1 + \left(C_2 + C_1 + \frac{R_1C_1}{R_2}\right)\dot v_1 + \frac{1}{R_2}v_1 = i_s(t) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Normalizar e identificar α e ω₀</div>
+          <p>Dividindo tudo por \(R_1C_1C_2\):</p>
+          <div class="eq-block">\[ \ddot v_1 + \left(\frac{1}{R_1C_2} + \frac{1}{R_2C_2} + \frac{1}{R_2C_1}\right)\dot v_1 + \frac{1}{R_1R_2C_1C_2}\,v_1 = \frac{i_s(t)}{R_1C_1C_2} \]</div>
+          <p>Comparando com \(\ddot x + 2\alpha\dot x + \omega_0^2 x = x_s(t)\):</p>
+          <div class="eq-block">\[ \alpha = \frac{1}{2}\left(\frac{1}{R_1C_2} + \frac{1}{R_2C_2} + \frac{1}{R_2C_1}\right), \qquad \omega_0^2 = \frac{1}{R_1R_2C_1C_2} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Condições iniciais — a segunda não vem de graça</div>
+          <p>A primeira é diretamente a tensão inicial do capacitor \(C_1\): \(v_1(0^+) = v_{10}\). Se não houver impulso de corrente que force um salto de tensão, \(v_{10} = v_1(0^-)\).</p>
+          <p>Para obter \(\dot v_1(0^+)\), usamos <b style="color:var(--ink)">exatamente a equação em que essa derivada aparece</b> — a do passo 01:</p>
+          <div class="eq-block">\[ C_1\dot v_1 = \frac{v_2 - v_1}{R_1} \;\Longrightarrow\; \dot v_1(0^+) = \frac{v_{20} - v_{10}}{R_1 C_1} \]</div>
+          <p>Essa passagem é importante: uma EDO de segunda ordem exige dois dados iniciais, mas eles <b style="color:var(--ink)">não precisam ser fornecidos explicitamente no enunciado</b>. Muitas vezes um deles é uma tensão ou corrente armazenada e o outro deve ser obtido das leis do circuito em \(t=0^+\).</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">Especializar para um degrau de corrente</div>
+          <p>Se \(i_s(t) = I_0 H(t)\), a solução particular constante sai impondo \(\dot v_1 = \ddot v_1 = 0\) na EDO:</p>
+          <div class="eq-block">\[ \frac{1}{R_1R_2C_1C_2}\,v_{1p} = \frac{I_0}{R_1C_1C_2} \;\Longrightarrow\; v_{1p} = I_0 R_2 \]</div>
+          <p>Fisicamente isso é coerente com o regime contínuo: depois do transitório os capacitores se comportam como circuitos abertos, não há queda em \(R_1\), e a fonte de corrente força \(I_0R_2\) em \(R_2\).</p>
+          <p>Definindo as condições iniciais líquidas \(a = v_{10} - I_0R_2\) e \(b = \dfrac{v_{20} - v_{10}}{R_1C_1}\), a solução sai direto pelas fórmulas do regime correspondente. No caso subamortecido, por exemplo:</p>
+          <div class="final-answer">
+            \[ v_1(t) = I_0 R_2 + e^{-\alpha t}\!\left[a\cos(\omega_d t) + \frac{\alpha a + b}{\omega_d}\,\mathrm{sen}(\omega_d t)\right]H(t) \]
+          </div>
+          <p class="dim">O procedimento é o mesmo para os regimes superamortecido e crítico — apenas muda a forma da parcela homogênea.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout"><b>O que este exemplo ensina</b> — o ponto central não é decorar a EDO final. É reconhecer a sequência: escolher uma variável de estado, escrever Kirchhoff, eliminar a variável auxiliar, identificar \(\alpha\) e \(\omega_0\), calcular as duas condições iniciais e <em>somente então</em> escolher a forma temporal adequada.</div>
+  </section>
+
+  <section id="classico-laplace" class="panel">
+    <span class="eyebrow">0.11</span>
+    <h2>Método clássico no tempo × método por Laplace</h2>
+    <p>O procedimento temporal tradicional para uma EDO linear não homogênea é:</p>
+    <div class="problem-list">
+      <div class="problem-item"><span class="num">1</span><p>Resolver a equação homogênea e encontrar \(x_h(t)\).</p></div>
+      <div class="problem-item"><span class="num">2</span><p>Obter uma solução particular \(x_p(t)\).</p></div>
+      <div class="problem-item"><span class="num">3</span><p>Somar: \(x = x_h + x_p\).</p></div>
+      <div class="problem-item"><span class="num">4</span><p>Usar as condições iniciais para determinar as constantes livres.</p></div>
+    </div>
+    <div class="callout">A transformada de Laplace <b>reorganiza</b> essas etapas. Em vez de procurar separadamente \(x_h\) e \(x_p\) e depois ajustar constantes, transformamos a EDO inteira de uma vez. As condições iniciais entram <b>automaticamente</b>, pelos termos de borda das transformadas das derivadas.</div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Transformação das derivadas e incorporação das condições iniciais</h3>
+    <p>Se \(X(s) = \mathcal{L}\{x(t)\}\), a transformada unilateral da primeira derivada é \(\mathcal{L}\{\dot x(t)\} = sX(s) - x(0^-)\). Aplicando a propriedade novamente:</p>
+    <div class="eq-block">\[ \mathcal{L}\{\ddot x(t)\} = s\,\mathcal{L}\{\dot x(t)\} - \dot x(0^-) = s\big[sX(s) - x(0^-)\big] - \dot x(0^-) = s^2 X(s) - s\,x(0^-) - \dot x(0^-) \]</div>
+    <p>E para ordem \(n\):</p>
+    <div class="eq-block">\[ \mathcal{L}\{x^{(n)}(t)\} = s^n X(s) - s^{n-1}x(0^-) - s^{n-2}\dot x(0^-) - \cdots - x^{(n-1)}(0^-) \]</div>
+    <p class="dim">A demonstração dessas fórmulas — via integração por partes — está no <a href="index.html#derivada-integral">módulo 01</a>.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Transformação de uma EDO de ordem \(n\)</h3>
+    <p>Considere \(x^{(n)} + a_1 x^{(n-1)} + \cdots + a_{n-1}\dot x + a_n x = b_0\,u(t)\), com \(x(0^-)=\xi_0\), \(\dot x(0^-)=\xi_1\), …, \(x^{(n-1)}(0^-)=\xi_{n-1}\).</p>
+    <p>Aplicando \(\mathcal{L}\) termo a termo e agrupando tudo que contém \(X(s)\):</p>
+    <div class="eq-block">\[ \big(s^n + a_1 s^{n-1} + \cdots + a_{n-1}s + a_n\big)X(s) = b_0\,U(s) + P_{\mathrm{ci}}(s) \]</div>
+    <p>em que \(P_{\mathrm{ci}}(s)\) reúne <b style="color:var(--ink)">somente</b> as contribuições das condições iniciais. Isolando \(X(s)\):</p>
+    <div class="final-answer">
+      \[ X(s) = \underbrace{\frac{b_0\,U(s)}{D(s)}}_{\text{excitação externa}} + \underbrace{\frac{P_{\mathrm{ci}}(s)}{D(s)}}_{\text{estado inicial}}, \qquad D(s) = s^n + a_1 s^{n-1} + \cdots + a_n \]
+    </div>
+    <div class="callout">A decomposição evidencia <b>duas origens diferentes</b> para a resposta: a excitação externa e a energia/estado existente antes de \(t=0\). E note que \(D(s)\) é exatamente o polinômio característico da seção 0.3 — com \(\lambda\) trocado por \(s\). Ao antitransformar \(X(s)\), a fatoração de \(D(s)\) reproduz exatamente as mesmas formas temporais encontradas pela equação característica. Essa é a razão pela qual as duas abordagens não podem discordar.</div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">Exercícios</span>
+    <h2>Questões de provas — EDOs e PVI</h2>
+    <p class="dim">Questões de testes e provas do PSI3213 que caem diretamente neste módulo: transformar a EDO, incorporar as condições iniciais e chegar em \(X(s)\). Cada resolução vem completa, passo a passo.</p>
+
+    <div class="q-intro">
+      <div><b>3 questões</b>2 testes · 1 dissertativa</div>
+      <div><b>Foco</b>EDO → domínio s</div>
+      <div><b>Pré-requisito</b>Teorema da derivada (módulo 01)</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 8</span>PVI de segunda ordem no domínio \(s\)</span>
+          <span class="q-prova">T2/2019 — Q1</span>
+        </div>
+        <p>A equação diferencial que descreve o comportamento livre de um circuito de segunda ordem é</p>
+        <div class="eq-block">\[ \ddot v(t) + 5\dot v(t) + 2v(t) = 0 \]</div>
+        <p>Sabendo-se que \(v(0^-) = 1\;\mathrm{V}\) e \(\dot v(0^-) = 20\;\mathrm{V/s}\), a transformada de Laplace de \(v(t)\) é igual a:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{s+25}{s^2+5s+2}\)</li>
+          <li data-alt="b">\(\dfrac{s-5}{s^2-5s+2}\)</li>
+          <li data-alt="c">\(\dfrac{s+25}{s^2-5s-2}\)</li>
+          <li data-alt="d">\(\dfrac{s+1}{s^2+s+1}\)</li>
+          <li data-alt="e">\(\dfrac{s+5}{s^2+5s+2}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">O que significa dizer que o circuito é de segunda ordem</div>
+              <p>A maior derivada é \(\ddot v\), portanto a EDO é de segunda ordem. Em circuitos, isso normalmente está associado a <b style="color:var(--ink)">dois graus de liberdade de armazenamento de energia</b> — por exemplo um indutor e um capacitor. São necessárias duas condições iniciais independentes para determinar completamente a trajetória temporal.</p>
+              <p>Uma realização possível é um RLC série em resposta natural. Seja \(v(t)=v_C(t)\). Pela LKT, \(v_R + v_L + v_C = 0\). Como a corrente de ramo é \(i(t)=C\dot v_C(t)\), temos \(v_R = Ri = RC\dot v\) e \(v_L = L\dot i = LC\ddot v\), logo \(LC\ddot v + RC\dot v + v = 0\). Dividindo por \(LC\):</p>
+              <div class="eq-block">\[ \ddot v + \frac{R}{L}\dot v + \frac{1}{LC}v = 0 \]</div>
+              <p>Portanto a EDO do enunciado pode representar um RLC com \(R/L = 5\) e \(1/(LC) = 2\) — por exemplo \(L=1\,\mathrm{H}\), \(R=5\,\Omega\), \(C=0{,}5\,\mathrm{F}\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Resolver primeiro no domínio do tempo (para comparar depois)</div>
+              <p>Procurando \(v_h(t)=e^{rt}\), então \(\dot v_h = re^{rt}\) e \(\ddot v_h = r^2 e^{rt}\). Substituindo na EDO e cancelando \(e^{rt}\ne 0\):</p>
+              <div class="eq-block">\[ r^2 + 5r + 2 = 0 \;\Longrightarrow\; r_{1,2} = \frac{-5\pm\sqrt{25-8}}{2} = \frac{-5\pm\sqrt{17}}{2} \]</div>
+              <p>As duas raízes são reais, distintas e negativas — resposta <b style="color:var(--ink)">superamortecida</b>, com dois modos exponenciais decrescentes: \(v(t) = C_1 e^{r_1 t} + C_2 e^{r_2 t}\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar as duas condições iniciais</div>
+              <p>Em \(t=0^+\): \(v(0^+) = C_1 + C_2 = 1\). Derivando, \(\dot v(t) = r_1C_1e^{r_1t} + r_2C_2e^{r_2t}\), logo \(\dot v(0^+) = r_1C_1 + r_2C_2 = 20\).</p>
+              <p>Do primeiro vínculo, \(C_2 = 1 - C_1\). Substituindo no segundo, \((r_1-r_2)C_1 = 20 - r_2\). Como \(r_1 - r_2 = \sqrt{17}\) e \(20 - r_2 = 20 + \frac{5+\sqrt{17}}{2} = \frac{45+\sqrt{17}}{2}\):</p>
+              <div class="eq-block">\[ C_1 = \frac{45+\sqrt{17}}{2\sqrt{17}}, \qquad C_2 = 1 - C_1 = \frac{\sqrt{17}-45}{2\sqrt{17}} \]</div>
+              <div class="eq-block">\[ v(t) = \frac{45+\sqrt{17}}{2\sqrt{17}}\,e^{\frac{-5+\sqrt{17}}{2}t} + \frac{\sqrt{17}-45}{2\sqrt{17}}\,e^{\frac{-5-\sqrt{17}}{2}t} \]</div>
+              <p>Os coeficientes têm sinais opostos porque a derivada inicial é fortemente positiva, mesmo que os dois modos individuais sejam decrescentes.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Conferir a solução temporal</div>
+              <p>Como cada raiz satisfaz \(r_k^2 + 5r_k + 2 = 0\), cada termo \(C_k e^{r_k t}\) satisfaz \(\ddot v_k + 5\dot v_k + 2v_k = C_k(r_k^2+5r_k+2)e^{r_kt} = 0\). Pela linearidade, a soma também satisfaz a EDO. Além disso \(C_1+C_2=1\) e \(r_1C_1+r_2C_2=20\) — as duas condições iniciais também são obedecidas.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Resolver agora por transformada de Laplace</div>
+              <p>Usando \(\mathcal{L}\{\dot v\} = sV(s)-v(0^-)\) e \(\mathcal{L}\{\ddot v\} = s^2V(s)-s\,v(0^-)-\dot v(0^-)\), e aplicando termo a termo:</p>
+              <div class="eq-block">\[ \big[s^2V - s(1) - 20\big] + 5\big[sV - 1\big] + 2V = 0 \]</div>
+              <div class="eq-block">\[ s^2V - s - 20 + 5sV - 5 + 2V = 0 \;\Longrightarrow\; (s^2+5s+2)V(s) - s - 25 = 0 \]</div>
+              <div class="final-answer">\[ V(s) = \frac{s+25}{s^2+5s+2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Mostrar que Laplace contém os mesmos dois modos</div>
+              <p>O denominador fatora como \(s^2+5s+2 = (s-r_1)(s-r_2)\), com <em>os mesmos</em> \(r_1\) e \(r_2\) encontrados pela equação característica temporal. Uma decomposição em frações parciais gera exatamente \(\dfrac{C_1}{s-r_1} + \dfrac{C_2}{s-r_2}\), cuja antitransformada é a solução temporal obtida antes.</p>
+            </div>
+          </div>
+          <div class="q-idea"><b>Ideia-chave</b> — a transformada de Laplace não cria uma dinâmica diferente: ela apenas converte a EDO e as condições iniciais em álgebra no domínio \(s\). O polinômio do denominador <em>é</em> o polinômio característico.</div>
+          <div class="final-answer">Resposta: alternativa <b>(a)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 11</span>EDO homogênea com condições iniciais</span>
+          <span class="q-prova">T1/2022 — Q2</span>
+        </div>
+        <p>Considere a equação diferencial</p>
+        <div class="eq-block">\[ \ddot v(t) - \dot v(t) - 2v(t) = 0 \]</div>
+        <p>com condições iniciais \(v(0^-) = 1\) e \(\dot v(0^-) = 0\). A transformada de Laplace \(V(s)\) de \(v(t)\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{s-1}{s^2-s-2}\)</li>
+          <li data-alt="b">\(\dfrac{s}{s^2-2}\)</li>
+          <li data-alt="c">\(s^2-s-1\)</li>
+          <li data-alt="d">\(s\,e^{-2s}\)</li>
+          <li data-alt="e">\(-\dfrac{1}{s^2-s}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Transformar cada derivada</div>
+              <p>As fórmulas necessárias são \(\mathcal{L}\{\dot v\} = sV - v(0^-)\) e \(\mathcal{L}\{\ddot v\} = s^2V - s\,v(0^-) - \dot v(0^-)\). Substituindo as condições iniciais dadas:</p>
+              <div class="eq-block">\[ \mathcal{L}\{\dot v\} = sV - 1, \qquad \mathcal{L}\{\ddot v\} = s^2 V - s \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Inserir na EDO e agrupar</div>
+              <div class="eq-block">\[ (s^2V - s) - (sV - 1) - 2V = 0 \]</div>
+              <p>Abrindo o segundo parêntese — atenção ao sinal, o \(-1\) vira \(+1\):</p>
+              <div class="eq-block">\[ s^2V - s - sV + 1 - 2V = 0 \;\Longrightarrow\; (s^2-s-2)V(s) - s + 1 = 0 \]</div>
+              <div class="final-answer">\[ V(s) = \frac{s-1}{s^2-s-2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Conferência da condição inicial</div>
+              <p>Como \(V(s)\) é estritamente própria e não há impulso na origem, \(\displaystyle\lim_{s\to\infty} sV(s) = 1\) — coincidindo com \(v(0^-)=1\). É o Teorema do Valor Inicial servindo de checagem rápida (veja o <a href="modulo-03.html#tvi">apêndice sobre o TVI</a>).</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(a)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card dissertativa">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Dissertativa · Questão 2</span>Sistema de EDOs e antitransformação</span>
+          <span class="q-prova">P1/2018 — 1ª Questão</span>
+        </div>
+        <p>Considere o problema de valor inicial</p>
+        <div class="eq-block">\[ \begin{cases} \dot i_1(t) + i_1(t) - i_2(t) = 5, \\[4pt] 2\dot i_2(t) - i_1(t) + 3i_2(t) = 0, \end{cases} \qquad i_1(0^-) = i_2(0^-) = 1\;\mathrm{A} \]</div>
+        <p><b>(a)</b> Obtenha \(I_2(s)\). &nbsp; <b>(b)</b> Obtenha \(i_2(t)\) a partir de \(I_2(s)\) do item anterior. &nbsp; <b>(d)</b> Para \(I_2(s) = \dfrac{s^2+s-2}{s^2+s+1}\), obtenha \(i_2(t)\) para \(t \ge 0\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">(a) Transformar o sistema de EDOs</div>
+              <p>Para a primeira equação, \(\mathcal{L}\{\dot i_1\} = sI_1 - 1\). Como o \(5\) é aplicado para \(t \ge 0\), \(\mathcal{L}\{5\} = 5/s\). Logo:</p>
+              <div class="eq-block">\[ (sI_1 - 1) + I_1 - I_2 = \frac{5}{s} \;\Longrightarrow\; (s+1)I_1 - I_2 = 1 + \frac{5}{s} \]</div>
+              <p>Para a segunda, \(2(sI_2 - 1) - I_1 + 3I_2 = 0\), portanto \(-I_1 + (2s+3)I_2 = 2\). O sistema algébrico é:</p>
+              <div class="eq-block">\[ \begin{bmatrix} s+1 & -1 \\ -1 & 2s+3\end{bmatrix}\begin{bmatrix} I_1 \\ I_2\end{bmatrix} = \begin{bmatrix} 1+5/s \\ 2\end{bmatrix} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">(a) Isolar I₂(s) por Cramer</div>
+              <p>O determinante é \(D(s) = (s+1)(2s+3) - 1 = 2s^2+5s+2 = (2s+1)(s+2)\). Pela regra de Cramer, o numerador vale \(2(s+1) + 1 + \dfrac{5}{s} = 2s+3+\dfrac{5}{s} = \dfrac{2s^2+3s+5}{s}\). Assim:</p>
+              <div class="final-answer">\[ I_2(s) = \frac{2s^2+3s+5}{s\,(2s+1)(s+2)} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">(b) Por que podemos usar resíduos simples?</div>
+              <p>Duas propriedades <b style="color:var(--ink)">diferentes</b>, que costumam ser confundidas:</p>
+              <p><b>1.</b> O numerador tem grau 2 e o denominador grau 3 — logo \(I_2(s)\) é <em>estritamente própria</em>. Isso garante que não existe parte polinomial em \(s\) antes das frações parciais.</p>
+              <p><b>2.</b> Os polos são \(0,\,-\tfrac12,\,-2\) e são <em>distintos</em> — logo são polos simples. É essa segunda propriedade que permite calcular cada coeficiente por \(R_k = \lim_{s\to p_k}(s-p_k)I_2(s)\).</p>
+              <p>Escrevendo a expansão na forma <b style="color:var(--ink)">normalizada pelos polos</b>: \(I_2(s) = \dfrac{A}{s} + \dfrac{B}{s+1/2} + \dfrac{C}{s+2}\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">(b) Calcular os três resíduos</div>
+              <p>Para \(p_1=0\): \(A = \left.\dfrac{2s^2+3s+5}{(2s+1)(s+2)}\right|_{s=0} = \dfrac{5}{2}\).</p>
+              <p>Para \(p_2=-1/2\), note que \(2s+1 = 2\left(s+\tfrac12\right)\), então o fator 2 sai para o denominador:</p>
+              <div class="eq-block">\[ B = \left.\frac{2s^2+3s+5}{2s(s+2)}\right|_{s=-1/2} = \frac{4}{-3/2} = -\frac{8}{3} \]</div>
+              <p>Para \(p_3=-2\): \(C = \left.\dfrac{2s^2+3s+5}{s(2s+1)}\right|_{s=-2} = \dfrac{7}{6}\). Portanto:</p>
+              <div class="eq-block">\[ I_2(s) = \frac{5/2}{s} - \frac{8/3}{s+1/2} + \frac{7/6}{s+2} \]</div>
+              <div class="final-answer">\[ i_2(t) = \left(\frac{5}{2} - \frac{8}{3}e^{-t/2} + \frac{7}{6}e^{-2t}\right)H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">(b) Conferência da condição inicial</div>
+              <p>Em \(t=0^+\): \(i_2(0^+) = \dfrac52 - \dfrac83 + \dfrac76 = \dfrac{15-16+7}{6} = 1\) — exatamente a condição inicial dada.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">(d) Agora com uma função NÃO estritamente própria</div>
+              <p>Com \(I_2(s) = \dfrac{s^2+s-2}{s^2+s+1}\), os graus são iguais — existe uma parcela direta:</p>
+              <div class="eq-block">\[ I_2(s) = 1 - \frac{3}{s^2+s+1} \]</div>
+              <p>O termo \(1\) corresponde a \(\delta(t)\). No denominador restante, completa-se o quadrado:</p>
+              <div class="eq-block">\[ s^2+s+1 = \left(s+\tfrac12\right)^2 + \tfrac34 = \left(s+\tfrac12\right)^2 + \left(\tfrac{\sqrt3}{2}\right)^2 \]</div>
+              <p>Para casar com o par do seno, escrevemos \(3 = 2\sqrt3 \cdot \dfrac{\sqrt3}{2}\):</p>
+              <div class="eq-block">\[ \frac{3}{s^2+s+1} = 2\sqrt3\,\frac{\sqrt3/2}{(s+1/2)^2+(\sqrt3/2)^2} \]</div>
+              <div class="final-answer">\[ i_2(t) = \delta(t) - 2\sqrt3\,e^{-t/2}\,\mathrm{sen}\!\left(\frac{\sqrt3}{2}t\right)H(t) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Cuidado com a forma \(\tilde B/(2s+1)\)</b> — se alguém escrever \(\dfrac{\tilde B}{2s+1}\), então \(\dfrac{\tilde B}{2s+1} = \dfrac{\tilde B/2}{s+1/2}\). Logo o resíduo verdadeiro no polo \(-1/2\) é \(\tilde B/2\). Na notação não normalizada aparecia \(\tilde B = -16/3\), enquanto na forma normalizada pelo polo o resíduo é \(B = -8/3\). São o mesmo resultado escrito de dois jeitos.</div>
+          <div class="q-idea"><b>Comparando (b) e (d)</b> — o item (b) evidencia a distinção entre <em>função estritamente própria</em> e <em>polos simples</em>; o item (d) mostra o que muda quando a função deixa de ser estritamente própria e passa a conter uma parcela impulsiva.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="index.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">01 · Transformada de Laplace</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Baseado nas notas de aula e no Bloco 1 — Transformada de Laplace (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+});
+
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const proof = btn.nextElementSibling;
+  if(!proof || !proof.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = proof.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

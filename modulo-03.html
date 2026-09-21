@@ -27,6 +27,10 @@ window.MathJax = {
 
     <div class="side-group">
       <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
       <a class="side-item" href="index.html">
         <span class="side-num">01</span>
         <span class="side-title">Transformada de Laplace</span>
@@ -47,14 +51,18 @@ window.MathJax = {
         <span class="side-num">05</span>
         <span class="side-title">Redes de 2ª ordem</span>
       </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
     </div>
 
     <div class="side-group">
       <div class="side-label">P2</div>
-      <div class="side-item disabled">
-        <span class="side-num">01</span>
-        <span class="side-title"><em>em breve</em></span>
-      </div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
     </div>
   </aside>
 
@@ -75,7 +83,10 @@ window.MathJax = {
         <a href="#ex1">Exemplo 1</a>
         <a href="#ex2">Exemplo 2</a>
         <a href="#inversao-integral">Integral de inversão</a>
+        <a href="#atrasos">Atrasos e roteiro</a>
         <a href="#receita">Receita de prova</a>
+        <a href="#tvi">Teorema do Valor Inicial</a>
+        <a href="#exercicios">Exercícios</a>
       </div>
     </nav>
 
@@ -578,35 +589,127 @@ window.MathJax = {
     <div class="callout"><b>Por que isso fecha o círculo.</b> Se você aplicar o teorema dos resíduos a uma \(F(s)\) racional, os resíduos de \(F(s)e^{st}\) nos polos devolvem exatamente os termos \(A_{k\ell}\,\frac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\) da expansão em frações parciais. Os dois métodos são o mesmo método — frações parciais é só o atalho para o caso racional.</div>
   </section>
 
-  <section id="receita" class="panel">
+  <section id="atrasos" class="panel">
     <span class="eyebrow">3.8</span>
+    <h2>Antes de inverter: que tipo de objeto é \(F(s)\)?</h2>
+    <p>Nem toda expressão em \(s\) deve ser tratada da mesma maneira. Vale gastar trinta segundos classificando \(F(s)\) antes de sair calculando resíduos — é o que evita as duas ou três armadilhas clássicas.</p>
+
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="num">1</span>
+        <p><b style="color:var(--ink)">Existem fatores exponenciais \(e^{-as}\)?</b> Eles indicam <em>atrasos no tempo</em> e devem ser separados antes de qualquer álgebra.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">2</span>
+        <p><b style="color:var(--ink)">\(F(s)\) é racional</b>, isto é, quociente de polinômios? Se não for, o caminho é reconhecer pares e propriedades, não frações parciais.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">3</span>
+        <p><b style="color:var(--ink)">Há fatores comuns exatos</b> entre numerador e denominador? Simplifique — eles são singularidades removíveis, não polos.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">4</span>
+        <p><b style="color:var(--ink)">Compare os graus</b> de numerador e denominador. É isso que decide se existe parte impulsiva.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">5</span>
+        <p><b style="color:var(--ink)">Somente depois</b> fatore o denominador e escolha a forma das frações parciais.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Fatores de atraso: separe primeiro, aplique por último</h3>
+    <p>Se \(F(s) = e^{-as}G(s)\) com \(a>0\), <b style="color:var(--ink)">não</b> tente antitransformar tudo de uma vez. Primeiro antitransforme só \(G\):</p>
+    <div class="eq-block">\[ g(t) = \mathcal{L}^{-1}\{G(s)\} \]</div>
+    <p>E somente então aplique a translação no tempo:</p>
+    <div class="eq-block">\[ \mathcal{L}^{-1}\{e^{-as}G(s)\} = g(t-a)\,H(t-a) \]</div>
+    <p>Se houver uma soma de vários fatores de atraso, trate cada parcela separadamente pela linearidade. Note que <b style="color:var(--ink)">o fator \(e^{-as}\) não altera os polos</b> da parte racional — ele apenas desloca a resposta no tempo. Então ele nunca muda quais exponenciais aparecem, só <em>quando</em> elas começam.</p>
+
+    <div class="callout"><b>Atenção ao substituir.</b> Depois de encontrar \(g(t)\), a substituição é \(t \to t-a\) em <b>toda</b> a expressão — incluindo dentro de exponenciais e cossenos. Um \(e^{-t/2}\) vira \(e^{-(t-1)/2} = \sqrt{e}\,e^{-t/2}\), e esse \(\sqrt{e}\) que "aparece do nada" é exatamente o tipo de coisa que a prova cobra (veja a Questão objetiva 10 nos exercícios).</div>
+
+    <div class="callout"><b>Separação de escopo.</b> Neste módulo os polos são usados como ferramenta algébrica de fatoração e antitransformação. A interpretação de polos e zeros como propriedades de <em>funções de rede</em>, frequências complexas próprias e critérios de estabilidade será tratada no <a href="modulo-06.html">módulo 06 — Funções de rede</a>. Um aviso relacionado: <b>não confunda existência da inversa com estabilidade</b> — uma exponencial crescente ainda possui transformada de Laplace em uma região de convergência apropriada.</div>
+  </section>
+
+  <section id="receita" class="panel">
+    <span class="eyebrow">3.9</span>
     <h2>A receita, em ordem</h2>
     <p class="dim">O roteiro completo para antitransformar qualquer \(F(s)\) racional que aparecer na prova.</p>
 
     <div class="problem-list">
       <div class="problem-item">
         <span class="num">1</span>
-        <p><b style="color:var(--ink)">Compare os graus.</b> Se \(\mathrm{gr}\{N\} \ge \mathrm{gr}\{D\}\), divida os polinômios e separe \(Q(s) + R(s)/D(s)\). Senão, siga direto.</p>
+        <p><b style="color:var(--ink)">Separe os fatores de atraso \(e^{-as}\)</b> e guarde-os de lado. Eles voltam só no último passo.</p>
       </div>
       <div class="problem-item">
         <span class="num">2</span>
-        <p><b style="color:var(--ink)">Fatore \(D(s)\)</b> e identifique cada polo \(p_k\) com sua multiplicidade \(m_k\). Confira que \(\sum m_k = n\).</p>
+        <p><b style="color:var(--ink)">Cancele fatores comuns exatos</b> entre numerador e denominador da parte racional restante.</p>
       </div>
       <div class="problem-item">
         <span class="num">3</span>
-        <p><b style="color:var(--ink)">Escreva a forma da expansão</b> antes de calcular qualquer coisa — um termo por potência de cada polo. Isso evita esquecer o \(A_{k1}\) dos polos múltiplos.</p>
+        <p><b style="color:var(--ink)">Compare os graus.</b> Se \(\mathrm{gr}\{N\} \ge \mathrm{gr}\{D\}\), divida os polinômios e separe \(Q(s) + R(s)/D(s)\) — e <em>registre a parte impulsiva</em>. Senão, siga direto.</p>
       </div>
       <div class="problem-item">
         <span class="num">4</span>
-        <p><b style="color:var(--ink)">Calcule os resíduos.</b> Potência mais alta de cada polo: tapa. Potências mais baixas: derive. Polos complexos: calcule só um do par e conjugue o outro.</p>
+        <p><b style="color:var(--ink)">Fatore \(D(s)\)</b> da parte estritamente própria e identifique cada polo \(p_k\) com sua multiplicidade \(m_k\). Confira que \(\sum m_k = n\).</p>
       </div>
       <div class="problem-item">
         <span class="num">5</span>
-        <p><b style="color:var(--ink)">Antitransforme termo a termo.</b> \(\dfrac{1}{(s-p_k)^\ell} \to \dfrac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\); pares conjugados viram \(2|A|e^{\sigma t}\cos(\omega t+\phi)\); \(Q(s)\) vira impulso e derivadas dele.</p>
+        <p><b style="color:var(--ink)">Classifique cada fator:</b> real simples, real repetido, quadrático irredutível simples ou quadrático repetido. Cada classe tem uma forma própria.</p>
       </div>
       <div class="problem-item">
         <span class="num">6</span>
+        <p><b style="color:var(--ink)">Escreva a forma completa da expansão</b> antes de calcular qualquer coisa — um termo por potência de cada polo. Isso evita esquecer o \(A_{k1}\) dos polos múltiplos.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">7</span>
+        <p><b style="color:var(--ink)">Calcule os coeficientes</b> por resíduos, derivadas, substituição de valores de \(s\) ou comparação de coeficientes. Potência mais alta de cada polo: tapa. Potências mais baixas: derive. Polos complexos: calcule só um do par e conjugue o outro.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">8</span>
+        <p><b style="color:var(--ink)">Antitransforme termo a termo.</b> \(\dfrac{1}{(s-p_k)^\ell} \to \dfrac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\); \(Q(s)\) vira impulso e derivadas dele.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">9</span>
+        <p><b style="color:var(--ink)">Recombine os pares conjugados em forma real</b> — \(2|A|e^{\sigma t}\cos(\omega t+\phi)\). Se \(F(s)\) tem coeficientes reais, a resposta física <em>tem</em> que ser real.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">10</span>
+        <p><b style="color:var(--ink)">Aplique por último os atrasos</b> que havia separado no passo 1: \(t \to t-a\) em toda a expressão, multiplicando por \(H(t-a)\).</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">11</span>
         <p><b style="color:var(--ink)">Confira.</b> A resposta tem que ser real (nenhum \(j\) sobrando) e, se \(F(s)\) for estritamente própria, não pode ter impulso nem doublet.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Os sete erros que mais aparecem</h3>
+    <div class="problem-list">
+      <div class="problem-item">
+        <span class="num">i</span>
+        <p><b style="color:var(--ink)">Não verificar os graus</b> — perde-se a parte impulsiva de funções não estritamente próprias. A fórmula de resíduo pode até fornecer corretamente os coeficientes dos polos finitos, mas <em>ela não revela a parte polinomial</em>. Sem a divisão, você obtém todas as exponenciais certas e ainda assim perde um \(\delta(t)\) ou um doublet.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">ii</span>
+        <p><b style="color:var(--ink)">Não cancelar fatores comuns</b> — trata-se como polo uma singularidade que na verdade é removível.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">iii</span>
+        <p><b style="color:var(--ink)">Escrever a forma errada para polo repetido</b> — uma multiplicidade \(m\) exige <em>todas</em> as potências de 1 até \(m\), não só a mais alta.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">iv</span>
+        <p><b style="color:var(--ink)">Usar numerador constante sobre fator quadrático</b> — para um quadrático irredutível, o numerador deve ser <em>linear</em>.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">v</span>
+        <p><b style="color:var(--ink)">Separar um par complexo e esquecer a recombinação real</b> — se \(F(s)\) tem coeficientes reais, a resposta final física deve ser real.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">vi</span>
+        <p><b style="color:var(--ink)">Ignorar o atraso \(e^{-as}\)</b> — esse fator não altera os polos da parte racional, mas desloca a resposta no tempo. Esquecê-lo dá a forma certa na hora errada.</p>
+      </div>
+      <div class="problem-item">
+        <span class="num">vii</span>
+        <p><b style="color:var(--ink)">Confundir existência da inversa com estabilidade</b> — uma exponencial crescente ainda possui transformada de Laplace em uma ROC apropriada. Estabilidade é outro assunto.</p>
       </div>
     </div>
 
@@ -619,6 +722,697 @@ window.MathJax = {
         <span class="tag">Teste rápido de sanidade</span>
         <p>Escolha um valor qualquer de \(s\) (por exemplo \(s=1\)), calcule \(F(s)\) pela expressão original e pela expansão. Se der diferente, algum resíduo está errado.</p>
       </div>
+    </div>
+  </section>
+
+  <section id="tvi" class="panel">
+    <span class="eyebrow">3.10 · Apêndice</span>
+    <h2>Prévia do Teorema do Valor Inicial</h2>
+    <p>O estudo formal dos teoremas do valor inicial e final pertence ao material de <b style="color:var(--ink)">Funções de Rede</b>. Ainda assim vale registrar uma prévia, porque o TVI fornece uma <b style="color:var(--ink)">conferência muito rápida</b> em vários exercícios — e às vezes resolve um item inteiro sem antitransformar nada.</p>
+
+    <h3 style="margin-top:1.4rem;font-size:1.1rem">Ideia básica</h3>
+    <p>Sob as hipóteses adequadas, se \(F(s) = \mathcal{L}\{f(t)\}\), então:</p>
+    <div class="eq-block">\[ f(0^+) = \lim_{s\to\infty} s\,F(s) \]</div>
+    <p>A interpretação é simples: valores muito grandes de \(s\) dão peso <b style="color:var(--ink)">muito forte</b> ao comportamento do sinal próximo de \(t=0\), porque o núcleo \(e^{-st}\) decai extremamente rápido. No limite, só sobra a informação da origem.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Exemplo — a Questão objetiva 11 resolvida em duas linhas</h3>
+    <p>Naquela questão foi dado \(V(s) = \dfrac{2s+5}{s^2+10s+25}\). Pelo TVI:</p>
+    <div class="eq-block">\[ v(0^+) = \lim_{s\to\infty} s\,V(s) = \lim_{s\to\infty}\frac{2s^2+5s}{s^2+10s+25} \]</div>
+    <p>Dividindo numerador e denominador por \(s^2\):</p>
+    <div class="eq-block">\[ v(0^+) = \lim_{s\to\infty}\frac{2+5/s}{1+10/s+25/s^2} = 2 \]</div>
+    <p>Isso coincide com o valor obtido pela antitransformação explícita — sem precisar fazer frações parciais.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">E para a derivada inicial?</h3>
+    <p>Uma forma de prosseguir é aplicar o mesmo raciocínio à transformada da derivada. Como \(\mathcal{L}\{\dot v(t)\} = sV(s) - v(0^-)\), então — se as hipóteses do TVI também forem satisfeitas por \(\dot v\):</p>
+    <div class="eq-block">\[ \dot v(0^+) = \lim_{s\to\infty} s\big[s\,V(s) - v(0^-)\big] \]</div>
+    <p>No exemplo, usando \(v(0^-) = 2\) e \(s^2+10s+25 = (s+5)^2\):</p>
+    <div class="eq-block">\[ \dot v(0^+) = \lim_{s\to\infty} s\left[\frac{s(2s+5)}{(s+5)^2} - 2\right] \]</div>
+    <p>Simplificando a expressão entre colchetes, \(\dfrac{2s^2+5s-2(s^2+10s+25)}{(s+5)^2} = \dfrac{-15s-50}{(s+5)^2}\), logo:</p>
+    <div class="eq-block">\[ \dot v(0^+) = \lim_{s\to\infty}\frac{-15s^2-50s}{(s+5)^2} = -15 \]</div>
+    <div class="final-answer">\[ v(0^-) = 2\;\mathrm{V}, \qquad \dot v(0^-) = -15\;\mathrm{V/s} \]</div>
+    <p class="dim" style="margin-top:1rem">Novamente o resultado coincide com a derivação direta da resposta temporal. <b>Nota:</b> esta é apenas uma prévia — hipóteses de validade e interpretação por polos serão tratadas em Funções de Rede.</p>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">Exercícios</span>
+    <h2>Questões de provas — antitransformação e frações parciais</h2>
+    <p class="dim">Questões de testes e provas do PSI3213 sobre voltar ao domínio do tempo: resíduos, polos duplos, pares complexos conjugados, funções impróprias e componentes impulsivas. As questões de <em>ida</em> (tempo → \(s\)) estão no <a href="index.html#exercicios">módulo 01</a>.</p>
+
+    <div class="q-intro">
+      <div><b>12 questões</b>5 testes · 6 objetivas · 1 dissertativa</div>
+      <div><b>Foco</b>domínio s → tempo</div>
+      <div><b>Período</b>2010 – 2023</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 2</span>EDO de terceira ordem e resíduo de polo simples</span>
+          <span class="q-prova">T2/2016 — Q4</span>
+        </div>
+        <p>Considere a equação diferencial</p>
+        <div class="eq-block">\[ y^{(3)}(t) + 3y^{(2)}(t) - 10y^{(1)}(t) = 3u^{(2)}(t) - u^{(1)}(t) + u(t) \]</div>
+        <p>com condições iniciais nulas e excitação \(u(t) = H(t)\). O valor do resíduo \(A\) da exponencial \(e^{2t}H(t)\) na resposta \(y(t) = Ae^{2t} + \cdots\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{259}{175}\)</li>
+          <li data-alt="b">\(\dfrac{11}{28}\)</li>
+          <li data-alt="c">\(-\dfrac{81}{175}\)</li>
+          <li data-alt="d">\(-\dfrac{1}{10}\)</li>
+          <li data-alt="e">\(\dfrac{1134}{875}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Transformar a equação diferencial</div>
+              <p>Como <b style="color:var(--ink)">todas</b> as condições iniciais são nulas, cada derivada transforma-se apenas em uma potência de \(s\) multiplicando a transformada da função: \(\mathcal{L}\{y^{(n)}\} = s^nY(s)\) e \(\mathcal{L}\{u^{(n)}\} = s^nU(s)\). Portanto:</p>
+              <div class="eq-block">\[ \big(s^3+3s^2-10s\big)Y(s) = \big(3s^2-s+1\big)U(s) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Inserir a entrada degrau e fatorar</div>
+              <p>Como \(u(t)=H(t)\), \(U(s)=1/s\). Logo \(Y(s) = \dfrac{3s^2-s+1}{s\left(s^3+3s^2-10s\right)}\). Fatorando o polinômio da dinâmica:</p>
+              <div class="eq-block">\[ s^3+3s^2-10s = s(s^2+3s-10) = s(s+5)(s-2) \]</div>
+              <div class="eq-block">\[ Y(s) = \frac{3s^2-s+1}{s^2(s+5)(s-2)} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Relacionar o termo e²ᵗ com um polo</div>
+              <p>O par básico \(\dfrac{A}{s-a} \leftrightarrow A\,e^{at}H(t)\) mostra que o termo \(Ae^{2t}H(t)\) vem do <b style="color:var(--ink)">polo simples em \(s=2\)</b>. Não precisamos calcular a resposta inteira — só o resíduo desse polo.</p>
+              <p>Para um polo simples \(s=p\), o coeficiente da parcela \(1/(s-p)\) é o resíduo \(A = \lim_{s\to p}(s-p)Y(s)\). Aqui \(p=2\), então basta "tapar" o fator \((s-2)\):</p>
+              <div class="eq-block">\[ A = \left.\frac{3s^2-s+1}{s^2(s+5)}\right|_{s=2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Substituir termo a termo</div>
+              <p>Numerador: \(3(2)^2 - 2 + 1 = 12 - 2 + 1 = 11\). Denominador: \(2^2(2+5) = 4\cdot 7 = 28\).</p>
+              <div class="final-answer">\[ A = \frac{11}{28} \]</div>
+              <p>Como o polo está em \(s=+2\), no <b style="color:var(--red)">semiplano direito</b>, essa componente <em>cresce</em> como \(e^{2t}\) — o sistema é instável. A questão pede somente o coeficiente dessa componente, não a resposta completa.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b>, \(A = 11/28\)</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 4</span>Antitransformação com polo duplo</span>
+          <span class="q-prova">T2/2017 — Q3</span>
+        </div>
+        <p>A antitransformada de Laplace de \(F(s) = \dfrac{s+1}{(s+2)^2}\), para \(t \ge 0\), é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\((1-2t)e^{-2t}\)</li>
+          <li data-alt="b">\((t+1)e^{-2t}\)</li>
+          <li data-alt="c">\((1-t)e^{-2t}\)</li>
+          <li data-alt="d">\((2t+1)e^{-2t}\)</li>
+          <li data-alt="e">\((t+1)^2 e^{-2t}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Adaptar o numerador aos pares tabelados</div>
+              <p>O denominador está escrito em termos de \(s+2\), então é conveniente reescrever o numerador da mesma forma: \(s+1 = (s+2)-1\). Substituindo e separando as frações:</p>
+              <div class="eq-block">\[ F(s) = \frac{(s+2)-1}{(s+2)^2} = \frac{1}{s+2} - \frac{1}{(s+2)^2} \]</div>
+              <p class="dim">Esse truque — reescrever o numerador em função do fator do denominador — dispensa completamente o cálculo de resíduos por derivada.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Antitransformar cada termo</div>
+              <p>Com \(\dfrac{1}{s+a} \leftrightarrow e^{-at}H(t)\) e \(\dfrac{1}{(s+a)^2} \leftrightarrow t\,e^{-at}H(t)\), para \(a=2\):</p>
+              <div class="eq-block">\[ f(t) = e^{-2t}H(t) - t\,e^{-2t}H(t) \]</div>
+              <div class="final-answer">\[ f(t) = (1-t)\,e^{-2t}H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Papel do polo duplo</div>
+              <p>O fator \((s+2)^2\) produz, na resposta temporal, um termo proporcional a \(t\,e^{-2t}\). É justamente <b style="color:var(--ink)">essa potência de \(t\)</b> que distingue um polo duplo de um polo simples.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(c)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 10</span>Função racional imprópria e componente impulsiva</span>
+          <span class="q-prova">T2/2019 — Q3</span>
+        </div>
+        <p>A antitransformada de Laplace de \(F(s) = \dfrac{2s^2+s+1}{s^2+2s+1}\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(2\delta(t)+2e^{-t}tH(t)\)</li>
+          <li data-alt="b">\(2\delta(t)-3\cos t-\mathrm{sen}\,t\)</li>
+          <li data-alt="c">\(2\delta(t)+2te^{-t}H(t)-3e^{-t}H(t)\)</li>
+          <li data-alt="d">\(-2e^{-t}H(t)+3te^{-t}H(t)\)</li>
+          <li data-alt="e">\(2e^{-2t}H(t)+3te^{-2t}H(t)\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Resolver pensando primeiro em pares de Laplace</div>
+              <p>Em vez de tratar o problema como uma divisão polinomial abstrata, vamos perguntar: <em>que tipos de sinais no tempo podem gerar essa estrutura no domínio \(s\)?</em></p>
+              <p>O denominador \(s^2+2s+1 = (s+1)^2\) sugere as formas \(\dfrac{1}{s+1} \leftrightarrow e^{-t}H(t)\) e \(\dfrac{1}{(s+1)^2} \leftrightarrow te^{-t}H(t)\).</p>
+              <p>E como numerador e denominador têm o <b style="color:var(--ink)">mesmo grau</b>, existe ainda uma parcela constante em \(s\), e \(1 \leftrightarrow \delta(t)\). Portanto é natural procurar:</p>
+              <div class="eq-block">\[ F(s) = A + \frac{B}{s+1} + \frac{C}{(s+1)^2} \]</div>
+              <p class="dim">Essa escolha já nasce diretamente dos pares de Laplace que queremos antitransformar.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Determinar A, B e C</div>
+              <p>Multiplicando por \((s+1)^2\): \(2s^2+s+1 = A(s+1)^2 + B(s+1) + C\). Expandindo apenas o necessário:</p>
+              <div class="eq-block">\[ A(s+1)^2 + B(s+1) + C = As^2 + (2A+B)s + (A+B+C) \]</div>
+              <p>Comparando com \(2s^2+s+1\): \(A=2\); depois \(2A+B=1 \Rightarrow B=-3\); e \(A+B+C=1 \Rightarrow 2-3+C=1 \Rightarrow C=2\).</p>
+              <div class="eq-block">\[ F(s) = 2 - \frac{3}{s+1} + \frac{2}{(s+1)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Voltar ao tempo termo a termo</div>
+              <p>\(2 \leftrightarrow 2\delta(t)\); \(-\dfrac{3}{s+1} \leftrightarrow -3e^{-t}H(t)\); \(\dfrac{2}{(s+1)^2} \leftrightarrow 2te^{-t}H(t)\).</p>
+              <div class="final-answer">\[ f(t) = 2\delta(t) - 3e^{-t}H(t) + 2te^{-t}H(t) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Ideia-chave</b> — o termo constante não é um "detalhe algébrico": ele é a assinatura, no domínio \(s\), de um <b>impulso concentrado em \(t=0\)</b>. Pensar nos pares de Laplace permite prever a forma temporal antes de calcular os coeficientes.</div>
+          <div class="final-answer">Resposta: alternativa <b>(c)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 12</span>Divisão polinomial e coeficiente de \(\delta(t)\)</span>
+          <span class="q-prova">T2/2022 — Q2</span>
+        </div>
+        <p>Dada a função racional</p>
+        <div class="eq-block">\[ F(s) = \frac{3s^4+2s^2+4s}{s^2+5s+2} \]</div>
+        <p>deseja-se determinar a componente impulsiva \(A\delta(t)\) de sua antitransformada \(f(t) = A\delta(t)+\cdots\). Indique o valor do coeficiente \(A\).</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(-15\)</li>
+          <li data-alt="b">\(3\)</li>
+          <li data-alt="c">\(34\)</li>
+          <li data-alt="d">\(71\)</li>
+          <li data-alt="e">\(75\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Por que fazer divisão polinomial?</div>
+              <p>A função é <b style="color:var(--ink)">imprópria</b>: o numerador tem grau 4 e o denominador grau 2. A parte polinomial da divisão corresponde, no tempo, a impulsos e derivadas do impulso. Como a questão pede especificamente o coeficiente de \(\delta(t)\), precisamos descobrir o <em>termo constante</em> dessa parte polinomial — e para isso não tem atalho, é preciso dividir.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Executar a divisão passo a passo</div>
+              <p><b>Primeiro termo:</b> \(\dfrac{3s^4}{s^2} = 3s^2\). Multiplicando o denominador: \(3s^2(s^2+5s+2) = 3s^4+15s^3+6s^2\). Subtraindo do dividendo \(3s^4+0s^3+2s^2+4s+0\):</p>
+              <div class="eq-block">\[ -15s^3 - 4s^2 + 4s \]</div>
+              <p><b>Segundo termo:</b> \(\dfrac{-15s^3}{s^2} = -15s\). Multiplicando: \(-15s(s^2+5s+2) = -15s^3-75s^2-30s\). Subtraindo:</p>
+              <div class="eq-block">\[ 71s^2 + 34s \]</div>
+              <p><b>Terceiro termo:</b> \(\dfrac{71s^2}{s^2} = 71\). Multiplicando: \(71(s^2+5s+2) = 71s^2+355s+142\). Subtraindo, o resto é \(-321s-142\).</p>
+              <div class="eq-block">\[ F(s) = 3s^2 - 15s + 71 + \frac{-321s-142}{s^2+5s+2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Identificar o coeficiente do impulso</div>
+              <p>Os pares relevantes são \(s^2 \leftrightarrow \delta''(t)\), \(s \leftrightarrow \delta'(t)\) e \(1 \leftrightarrow \delta(t)\). Portanto:</p>
+              <div class="eq-block">\[ 3s^2 - 15s + 71 \;\longleftrightarrow\; 3\delta''(t) - 15\delta'(t) + 71\delta(t) \]</div>
+              <p>A parte racional restante é estritamente própria (grau 1 sobre grau 2) e <b style="color:var(--ink)">não adiciona outra parcela \(\delta(t)\)</b>.</p>
+              <div class="final-answer">\[ A = 71 \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Onde estão as armadilhas</b> — \(3\) é o coeficiente de \(\delta''\), \(-15\) é o de \(\delta'\), e \(34\) é um resto intermediário da divisão. Todas as alternativas erradas são números que <em>de fato aparecem</em> durante a conta; só uma delas é o coeficiente pedido.</div>
+          <div class="final-answer">Resposta: alternativa <b>(d)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 13</span>Polos complexos conjugados <em>e</em> polos duplos</span>
+          <span class="q-prova">T2/2023 — Q2</span>
+        </div>
+        <p>Seja</p>
+        <div class="eq-block">\[ F(s) = \frac{A}{s+2+j2} + \frac{A^*}{s+2-j2} + \frac{B}{(s+2+j2)^2} + \frac{B^*}{(s+2-j2)^2} \]</div>
+        <p>sabendo-se que \(f(t) = 2t\,e^{-2t}\,\mathrm{sen}(2t) + e^{-2t}\cos(2t)\). Pode-se dizer que os resíduos \(A\) e \(B\) são, respectivamente:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(1\angle(-90^\circ)\);&nbsp; \(\tfrac12\angle 0^\circ\)</li>
+          <li data-alt="b">\(\tfrac12\angle 0^\circ\);&nbsp; \(1\angle(-90^\circ)\)</li>
+          <li data-alt="c">\(2\angle 0^\circ\);&nbsp; \(1\angle 90^\circ\)</li>
+          <li data-alt="d">\(\tfrac12\angle 0^\circ\);&nbsp; \(1\angle 90^\circ\)</li>
+          <li data-alt="e">\(1\angle 0^\circ\);&nbsp; \(1\angle 90^\circ\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Por que aparecem pares conjugados?</div>
+              <p>Os polos aparecem em pares conjugados porque a função temporal final é <b style="color:var(--ink)">real</b>. A soma de dois termos conjugados elimina a parte imaginária e deixa uma combinação real de seno e cosseno. Aqui a questão é inversa: dado \(f(t)\), descobrir os resíduos.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Mostrar com calma de onde vem o fator 2Re{·}</div>
+              <p>Considere primeiro o par associado a \(A\): \(f_A(t) = Ae^{(-2-j2)t} + A^*e^{(-2+j2)t}\). Fatorando o amortecimento real:</p>
+              <div class="eq-block">\[ f_A(t) = e^{-2t}\big[Ae^{-j2t} + A^*e^{j2t}\big] \]</div>
+              <p>Observe que \(A^*e^{j2t}\) é exatamente o conjugado de \(Ae^{-j2t}\). Chamando \(z = Ae^{-j2t}\), vale \(z+z^* = 2\mathrm{Re}\{z\}\). Assim:</p>
+              <div class="eq-block">\[ f_A(t) = 2e^{-2t}\,\mathrm{Re}\{Ae^{-j2t}\} \]</div>
+              <p class="dim">O fator 2 aparece porque somar um número complexo com seu conjugado <em>duplica</em> sua parte real. Não é uma constante arbitrária.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Abrir a parte real e comparar com o enunciado</div>
+              <p>Escreva \(A = a+jb\) e \(e^{-j2t} = \cos 2t - j\,\mathrm{sen}\,2t\). Multiplicando explicitamente:</p>
+              <div class="eq-block">\[ Ae^{-j2t} = a\cos 2t + b\,\mathrm{sen}\,2t + j\big(b\cos 2t - a\,\mathrm{sen}\,2t\big) \]</div>
+              <p>Logo \(\mathrm{Re}\{Ae^{-j2t}\} = a\cos 2t + b\,\mathrm{sen}\,2t\), e portanto \(f_A(t) = 2e^{-2t}\big[a\cos 2t + b\,\mathrm{sen}\,2t\big]\).</p>
+              <p>No enunciado, a parcela <b style="color:var(--ink)">sem \(t\)</b> é \(e^{-2t}\cos 2t\). Comparando coeficientes: \(2a = 1 \Rightarrow a = \tfrac12\) e \(2b = 0 \Rightarrow b = 0\).</p>
+              <div class="eq-block">\[ A = \frac{1}{2} = \frac{1}{2}\angle 0^\circ \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Repetir o raciocínio para o coeficiente B</div>
+              <p>Para um polo duplo, \(\dfrac{1}{(s-p)^2} \leftrightarrow t\,e^{pt}H(t)\). Portanto \(f_B(t) = tBe^{(-2-j2)t} + tB^*e^{(-2+j2)t} = 2t\,e^{-2t}\,\mathrm{Re}\{Be^{-j2t}\}\), pelo mesmo argumento do conjugado.</p>
+              <p>Escrevendo \(B = c+jd\), \(\mathrm{Re}\{Be^{-j2t}\} = c\cos 2t + d\,\mathrm{sen}\,2t\), logo \(f_B(t) = 2te^{-2t}\big[c\cos 2t + d\,\mathrm{sen}\,2t\big]\).</p>
+              <p>No enunciado, a parcela multiplicada por \(t\) é \(2te^{-2t}\mathrm{sen}\,2t\). Logo \(2c=0 \Rightarrow c=0\) e \(2d=2 \Rightarrow d=1\):</p>
+              <div class="eq-block">\[ B = j = 1\angle 90^\circ \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Reconstrução final como conferência</div>
+              <p>Com \(A=\tfrac12\) e \(B=j\), o par simples produz \(f_A(t) = e^{-2t}\cos 2t\) e o par duplo produz \(f_B(t) = 2te^{-2t}\mathrm{sen}\,2t\). Somando:</p>
+              <div class="eq-block">\[ f_A(t)+f_B(t) = e^{-2t}\cos 2t + 2te^{-2t}\,\mathrm{sen}\,2t \]</div>
+              <p>que coincide exatamente com a função dada.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(d)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 3</span>Função racional imprópria e polo duplo</span>
+          <span class="q-prova">P2/2010 — Teste 1</span>
+        </div>
+        <p>Considere \(F(s) = \dfrac{s^3+2s^2+s+1}{(s+2)^2}\). Qual é a <b>parte exponencial</b> da antitransformada de Laplace de \(F(s)\)?</p>
+        <ul class="q-alts">
+          <li data-alt="a">\((3-t)e^{-2t}H(t)\)</li>
+          <li data-alt="b">\((5-t)e^{-2t}H(t)\)</li>
+          <li data-alt="c">\((1-t)e^{-2t}H(t)\)</li>
+          <li data-alt="d">\((1+t)e^{-2t}H(t)\)</li>
+          <li data-alt="e">n.d.a.</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Prever a forma temporal a partir dos pares de Laplace</div>
+              <p>A questão pede apenas a parte exponencial. O denominador \((s+2)^2\) mostra que a parte ordinária pode conter \(\dfrac{1}{s+2} \leftrightarrow e^{-2t}H(t)\) e \(\dfrac{1}{(s+2)^2} \leftrightarrow te^{-2t}H(t)\).</p>
+              <p>Como a função é <b style="color:var(--ink)">imprópria</b> (grau 3 sobre grau 2), haverá ainda termos polinomiais em \(s\), correspondentes a impulsos em \(t=0\). Como eles não fazem parte da parcela pedida, vamos separá-los usando uma forma já adaptada aos pares:</p>
+              <div class="eq-block">\[ F(s) = As + B + \frac{C}{s+2} + \frac{D}{(s+2)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Determinar os coeficientes por equivalência no domínio s</div>
+              <p>Multiplicando por \((s+2)^2\):</p>
+              <div class="eq-block">\[ s^3+2s^2+s+1 = (As+B)(s+2)^2 + C(s+2) + D \]</div>
+              <p>Como \((s+2)^2 = s^2+4s+4\), então \((As+B)(s+2)^2 = As^3 + (4A+B)s^2 + (4A+4B)s + 4B\). Somando os termos restantes:</p>
+              <div class="eq-block">\[ s^3+2s^2+s+1 = As^3 + (4A+B)s^2 + (4A+4B+C)s + (4B+2C+D) \]</div>
+              <p>Comparando coeficientes, em ordem: \(A=1\); \(4A+B=2 \Rightarrow B=-2\); \(4A+4B+C=1 \Rightarrow 4-8+C=1 \Rightarrow C=5\); e \(4B+2C+D=1 \Rightarrow -8+10+D=1 \Rightarrow D=-1\).</p>
+              <div class="eq-block">\[ F(s) = s - 2 + \frac{5}{s+2} - \frac{1}{(s+2)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Antitransformar somente a parte solicitada</div>
+              <p>Os dois primeiros termos geram distribuições na origem: \(s-2 \leftrightarrow \delta'(t) - 2\delta(t)\). A parte exponencial é:</p>
+              <div class="eq-block">\[ \frac{5}{s+2} - \frac{1}{(s+2)^2} \;\longleftrightarrow\; 5e^{-2t}H(t) - te^{-2t}H(t) \]</div>
+              <div class="final-answer">\[ f_{\exp}(t) = (5-t)\,e^{-2t}H(t) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Ideia-chave</b> — a resolução foi montada a partir dos <em>pares de Laplace esperados</em>. A álgebra serve apenas para encontrar seus coeficientes; não é necessário tratar a questão como um exercício de divisão polinomial formal.</div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 5</span>Polos reais e complexos conjugados na antitransformada</span>
+          <span class="q-prova">P2/2010 — Teste 9</span>
+        </div>
+        <p>A transformada de Laplace de uma função \(f(t)\) é \(F(s) = \dfrac{6s^2+8s+2}{(s+2)(s^2+2s+5)}\). Determine \(f(t)\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Identificar a estrutura dos polos</div>
+              <p>O fator quadrático pode ser escrito como \(s^2+2s+5 = (s+1)^2+4\), logo os polos são \(s=-2\) e \(s=-1\pm j2\). Isso indica que a resposta terá uma <b style="color:var(--ink)">exponencial real \(e^{-2t}\)</b> e uma <b style="color:var(--ink)">senoide amortecida por \(e^{-t}\)</b>, com frequência \(\omega=2\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Montar as frações parciais na forma real</div>
+              <p>Sobre o quadrático irredutível o numerador precisa ser <em>linear</em>:</p>
+              <div class="eq-block">\[ F(s) = \frac{A}{s+2} + \frac{Bs+C}{s^2+2s+5} \]</div>
+              <p>Multiplicando pelo denominador completo: \(6s^2+8s+2 = A(s^2+2s+5) + (Bs+C)(s+2)\). Expandindo:</p>
+              <div class="eq-block">\[ 6s^2+8s+2 = (A+B)s^2 + (2A+2B+C)s + (5A+2C) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Resolver o sistema</div>
+              <p>Da primeira equação, \(A+B=6\). Então a segunda dá \(2(A+B)+C = 8 \Rightarrow 12+C=8 \Rightarrow C=-4\). Na terceira, \(5A+2(-4)=2 \Rightarrow 5A=10 \Rightarrow A=2\), e portanto \(B = 6-A = 4\).</p>
+              <div class="eq-block">\[ F(s) = \frac{2}{s+2} + \frac{4s-4}{s^2+2s+5} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Adaptar o termo quadrático aos pares seno e cosseno</div>
+              <p>Como \(4s-4 = 4(s+1)-8\):</p>
+              <div class="eq-block">\[ F(s) = \frac{2}{s+2} + 4\,\frac{s+1}{(s+1)^2+4} - 8\,\frac{1}{(s+1)^2+4} \]</div>
+              <p>Usamos \(\dfrac{s+a}{(s+a)^2+\omega^2} \leftrightarrow e^{-at}\cos(\omega t)H(t)\) e \(\dfrac{\omega}{(s+a)^2+\omega^2} \leftrightarrow e^{-at}\mathrm{sen}(\omega t)H(t)\). No último termo, \(-\dfrac{8}{(s+1)^2+4} = -4\cdot\dfrac{2}{(s+1)^2+4}\):</p>
+              <div class="final-answer">\[ f(t) = \big[2e^{-2t} + 4e^{-t}\cos 2t - 4e^{-t}\,\mathrm{sen}\,2t\big]H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Forma equivalente em amplitude e fase</div>
+              <p>Como \(\cos x - \mathrm{sen}\,x = \sqrt2\cos(x+45^\circ)\), a parcela oscilatória também pode ser escrita como \(4\sqrt2\,e^{-t}\cos(2t+45^\circ)\) — as duas formas são igualmente válidas.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 8</span>Frações parciais com polo duplo</span>
+          <span class="q-prova">P1/2016 — Teste 8</span>
+        </div>
+        <p>Seja \(V(s) = \dfrac{3s}{(s+1)^2(s+4)}\). Determine \(v(t)\) para \(t \ge 0\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Escolher a forma correta da expansão</div>
+              <p>Há um polo duplo em \(s=-1\) e um polo simples em \(s=-4\). Portanto a expansão deve conter <b style="color:var(--ink)">dois</b> termos associados a \(s=-1\):</p>
+              <div class="eq-block">\[ V(s) = \frac{A_1}{(s+1)^2} + \frac{A_2}{s+1} + \frac{B}{s+4} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Calcular A₁ — o termo de maior ordem, pelo tapa</div>
+              <p>Para a potência mais alta do polo duplo não é preciso derivar nada:</p>
+              <div class="eq-block">\[ A_1 = \big[(s+1)^2 V(s)\big]_{s=-1} = \left.\frac{3s}{s+4}\right|_{s=-1} = \frac{-3}{3} = -1 \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Calcular A₂ — aqui a derivada é obrigatória</div>
+              <div class="eq-block">\[ A_2 = \left.\frac{d}{ds}\big[(s+1)^2V(s)\big]\right|_{s=-1} = \left.\frac{d}{ds}\left(\frac{3s}{s+4}\right)\right|_{s=-1} \]</div>
+              <p>Pela regra do quociente, \(\dfrac{d}{ds}\left(\dfrac{3s}{s+4}\right) = \dfrac{3(s+4)-3s}{(s+4)^2} = \dfrac{12}{(s+4)^2}\). Em \(s=-1\):</p>
+              <div class="eq-block">\[ A_2 = \frac{12}{3^2} = \frac{4}{3} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Calcular B — polo simples</div>
+              <div class="eq-block">\[ B = \big[(s+4)V(s)\big]_{s=-4} = \left.\frac{3s}{(s+1)^2}\right|_{s=-4} = \frac{-12}{(-3)^2} = -\frac{4}{3} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Antitransformar</div>
+              <p>A expansão é \(V(s) = -\dfrac{1}{(s+1)^2} + \dfrac{4/3}{s+1} - \dfrac{4/3}{s+4}\). Usando \(\dfrac{1}{(s+a)^2} \leftrightarrow te^{-at}H(t)\) e \(\dfrac{1}{s+a} \leftrightarrow e^{-at}H(t)\):</p>
+              <div class="final-answer">\[ v(t) = \left[-t\,e^{-t} + \frac{4}{3}e^{-t} - \frac{4}{3}e^{-4t}\right]H(t) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Conferência rápida</b> — em \(t=0^+\): \(0 + \tfrac43 - \tfrac43 = 0\). E de fato \(\lim_{s\to\infty}sV(s) = 0\), porque \(V(s)\) é estritamente própria com grau 1 sobre grau 3. Consistente.</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 9</span>Mudança de escala na antitransformada</span>
+          <span class="q-prova">P1/2018 — Teste 5</span>
+        </div>
+        <p>Determine a antitransformada de \(F(s) = \dfrac{2s}{(2s)^2+16}\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Colocar a expressão no formato de um par conhecido</div>
+              <p>Primeiro desenvolvemos o quadrado: \((2s)^2 = 4s^2\), logo \(F(s) = \dfrac{2s}{4s^2+16}\). Colocando 4 em evidência no denominador, \(4s^2+16 = 4(s^2+4)\):</p>
+              <div class="eq-block">\[ F(s) = \frac{2s}{4(s^2+4)} = \frac{1}{2}\cdot\frac{s}{s^2+4} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Reconhecer a transformada do cosseno</div>
+              <p>O par básico é \(\mathcal{L}\{\cos(\omega t)H(t)\} = \dfrac{s}{s^2+\omega^2}\). Aqui \(\omega^2=4 \Rightarrow \omega=2\), portanto \(\dfrac{s}{s^2+4} \leftrightarrow \cos(2t)H(t)\). Como existe o fator \(1/2\):</p>
+              <div class="final-answer">\[ f(t) = \frac{1}{2}\cos(2t)\,H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Interpretação da escala</div>
+              <p>O fator \(2s\) no enunciado <em>parece</em> sugerir uma mudança de escala, mas a simplificação algébrica revela imediatamente o par padrão. Fazer essa redução primeiro evita aplicar uma propriedade mais complicada sem necessidade — a lição aqui é <b style="color:var(--ink)">simplificar antes de teorizar</b>.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 10</span>Polo complexo conjugado, fase e atraso temporal</span>
+          <span class="q-prova">P1/2018 — Teste 7</span>
+        </div>
+        <p>A antitransformada de \(F(s) = \dfrac{(s+1)e^{-s}}{s^2+s+1}\) pode ser escrita na forma</p>
+        <div class="eq-block">\[ f(t) = K\,e^{-t/2}\cos\!\left[\frac{\sqrt3}{2}(t-1) - 30^\circ\right]H(t-1) \]</div>
+        <p>Determine \(K\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Separar o atraso temporal</div>
+              <p>Escreva \(F(s) = e^{-s}G(s)\) com \(G(s) = \dfrac{s+1}{s^2+s+1}\). O fator \(e^{-s}\) representa um atraso de <b>uma</b> unidade de tempo. Primeiro encontramos \(g(t) = \mathcal{L}^{-1}\{G(s)\}\); depois substituímos \(t\) por \(t-1\) e multiplicamos por \(H(t-1)\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Completar o quadrado no denominador</div>
+              <div class="eq-block">\[ s^2+s+1 = s^2+s+\frac14+\frac34 = \left(s+\frac12\right)^2 + \left(\frac{\sqrt3}{2}\right)^2 \]</div>
+              <p>E no numerador, escrito em função de \(s+\tfrac12\): \(s+1 = \left(s+\tfrac12\right) + \tfrac12\). Portanto:</p>
+              <div class="eq-block">\[ G(s) = \frac{s+1/2}{(s+1/2)^2+(\sqrt3/2)^2} + \frac{1/2}{(s+1/2)^2+(\sqrt3/2)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Antitransformar as duas parcelas</div>
+              <p>A primeira parcela é o par do cosseno amortecido: \(e^{-t/2}\cos\!\left(\tfrac{\sqrt3}{2}t\right)\).</p>
+              <p>Para a segunda, precisamos de \(\omega = \tfrac{\sqrt3}{2}\) no numerador, então escrevemos \(\tfrac12 = \tfrac{1}{\sqrt3}\cdot\tfrac{\sqrt3}{2}\):</p>
+              <div class="eq-block">\[ \frac{1/2}{(s+1/2)^2+(\sqrt3/2)^2} = \frac{1}{\sqrt3}\cdot\frac{\sqrt3/2}{(s+1/2)^2+(\sqrt3/2)^2} \]</div>
+              <div class="eq-block">\[ g(t) = e^{-t/2}\left[\cos\!\left(\frac{\sqrt3}{2}t\right) + \frac{1}{\sqrt3}\,\mathrm{sen}\!\left(\frac{\sqrt3}{2}t\right)\right]H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Converter seno e cosseno em uma única senoide</div>
+              <p>Para \(\cos x + \tfrac{1}{\sqrt3}\mathrm{sen}\,x\), a amplitude é:</p>
+              <div class="eq-block">\[ R = \sqrt{1^2 + \left(\frac{1}{\sqrt3}\right)^2} = \sqrt{\frac{4}{3}} = \frac{2}{\sqrt3} \]</div>
+              <p>E a fase satisfaz \(\tan\phi = \dfrac{1/\sqrt3}{1} \Rightarrow \phi = 30^\circ\). Portanto \(\cos x + \tfrac{1}{\sqrt3}\mathrm{sen}\,x = \tfrac{2}{\sqrt3}\cos(x-30^\circ)\), e:</p>
+              <div class="eq-block">\[ g(t) = \frac{2}{\sqrt3}\,e^{-t/2}\cos\!\left(\frac{\sqrt3}{2}t - 30^\circ\right)H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar o atraso — e aqui aparece o √e</div>
+              <p>Como \(F(s) = e^{-s}G(s)\), vale \(f(t) = g(t-1)H(t-1)\):</p>
+              <div class="eq-block">\[ f(t) = \frac{2}{\sqrt3}\,e^{-(t-1)/2}\cos\!\left[\frac{\sqrt3}{2}(t-1) - 30^\circ\right]H(t-1) \]</div>
+              <p>O enunciado, porém, escreve o fator exponencial como \(e^{-t/2}\). Como \(e^{-(t-1)/2} = e^{1/2}e^{-t/2} = \sqrt{e}\,e^{-t/2}\):</p>
+              <div class="eq-block">\[ f(t) = \frac{2\sqrt{e}}{\sqrt3}\,e^{-t/2}\cos\!\left[\frac{\sqrt3}{2}(t-1) - 30^\circ\right]H(t-1) \]</div>
+              <div class="final-answer">\[ K = \frac{2\sqrt{e}}{\sqrt{3}} \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>A pegadinha central</b> — a substituição \(t \to t-1\) vale para <b>toda</b> a expressão, inclusive dentro da exponencial de amortecimento. É esse \(\sqrt{e}\) "vindo do nada" que a questão realmente está cobrando.</div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 11</span>Recuperação de condições iniciais por antitransformação</span>
+          <span class="q-prova">P1/2019 — Teste 3</span>
+        </div>
+        <p>Dada \(V(s) = \dfrac{2s+5}{s^2+10s+25}\), determine as condições iniciais \(v(0^-)\) e \(\dot v(0^-)\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Colocar V(s) em uma forma tabelada</div>
+              <p>Note que \(s^2+10s+25 = (s+5)^2\) — polo duplo. Reescrevendo o numerador em função de \(s+5\): \(2s+5 = 2(s+5)-5\). Logo:</p>
+              <div class="eq-block">\[ V(s) = \frac{2}{s+5} - \frac{5}{(s+5)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Antitransformar termo a termo</div>
+              <p>Com \(\dfrac{1}{s+a} \leftrightarrow e^{-at}H(t)\) e \(\dfrac{1}{(s+a)^2} \leftrightarrow te^{-at}H(t)\), para \(t>0\):</p>
+              <div class="eq-block">\[ v(t) = 2e^{-5t} - 5t\,e^{-5t} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Obter o valor inicial diretamente da expressão temporal</div>
+              <p>Em \(t=0^+\): \(v(0^+) = 2e^0 - 5(0)e^0 = 2\). Portanto, sob a hipótese usual de continuidade regular da variável no instante inicial:</p>
+              <div class="eq-block">\[ v(0^-) = 2\;\mathrm{V} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Derivar para obter a segunda condição inicial</div>
+              <p>\(\dfrac{d}{dt}[2e^{-5t}] = -10e^{-5t}\). Para o segundo termo, pela regra do produto, \(\dfrac{d}{dt}[te^{-5t}] = e^{-5t} - 5te^{-5t}\). Logo:</p>
+              <div class="eq-block">\[ \dot v(t) = -10e^{-5t} - 5\big[e^{-5t} - 5te^{-5t}\big] = -15e^{-5t} + 25t\,e^{-5t} \]</div>
+              <p>Em \(t=0^+\): \(\dot v(0^+) = -15\).</p>
+              <div class="final-answer">\[ v(0^-) = 2\;\mathrm{V}, \qquad \dot v(0^-) = -15\;\mathrm{V/s} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Prévia: como o Teorema do Valor Inicial faria o primeiro passo</div>
+              <p>Para funções que satisfazem suas hipóteses, \(v(0^+) = \lim_{s\to\infty}sV(s)\). Neste exemplo:</p>
+              <div class="eq-block">\[ v(0^+) = \lim_{s\to\infty}\frac{s(2s+5)}{s^2+10s+25} = 2 \]</div>
+              <p>O mesmo valor obtido pela antitransformação — em uma linha. O <a href="#tvi">apêndice sobre o TVI</a> logo acima mostra como estender a ideia para \(\dot v(0^+)\) também.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card dissertativa">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Dissertativa · Questão 3</span>Resíduo associado ao polo na origem</span>
+          <span class="q-prova">P1/2019 — 1ª Questão, item c</span>
+        </div>
+        <p>Dada a função de rede</p>
+        <div class="eq-block">\[ F(s) = \frac{s^2+2as+\omega_s^2}{s\,(s+a-j\omega_p)(s+a+j\omega_p)} \]</div>
+        <p>o resíduo da expansão em frações parciais correspondente ao polo \(s=0\) é \(A_0\). Calcule \(A_0\) em função de \(a\), \(\omega_s\) e \(\omega_p\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Ler a estrutura da função antes de calcular</div>
+              <p>O numerador tem grau 2 e o denominador grau 3, portanto a função é <b style="color:var(--ink)">estritamente própria</b> — não há parte polinomial. Em condições genéricas, o denominador apresenta três polos:</p>
+              <div class="eq-block">\[ p_0 = 0, \qquad p_+ = -a+j\omega_p, \qquad p_- = -a-j\omega_p \]</div>
+              <p>O fator \(s\) aparece <em>apenas uma vez</em>. Se \(\omega_s \ne 0\), o numerador não se anula em \(s=0\), portanto \(s=0\) é efetivamente um <b style="color:var(--ink)">polo simples</b> — vale a pena verificar isso antes de aplicar a fórmula.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Escrever a forma das frações parciais</div>
+              <p>Como os polos são simples e, genericamente, distintos:</p>
+              <div class="eq-block">\[ F(s) = \frac{A_0}{s} + \frac{A_+}{s+a-j\omega_p} + \frac{A_-}{s+a+j\omega_p} \]</div>
+              <p>Queremos apenas \(A_0\), o coeficiente que multiplica \(1/s\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Demonstrar a fórmula do resíduo de um polo simples</div>
+              <p>Perto de um polo simples \(p\), escreva \(F(s) = \dfrac{A_p}{s-p} + R(s)\), onde \(R(s)\) permanece finita em \(s=p\). Multiplicando por \(s-p\):</p>
+              <div class="eq-block">\[ (s-p)F(s) = A_p + (s-p)R(s) \]</div>
+              <p>Fazendo \(s \to p\), o segundo termo desaparece porque \(\lim_{s\to p}(s-p)R(s)=0\). Portanto \(A_p = \lim_{s\to p}(s-p)F(s)\). É por isso que, para um polo simples, podemos "cancelar" o fator responsável pelo polo e avaliar o restante no próprio polo.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a fórmula ao polo s = 0</div>
+              <p>Aqui \(p=0\), então \(A_0 = \lim_{s\to 0} sF(s)\). Substituindo \(F(s)\), o \(s\) cancela com o \(s\) do denominador:</p>
+              <div class="eq-block">\[ A_0 = \lim_{s\to 0}\frac{s^2+2as+\omega_s^2}{(s+a-j\omega_p)(s+a+j\omega_p)} \]</div>
+              <p>Depois que o fator \(s\) foi cancelado, a expressão restante é regular em \(s=0\) desde que \(a^2+\omega_p^2 \ne 0\). Assim podemos substituir \(s=0\) diretamente:</p>
+              <div class="eq-block">\[ A_0 = \frac{\omega_s^2}{(a-j\omega_p)(a+j\omega_p)} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Simplificar o produto dos fatores conjugados</div>
+              <p>Os dois fatores são conjugados. Desenvolvendo explicitamente:</p>
+              <div class="eq-block">\[ (a-j\omega_p)(a+j\omega_p) = a^2 + aj\omega_p - aj\omega_p - j^2\omega_p^2 = a^2+\omega_p^2 \]</div>
+              <p>pois \(j^2=-1\). Logo:</p>
+              <div class="final-answer">\[ A_0 = \frac{\omega_s^2}{a^2+\omega_p^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">O que esse coeficiente significa no tempo?</div>
+              <p>A parcela associada ao polo na origem é \(\dfrac{A_0}{s}\). Como \(\dfrac{1}{s} \leftrightarrow H(t)\), essa parcela produz \(A_0 H(t)\). Portanto <b style="color:var(--ink)">\(A_0\) é a amplitude da contribuição constante</b> gerada pelo polo na origem na antitransformada causal — em circuitos, o valor de regime permanente.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Conferência estrutural</div>
+              <p>Multiplicando a função original por \(s\) e fazendo \(s\to 0\), os termos associados aos outros dois polos permanecem multiplicados por \(s\) e desaparecem, enquanto \(s\cdot\dfrac{A_0}{s} \to A_0\). Isso confirma diretamente por que o limite \(\lim_{s\to 0}sF(s)\) isola exatamente o coeficiente desejado, sem precisar calcular \(A_+\) e \(A_-\).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -663,6 +1457,19 @@ document.querySelectorAll('.demo-btn').forEach(btn => {
     btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
     if(window.MathJax && window.MathJax.typesetPromise){
       window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
     }
   });
 });

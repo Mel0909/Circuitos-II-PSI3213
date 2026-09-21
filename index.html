@@ -27,6 +27,10 @@ window.MathJax = {
 
     <div class="side-group">
       <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
       <a class="side-item active" href="#top">
         <span class="side-num">01</span>
         <span class="side-title">Transformada de Laplace</span>
@@ -47,14 +51,18 @@ window.MathJax = {
         <span class="side-num">05</span>
         <span class="side-title">Redes de 2ª ordem</span>
       </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
     </div>
 
     <div class="side-group">
       <div class="side-label">P2</div>
-      <div class="side-item disabled">
-        <span class="side-num">01</span>
-        <span class="side-title"><em>em breve</em></span>
-      </div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
     </div>
   </aside>
 
@@ -72,13 +80,16 @@ window.MathJax = {
         <a href="#fluxo">Cálculo operacional</a>
         <a href="#def">Definição</a>
         <a href="#oe">Ordem exponencial</a>
+        <a href="#singularidades">Degrau e impulso</a>
         <a href="#tabela">Tabela</a>
         <a href="#propriedades">Propriedades</a>
         <a href="#derivada-integral">Derivada/Integral</a>
+        <a href="#tabela-op">Tabela operacional</a>
         <a href="#euler">Euler-Moivre</a>
         <a href="#inversao">Inversão</a>
         <a href="#fracoes">Frações parciais</a>
         <a href="#exemplos2">Exemplos II</a>
+        <a href="#exercicios">Exercícios</a>
       </div>
     </nav>
 
@@ -86,10 +97,11 @@ window.MathJax = {
       <div class="hero-text">
         <div class="eyebrow">P1 · Módulo 01 · PSI3213 Circuitos Elétricos II</div>
         <h1><span class="tone-a">Uma equação diferencial aparece.</span> <span class="tone-b">Existe um jeito bem mais simples de resolvê-la?</span></h1>
-        <p class="hero-sub">Esse módulo cobre a ferramenta matemática: como a transformada de Laplace pega uma equação diferencial com condições iniciais e transforma isso num problema de álgebra, lá no domínio da frequência complexa <em>s</em>. A gente vê a motivação, o fluxo do cálculo operacional, a definição formal, quando essa transformada realmente existe, o repertório de teoremas operacionais (derivada, integral, deslocamento, escala) e como voltar pro domínio do tempo com frações parciais. A aplicação em circuitos fica no <a href="modulo-02.html">módulo 02</a>.</p>
+        <p class="hero-sub">Esse módulo cobre a ferramenta matemática: como a transformada de Laplace pega uma equação diferencial com condições iniciais e transforma isso num problema de álgebra, lá no domínio da frequência complexa <em>s</em>. A gente vê a motivação, o fluxo do cálculo operacional, a definição formal, quando essa transformada realmente existe, o repertório de teoremas operacionais (derivada, integral, deslocamento, escala) e como voltar pro domínio do tempo com frações parciais. A aplicação em circuitos fica no <a href="modulo-02.html">módulo 02</a>. Se a parte de equações diferenciais e condições iniciais estiver enferrujada, o <a href="modulo-00.html">módulo 00</a> cobre esse terreno primeiro.</p>
         <div class="hero-meta">
           <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
           <span><b>Módulo</b>Transformada de Laplace</span>
+          <span><b>Pré-requisito</b>Módulo 00</span>
         </div>
       </div>
 
@@ -288,25 +300,120 @@ window.MathJax = {
     </div>
   </section>
 
-  <section id="tabela" class="panel">
+  <section id="singularidades" class="panel">
     <span class="eyebrow">1.3</span>
+    <h2>Degrau, impulso e sinais generalizados</h2>
+    <p>As funções degrau e impulso são essenciais porque permitem representar <b style="color:var(--ink)">chaveamentos</b>, <b style="color:var(--ink)">sinais definidos por trechos</b> e <b style="color:var(--ink)">ações concentradas no tempo</b> — as três coisas que aparecem em quase todo problema de circuitos.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Degrau unitário de Heaviside</span>
+        <div class="eq-block">\[ H(t) = \begin{cases} 0, & t<0, \\ 1, & t>0, \end{cases} \qquad \mathcal{L}\{H(t)\} = \frac{1}{s},\;\; \mathrm{Re}\{s\}>0 \]</div>
+        <p class="dim">O valor exatamente em \(t=0\) não altera as integrais ordinárias usadas em Laplace — por isso a definição deixa esse ponto de fora.</p>
+        <p>Um degrau <b style="color:var(--ink)">deslocado</b> ativa uma ação em \(t=a\): \(H(t-a) = 0\) para \(t<a\) e \(1\) para \(t>a\). Com dois deles você monta um pulso retangular de amplitude \(A\), ativo apenas em \(a&lt;t&lt;b\):</p>
+        <div class="eq-block">\[ A\big[H(t-a) - H(t-b)\big] \]</div>
+      </div>
+
+      <div class="theorem-card">
+        <span class="tag">Impulso de Dirac</span>
+        <p>\(\delta(t)\) não é uma função ordinária no sentido clássico — é uma <b style="color:var(--ink)">distribuição</b>. As propriedades que importam aqui são:</p>
+        <div class="eq-block">\[ \delta(t) = 0 \;(t\ne 0), \qquad \int_{-\infty}^{\infty}\delta(t)\,dt = 1 \]</div>
+        <p>E a propriedade de <b style="color:var(--ink)">filtragem</b> (ou amostragem), que é o que realmente se usa nas contas:</p>
+        <div class="eq-block">\[ \int_{-\infty}^{\infty} f(t)\,\delta(t-t_0)\,dt = f(t_0) \]</div>
+        <p class="dim">Desde que \(f\) seja regular em \(t_0\) — e, na prática, desde que \(t_0\) esteja <em>dentro</em> do intervalo de integração. Se estiver fora, a contribuição é zero.</p>
+        <div class="eq-block">\[ \mathcal{L}\{\delta(t-a)\} = e^{-as},\;\; a\ge 0 \quad\Longrightarrow\quad \mathcal{L}\{\delta(t)\} = 1 \]</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Rampa, degrau e impulso: a mesma família, derivada a derivada</h3>
+    <p>A relação mais importante entre essas singularidades é obtida por derivação. Se \(r(t) = t\,H(t)\) é a rampa unitária, então — <em>no sentido das distribuições</em>:</p>
+    <div class="eq-block">\[ \frac{dr}{dt} = H(t), \qquad \frac{dH(t)}{dt} = \delta(t) \qquad\Longleftrightarrow\qquad H(t) = \int_{-\infty}^{t}\delta(\tau)\,d\tau \]</div>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">r(t)</div><div class="small">rampa<br>t·H(t)</div></div>
+      <div class="flow-arrow"><span class="line"></span><span>d/dt</span></div>
+      <div class="flow-box"><div class="big">H(t)</div><div class="small">degrau</div></div>
+      <div class="flow-arrow"><span class="line"></span><span>d/dt</span></div>
+      <div class="flow-box"><div class="big">δ(t)</div><div class="small">impulso</div></div>
+    </div>
+
+    <p class="flow-note">Isso explica por que <b style="color:var(--ink)">um salto finito na própria função gera um impulso na sua derivada</b>. Para um degrau deslocado, \(\frac{d}{dt}H(t-a) = \delta(t-a)\). E, mais geralmente, se uma função regular \(g(t)\) é multiplicada por um degrau:</p>
+
+    <div class="eq-block">\[ \frac{d}{dt}\big[g(t)\,H(t-a)\big] = g'(t)\,H(t-a) + g(a)\,\delta(t-a) \]</div>
+    <p class="dim">O segundo termo registra o salto criado no instante de ativação: a função pula de \(0\) para \(g(a)\) em \(t=a\), e esse pulo tem que aparecer na derivada.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Escalamento e derivadas do impulso</h3>
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">Escalamento do argumento</span>
+        <p>Para \(a \ne 0\):</p>
+        <div class="eq-block" style="margin-top:0.6rem">\[ \delta(at-b) = \frac{1}{|a|}\,\delta\!\left(t - \frac{b}{a}\right) \]</div>
+        <p style="margin-top:0.5rem">Ou seja: comprimir o argumento <b>divide a área</b> por \(|a|\) e desloca o impulso para \(t = b/a\). Esse \(1/|a|\) é a fonte mais comum de erro em prova.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">Derivadas do impulso</span>
+        <p>Para funções suficientemente regulares:</p>
+        <div class="eq-block" style="margin-top:0.6rem">\[ \int f(t)\,\delta^{(n)}(t-t_0)\,dt = (-1)^n f^{(n)}(t_0) \]</div>
+        <p style="margin-top:0.5rem">E no domínio de Laplace:</p>
+        <div class="eq-block" style="margin-top:0.6rem">\[ \mathcal{L}\{\delta^{(n)}(t)\} = s^n \]</div>
+      </div>
+    </div>
+    <div class="callout">Guarde essa última: <b>parcelas polinomiais em \(s\) correspondem a impulsos e derivadas de impulso no tempo</b>. É exatamente isso que aparece quando \(F(s)\) não é estritamente própria — o assunto do <a href="modulo-03.html">módulo 03</a>, onde \(\delta'(t)\) ganha nome próprio (doublet).</div>
+
+    <div class="callout"><b>Degrau não é impulso.</b> \(H(t)\) representa uma <em>mudança permanente de nível</em> a partir de um instante. \(\delta(t)\) representa uma <em>ação concentrada de área unitária</em>. A derivada do degrau é o impulso. E o impulso não deve ser interpretado como "um degrau de amplitude infinita e duração finita", mas como o limite distribucional de pulsos de <b>área constante</b> cuja largura tende a zero.</div>
+  </section>
+
+  <section id="tabela" class="panel">
+    <span class="eyebrow">1.4</span>
     <h2>Transformada de funções elementares</h2>
     <p>Antes de sair calculando integral toda vez, vale montar um repertório básico. Essas são as transformadas mais usadas em circuitos — e valem a pena decorar, porque vão aparecer o tempo todo:</p>
     <table class="ltable">
       <thead><tr><th>f(t)</th><th>F(s) = ℒ[f(t)]</th></tr></thead>
       <tbody>
+        <tr><td>\(\delta(t)\) — impulso unitário</td><td>\(1\)</td></tr>
+        <tr><td>\(\delta(t-a)\) — impulso deslocado</td><td>\(e^{-as}\)</td></tr>
+        <tr><td>\(\delta^{(n)}(t)\) — derivada \(n\)-ésima do impulso</td><td>\(s^n\)</td></tr>
         <tr><td>\(H(t)\) — degrau unitário</td><td>\(\dfrac{1}{s}\)</td></tr>
         <tr><td>\(e^{at}\)</td><td>\(\dfrac{1}{s-a}\)</td></tr>
+        <tr><td>\(t^n\)</td><td>\(\dfrac{n!}{s^{n+1}}\)</td></tr>
         <tr><td>\(\mathrm{sen}\,\omega t\)</td><td>\(\dfrac{\omega}{s^2+\omega^2}\)</td></tr>
         <tr><td>\(\cos \omega t\)</td><td>\(\dfrac{s}{s^2+\omega^2}\)</td></tr>
-        <tr><td>\(\delta(t)\) — impulso unitário</td><td>\(1\)</td></tr>
+        <tr><td>\(\mathrm{senh}\,at\)</td><td>\(\dfrac{a}{s^2-a^2}\)</td></tr>
+        <tr><td>\(\cosh at\)</td><td>\(\dfrac{s}{s^2-a^2}\)</td></tr>
       </tbody>
     </table>
-    <p class="dim" style="margin-top:1rem">Todas essas funções do tempo estão implicitamente multiplicadas por \(H(t)\) — ou seja, valem só para \(t \ge 0\), como já era de se esperar da transformada unilateral.</p>
+    <p class="dim" style="margin-top:1rem">Todas essas funções do tempo estão implicitamente multiplicadas por \(H(t)\) — ou seja, valem só para \(t \ge 0\), como já era de se esperar da transformada unilateral. Note o sinal do denominador: as trigonométricas dão \(s^2+\omega^2\) (polos imaginários) e as hiperbólicas dão \(s^2-a^2\) (polos reais \(\pm a\)).</p>
+
+    <div class="callout"><b>Por que os pares hiperbólicos aparecem</b> — \(\cosh\) e \(\mathrm{senh}\) saem direto da exponencial, porque \(\cosh at = \tfrac12(e^{at}+e^{-at})\) e \(\mathrm{senh}\,at = \tfrac12(e^{at}-e^{-at})\). Aplicando linearidade sobre \(\mathcal{L}\{e^{at}\}=1/(s-a)\):
+      <div class="eq-block" style="margin-top:0.8rem">\[ \mathcal{L}\{\cosh at\} = \frac{1}{2}\left(\frac{1}{s-a}+\frac{1}{s+a}\right) = \frac{s}{s^2-a^2}, \qquad \mathcal{L}\{\mathrm{senh}\,at\} = \frac{1}{2}\left(\frac{1}{s-a}-\frac{1}{s+a}\right) = \frac{a}{s^2-a^2} \]</div>
+      Eles são particularmente úteis na solução de EDOs <b>superamortecidas</b>, quando duas exponenciais reais são reorganizadas em \(e^{-\alpha t}\cosh(\beta t)\) e \(e^{-\alpha t}\mathrm{senh}(\beta t)\) — exatamente a forma vista no <a href="modulo-00.html#regimes">módulo 00</a>.
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Potências de \(t\): a recorrência por integração por partes</h3>
+    <p>A fórmula \(\mathcal{L}\{t^n H(t)\} = n!/s^{n+1}\) pode ser obtida derivando em \(s\) repetidamente (é o que a seção 1.5 faz), mas também sai direto da definição — e essa é a versão que já foi pedida em prova:</p>
+    <button class="demo-btn">Ver demonstração ↓</button>
+    <div class="proof-block">
+      <div class="proof-steps">
+        <span>Parte da definição: \(\displaystyle I_n(s) = \mathcal{L}\{t^n H(t)\} = \int_0^\infty t^n e^{-st}\,dt\)</span>
+        <span>Integra por partes escolhendo \(u = t^n\) e \(dv = e^{-st}dt\), logo \(du = nt^{n-1}dt\) e \(v = -\tfrac{1}{s}e^{-st}\):</span>
+        <span class="proof-eq">\(\displaystyle I_n(s) = \left[-\frac{t^n}{s}e^{-st}\right]_0^\infty + \frac{n}{s}\int_0^\infty t^{n-1}e^{-st}\,dt\)</span>
+        <span>Para \(\mathrm{Re}\{s\}>0\), o termo \(t^n e^{-st}\) tende a zero no infinito; em \(t=0\) ele também é zero para \(n \ge 1\). O termo de borda morre inteiro.</span>
+        <span>A integral que sobrou é, pela própria definição, \(\mathcal{L}\{t^{n-1}\}\). Surge então a <b style="color:var(--ink)">relação de recorrência</b>:</span>
+        <span class="proof-eq">\(\displaystyle I_n(s) = \frac{n}{s}\,I_{n-1}(s)\)</span>
+        <span>Como \(I_0(s) = \mathcal{L}\{H(t)\} = 1/s\), repetimos a recorrência \(n\) vezes:</span>
+        <span class="proof-eq">\(\displaystyle I_n(s) = \frac{n}{s}\cdot\frac{n-1}{s}\cdots\frac{1}{s}\cdot\frac{1}{s} = \frac{n!}{s^{n}}\cdot\frac{1}{s} = \frac{n!}{s^{n+1}}\)</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Senoides com amplitude e fase inicial</h3>
+    <p>Em circuitos é muito comum o sinal aparecer na forma \(A\cos(\omega t + \varphi)\) ou \(A\,\mathrm{sen}(\omega t + \varphi)\). <b style="color:var(--ink)">Não é necessário criar um novo teorema</b> — basta expandir a fase com identidades trigonométricas e transformar termo a termo.</p>
+    <div class="eq-block">\[ A\cos(\omega t+\varphi) = A\cos\varphi\,\cos\omega t - A\,\mathrm{sen}\,\varphi\,\mathrm{sen}\,\omega t \;\Longrightarrow\; \mathcal{L}\{A\cos(\omega t+\varphi)H(t)\} = A\,\frac{s\cos\varphi - \omega\,\mathrm{sen}\,\varphi}{s^2+\omega^2} \]</div>
+    <div class="eq-block">\[ A\,\mathrm{sen}(\omega t+\varphi) = A\,\mathrm{sen}\,\varphi\,\cos\omega t + A\cos\varphi\,\mathrm{sen}\,\omega t \;\Longrightarrow\; \mathcal{L}\{A\,\mathrm{sen}(\omega t+\varphi)H(t)\} = A\,\frac{s\,\mathrm{sen}\,\varphi + \omega\cos\varphi}{s^2+\omega^2} \]</div>
+    <div class="callout"><b>De onde vem o sinal negativo</b> — o numerador do cosseno contém \(s\cos\varphi - \omega\,\mathrm{sen}\,\varphi\). Esse menos vem diretamente de \(\cos(a+b) = \cos a\cos b - \mathrm{sen}\,a\,\mathrm{sen}\,b\); não é uma convenção de Laplace nem algo para decorar.</div>
   </section>
 
   <section id="propriedades" class="panel">
-    <span class="eyebrow">1.4</span>
+    <span class="eyebrow">1.5</span>
     <h2>Mais teoremas operacionais</h2>
     <p class="dim">Além da linearidade, tem um punhado de teoremas que fazem a transformada de Laplace valer a pena de verdade — cada um traduz uma operação no tempo pra uma operação bem mais simples lá no domínio de \(s\).</p>
 
@@ -340,7 +447,7 @@ window.MathJax = {
           </table>
           <div class="proof-steps" style="margin-top:0.8rem">
             <span>Note o sinal alternando: cada derivada em \(s\) traz um \(-1\), e o \(-\) da fórmula do teorema cancela ou reforça esse sinal conforme a paridade de \(k\).</span>
-            <span>Invertendo a última linha, chega-se na fórmula usada na expansão em frações parciais (seção 1.8):</span>
+            <span>Invertendo a última linha, chega-se na fórmula usada na expansão em frações parciais (seção 1.10):</span>
             <span class="proof-eq">\(\displaystyle \mathcal{L}^{-1}\!\left[\frac{1}{(s-a)^{k}}\right] = \frac{t^{\,k-1}}{(k-1)!}\,e^{at}\)</span>
           </div>
         </div>
@@ -362,6 +469,7 @@ window.MathJax = {
             <span>E essa última integral é exatamente \(F(s)\), sobrando \(\mathcal{L}[f(t-a)] = e^{-as}F(s)\).</span>
           </div>
         </div>
+        <div class="q-idea" style="margin-top:1.1rem"><b>Não confunda \(g(t)H(t-a)\) com \(f(t-a)H(t-a)\)</b> — se a expressão for, por exemplo, \(t\,H(t-2)\), <em>não</em> se deve escrever imediatamente \(e^{-2s}\mathcal{L}[t]\). O teorema exige que o argumento da função esteja deslocado <b>junto</b> com o degrau. Primeiro reescreva \(t = (t-2)+2\), logo \(t\,H(t-2) = [(t-2)+2]H(t-2)\), e só então aplique o teorema a cada parcela: \(\mathcal{L}\{t\,H(t-2)\} = e^{-2s}\left(\dfrac{1}{s^2}+\dfrac{2}{s}\right)\).</div>
       </div>
 
       <div class="theorem-card">
@@ -380,6 +488,11 @@ window.MathJax = {
             <span>Essa é exatamente a definição de \(F(\cdot)\) avaliada em \(s+a\) no lugar de \(s\) — então \(\mathcal{L}[e^{-at}f(t)] = F(s+a)\).</span>
           </div>
         </div>
+        <div class="q-idea" style="margin-top:1.1rem"><b>Regra de sinal</b> — multiplicar por \(e^{-at}\) no tempo produz \(s \mapsto s+a\); multiplicar por \(e^{+at}\) produz \(s \mapsto s-a\). É mais seguro reconstruir a passagem \(e^{at}e^{-st} = e^{-(s-a)t}\) do que tentar decorar o sinal isoladamente.</div>
+        <p style="margin-top:1.1rem"><b style="color:var(--ink)">O caso mais útil de todos — senoide amortecida com fase.</b> Combinando este teorema com as senoides com fase da seção 1.4, substitui-se \(s\) por \(s+a\):</p>
+        <div class="eq-block">\[ \mathcal{L}\{A\,e^{-at}\cos(\omega t+\varphi)H(t)\} = A\,\frac{(s+a)\cos\varphi - \omega\,\mathrm{sen}\,\varphi}{(s+a)^2+\omega^2} \]</div>
+        <div class="eq-block">\[ \mathcal{L}\{A\,e^{-at}\,\mathrm{sen}(\omega t+\varphi)H(t)\} = A\,\frac{(s+a)\,\mathrm{sen}\,\varphi + \omega\cos\varphi}{(s+a)^2+\omega^2} \]</div>
+        <p class="dim">Lidas de trás pra frente, essas duas formas são extremamente úteis na antitransformação de pares complexos conjugados — é o atalho que dispensa calcular resíduos complexos.</p>
       </div>
 
       <div class="theorem-card">
@@ -430,7 +543,7 @@ exp(-a*t)*cos(w*t)</span>
   </section>
 
   <section id="derivada-integral" class="panel">
-    <span class="eyebrow">1.5</span>
+    <span class="eyebrow">1.6</span>
     <h2>Derivar e integrar: onde entram as condições iniciais</h2>
     <p>Esses dois teoremas são o motivo pelo qual a Laplace resolve o Problema de Valor Inicial de uma vez só: derivada e integral no tempo viram álgebra em \(s\) — e as condições iniciais entram sozinhas, embutidas na fórmula.</p>
 
@@ -511,8 +624,34 @@ exp(-a*t)*cos(w*t)</span>
     </div>
   </section>
 
+  <section id="tabela-op" class="panel">
+    <span class="eyebrow">1.7</span>
+    <h2>Tabela operacional compacta</h2>
+    <p class="dim">Tudo que foi demonstrado nas duas seções anteriores, num só lugar. Cada linha traduz uma operação no tempo em uma operação algébrica bem definida no domínio de \(s\).</p>
+    <table class="ltable">
+      <thead><tr><th>Operação no tempo</th><th>Operação no domínio s</th></tr></thead>
+      <tbody>
+        <tr><td>\(c_1 f_1 + c_2 f_2\)</td><td>\(c_1 F_1 + c_2 F_2\)</td></tr>
+        <tr><td>\(t\,f(t)\)</td><td>\(-F'(s)\)</td></tr>
+        <tr><td>\(t^n f(t)\)</td><td>\((-1)^n F^{(n)}(s)\)</td></tr>
+        <tr><td>\(e^{-at}f(t)\)</td><td>\(F(s+a)\)</td></tr>
+        <tr><td>\(e^{at}f(t)\)</td><td>\(F(s-a)\)</td></tr>
+        <tr><td>\(f(t-a)\,H(t-a)\)</td><td>\(e^{-as}F(s)\)</td></tr>
+        <tr><td>\(f(at)\), \(a>0\)</td><td>\(a^{-1}F(s/a)\)</td></tr>
+        <tr><td>\(f'(t)\)</td><td>\(sF(s) - f(0^-)\)</td></tr>
+        <tr><td>\(f^{(n)}(t)\)</td><td>\(s^n F - s^{n-1}f(0^-) - \cdots - f^{(n-1)}(0^-)\)</td></tr>
+        <tr><td>\(\displaystyle\int_0^t f(\tau)\,d\tau\)</td><td>\(F(s)/s\)</td></tr>
+        <tr><td>\(f(t)\) periódica de período \(T\)</td><td>\(\displaystyle\frac{1}{1-e^{-sT}}\int_0^T f(t)e^{-st}\,dt\)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout"><b>Ordem de uso das propriedades</b> — em expressões que combinam várias operações, identifique <em>primeiro</em> a estrutura temporal. Por exemplo, em \(e^{-2t}(t-3)\cos(4t)H(t)\), é geralmente mais seguro transformar \((t-3)\cos(4t)\) usando linearidade e multiplicação por \(t\), e somente ao final aplicar a translação \(s \mapsto s+2\). Aplicar as propriedades na ordem errada costuma gerar um resultado que <em>parece</em> plausível mas está deslocado em \(s\).</div>
+
+    <div class="callout"><b>Significado do fator \(1/s\).</b> Como \(1/s\) é a transformada do degrau \(H(t)\), multiplicar \(F(s)\) por \(1/s\) corresponde a <b>acumular</b> o sinal no tempo — e, de fato, \(\int_0^t f(\lambda)d\lambda = (f * H)(t)\), uma convolução com o degrau. Quando uma questão apresentar \(F(s)/s\), antes de fazer qualquer álgebra vale perguntar se a expressão pode ser reconhecida como a transformada de uma integral acumulada. Na prática: multiplicar por \(1/s\) acrescenta um polo na origem (salvo cancelamentos), e esse polo é a assinatura, no domínio \(s\), do comportamento integrador.</div>
+  </section>
+
   <section id="euler" class="panel">
-    <span class="eyebrow">1.6</span>
+    <span class="eyebrow">1.8</span>
     <h2>Euler-Moivre e números complexos no plano</h2>
     <p>Antes de mexer com polos complexos, vale fixar a ferramenta que faz a ponte entre exponencial complexa e função trigonométrica — e que é o que permite escrever a resposta no tempo como cosseno em vez de soma de exponenciais imaginárias.</p>
 
@@ -551,7 +690,7 @@ exp(-a*t)*cos(w*t)</span>
   </section>
 
   <section id="inversao" class="panel">
-    <span class="eyebrow">1.7</span>
+    <span class="eyebrow">1.9</span>
     <h2>Inversão da transformada de Laplace</h2>
     <p>Depois de resolver o problema em \(s\), falta o último passo do fluxograma lá do início: voltar pro domínio do tempo. Essa operação se chama <b style="color:var(--ink)">antitransformada</b>:</p>
     <div class="eq-block">\[ f(t) = \mathcal{L}^{-1}[F(s)] \]</div>
@@ -572,7 +711,7 @@ exp(-a*t)*cos(w*t)</span>
 
     <p style="margin-top:1.4rem"><b style="color:var(--ink)">3º método — antitransformação de funções racionais.</b> Esse é o que realmente se usa em circuitos, porque toda \(F(s)\) que aparece resolvendo um circuito é uma razão de polinômios:</p>
     <div class="eq-block">\[ F(s) = \frac{N(s)}{D(s)} = \frac{b_0 s^m + b_1 s^{m-1} + \cdots + b_m}{a_0 s^n + a_1 s^{n-1} + \cdots + a_n}, \qquad a_0, b_0 \ne 0 \]</div>
-    <p>Se \(m \le n\) a função é <b style="color:var(--ink)">própria</b>; se \(m<n\), <b style="color:var(--ink)">estritamente própria</b>. Reescrevendo na forma fatorada:</p>
+    <p>Se \(m \le n\) a função é <b style="color:var(--ink)">própria</b>; se \(m&lt;n\), <b style="color:var(--ink)">estritamente própria</b>. Reescrevendo na forma fatorada:</p>
     <div class="eq-block">\[ F(s) = K \cdot \frac{\displaystyle\prod_{i=1}^{m}(s-z_i)}{\displaystyle\prod_{k=1}^{n}(s-p_k)}, \qquad K = \frac{b_0}{a_0} \]</div>
     <p>onde \(z_i\) são os <b style="color:var(--ink)">zeros</b>, \(p_k\) são os <b style="color:var(--ink)">polos</b> (simples ou múltiplos, reais ou complexos) e \(K\) é o fator de escala (ganho). Um exemplo com um pouco de tudo:</p>
 
@@ -613,9 +752,15 @@ exp(-a*t)*cos(w*t)</span>
   </section>
 
   <section id="fracoes" class="panel">
-    <span class="eyebrow">1.8</span>
+    <span class="eyebrow">1.10</span>
     <h2>Expansão em frações parciais</h2>
-    <p>Pra antitransformar uma \(F(s)\) racional, o truque é quebrá-la em pedacinhos simples — cada um do tipo \(1/(s-p_k)^j\), que já sabemos antitransformar:</p>
+
+    <div class="callout"><b>Passo zero: cancele os fatores comuns.</b> Antes de chamar uma raiz do denominador de "polo", verifique se o mesmo fator aparece no numerador. Por exemplo,
+      <div class="eq-block" style="margin-top:0.8rem">\[ F(s) = \frac{(s+2)(s+5)}{(s+2)(s+1)(s+3)} \quad\text{deve ser simplificada para}\quad F(s) = \frac{s+5}{(s+1)(s+3)} \]</div>
+      O fator \(s+2\) é uma <b>singularidade removível</b> da expressão original, não um polo da função simplificada. Se você não cancelar, vai calcular um resíduo para um polo que não existe — e ele sai zero ou indefinido, dependendo de como a conta é montada. Depois dos cancelamentos, escreva \(D(s) = a_n\prod_{k=1}^{r}(s-p_k)^{m_k}\), onde a multiplicidade \(m_k\) determina quantos termos daquele fator aparecem na decomposição.
+    </div>
+
+    <p style="margin-top:1.4rem">Pra antitransformar uma \(F(s)\) racional, o truque é quebrá-la em pedacinhos simples — cada um do tipo \(1/(s-p_k)^j\), que já sabemos antitransformar:</p>
     <div class="eq-block">\[ F(s) = \sum_{k=1}^{q}\sum_{j=1}^{m_k} A_{kj}\,\frac{1}{(s-p_k)^{j}} \]</div>
     <p>onde \(A_{kj}\) são os <b style="color:var(--ink)">resíduos</b> (coeficientes a determinar), \(p_k\) é o \(k\)-ésimo polo, \(m_k\) é a multiplicidade dele, e \(m_1+m_2+\cdots+m_q = n\) é o grau de \(D(s)\). Cada termo se antitransforma assim:</p>
     <div class="eq-block">\[ \mathcal{L}^{-1}\!\left[\frac{1}{(s-p_k)^j}\right] = \frac{t^{\,j-1}}{(j-1)!}\,e^{p_k t} \]</div>
@@ -658,10 +803,26 @@ exp(-a*t)*cos(w*t)</span>
       </div>
     </div>
     <p class="dim" style="margin-top:1rem">Essas duas formas usam as fórmulas de Euler: \(e^{j\Phi}=\cos\Phi+j\,\mathrm{sen}\,\Phi\), \(\cos\Phi=\tfrac12(e^{j\Phi}+e^{-j\Phi})\) e \(\mathrm{sen}\,\Phi=\tfrac{1}{2j}(e^{j\Phi}-e^{-j\Phi})\) — a ponte entre exponencial complexa e as funções trigonométricas que aparecem na resposta no tempo.</p>
+
+    <h3 style="margin-top:2rem;font-size:1.1rem">Forma real: como evitar resíduos complexos por completo</h3>
+    <p>Muitas vezes é mais simples <b style="color:var(--ink)">manter tudo real</b>. Se o denominador já aparece como um quadrático completo, considere:</p>
+    <div class="eq-block">\[ F(s) = \frac{Bs+C}{(s+a)^2+\omega^2} \]</div>
+    <p>Para usar os pares conhecidos, o numerador deve ser reescrito <em>em função de \(s+a\)</em> — esse é o único truque:</p>
+    <div class="eq-block">\[ Bs + C = B(s+a) + (C - aB) \;\Longrightarrow\; F(s) = B\,\frac{s+a}{(s+a)^2+\omega^2} + \frac{C-aB}{\omega}\cdot\frac{\omega}{(s+a)^2+\omega^2} \]</div>
+    <div class="final-answer">
+      \[ f(t) = B\,e^{-at}\cos(\omega t)H(t) + \frac{C-aB}{\omega}\,e^{-at}\,\mathrm{sen}(\omega t)\,H(t) \]
+    </div>
+    <p class="dim" style="margin-top:1rem">Essa forma é frequentemente a mais rápida em provas — e nunca exige mexer com números complexos. Note que os numeradores sobre um fator quadrático irredutível <b>têm que ser lineares</b> (grau menor que o do fator); numerador constante sobre quadrático é um erro clássico.</p>
+
+    <h3 style="margin-top:2rem;font-size:1.1rem">Par complexo conjugado <em>repetido</em></h3>
+    <p>Se o fator quadrático \(Q(s) = (s+a)^2 + \omega^2\) aparece com multiplicidade \(m\), a decomposição real deve conter uma fração para <b style="color:var(--ink)">cada potência de \(Q\)</b>:</p>
+    <div class="eq-block">\[ \frac{B_1(s+a)+C_1}{Q(s)} + \frac{B_2(s+a)+C_2}{Q^2(s)} + \cdots + \frac{B_m(s+a)+C_m}{Q^m(s)} \]</div>
+    <p>As inversas dos termos com \(Q^2, Q^3, \ldots\) contêm fatores polinomiais em \(t\) multiplicando senoides amortecidas — exatamente em analogia ao que ocorre com polos reais repetidos, onde surgem \(t\,e^{pt}\), \(t^2 e^{pt}\) e assim por diante.</p>
+    <div class="callout">Esse caso é <b>menos frequente</b> nas questões básicas. Quando aparecer, o procedimento seguro é: montar a forma completa acima, determinar os coeficientes (por comparação de coeficientes ou substituição de valores de \(s\)) e usar pares tabelados ou a propriedade de derivação em \(s\). Não tente adivinhar a forma — a multiplicidade \(m\) exige todas as potências de 1 até \(m\).</div>
   </section>
 
   <section id="exemplos2" class="panel">
-    <span class="eyebrow">1.9</span>
+    <span class="eyebrow">1.11</span>
     <h2>Dois exemplos completos, do início ao fim</h2>
     <p class="dim">Juntando frações parciais com antitransformada termo a termo — do jeito que você vai fazer na prova.</p>
 
@@ -686,6 +847,748 @@ exp(-a*t)*cos(w*t)</span>
         </div>
         <div class="result">\(f(t) = \delta'(t) + 2\,\delta(t) + 0{,}5 + 2e^{-t} - 6{,}5\,e^{-2t}\)</div>
       </div>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">Exercícios</span>
+    <h2>Questões de provas — definição e propriedades</h2>
+    <p class="dim">Questões de testes e provas do PSI3213 que caem neste módulo: calcular transformadas pela definição, aplicar os teoremas operacionais, representar sinais por trechos com degraus e usar as propriedades do impulso. Antitransformação e frações parciais estão no <a href="modulo-03.html#exercicios">módulo 03</a>.</p>
+
+    <div class="q-intro">
+      <div><b>14 questões</b>7 testes · 4 objetivas · 3 dissertativas</div>
+      <div><b>Foco</b>tempo → domínio s</div>
+      <div><b>Período</b>2008 – 2025</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 1</span>Sinal por trechos e deslocamentos temporais</span>
+          <span class="q-prova">T1/2016 — Q3</span>
+        </div>
+        <p>Considere a função</p>
+        <div class="eq-block">\[ h(t) = \begin{cases} 10, & 0 \le t < 2, \\ 5, & 2 \le t < 4, \\ 0, & t \ge 4. \end{cases} \]</div>
+        <p>A transformada de Laplace de \(h(t)\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(5\left(1-e^{-2s}-e^{-4s}\right)\)</li>
+          <li data-alt="b">\(5s\left(1-e^{-2s}-e^{-4s}\right)\)</li>
+          <li data-alt="c">\(\dfrac{5}{s}\left(2-e^{-2s}-e^{-4s}\right)\)</li>
+          <li data-alt="d">\(s\left(2-e^{-2s}-e^{-4s}\right)\)</li>
+          <li data-alt="e">\(5\left(2+e^{-2s}+s\,e^{-4s}\right)\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Ler o sinal antes de transformar</div>
+              <p>A função não é dada por uma única expressão: seu valor muda em \(t=2\) e novamente em \(t=4\). O modo mais seguro de usar Laplace é representar essas mudanças com degraus de Heaviside.</p>
+              <p>No instante \(t=0\), o sinal sobe de \(0\) para \(10\). Em \(t=2\), ele cai de \(10\) para \(5\) — isto é, sofre uma variação de \(-5\). Em \(t=4\), cai de \(5\) para \(0\), sofrendo outra variação de \(-5\). Assim:</p>
+              <div class="eq-block">\[ h(t) = 10\,H(t) - 5\,H(t-2) - 5\,H(t-4) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Ideia-chave</b> — em uma representação por degraus, cada termo indica uma <em>mudança de nível</em>. O coeficiente que multiplica \(H(t-a)\) é a <b>variação</b> que ocorre no instante \(t=a\), e não necessariamente o valor final do sinal.</div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Transformar cada parcela</div>
+              <p>Usamos \(\mathcal{L}\{H(t)\} = 1/s\) e \(\mathcal{L}\{H(t-a)\} = e^{-as}/s\). Pela linearidade:</p>
+              <div class="eq-block">\[ H(s) = \frac{10}{s} - \frac{5e^{-2s}}{s} - \frac{5e^{-4s}}{s} \]</div>
+              <p>Colocando \(5/s\) em evidência:</p>
+              <div class="final-answer">\[ H(s) = \frac{5}{s}\left(2 - e^{-2s} - e^{-4s}\right) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Conferência direta por integração</div>
+              <p>Também poderíamos partir da definição, separando os intervalos em que \(h(t)\) é constante:</p>
+              <div class="eq-block">\[ H(s) = \int_0^2 10\,e^{-st}\,dt + \int_2^4 5\,e^{-st}\,dt = \frac{10}{s}\left(1-e^{-2s}\right) + \frac{5}{s}\left(e^{-2s}-e^{-4s}\right) \]</div>
+              <p>Distribuindo e agrupando, \(\dfrac{10 - 10e^{-2s} + 5e^{-2s} - 5e^{-4s}}{s} = \dfrac{5}{s}\left(2-e^{-2s}-e^{-4s}\right)\) — o mesmo resultado obtido pela representação com degraus.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(c)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 3</span>Multiplicação por \(t\) no domínio do tempo</span>
+          <span class="q-prova">T1/2017 — Q2</span>
+        </div>
+        <p>A transformada de Laplace de \(f(t) = t\,\mathrm{sen}\,t\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{2s}{1+s^2}\)</li>
+          <li data-alt="b">\(\dfrac{s^2}{1+s^2}\)</li>
+          <li data-alt="c">\(\dfrac{2s}{(1+s^2)^2}\)</li>
+          <li data-alt="d">\(\dfrac{s}{(1+s^2)^2}\)</li>
+          <li data-alt="e">\(\dfrac{2s^2}{1+s^2}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Identificar um par conhecido</div>
+              <p>Definindo \(f(t) = \mathrm{sen}\,t\), temos \(F(s) = \dfrac{1}{s^2+1}\) (é o par do seno com \(\omega=1\)).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a propriedade operacional</div>
+              <p>A multiplicação por \(t\) no tempo corresponde a derivar em \(s\), com sinal trocado: \(\mathcal{L}\{t f(t)\} = -\dfrac{dF}{ds}\). Logo:</p>
+              <div class="eq-block">\[ \mathcal{L}\{t\,\mathrm{sen}\,t\} = -\frac{d}{ds}\left(\frac{1}{s^2+1}\right) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Fazer a derivada sem saltar etapas</div>
+              <p>Escrevendo \((s^2+1)^{-1}\) e aplicando a regra da cadeia:</p>
+              <div class="eq-block">\[ \frac{d}{ds}(s^2+1)^{-1} = -(s^2+1)^{-2}\,(2s) = -\frac{2s}{(s^2+1)^2} \]</div>
+              <p>Com o sinal de menos do teorema, os dois menos se cancelam:</p>
+              <div class="final-answer">\[ \mathcal{L}\{t\,\mathrm{sen}\,t\} = \frac{2s}{(1+s^2)^2} \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Sinal de alerta</b> — repare que o denominador vira <b>quadrado</b>. Alternativas com \((1+s^2)\) no denominador simples podem ser descartadas de imediato: derivar em \(s\) sempre eleva o grau do denominador.</div>
+          <div class="final-answer">Resposta: alternativa <b>(c)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 5</span>Transformada da derivada de função hiperbólica</span>
+          <span class="q-prova">T1/2017 — Q4</span>
+        </div>
+        <p>A transformada de Laplace de \(\dfrac{d}{dt}\cosh(t)\) é. Considere \(\cosh t = \dfrac{e^t+e^{-t}}{2}\).</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{s}{s^2-1}\)</li>
+          <li data-alt="b">\(\dfrac{1}{s^2-1}\)</li>
+          <li data-alt="c">\(\dfrac{1}{s^2+1}\)</li>
+          <li data-alt="d">\(\dfrac{s}{s^2+1}\)</li>
+          <li data-alt="e">\(\dfrac{s^2}{s^2+1}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Antes de usar propriedades: obter ℒ{cosh t} pela definição</div>
+              <p>Partindo da definição unilateral com \(f(t)=\cosh t\) e substituindo a definição da hiperbólica:</p>
+              <div class="eq-block">\[ \mathcal{L}\{\cosh t\} = \frac{1}{2}\left[\int_0^\infty e^{-(s-1)t}dt + \int_0^\infty e^{-(s+1)t}dt\right] \]</div>
+              <p>Para que as duas integrais convirjam, é suficiente exigir \(\mathrm{Re}\{s\}>1\). Usando \(\int_0^\infty e^{-\alpha t}dt = 1/\alpha\) para \(\mathrm{Re}\{\alpha\}>0\):</p>
+              <div class="eq-block">\[ \mathcal{L}\{\cosh t\} = \frac{1}{2}\left(\frac{1}{s-1}+\frac{1}{s+1}\right) = \frac{1}{2}\cdot\frac{(s+1)+(s-1)}{(s-1)(s+1)} = \frac{1}{2}\cdot\frac{2s}{s^2-1} \]</div>
+              <div class="eq-block">\[ \mathcal{L}\{\cosh t\} = \frac{s}{s^2-1}, \qquad \mathrm{Re}\{s\}>1 \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Agora sim: aplicar o teorema da derivada</div>
+              <p>Com \(F(s) = \dfrac{s}{s^2-1}\) e \(f(0^-) = \cosh 0 = 1\), o teorema \(\mathcal{L}\{f'(t)\} = sF(s) - f(0^-)\) dá:</p>
+              <div class="eq-block">\[ \mathcal{L}\!\left\{\frac{d}{dt}\cosh t\right\} = \frac{s^2}{s^2-1} - 1 = \frac{s^2 - (s^2-1)}{s^2-1} \]</div>
+              <div class="final-answer">\[ \mathcal{L}\!\left\{\frac{d}{dt}\cosh t\right\} = \frac{1}{s^2-1} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Conferência independente, pelo domínio do tempo</div>
+              <p>Da própria definição, \(\dfrac{d}{dt}\cosh t = \dfrac{e^t-e^{-t}}{2} = \mathrm{senh}\,t\). Aplicando Laplace direto ao seno hiperbólico:</p>
+              <div class="eq-block">\[ \mathcal{L}\{\mathrm{senh}\,t\} = \frac{1}{2}\left(\frac{1}{s-1}-\frac{1}{s+1}\right) = \frac{1}{2}\cdot\frac{(s+1)-(s-1)}{s^2-1} = \frac{1}{s^2-1} \]</div>
+              <p>A conferência produz exatamente o mesmo resultado.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 6</span>Definição, integração por partes e relação de recorrência</span>
+          <span class="q-prova">T1/2017 — Q5</span>
+        </div>
+        <p>Para calcular a transformada de Laplace de \(t^n\) pela definição pode-se usar integração por partes e escrever</p>
+        <div class="eq-block">\[ \mathcal{L}\{t^n\} = \int_{0^-}^{\infty} t^n e^{-st}\,dt = \left[-\frac{t^n}{s}e^{-st}\right]_{0^-}^{\infty} + \int_{0^-}^{\infty}\frac{n\,t^{n-1}}{s}\,e^{-st}\,dt \]</div>
+        <p>A segunda parcela da expressão acima é equivalente a:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\mathcal{L}\!\left\{\dfrac{d}{dt}(t^{n-1})\right\}\)</li>
+          <li data-alt="b">\(\dfrac{\mathcal{L}\{t^{n-1}\}}{n}\)</li>
+          <li data-alt="c">\(\dfrac{n}{\mathcal{L}\{t^{n-1}-1\}}\)</li>
+          <li data-alt="d">\(\mathcal{L}\{t^n\} - e^{-st}\)</li>
+          <li data-alt="e">\(\dfrac{n}{s}\,\mathcal{L}\{t^{n-1}\}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Entender a integração por partes que gerou a expressão</div>
+              <p>Partindo de \(\mathcal{L}\{t^n\} = \int t^n e^{-st}dt\), escolhemos \(u = t^n\) e \(dv = e^{-st}dt\), logo \(du = nt^{n-1}dt\) e \(v = -\tfrac{1}{s}e^{-st}\). A fórmula \(\int u\,dv = uv - \int v\,du\) produz exatamente a expressão do enunciado.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Identificar a segunda integral como outra transformada</div>
+              <p>O fator \(n/s\) <b style="color:var(--ink)">não depende de \(t\)</b>, portanto pode sair da integral:</p>
+              <div class="eq-block">\[ \int_{0^-}^{\infty}\frac{n}{s}\,t^{n-1}e^{-st}\,dt = \frac{n}{s}\int_{0^-}^{\infty} t^{n-1}e^{-st}\,dt \]</div>
+              <p>E, pela própria definição de Laplace, \(\int_{0^-}^{\infty} t^{n-1}e^{-st}dt = \mathcal{L}\{t^{n-1}\}\). Logo a segunda parcela é:</p>
+              <div class="final-answer">\[ \frac{n}{s}\,\mathcal{L}\{t^{n-1}\} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Por que isso é útil?</div>
+              <p>Para \(\mathrm{Re}\{s\}>0\), o termo de contorno desaparece. Surge então a <b style="color:var(--ink)">relação de recorrência</b> \(\mathcal{L}\{t^n\} = \dfrac{n}{s}\mathcal{L}\{t^{n-1}\}\). Repetindo o processo até chegar a \(\mathcal{L}\{1\} = 1/s\), obtém-se \(\mathcal{L}\{t^n\} = \dfrac{n!}{s^{n+1}}\) — a fórmula da tabela, agora deduzida em vez de decorada.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(e)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 7</span>Mudança de escala temporal</span>
+          <span class="q-prova">T1/2018 — Q4</span>
+        </div>
+        <p>Sabendo que \(\displaystyle \mathcal{L}\!\left\{\frac{\mathrm{sen}\,t}{t}\right\} = \arctan\!\left(\frac{1}{s}\right)\), determine \(\mathcal{L}\{\mathrm{sen}(at)/t\}\), para \(a>0\).</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(\arctan(a/s)\)</li>
+          <li data-alt="b">\(\dfrac{1}{a}\arctan(1/s)\)</li>
+          <li data-alt="c">\(\dfrac{1}{a}\arctan\big(1/(as)\big)\)</li>
+          <li data-alt="d">\(\dfrac{1}{a}\arctan(a/s)\)</li>
+          <li data-alt="e">\(\arctan\big(1/(as)\big)\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Criar uma função auxiliar</div>
+              <p>Defina \(g(t) = \dfrac{\mathrm{sen}\,t}{t}\), de modo que \(G(s) = \arctan\!\left(\dfrac{1}{s}\right)\) é o dado do enunciado.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Relacionar a função pedida com g(at)</div>
+              <p>Substituindo \(t\) por \(at\) em \(g\): \(g(at) = \dfrac{\mathrm{sen}(at)}{at}\). Multiplicando por \(a\):</p>
+              <div class="eq-block">\[ a\,g(at) = \frac{\mathrm{sen}(at)}{t} \]</div>
+              <p>Portanto a função pedida é exatamente \(a\,g(at)\) — não \(g(at)\). Esse fator \(a\) é o que faz a diferença entre as alternativas.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a propriedade de escala</div>
+              <p>Para \(a>0\), \(\mathcal{L}\{g(at)\} = \dfrac{1}{a}G\!\left(\dfrac{s}{a}\right)\). Multiplicando por \(a\), o \(1/a\) é cancelado:</p>
+              <div class="eq-block">\[ \mathcal{L}\{a\,g(at)\} = G\!\left(\frac{s}{a}\right) = \arctan\!\left(\frac{1}{s/a}\right) \]</div>
+              <div class="final-answer">\[ \mathcal{L}\!\left\{\frac{\mathrm{sen}(at)}{t}\right\} = \arctan\!\left(\frac{a}{s}\right) \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>A pegadinha</b> — o fator \(1/a\) da propriedade de escala e o fator \(a\) que aparece ao reconstruir \(\mathrm{sen}(at)/t\) se cancelam exatamente. Quem esquece um dos dois cai nas alternativas (b), (c) ou (d).</div>
+          <div class="final-answer">Resposta: alternativa <b>(a)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 9</span>Derivada e translação no domínio \(s\)</span>
+          <span class="q-prova">T1/2019 — Q3</span>
+        </div>
+        <p>A transformada de Laplace de \(g(t) = \dfrac{d}{dt}\left(e^{-t}\cos t\right)\) é:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(-\dfrac{s+2}{(s+1)^2+1}\)</li>
+          <li data-alt="b">\(-\dfrac{s+1}{(s+1)^2+4}\)</li>
+          <li data-alt="c">\(-\dfrac{s+1}{(s+1)^2+1}\)</li>
+          <li data-alt="d">\(\dfrac{2s}{(s+1)^2+1}\)</li>
+          <li data-alt="e">\(-\dfrac{s+2}{(s+1)^2+4}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Transformar a função antes de derivá-la</div>
+              <p>Defina \(f(t) = e^{-t}\cos t\). Sabemos que \(\mathcal{L}\{\cos t\} = \dfrac{s}{s^2+1}\). Multiplicar por \(e^{-t}\) desloca \(s \mapsto s+1\):</p>
+              <div class="eq-block">\[ F(s) = \frac{s+1}{(s+1)^2+1}, \qquad f(0^-) = e^0\cos 0 = 1 \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a propriedade da derivada</div>
+              <p>Como \(g(t) = f'(t)\), vale \(G(s) = sF(s) - f(0^-)\):</p>
+              <div class="eq-block">\[ G(s) = \frac{s(s+1)}{(s+1)^2+1} - 1 = \frac{s(s+1) - \big[(s+1)^2+1\big]}{(s+1)^2+1} \]</div>
+              <p>No numerador, \(s(s+1) = s^2+s\) e \((s+1)^2+1 = s^2+2s+2\), logo \(s^2+s-(s^2+2s+2) = -s-2\):</p>
+              <div class="final-answer">\[ G(s) = -\frac{s+2}{(s+1)^2+1} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Conferência completa: derivar no tempo e transformar cada parcela</div>
+              <p>Sem usar a propriedade da derivada, pela regra do produto: \(g(t) = -e^{-t}\cos t - e^{-t}\,\mathrm{sen}\,t\). Transformando as duas parcelas separadamente:</p>
+              <div class="eq-block">\[ G(s) = -\frac{s+1}{(s+1)^2+1} - \frac{1}{(s+1)^2+1} = -\frac{s+2}{(s+1)^2+1} \]</div>
+              <p>A conferência coincide exatamente com o resultado obtido pelo teorema da derivada.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(a)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste · Questão 14</span>Laplace aplicada a uma integral imprópria</span>
+          <span class="q-prova">T2/2024 — Q2</span>
+        </div>
+        <p>O valor da integral \(\displaystyle \int_0^\infty t\,e^{-2t}\cos t\;dt\) é. <span class="dim">Dica: calcule \(\mathcal{L}\{t\cos t\}\).</span></p>
+        <ul class="q-alts">
+          <li data-alt="a">\(1\)</li>
+          <li data-alt="b">\(\dfrac{3}{25}\)</li>
+          <li data-alt="c">\(\dfrac{2}{5}\)</li>
+          <li data-alt="d">\(\dfrac{5}{27}\)</li>
+          <li data-alt="e">A integral não converge.</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Reconhecer a própria definição de Laplace</div>
+              <p>A transformada de uma função é \(F(s) = \int_0^\infty e^{-st}f(t)\,dt\). Comparando com a integral do enunciado, basta escolher \(f(t) = t\cos t\) e avaliar sua transformada em \(s=2\):</p>
+              <div class="eq-block">\[ \int_0^\infty t\,e^{-2t}\cos t\,dt = \big.\mathcal{L}\{t\cos t\}\big|_{s=2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Calcular ℒ{t cos t}</div>
+              <p>De \(\mathcal{L}\{\cos t\} = \dfrac{s}{s^2+1}\) e da propriedade \(\mathcal{L}\{tf(t)\} = -\dfrac{dF}{ds}\), pela regra do quociente:</p>
+              <div class="eq-block">\[ \frac{d}{ds}\left(\frac{s}{s^2+1}\right) = \frac{(s^2+1)-s(2s)}{(s^2+1)^2} = \frac{1-s^2}{(s^2+1)^2} \]</div>
+              <div class="eq-block">\[ \mathcal{L}\{t\cos t\} = -\frac{1-s^2}{(s^2+1)^2} = \frac{s^2-1}{(s^2+1)^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Avaliar em s = 2</div>
+              <div class="eq-block">\[ \left.\frac{s^2-1}{(s^2+1)^2}\right|_{s=2} = \frac{4-1}{(4+1)^2} = \frac{3}{25} \]</div>
+              <div class="final-answer">\[ \int_0^\infty t\,e^{-2t}\cos t\,dt = \frac{3}{25} \]</div>
+              <p>O fator \(e^{-2t}\) garante a convergência da integral apesar do fator \(t\) crescente — a alternativa (e) é uma armadilha.</p>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 1</span>Translação no tempo combinada com multiplicação por \(t\)</span>
+          <span class="q-prova">P2/2008 — Teste 1</span>
+        </div>
+        <p>Sendo \(F(s) = \mathcal{L}\{f(t)\}\) e admitindo \(f(t-a) = 0\) para \(t \le a\), determine a transformada de Laplace de \(t\,f(t-a)\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Reescrever a expressão para separar duas parcelas transformáveis</div>
+              <p>Queremos \(\mathcal{L}\{t\,f(t-a)\}\). O problema é que o \(t\) na frente <b style="color:var(--ink)">não está deslocado</b> junto com \(f\). A forma mais didática é escrever \(t = (t-a)+a\):</p>
+              <div class="eq-block">\[ t\,f(t-a) = (t-a)\,f(t-a) + a\,f(t-a) \]</div>
+              <p>Agora temos duas parcelas e transformaremos cada uma separadamente.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Transformar a parcela a·f(t−a)</div>
+              <p>O enunciado informa que \(f(t-a)=0\) para \(t \le a\), portanto o atraso está causalmente bem definido. Pelo teorema de translação no tempo, \(\mathcal{L}\{f(t-a)\} = e^{-as}F(s)\), logo:</p>
+              <div class="eq-block">\[ \mathcal{L}\{a\,f(t-a)\} = a\,e^{-as}F(s) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Transformar a parcela (t−a)·f(t−a)</div>
+              <p>Defina \(h(t) = t\,f(t)\). A multiplicação por \(t\) no tempo corresponde à derivação em \(s\), então \(H(s) = -F'(s)\). Agora atrasamos essa função em \(a\): \(h(t-a) = (t-a)f(t-a)\). Pela translação no tempo:</p>
+              <div class="eq-block">\[ \mathcal{L}\{(t-a)f(t-a)\} = e^{-as}H(s) = -e^{-as}F'(s) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Somar as duas transformadas</div>
+              <div class="final-answer">\[ \mathcal{L}\{t\,f(t-a)\} = e^{-as}\big[a\,F(s) - F'(s)\big] \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conferência por uma única propriedade</div>
+              <p>Se definirmos \(g(t) = f(t-a)\), então \(G(s) = e^{-as}F(s)\). Aplicando diretamente \(\mathcal{L}\{t\,g(t)\} = -G'(s)\) e usando a regra do produto:</p>
+              <div class="eq-block">\[ -\frac{d}{ds}\big[e^{-as}F(s)\big] = -\big[-a\,e^{-as}F(s) + e^{-as}F'(s)\big] = e^{-as}\big[aF(s)-F'(s)\big] \]</div>
+              <p>Confirmando o resultado anterior por um caminho totalmente diferente.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 4</span>Escalamento e deslocamento do impulso de Dirac</span>
+          <span class="q-prova">P2/2010 — Teste 3</span>
+        </div>
+        <p>Qual é a transformada de Laplace de \(f(t) = \delta(at-b)\), sendo \(a\) e \(b\) constantes reais positivas?</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(a\,e^{-sb}\)</li>
+          <li data-alt="b">\(\dfrac{1}{a}\,e^{-s(b/a)}\)</li>
+          <li data-alt="c">\(\dfrac{1}{a}\,e^{-sb}s\)</li>
+          <li data-alt="d">\(a\,e^{-jb}\)</li>
+          <li data-alt="e">\(e^{a+jb}\)</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Localizar onde o argumento do impulso zera</div>
+              <p>O impulso ocorre no instante em que \(at-b=0\), isto é, \(t_0 = \dfrac{b}{a}\). Como \(a,b>0\), esse instante é positivo e está dentro do intervalo de integração.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Usar a propriedade de escala do delta</div>
+              <p>Para uma constante \(a \ne 0\), \(\delta(ax) = \dfrac{1}{|a|}\delta(x)\). Como \(a>0\), \(|a|=a\). Logo:</p>
+              <div class="eq-block">\[ \delta(at-b) = \delta\!\left(a\left[t-\frac{b}{a}\right]\right) = \frac{1}{a}\,\delta\!\left(t-\frac{b}{a}\right) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar diretamente a definição de Laplace</div>
+              <div class="eq-block">\[ F(s) = \int_{0^-}^{\infty} e^{-st}\delta(at-b)\,dt = \frac{1}{a}\int_{0^-}^{\infty} e^{-st}\,\delta\!\left(t-\frac{b}{a}\right)dt \]</div>
+              <p>Pela propriedade de filtragem, a integral só avalia \(e^{-st}\) no ponto \(t = b/a\):</p>
+              <div class="final-answer">\[ \mathcal{L}\{\delta(at-b)\} = \frac{1}{a}\,e^{-sb/a} \]</div>
+            </div>
+          </div>
+          <div class="q-idea"><b>Dois erros de uma vez</b> — quem esquece o fator \(1/a\) cai em (a); quem esquece de dividir o expoente por \(a\) cai em (a) ou (c). A propriedade de escala mexe nas <em>duas</em> coisas: na amplitude e no instante.</div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 6</span>Propriedade de filtragem do impulso e função degrau</span>
+          <span class="q-prova">P1/2011 — Teste 4</span>
+        </div>
+        <p>Calcule \(\displaystyle \int_{-4}^{3} H(t^3+6)\,\big[\delta(t-2)+\delta(t+2)-\delta(t-4)\big]\,dt\).</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(12\)</li>
+          <li data-alt="b">\(1\)</li>
+          <li data-alt="c">\(0\)</li>
+          <li data-alt="d">\(-1\)</li>
+          <li data-alt="e">n.d.a.</li>
+        </ul>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Localizar os impulsos que realmente pertencem ao intervalo</div>
+              <p>A propriedade de filtragem diz \(\int_a^b g(t)\delta(t-t_0)dt = g(t_0)\), <b style="color:var(--ink)">desde que \(t_0 \in [a,b]\)</b>. Os impulsos estão em \(t=2\), \(t=-2\) e \(t=4\).</p>
+              <p>Como o intervalo é \([-4,3]\), apenas \(t=2\) e \(t=-2\) contribuem. O impulso em \(t=4\) está <b style="color:var(--red)">fora</b> da janela de integração — some da conta, e com ele o sinal negativo que o acompanhava.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Por que o argumento de H(·) decide entre 0 e 1?</div>
+              <p>A função de Heaviside vale \(0\) para argumento negativo e \(1\) para argumento positivo. O que entra nessa regra <b style="color:var(--ink)">não precisa ser o próprio \(t\)</b> — pode ser qualquer expressão. Aqui a entrada é \(x = t^3+6\).</p>
+              <p>Portanto, em cada ponto selecionado pelo impulso, primeiro calculamos o valor de \(t^3+6\) e só depois verificamos seu sinal.</p>
+              <p>Para o impulso em \(t=2\): \(2^3+6 = 14 > 0\), logo \(H(14)=1\) — a "chave" representada por Heaviside está <b>ligada</b>.</p>
+              <p>Para o impulso em \(t=-2\): \((-2)^3+6 = -2 < 0\), portanto \(H(-2)=0\) — a chave está <b>desligada</b>, e esse impulso é completamente anulado pelo fator \(H(t^3+6)\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a filtragem</div>
+              <div class="eq-block">\[ I = H(14) + H(-2) = 1 + 0 = 1 \]</div>
+              <div class="final-answer">\[ I = 1 \]</div>
+            </div>
+          </div>
+          <div class="final-answer">Resposta: alternativa <b>(b)</b></div>
+        </div>
+      </div>
+
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Objetiva · Questão 7</span>Transformada da integral de uma função</span>
+          <span class="q-prova">P1/2016 — Teste 6</span>
+        </div>
+        <p>Determine a transformada de Laplace de \(\displaystyle f(t) = \int_0^t e^{-2\lambda}\,\mathrm{sen}(2\lambda)\,d\lambda\).</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Identificar a função integrada</div>
+              <p>Defina \(g(t) = e^{-2t}\,\mathrm{sen}(2t)\), de modo que \(f(t) = \int_0^t g(\lambda)\,d\lambda\). Transforme \(g\) primeiro, depois trate a integral.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Transformar g(t)</div>
+              <p>De \(\mathcal{L}\{\mathrm{sen}(2t)\} = \dfrac{2}{s^2+4}\), multiplicar por \(e^{-2t}\) desloca \(s \mapsto s+2\):</p>
+              <div class="eq-block">\[ G(s) = \frac{2}{(s+2)^2+4} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Usar a propriedade da integral acumulada</div>
+              <p>Se \(f(t) = \int_0^t g(\lambda)d\lambda\), então \(F(s) = G(s)/s\). Expandindo \((s+2)^2+4 = s^2+4s+8\):</p>
+              <div class="final-answer">\[ F(s) = \frac{2}{s\big[(s+2)^2+4\big]} = \frac{2}{s(s^2+4s+8)} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Por que vale a pena comentar o fator 1/s?</div>
+              <p>Esse fator não é apenas uma consequência algébrica — ele contém uma informação estrutural. Primeiro, recorde que \(1/s \leftrightarrow H(t)\). Além disso, integrar \(g\) desde \(0\) até \(t\) equivale a <b style="color:var(--ink)">convoluir \(g\) com o degrau</b>:</p>
+              <div class="eq-block">\[ f(t) = \int_0^t g(\lambda)\,d\lambda = (g * H)(t) \]</div>
+              <p>E no domínio de Laplace convolução vira multiplicação: \(F(s) = G(s)\cdot\dfrac{1}{s}\). É daí que nasce o fator \(1/s\).</p>
+              <p>Fisicamente, a integração introduz <b>memória</b>: o valor atual de \(f(t)\) depende de tudo o que \(g(\lambda)\) acumulou desde o instante inicial. Por isso, em sistemas dinâmicos, a presença de um fator \(1/s\) costuma ser interpretada como comportamento <em>integrador</em>. E há uma consequência algébrica útil: multiplicar por \(1/s\) acrescenta um polo na origem (salvo cancelamentos) — esse polo é a assinatura, no domínio \(s\), da acumulação temporal.</p>
+            </div>
+          </div>
+          <div class="q-idea"><b>Três visões da mesma operação</b> — integração no tempo ⇕ convolução com \(H(t)\) ⇕ multiplicação por \(1/s\).</div>
+        </div>
+      </div>
+
+      <div class="q-card dissertativa">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Dissertativa · Questão 1</span>Derivada de ordem elevada e translação no domínio \(s\)</span>
+          <span class="q-prova">P1/2016 — 1ª Questão, item b</span>
+        </div>
+        <p>Encontre a transformada de Laplace da função</p>
+        <div class="eq-block">\[ f(t) = e^{t}\,\frac{d^{100}}{dt^{100}}\left(e^{-t}t^{100}\right) \]</div>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Definir a parte interna e traçar a estratégia</div>
+              <p>Defina \(g(t) = e^{-t}t^{100}\). A estratégia será: transformar \(g\), aplicar o teorema da derivada de ordem 100 e, por fim, tratar o fator externo \(e^{t}\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Transformar g(t)</div>
+              <p>De \(\mathcal{L}\{t^{100}H(t)\} = \dfrac{100!}{s^{101}}\), o fator \(e^{-t}\) produz a translação \(s \mapsto s+1\):</p>
+              <div class="eq-block">\[ G(s) = \mathcal{L}\{e^{-t}t^{100}\} = \frac{100!}{(s+1)^{101}} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Demonstrar por que g(0), g′(0), …, g⁽⁹⁹⁾(0) são todos nulos</div>
+              <p>Não basta afirmar que o fator \(t^{100}\) "zera tudo" — vamos demonstrar. Pela fórmula de Leibniz para a derivada de ordem \(k\) de um produto:</p>
+              <div class="eq-block">\[ g^{(k)}(t) = \sum_{m=0}^{k}\binom{k}{m}\frac{d^m}{dt^m}\big(e^{-t}\big)\,\frac{d^{\,k-m}}{dt^{\,k-m}}\big(t^{100}\big) \]</div>
+              <p>Temos \(\dfrac{d^m}{dt^m}e^{-t} = (-1)^m e^{-t}\) e, para \(k-m \le 100\):</p>
+              <div class="eq-block">\[ \frac{d^{\,k-m}}{dt^{\,k-m}}t^{100} = \frac{100!}{\big[100-(k-m)\big]!}\,t^{\,100-(k-m)} \]</div>
+              <p>Agora suponha \(0 \le k \le 99\). Como \(0 \le m \le k\), o expoente satisfaz \(100-(k-m) = 100-k+m \ge 100-k \ge 1\). Portanto <b style="color:var(--ink)">todo</b> termo da soma ainda contém pelo menos uma potência \(t^1\), e em \(t=0\) cada um se anula.</p>
+              <div class="eq-block">\[ g^{(k)}(0) = 0, \qquad k = 0,1,\ldots,99 \]</div>
+              <p>Somente na derivada de ordem 100 pode aparecer uma parcela constante não nula na origem.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar o teorema da derivada de ordem 100</div>
+              <p>Em geral, \(\mathcal{L}\{g^{(n)}(t)\} = s^n G(s) - s^{n-1}g(0^-) - \cdots - g^{(n-1)}(0^-)\). Para \(n=100\), <b style="color:var(--ink)">todas</b> as 100 condições iniciais que aparecem na fórmula são nulas pelo passo anterior. Assim, com \(q(t) = g^{(100)}(t)\):</p>
+              <div class="eq-block">\[ Q(s) = \mathcal{L}\{g^{(100)}(t)\} = s^{100}G(s) = 100!\,\frac{s^{100}}{(s+1)^{101}} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Incorporar o fator externo eᵗ</div>
+              <p>A função pedida é \(f(t) = e^{t}q(t)\). Pela translação exponencial, \(\mathcal{L}\{e^{at}q(t)\} = Q(s-a)\). Com \(a=1\):</p>
+              <div class="eq-block">\[ F(s) = Q(s-1) = 100!\,\frac{(s-1)^{100}}{\big[(s-1)+1\big]^{101}} \]</div>
+              <div class="final-answer">\[ F(s) = 100!\;\frac{(s-1)^{100}}{s^{101}} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Segunda solução: uma recorrência que evita escrever a derivada de ordem 100</div>
+              <p>Defina a sequência \(p_0(t) = t^{100}\) e \(p_{n+1}(t) = p_n'(t) - p_n(t)\). A identidade</p>
+              <div class="eq-block">\[ e^{t}\frac{d}{dt}\big(e^{-t}p_n(t)\big) = p_n'(t) - p_n(t) \]</div>
+              <p>mostra que \(p_n(t) = e^{t}\dfrac{d^n}{dt^n}\big(e^{-t}t^{100}\big)\). Logo a própria função procurada é \(f(t) = p_{100}(t)\).</p>
+              <p>Para \(n<100\), cada aplicação de \(p_{n+1} = p_n' - p_n\) reduz em no máximo uma unidade a menor potência de \(t\) presente. Portanto \(p_n(t)\) continua divisível por \(t^{100-n}\) e, consequentemente, \(p_n(0)=0\) para \(n=0,\ldots,99\).</p>
+              <p>Aplicando Laplace à recorrência: \(P_{n+1}(s) = sP_n(s) - p_n(0) - P_n(s)\). Como \(p_n(0)=0\) para \(n<100\), sobra \(P_{n+1}(s) = (s-1)P_n(s)\). Partindo de \(P_0(s) = 100!/s^{101}\) e repetindo 100 vezes:</p>
+              <div class="eq-block">\[ P_{100}(s) = (s-1)^{100}P_0(s) = 100!\,\frac{(s-1)^{100}}{s^{101}} \]</div>
+              <p>A segunda solução chega exatamente ao mesmo resultado, mas interpreta a operação como uma sequência de 100 aplicações do operador \(\mathcal{D}-1\).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card dissertativa">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Dissertativa · Questão 4</span>Potência de \(t\) combinada com translação no domínio \(s\)</span>
+          <span class="q-prova">P1/2022 — 2ª Questão, item a</span>
+        </div>
+        <p>Obtenha a função transformada por Laplace de \(f(t) = t^3 e^{-2t}H(t)\), indicando claramente o procedimento utilizado.</p>
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Separar a potência de t do fator exponencial</div>
+              <p>Há duas estruturas importantes: \(t^3H(t)\) possui um par de Laplace conhecido, e o fator \(e^{-2t}\) provoca uma translação no domínio \(s\).</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Transformar t³H(t)</div>
+              <p>O par geral é \(\mathcal{L}\{t^nH(t)\} = \dfrac{n!}{s^{n+1}}\). Para \(n=3\), com \(3! = 3\cdot2\cdot1 = 6\):</p>
+              <div class="eq-block">\[ F_0(s) = \frac{6}{s^4} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Aplicar a translação causada por e⁻²ᵗ</div>
+              <p>Se \(f_0(t) \leftrightarrow F_0(s)\), então \(e^{-at}f_0(t) \leftrightarrow F_0(s+a)\). Aqui \(a=2\), portanto substituímos \(s\) por \(s+2\):</p>
+              <div class="final-answer">\[ \mathcal{L}\{t^3 e^{-2t}H(t)\} = \frac{6}{(s+2)^4} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Conferência por outra propriedade</div>
+              <p>Também poderíamos começar de \(\mathcal{L}\{e^{-2t}H(t)\} = \dfrac{1}{s+2}\) e usar três vezes a propriedade \(\mathcal{L}\{t^nf(t)\} = (-1)^n\dfrac{d^nF}{ds^n}\). As derivadas são:</p>
+              <div class="eq-block">\[ \frac{d}{ds}(s+2)^{-1} = -(s+2)^{-2}, \quad \frac{d^2}{ds^2}(s+2)^{-1} = 2(s+2)^{-3}, \quad \frac{d^3}{ds^3}(s+2)^{-1} = -6(s+2)^{-4} \]</div>
+              <p>Com o sinal \((-1)^3 = -1\): \(-\big[-6(s+2)^{-4}\big] = \dfrac{6}{(s+2)^4}\) — confirmando o resultado.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card dissertativa">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Dissertativa · Questão 5</span>Sinal por trechos, teorema da derivada e frações parciais</span>
+          <span class="q-prova">P1/2025 — 1ª Questão</span>
+        </div>
+        <p><b>(a)</b> Considere a função \(f(t)\) definida pelo gráfico abaixo. Obtenha \(F(s) = \mathcal{L}\{f(t)\}\) como soma de, no máximo, três parcelas.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
+            <line x1="50" y1="180" x2="370" y2="180" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+            <line x1="50" y1="200" x2="50" y2="30" stroke="rgba(231,237,233,0.6)" stroke-width="1.4"/>
+            <text x="356" y="200" fill="rgba(231,237,233,0.7)" font-family="IBM Plex Mono, monospace" font-size="13" font-style="italic">t</text>
+            <text x="16" y="42" fill="rgba(231,237,233,0.7)" font-family="IBM Plex Mono, monospace" font-size="13">f(t)</text>
+            <!-- level 3 from 0 to 1, then ramp down to 0 at t=2 -->
+            <path d="M50 70 L150 70 L250 180 L370 180" fill="none" stroke="#4ade9a" stroke-width="2.6"/>
+            <!-- guides -->
+            <line x1="50" y1="70" x2="150" y2="70" stroke="rgba(74,222,154,0.3)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="150" y1="70" x2="150" y2="180" stroke="rgba(122,199,170,0.35)" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="250" y1="70" x2="250" y2="180" stroke="rgba(122,199,170,0.35)" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="30" y="76" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">3</text>
+            <text x="146" y="198" fill="rgba(231,237,233,0.8)" font-family="IBM Plex Mono, monospace" font-size="13">1</text>
+            <text x="246" y="198" fill="rgba(231,237,233,0.8)" font-family="IBM Plex Mono, monospace" font-size="13">2</text>
+          </svg>
+        </div>
+
+        <p style="margin-top:1.2rem"><b>(b)</b> Sabendo que \(\mathcal{L}\{\cos(at)\} = \dfrac{s}{s^2+a^2}\), obtenha \(\mathcal{L}\{\mathrm{sen}(at)\}\) usando o teorema da transformada de Laplace da derivada.</p>
+        <p><b>(c)</b> Obtenha \(f(t) = \mathcal{L}^{-1}\!\left\{\dfrac{s^2}{(s+3)^3}\right\}\) como soma de três funções do tempo, apresentando claramente a decomposição em frações parciais e seus coeficientes.</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">(a) Interpretar o gráfico por operações de degrau e rampa</div>
+              <p>O gráfico mostra \(f(t) = 0\) para \(t<0\); \(f(t)=3\) para \(0 \le t<1\); \(f(t)=3(2-t)\) para \(1 \le t<2\); e \(f(t)=0\) para \(t \ge 2\).</p>
+              <p>A forma especialmente conveniente para Laplace é construir o sinal a partir de <b style="color:var(--ink)">degraus e rampas deslocadas</b>, pensando em "o que liga em cada instante":</p>
+              <p>Em \(t=0\) ligamos um nível constante de amplitude 3: \(\;3H(t)\).</p>
+              <p>Em \(t=1\) começa uma rampa de inclinação \(-3\): \(\;-3(t-1)H(t-1)\).</p>
+              <p>Se parássemos aqui, essa rampa continuaria caindo depois de \(t=2\). Para <b style="color:var(--ink)">cancelar sua inclinação</b> a partir de \(t=2\), adicionamos uma rampa de inclinação \(+3\): \(\;+3(t-2)H(t-2)\).</p>
+              <div class="eq-block">\[ f(t) = 3H(t) - 3(t-1)H(t-1) + 3(t-2)H(t-2) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">(a) Conferir por intervalos antes de transformar</div>
+              <p>Para \(0&lt;t&lt;1\), apenas o primeiro degrau está ativo: \(f(t)=3\). ✓</p>
+              <p>Para \(1&lt;t&lt;2\): \(f(t) = 3 - 3(t-1) = 6-3t = 3(2-t)\). ✓</p>
+              <p>Para \(t&gt;2\): \(f(t) = 3 - 3(t-1) + 3(t-2) = 3 - 3t + 3 + 3t - 6 = 0\). ✓</p>
+              <p>A representação reproduz exatamente o gráfico.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">(a) Transformar parcela a parcela</div>
+              <p>Usamos \(\mathcal{L}\{H(t)\} = \dfrac{1}{s}\) e \(\mathcal{L}\{(t-a)H(t-a)\} = \dfrac{e^{-as}}{s^2}\) — note que aqui a rampa <em>já está</em> corretamente deslocada, então o teorema se aplica direto.</p>
+              <div class="final-answer">\[ F(s) = \frac{3}{s} - \frac{3e^{-s}}{s^2} + \frac{3e^{-2s}}{s^2} \]</div>
+              <p>A resposta possui exatamente três parcelas, como solicitado.</p>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">(b) Obter ℒ{sen} a partir da derivada do cosseno</div>
+              <p>Defina \(g(t) = \cos(at)\), logo \(g'(t) = -a\,\mathrm{sen}(at)\). Pelo teorema da derivada, \(\mathcal{L}\{g'(t)\} = sG(s) - g(0^-)\), com \(G(s) = \dfrac{s}{s^2+a^2}\) e \(g(0^-) = \cos 0 = 1\):</p>
+              <div class="eq-block">\[ \mathcal{L}\{-a\,\mathrm{sen}(at)\} = \frac{s^2}{s^2+a^2} - 1 = \frac{s^2-(s^2+a^2)}{s^2+a^2} = -\frac{a^2}{s^2+a^2} \]</div>
+              <p>Pela linearidade, \(-a\,\mathcal{L}\{\mathrm{sen}(at)\} = -\dfrac{a^2}{s^2+a^2}\). Dividindo por \(-a\):</p>
+              <div class="final-answer">\[ \mathcal{L}\{\mathrm{sen}(at)\} = \frac{a}{s^2+a^2} \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">(c) Reconhecer a estrutura do polo triplo</div>
+              <p>\(F(s) = \dfrac{s^2}{(s+3)^3}\) é estritamente própria (grau 2 sobre grau 3) e possui um único polo em \(s=-3\) com multiplicidade 3. Portanto a expansão deve conter <b style="color:var(--ink)">todas</b> as potências de 1 a 3:</p>
+              <div class="eq-block">\[ F(s) = \frac{A}{s+3} + \frac{B}{(s+3)^2} + \frac{C}{(s+3)^3} \]</div>
+              <p>Uma maneira simples de encontrar os coeficientes — sem derivar nada — é escrever \(s = (s+3)-3\) e expandir:</p>
+              <div class="eq-block">\[ s^2 = \big[(s+3)-3\big]^2 = (s+3)^2 - 6(s+3) + 9 \]</div>
+              <p>Dividindo tudo por \((s+3)^3\):</p>
+              <div class="eq-block">\[ F(s) = \frac{(s+3)^2}{(s+3)^3} - 6\frac{(s+3)}{(s+3)^3} + \frac{9}{(s+3)^3} = \frac{1}{s+3} - \frac{6}{(s+3)^2} + \frac{9}{(s+3)^3} \]</div>
+              <div class="eq-block">\[ A = 1, \qquad B = -6, \qquad C = 9 \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">(c) Antitransformar cada parcela</div>
+              <p>Usamos \(\dfrac{1}{s+a} \leftrightarrow e^{-at}H(t)\), \(\dfrac{1}{(s+a)^2} \leftrightarrow t\,e^{-at}H(t)\) e \(\dfrac{1}{(s+a)^3} \leftrightarrow \dfrac{t^2}{2}e^{-at}H(t)\). Com \(a=3\):</p>
+              <div class="final-answer">\[ f(t) = e^{-3t}H(t) - 6t\,e^{-3t}H(t) + \frac{9}{2}t^2 e^{-3t}H(t) \]</div>
+            </div>
+          </div>
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">(c) Conferência transformando a resposta de volta</div>
+              <p>\(\mathcal{L}\{e^{-3t}H\} = \dfrac{1}{s+3}\), \(\;\mathcal{L}\{-6te^{-3t}H\} = -\dfrac{6}{(s+3)^2}\), \(\;\mathcal{L}\!\left\{\tfrac92 t^2e^{-3t}H\right\} = \dfrac{9}{2}\cdot\dfrac{2}{(s+3)^3} = \dfrac{9}{(s+3)^3}\).</p>
+              <p>Somando: \(\dfrac{1}{s+3} - \dfrac{6}{(s+3)^2} + \dfrac{9}{(s+3)^3} = \dfrac{s^2}{(s+3)^3}\). A antitransformada está confirmada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -880,6 +1783,19 @@ document.querySelectorAll('.demo-btn').forEach(btn => {
     btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
     if(window.MathJax && window.MathJax.typesetPromise){
       window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
     }
   });
 });

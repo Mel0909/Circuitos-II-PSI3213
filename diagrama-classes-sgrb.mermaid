@@ -1,0 +1,132 @@
+classDiagram
+    direction TB
+
+    class Usuario {
+        <<abstract>>
+        -nome: String
+        -cpf: String
+        -rg: String
+        -endereco: String
+        -celular: String
+        -senha: String
+        +autenticar() bool
+        +validarDados() bool
+    }
+
+    class Cidadao {
+        -dataCadastro: Date
+        +solicitarCadastro()
+        +solicitarRegistroBuraco()
+    }
+
+    class FuncionarioManutencao {
+        -matricula: String
+        -setor: String
+        +listarOSNaoPreenchidas() List~OrdemDeServico~
+        +preencherOS(os: OrdemDeServico)
+        +alterarPrioridade(p: Prioridade)
+    }
+
+    class ResponsavelReparo {
+        -matricula: String
+        +listarBuracosItinerario() List~Buraco~
+        +registrarResultadoReparo(res: Resultado)
+    }
+
+    class Buraco {
+        -id: int
+        -endereco: String
+        -dimensao: float
+        -localizacaoNaVia: String
+        -nivelObstrucao: String
+        -foto: Imagem
+        -prioridade: String
+        -status: String
+        -numReclamacoes: int
+        +registrar() bool
+        +buscar(endereco: String) Buraco
+        +confirmarExistencia()
+        +marcarComoReparado()
+    }
+
+    class OrdemDeServico {
+        -numero: int
+        -dataEmissao: Date
+        -servicos: List~String~
+        -prioridade: String
+        -status: String
+        +criarVazia(b: Buraco)
+        +preencher(recursos: Recurso[]) bool
+        +alterar()
+        +listarNaoPreenchidas() List~OrdemDeServico~
+    }
+
+    class Resultado {
+        -data: Date
+        -duracao: float
+        -concluido: bool
+        -motivoNaoConclusao: String
+        -recursosUtilizados: List~Recurso~
+        +registrar()
+        +liberarRecursos()
+    }
+
+    class EquipeReparo {
+        -identificacao: String
+        -numIntegrantes: int
+        -disponibilidade: bool
+        +alocar()
+        +liberar()
+    }
+
+    class Recurso {
+        <<abstract>>
+        -identificacao: String
+        -tipo: String
+        -quantidade: int
+        -disponibilidade: bool
+        +verificarDisponibilidade() bool
+        +alocar()
+        +liberar()
+    }
+
+    class Equipamento {
+        -descricao: String
+    }
+
+    class Material {
+        -unidadeMedida: String
+    }
+
+    class Veiculo {
+        -placa: String
+        -combustivel: float
+    }
+
+    class InterfaceAlocacaoRecursos {
+        <<boundary>>
+        +consultarRecursos(tipo: String) List~Recurso~
+        +verificarExistencia(recursos: Recurso[]) bool
+        +reservarRecursos(recursos: Recurso[])
+        +liberarRecursos(recursos: Recurso[])
+    }
+
+    %% Heranca
+    Usuario <|-- Cidadao
+    Usuario <|-- FuncionarioManutencao
+    Usuario <|-- ResponsavelReparo
+    Recurso <|-- Equipamento
+    Recurso <|-- Material
+    Recurso <|-- Veiculo
+
+    %% Associacoes
+    Cidadao "1" --> "0..*" Buraco : registra
+    Buraco "1" --> "1" OrdemDeServico : gera
+    FuncionarioManutencao "1" --> "0..*" OrdemDeServico : preenche
+    OrdemDeServico "0..*" --> "1..*" Recurso : aloca
+    OrdemDeServico "1" --> "0..1" Resultado : origina
+    ResponsavelReparo "1" --> "0..*" Resultado : registra
+    EquipeReparo "1" --> "0..*" OrdemDeServico : executa
+    ResponsavelReparo "1" --> "1" EquipeReparo : chefia
+    FuncionarioManutencao "1" ..> "1" InterfaceAlocacaoRecursos : consulta
+    InterfaceAlocacaoRecursos "1" ..> "0..*" Recurso : obtem dados de

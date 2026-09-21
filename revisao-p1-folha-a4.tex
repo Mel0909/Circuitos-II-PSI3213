@@ -1,0 +1,375 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[a4paper,top=7mm,bottom=7mm,left=7mm,right=7mm]{geometry}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{multicol}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{lmodern}
+
+\definecolor{acc}{RGB}{0,110,80}
+\definecolor{amb}{RGB}{170,110,0}
+\definecolor{gry}{RGB}{90,90,90}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\columnsep}{4.5mm}
+\setlength{\columnseprule}{0.2pt}
+\renewcommand{\arraystretch}{1.05}
+
+% headers
+\newcommand{\sect}[1]{\vspace{1.2mm}{\color{acc}\rule{\linewidth}{0.9pt}}\vspace{-0.3mm}\par
+  {\footnotesize\bfseries\color{acc}\MakeUppercase{#1}}\par\vspace{0.6mm}}
+\newcommand{\sub}[1]{\vspace{0.8mm}{\bfseries #1}\par\vspace{0.3mm}}
+\newcommand{\warn}[1]{{\color{amb}\textbf{!}~#1}\par\vspace{0.4mm}}
+\newcommand{\note}[1]{{\color{gry}#1}\par\vspace{0.4mm}}
+\newcommand{\ci}{0^{-}}
+\newcommand{\cip}{0^{+}}
+\abovedisplayskip=1.4mm \belowdisplayskip=1.4mm
+\abovedisplayshortskip=0.8mm \belowdisplayshortskip=0.8mm
+\setlist[itemize]{leftmargin=3.2mm,itemsep=0.1mm,topsep=0.4mm,parsep=0pt}
+\setlist[enumerate]{leftmargin=4.0mm,itemsep=0.1mm,topsep=0.4mm,parsep=0pt}
+
+\begin{document}
+\footnotesize
+
+\begin{center}
+{\normalsize\bfseries PSI3213 — Circuitos Elétricos II \;\textbullet\; Folha de Revisão P1}\\[0.3mm]
+{\color{gry}\scriptsize Módulos 00–05 \;\textbullet\; fórmulas e receitas}
+\end{center}
+\vspace{-1mm}
+
+\begin{multicols}{3}
+
+%================= LAPLACE =================
+\sect{1 · Laplace — definição}
+$\displaystyle F(s)=\mathcal{L}[f]=\int_{\ci}^{\infty}\! f(t)e^{-st}dt$,\; converge p/ $\mathrm{Re}\{s\}>\sigma_0$.\\
+Linearidade: $\mathcal{L}[af+bg]=aF+bG$.\\
+Ordem exponencial: $\lim_{t\to\infty}f(t)e^{-\alpha t}=0$ p/ $\alpha\ge\alpha_0=\sigma_0$. (suficiente, não necessária)
+
+\sect{2 · Tabela de pares}
+{\renewcommand{\arraystretch}{1.45}
+\begin{tabular}{@{}l@{\;\;}l@{}}
+$\delta(t)$ & $1$\\
+$\delta(t-a)$ & $e^{-as}$\\
+$\delta^{(n)}(t)$ & $s^n$\\
+$H(t)$ & $1/s$\\
+$e^{at}$ & $\dfrac{1}{s-a}$\\
+$t^n$ & $\dfrac{n!}{s^{n+1}}$\\
+$\dfrac{t^{k-1}}{(k-1)!}e^{at}$ & $\dfrac{1}{(s-a)^{k}}$\\
+$\operatorname{sen}\omega t$ & $\dfrac{\omega}{s^2+\omega^2}$\\
+$\cos\omega t$ & $\dfrac{s}{s^2+\omega^2}$\\
+$\operatorname{senh}at$ & $\dfrac{a}{s^2-a^2}$\\
+$\cosh at$ & $\dfrac{s}{s^2-a^2}$\\
+\end{tabular}}\\[1mm]
+{\color{gry}Todas $\times H(t)$. Trig $\to s^2{+}\omega^2$; hiperb. $\to s^2{-}a^2$.}
+
+\sub{Senoides com fase}
+$\mathcal{L}[A\cos(\omega t{+}\varphi)H]=A\dfrac{s\cos\varphi-\omega\operatorname{sen}\varphi}{s^2+\omega^2}$\\[0.8mm]
+$\mathcal{L}[A\operatorname{sen}(\omega t{+}\varphi)H]=A\dfrac{s\operatorname{sen}\varphi+\omega\cos\varphi}{s^2+\omega^2}$\\[0.8mm]
+Amortecidas: troque $s\to s{+}a$ no numerador e $s^2{+}\omega^2\to(s{+}a)^2{+}\omega^2$.
+
+\sect{3 · Teoremas operacionais}
+\begin{tabular}{@{}l@{\;\;}l@{}}
+$c_1f_1+c_2f_2$ & $c_1F_1+c_2F_2$\\
+$t\,f(t)$ & $-F'(s)$\\
+$t^nf(t)$ & $(-1)^nF^{(n)}(s)$\\
+$e^{-at}f(t)$ & $F(s+a)$\\
+$e^{at}f(t)$ & $F(s-a)$\\
+$f(t-a)H(t-a)$ & $e^{-as}F(s)$\\
+$f(at),\,a>0$ & $a^{-1}F(s/a)$\\
+$f'(t)$ & $sF(s)-f(\ci)$\\
+$\int_0^t\! f$ & $F(s)/s$\\
+\end{tabular}\\[0.8mm]
+$\mathcal{L}[\ddot f]=s^2F-s f(\ci)-\dot f(\ci)$\\[0.4mm]
+$\mathcal{L}[f^{(n)}]=s^nF-s^{n-1}f(\ci)-\cdots-f^{(n-1)}(\ci)$\\[0.4mm]
+Integral: $\Phi(s)=\dfrac{F(s)}{s}+\dfrac{\varphi(\ci)}{s}$,\; $\varphi=\int_{-\infty}^{t}\!f$\\[0.8mm]
+Periódica de período $T$:
+\[F(s)=\frac{1}{1-e^{-sT}}\int_{\ci}^{T^-}\!\! f(t)e^{-st}dt\]
+\warn{Ordem: resolva $t^n$/polinômio \textbf{antes} da translação em $s$. Atrasos $e^{-as}$ saem no início e voltam no \textbf{último} passo.}
+
+\sect{4 · Impulso e doublet}
+$\int f(t)\delta(t-t_0)dt=f(t_0)$\\[0.4mm]
+$\int f(t)\delta^{(n)}(t-t_0)dt=(-1)^nf^{(n)}(t_0)$\\[0.4mm]
+Doublet: $\int\delta^{(1)}=0$, $\int_{-\infty}^{t}\!\delta^{(1)}=\delta(t)$, $\frac{d}{dt}\delta=\delta^{(1)}$\\[0.4mm]
+Amostragem: $\int f\,\delta^{(1)}(t-t_0)dt=-\dot f(t_0)$\\[0.4mm]
+Derivador ideal: $\delta^{(1)}*x=\dot x$, $H(s)=s$\\[0.4mm]
+$\frac{d}{dt}[g(t)H(t-a)]=g'H(t-a)+g(a)\delta(t-a)$\\[0.4mm]
+\warn{$\delta(at-b)=\frac{1}{|a|}\delta\!\left(t-\frac{b}{a}\right)$}
+$\frac{dr}{dt}=H$, $\frac{dH}{dt}=\delta$, $r(t)=tH(t)$
+
+\sect{5 · Complexos}
+$e^{j\Phi}=\cos\Phi+j\operatorname{sen}\Phi$;\; $\cos\Phi=\frac{1}{2}(e^{j\Phi}{+}e^{-j\Phi})$;\; $\operatorname{sen}\Phi=\frac{1}{2j}(e^{j\Phi}{-}e^{-j\Phi})$\\[0.4mm]
+Divisão em polar: módulos dividem, ângulos subtraem.\\
+$\psi=\operatorname{atan2}(y,x)$ — nunca $\arctan$ puro ($180^\circ$ de erro se $x<0$).
+
+%================= ANTITRANSFORMADA =================
+\sect{6 · Antitransformada — racionais}
+$F(s)=\dfrac{N(s)}{D(s)}=K\dfrac{\prod(s-z_i)}{\prod(s-p_k)}$,\; $K=b_0/a_0$\\[0.8mm]
+\sub{Passo 1: é própria?}
+\begin{tabular}{@{}l@{\;}l@{}}
+$\mathrm{gr}N<\mathrm{gr}D$ & estrit. própria $\to$ direto\\
+$\mathrm{gr}N=\mathrm{gr}D$ & divide; $Q$ const $\to\delta(t)$\\
+$\mathrm{gr}N>\mathrm{gr}D$ & imprópria; $Q$ tem $s^k$\\
+\end{tabular}\\[0.6mm]
+$F=Q(s)+\dfrac{R(s)}{D(s)}$, $\mathrm{gr}R<\mathrm{gr}D$.
+\note{Excesso de $k$ graus $\Rightarrow$ singularidades até $\delta^{(k)}(t)$.}
+
+\sub{Expansão e resíduos}
+\[F=\sum_{k=1}^{r}\sum_{\ell=1}^{m_k}\frac{A_{k\ell}}{(s-p_k)^{\ell}},\quad \textstyle\sum m_k=n\]
+\[\mathcal{L}^{-1}\!\left[\frac{1}{(s-p_k)^{\ell}}\right]=\frac{t^{\ell-1}}{(\ell-1)!}e^{p_kt}\]
+Polo simples (tapa): $A_k=[(s-p_k)F]_{s=p_k}$\\[0.6mm]
+Polo múltiplo:
+\[A_{k\ell}=\frac{1}{(m_k{-}\ell)!}\frac{d^{\,m_k-\ell}}{ds^{\,m_k-\ell}}\Big[(s-p_k)^{m_k}F\Big]_{s=p_k}\]
+{\color{gry}$n^\circ$ de derivadas $=m_k-\ell$. Expoente máximo ($\ell{=}m_k$) $\to$ tapa. É o coef.\ de Taylor de $(s-p_k)^{m_k}F$.}\\[0.6mm]
+\emph{Alternativa}: multiplicar tudo por $D(s)$ e igualar coeficientes.
+
+\sub{Par conjugado — a regra de ouro}
+\[A e^{pt}+A^{*}e^{p^{*}t}=2\,\mathrm{Re}[Ae^{pt}]\]
+\[\boxed{\;\begin{array}{c}p=\sigma\pm j\omega,\;\;A=|A|e^{j\phi}\\[0.4mm]\Downarrow\\[0.4mm]2|A|\,e^{\sigma t}\cos(\omega t+\phi)\end{array}\;}\]
+{\color{gry}Calcule só o resíduo do polo de cima. O fator 2 vem de $e^{j\theta}{+}e^{-j\theta}{=}2\cos\theta$.}
+Retangular ($A=A'+jA''$): $2e^{\sigma t}[A'\cos\omega t-A''\operatorname{sen}\omega t]$\\[0.4mm]
+Forma real (evita complexos):
+\[\frac{Bs+C}{(s{+}a)^2{+}\omega^2}\;\to\;e^{-at}\!\left[B\cos\omega t+\tfrac{C-aB}{\omega}\operatorname{sen}\omega t\right]\]
+\note{Sobre quadrático irredutível o numerador é \emph{linear}. Completar quadrado: $s^2{+}s{+}1=(s{+}\frac12)^2+(\frac{\sqrt3}{2})^2$.}
+
+\sect{7 · Receita de antitransformação}
+\begin{enumerate}[nosep]
+\item Separe os atrasos $e^{-as}$; voltam no fim.
+\item Cancele fatores comuns (singul. removível $\ne$ polo).
+\item Compare graus; se $\mathrm{gr}N\ge\mathrm{gr}D$, divida.
+\item Fatore $D$; ache $p_k$ e $m_k$; confira $\sum m_k=n$.
+\item Escreva a forma completa \emph{antes} de calcular.
+\item Resíduos: tapa no expoente máximo, derive nos menores, conjugue os complexos.
+\item Antitransforme termo a termo; $Q(s)\to\delta$ e derivadas.
+\item Recombine conjugados em cosseno real.
+\item Reaplique atrasos: $t\to t{-}a$, $\times H(t{-}a)$.
+\item Confira: nada de $j$ sobrando; se estrit. própria, sem $\delta$.
+\end{enumerate}
+\note{Teste rápido: avalie $F(1)$ pela original e pela expansão.}
+
+\sect{8 · Valor inicial (TVI)}
+$f(\cip)=\lim_{s\to\infty}sF(s)$\\[0.4mm]
+$\dot f(\cip)=\lim_{s\to\infty}s[sF(s)-f(\ci)]$\\[0.4mm]
+\note{Bromwich: $f(t)=\frac{1}{2\pi j}\int_{\sigma-j\infty}^{\sigma+j\infty}F(s)e^{st}ds$ (não se usa na prática).}
+
+%================= CIRCUITOS EM S =================
+\sect{9 · Indutor e capacitor em $s$}
+\begin{tabular}{@{}l@{}}
+\textbf{Indutor} $v=L\,di/dt$\\
+$V(s)=sL\,I(s)-L\,i(\ci)$\\
+$I(s)=\dfrac{1}{sL}V(s)+\dfrac{i(\ci)}{s}$\\[1mm]
+\textbf{Capacitor} $i=C\,dv/dt$\\
+$I(s)=sC\,V(s)-C\,v(\ci)$\\
+$V(s)=\dfrac{1}{sC}I(s)+\dfrac{v(\ci)}{s}$\\
+\end{tabular}\\[0.8mm]
+$q_C(\ci)=C\,v_C(\ci)$ — carga ou tensão, tanto faz.
+
+\sub{Equivalentes (fonte de c.i.)}
+{\renewcommand{\arraystretch}{1.35}
+\begin{tabular}{@{}l@{\quad}c@{\quad}c@{}}
+\textbf{Thévenin} & $Z(s)$ & fonte de \emph{tensão}\\
+\hline
+$L$ & $sL$ & $-\,L\,i(\ci)$\\
+$C$ & $\dfrac{1}{sC}$ & $+\,\dfrac{v(\ci)}{s}$\\[1mm]
+\textbf{Norton} & $Y(s)$ & fonte de \emph{corrente}\\
+\hline
+$L$ & $\dfrac{1}{sL}$ & $+\,\dfrac{i(\ci)}{s}$\\
+$C$ & $sC$ & $-\,C\,v(\ci)$\\
+\end{tabular}}\\[1mm]
+\warn{\textbf{Sinal}: indutor entra \textbf{negativo} ($-Li(\ci)$), capacitor \textbf{positivo} ($+v(\ci)/s$). Trocar a polaridade é o erro mais comum.}
+\note{Em $s$ o circuito é resistivo: Kirchhoff, divisor, Thévenin e superposição valem, sem nenhuma EDO.}
+
+\sect{10 · Duas decomposições}
+\textbf{Transitória / Permanente} — \emph{esse termo morre quando $t\to\infty$?}\\[0.4mm]
+\textbf{Livre / Forçada} — \emph{de onde veio a energia?}\\[0.6mm]
+\textbf{Livre}: apaga a fonte externa, mantém c.i.\\
+\textbf{Forçada}: zera a c.i., mantém a fonte.\\[0.4mm]
+\warn{livre $\ne$ transitória. A resposta \emph{forçada} também contém transitório (a fonte precisa carregar o capacitor com $\tau$ do circuito).}
+\note{Como distinguir: a fonte real já está no desenho \emph{no tempo}; a de c.i. só nasce depois de transformar, nunca tem a forma de onda da excitação (é const.\ ou const/$s$), e carrega literalmente um $(\ci)$. Não substitua números cedo.}
+
+%================= EDO / 2a ORDEM =================
+\sect{11 · EDO — método clássico}
+$x=x_h+x_p$. Característica: $a_n\lambda^n+\cdots+a_0=0$.\\[0.4mm]
+Raízes distintas: $\sum C_ie^{\lambda_it}$;\; repetida ($m$): $(C_0{+}C_1t{+}\cdots)e^{\lambda t}$;\; par $\alpha\pm j\beta$: $e^{\alpha t}(C_1\cos\beta t+C_2\operatorname{sen}\beta t)$.\\[0.4mm]
+Por Laplace: $X(s)=\dfrac{b_0U(s)}{D(s)}+\dfrac{P_{ci}(s)}{D(s)}$, com $D(s)$ = polinômio característico ($\lambda\to s$).\\[0.4mm]
+Salto por impulso: $\dot x+ax=K\delta(t)\Rightarrow x(\cip)-x(\ci)=K$.
+
+\sect{12 · Redes de 2ª ordem}
+\[\ddot v+2\alpha\dot v+\omega_0^2 v=f(t)\qquad D(s)=s^2+2\alpha s+\omega_0^2\]
+\begin{tabular}{@{}l@{\;\;}l@{\;\;}l@{}}
+ & $\alpha$ & $\omega_0$\\
+\textbf{RLC paralelo} & $\dfrac{1}{2RC}=\dfrac{G}{2C}$ & $\dfrac{1}{\sqrt{LC}}$\\[1mm]
+\textbf{RLC série} & $\dfrac{R}{2L}$ & $\dfrac{1}{\sqrt{LC}}$\\
+\end{tabular}\\[0.6mm]
+\warn{$\alpha$ \textbf{invertido}: série cresce com $R$; paralelo diminui com $R$. Mesmo $\omega_0$.}
+$\Delta=4(\alpha^2-\omega_0^2)$,\; $s_{1,2}=-\alpha\pm\sqrt{\alpha^2-\omega_0^2}$
+
+\sub{Os três regimes}
+\begin{tabular}{@{}l@{\;}l@{}}
+$\alpha>\omega_0$ & \textbf{super}amortecida\\
+$\alpha=\omega_0$ & \textbf{crítica}\\
+$\alpha<\omega_0$ & \textbf{sub}amortecida\\
+\end{tabular}\\[0.8mm]
+\textbf{Super}: $\beta=\sqrt{\alpha^2-\omega_0^2}$, $s_{1,2}=-\alpha\pm\beta$ (reais $<0$)
+\[v=V_1e^{s_1t}+V_2e^{s_2t}+v_p\]
+\textbf{Sub}: $\omega_d=\sqrt{\omega_0^2-\alpha^2}$, $s_{1,2}=-\alpha\pm j\omega_d$
+\[v=Ve^{-\alpha t}\cos(\omega_dt+\psi)+v_p\]
+\textbf{Crítica}: $s_1=s_2=-\alpha$
+\[v=[a+(\alpha a+b)t]e^{-\alpha t}+v_p\]
+\note{$\omega_0$ é a \emph{não}-amortecida; $\omega_d<\omega_0$ é a amortecida. Crítica $\ne$ amortecimento máximo — é a mais rápida a acomodar.}
+
+\sect{13 · PVI de 2ª ordem}
+C.i. líquidas: $a\triangleq v(\cip)-v_p(\cip)$,\; $b\triangleq\dot v(\cip)-\dot v_p(\cip)$
+\[\begin{bmatrix}1&1\\ s_1&s_2\end{bmatrix}\!\begin{bmatrix}V_1\\V_2\end{bmatrix}=\begin{bmatrix}a\\b\end{bmatrix}\]
+\[V_1=\frac{as_2-b}{s_2-s_1},\qquad V_2=\frac{b-as_1}{s_2-s_1}\]
+Crítica: $\begin{bmatrix}1&0\\-\alpha&1\end{bmatrix}$ $\Rightarrow V_1=a$, $V_2=\alpha a+b$.\\[0.6mm]
+\textbf{Sub} — amplitude e fase direto de $a,b$:
+\[V=\sqrt{a^2+\Big(\tfrac{\alpha a+b}{\omega_d}\Big)^{2}}\]
+\[\psi=\operatorname{atan2}\!\Big(\!-\tfrac{\alpha a+b}{\omega_d},\;a\Big)\]
+Equivalente (sem fasor):
+\[v_T=e^{-\alpha t}\!\left[a\cos\omega_dt+\tfrac{\alpha a+b}{\omega_d}\operatorname{sen}\omega_dt\right]\]
+
+\sub{Circuito instantâneo — achar $\dot v(\cip)$}
+\warn{$\dot v(\cip)$ nunca é dado. Sai da constitutiva.}
+Em $\cip$: indutor $\to$ fonte de corrente $i_L(\cip)$; capacitor $\to$ fonte de tensão $v_C(\cip)$. Resolve-se um circuito \textbf{resistivo}.\\[0.4mm]
+$\dot v_C(\cip)=\dfrac{i_C(\cip)}{C}$,\qquad $\dot i_L(\cip)=\dfrac{v_L(\cip)}{L}$\\[0.6mm]
+RLC paralelo: $\dot v(\cip)=\dfrac{i_s(\cip)-G\,v(\cip)-i_0}{C}$\\[0.4mm]
+Impulso $Q_s\delta(t)$: $v(\cip)=v(\ci)+Q_s/C$, $j_L(\cip)=j_L(\ci)$; e a parcela impulsiva \emph{não} entra em $i_s(\cip)$.
+
+\sub{$v_p$ conforme a fonte}
+\begin{itemize}[nosep]
+\item Contínua (RPCC): $v_p$ constante; impõe $\dot v=\ddot v=0$. No paralelo com fonte de corrente, $v_p=0$ (indutor vira curto).
+\item Senoidal (RPS, fasores):
+\[\hat V_p=\frac{\hat I_s}{G+j\omega C+\frac{1}{j\omega L}}\]
+\item Impulsiva: sem permanente — resolve junto com as c.i.
+\end{itemize}
+
+\sub{Roteiro}
+\begin{enumerate}[nosep]
+\item Monte a ED; identifique $\alpha$ e $\omega_0$.
+\item $\Delta$ $\to$ FCPs $s_{1,2}$.
+\item Escreva a forma dos modos do caso.
+\item Ache $v_p$ pelo tipo de fonte.
+\item Determine $v(\cip)$ e $\dot v(\cip)$.
+\item Resolva o sistema $2\times2$.
+\end{enumerate}
+
+%================= PERIODICAS / FT =================
+\sect{14 · Funções periódicas}
+\[F(s)=\frac{I_0(s)}{1-e^{-sT}},\qquad I_0(s)=\int_{\ci}^{T^-}\!\! f(t)e^{-st}dt\]
+Integre \emph{um} período; divida por $1-e^{-sT}$; simplifique por diferença de potências, ex.\ $1-e^{-4s}=(1-e^{-2s})(1+e^{-2s})$.\\
+\note{Onda quadrada $T{=}4$, ampl.\ 2: $F=\frac{2}{s(1+e^{-2s})}$.\\ Checagem: $\lim_{s\to0}sF(s)$ = valor médio do sinal.}
+
+\sect{15 · Função de transferência}
+$G_v(s)=\left.\dfrac{V_2(s)}{V_e(s)}\right|_{\text{c.i. nulas}}$,\quad $g_v(t)=\mathcal{L}^{-1}[G_v]$\\[0.6mm]
+$D(s)=\det T(s)$ = polinômio característico; raízes = \textbf{FCPs} (modos naturais).\\[0.4mm]
+\textbf{Redutível}: nº de FCPs $<$ nº de armazenadores (não são independentes).\\
+\textbf{Degenerado}: zero cancela polo $\to$ a FCP some da saída.
+
+\sub{Ponta de prova ($R_1\|C_1$ + $R_2\|C_2$)}
+\[G_v(s)=\frac{C_1}{C_1{+}C_2}\cdot\frac{s+G_1/C_1}{s-p_1},\quad p_1=-\frac{G_1{+}G_2}{C_1{+}C_2}\]
+\[g_v(t)=\frac{C_1}{C_1{+}C_2}\delta(t)+\frac{G_1C_2{-}G_2C_1}{(C_1{+}C_2)^2}e^{p_1t}\]
+\textbf{Compensação} (zero cancela polo):
+\[\boxed{\;R_1C_1=R_2C_2\;\Longleftrightarrow\;\frac{C_1}{C_2}=\frac{R_2}{R_1}=\frac{G_1}{G_2}\;}\]
+Compensada: $G_v=\dfrac{C_1}{C_1+C_2}=\dfrac{R_2}{R_1+R_2}$ (constante).\\[0.4mm]
+Os dois divisores: $v_2(\cip)=\frac{C_1}{C_1+C_2}v_e$ (capacitivo, no salto) e $v_2(\infty)=\frac{R_2}{R_1+R_2}v_e$ (resistivo). Compensar = igualar os dois. $\tau=\frac{C_1+C_2}{G_1+G_2}$.
+
+
+\sect{A · Mapa: polo $\to$ resposta}
+{\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{@{}l@{\;\;}l@{}}
+\textbf{polo $p$} & \textbf{termo em $f(t)$}\\
+real $<0$ & $e^{pt}$ — decai\\
+real $>0$ & $e^{pt}$ — cresce (instável)\\
+$p=0$ & constante (degrau)\\
+$p=0$ duplo & rampa $t$\\
+$\pm j\omega$ & $\cos(\omega t+\phi)$ puro\\
+$\sigma\pm j\omega$, $\sigma<0$ & $e^{\sigma t}\cos(\omega t+\phi)$\\
+multiplicidade $m$ & $\times\,t^{\ell-1}/(\ell-1)!$\\
+$s^k$ em $Q(s)$ & $\delta^{(k)}(t)$\\
+\end{tabular}}\\[1mm]
+\textbf{Re}\,$p$ = quão rápido decai;\; \textbf{Im}\,$p$ = frequência.\\
+$1/s$ embaixo = integra; $s$ em cima = deriva.
+
+\sect{B · Álgebra de apoio}
+$s^2+bs+c=0$:\; $s_{1,2}=\frac{-b\pm\sqrt{b^2-4c}}{2}$;\; $s_1{+}s_2=-b$, $s_1s_2=c$ (checagem rápida da fatoração).\\[0.6mm]
+Completar quadrado: $s^2{+}2as{+}c=(s{+}a)^2+(c{-}a^2)$.\\[0.6mm]
+$s^2+\omega^2=(s-j\omega)(s+j\omega)$.\\[0.6mm]
+$1-e^{-2xs}=(1-e^{-xs})(1+e^{-xs})$.\\[0.6mm]
+Grau de produto = soma dos graus — \emph{nunca} expanda só para contar grau.\\[0.6mm]
+$\tau=RC=L/R$;\; $e^{-t/\tau}$: 37\% em $\tau$, $<1$\% em $5\tau$.
+
+\sect{C · Exemplos-modelo}
+\sub{C1 · RC com c.i. (mód.\ 02)}
+$RC{=}1$, $v_C(\ci){=}2$, $e_s{=}5\cos t$, quer $v_R$:
+\[\frac{s{+}1}{s}V_R=\underbrace{\frac{5s}{s^2{+}1}}_{\text{fonte}}-\underbrace{\frac{2}{s}}_{\text{c.i.}}\]
+\[V_R=\frac{3s^2{-}2}{(s{+}1)(s^2{+}1)}\]
+\[v_R(t)=\underbrace{\tfrac12e^{-t}}_{\text{transit.}}+\underbrace{\tfrac{5}{\sqrt2}\cos(t{+}45^\circ)}_{\text{perman.}}\]
+Livre $=-2e^{-t}$;\; forçada $=\tfrac52e^{-t}+\tfrac{5}{\sqrt2}\cos(t{+}45^\circ)$.
+
+\sub{C2 · Polo duplo + par conj.\ (mód.\ 03)}
+\[F(s)=\frac{5(s{+}2)(s{+}3)}{s^2(s^2{+}2s{+}2)}\quad(\mathrm{gr}\,2<\mathrm{gr}\,4)\]
+Polos: $0$ (duplo), $-1\pm j$. $A_{12}{=}15$, $A_{11}{=}-\tfrac52$, $A_{21}{=}1{,}25{+}j3{,}75=3{,}953\,e^{j71{,}57^\circ}$.
+\[f(t)=\big[{-}\tfrac52+15t+7{,}906\,e^{-t}\cos(t{+}71{,}57^\circ)\big]H(t)\]
+
+\sub{C3 · Imprópria $\to$ doublet (mód.\ 03)}
+\[F(s)=\frac{s^4{+}5s^3{+}4s^2{+}3s{+}1}{s^3{+}3s^2{+}2s}\]
+\[=s+2+\frac{0{,}5}{s}+\frac{2}{s{+}1}-\frac{6{,}5}{s{+}2}\]
+\[f(t)=\delta^{(1)}(t)+2\delta(t)+0{,}5+2e^{-t}-6{,}5e^{-2t}\]
+
+
+\sect{D · Impedâncias em $s$ (c.i.\ nulas)}
+{\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{@{}l@{\quad}c@{\quad}c@{}}
+ & $Z(s)$ & $Y(s)$\\
+\hline
+$R$ & $R$ & $G=1/R$\\
+$L$ & $sL$ & $1/sL$\\
+$C$ & $1/sC$ & $sC$\\
+\end{tabular}}\\[1mm]
+Série: $Z=\sum Z_i$.\quad Paralelo: $Y=\sum Y_i$.\\
+Divisor de tensão: $V_k=\dfrac{Z_k}{\sum Z_i}V$.\quad
+Divisor de corrente: $I_k=\dfrac{Y_k}{\sum Y_i}I$.\\[0.4mm]
+\note{Com c.i.\ não-nulas, some as fontes da seção 9 — depois vale tudo de Circuitos I.}
+
+\sect{E · Condições iniciais em circuitos}
+Contínuas na comutação (sem impulso): $v_C$ e $i_L$.\\
+$v_C(\cip)=v_C(\ci)$,\qquad $i_L(\cip)=i_L(\ci)$\\[0.6mm]
+\textbf{Derivadas} saem da constitutiva do elemento:
+$i_C=C\,\dot v_C\;\Rightarrow\;\dot v_C(\cip)=\dfrac{i_C(\cip)}{C}$\\[0.8mm]
+$v_L=L\,\dot i_L\;\Rightarrow\;\dot i_L(\cip)=\dfrac{v_L(\cip)}{L}$\\[0.6mm]
+\textbf{Regime contínuo} ($t\to\infty$ ou $t<0$ com fonte DC): $C$ = circuito aberto, $L$ = curto.\\[0.4mm]
+Procedimento: (1) circuito em $\ci$ em regime $\to$ $v_C(\ci)$, $i_L(\ci)$; (2) Kirchhoff em $\cip$ com $L\to$ fonte de corrente e $C\to$ fonte de tensão; (3) leia a corrente/tensão que dá a derivada.
+
+\sect{F · Roteiro mestre: do circuito à resposta}
+\begin{enumerate}[nosep]
+\item Ache $v_C(\ci)$ e $i_L(\ci)$ no circuito \emph{antes} da comutação (regime DC: $C$ aberto, $L$ curto).
+\item Redesenhe em $s$: impedâncias + fontes de c.i.\ (atenção à polaridade).
+\item Kirchhoff / divisor / Thévenin — álgebra pura. Isole a incógnita $V(s)$.
+\item Cheque graus; divida se preciso; fatore $D(s)$.
+\item Frações parciais; resíduos.
+\item Antitransforme; recombine conjugados.
+\item Confira com o TVI: $v(\cip)=\lim_{s\to\infty}sV(s)$ deve bater com o circuito em $\cip$.
+\end{enumerate}
+\note{Alternativa clássica (mód.\ 00/05): monte a EDO, ache $\alpha$ e $\omega_0$, classifique pelo $\Delta$, escreva a forma do regime, ajuste $V_1,V_2$ pelas c.i.}
+
+\sect{16 · Armadilhas de prova}
+\begin{itemize}[nosep]
+\item Não checar os graus $\to$ perde $\delta$ / doublet.
+\item Polo de multiplicidade $m$ exige \emph{todas} as potências $1\ldots m$.
+\item Numerador constante sobre quadrático irredutível (tem que ser linear).
+\item Esquecer de recombinar o par conjugado (sobra $j$).
+\item Ignorar $e^{-as}$: forma certa, hora errada.
+\item Polaridade da c.i.: no \textbf{Thévenin} $L$ negativo, $C$ positivo; no Norton inverte.
+\item Trocar $\alpha$ do série pelo do paralelo.
+\item Usar $\ci$ em vez de $\cip$ quando há impulso.
+\item $\arctan$ no lugar de $\operatorname{atan2}$.
+\item Existência da inversa $\ne$ estabilidade.
+\end{itemize}
+
+\end{multicols}
+\end{document}

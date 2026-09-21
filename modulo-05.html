@@ -27,6 +27,10 @@ window.MathJax = {
 
     <div class="side-group">
       <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
       <a class="side-item" href="index.html">
         <span class="side-num">01</span>
         <span class="side-title">Transformada de Laplace</span>
@@ -47,14 +51,18 @@ window.MathJax = {
         <span class="side-num">05</span>
         <span class="side-title">Redes de 2ª ordem</span>
       </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
     </div>
 
     <div class="side-group">
       <div class="side-label">P2</div>
-      <div class="side-item disabled">
-        <span class="side-num">01</span>
-        <span class="side-title"><em>em breve</em></span>
-      </div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
     </div>
   </aside>
 
@@ -75,6 +83,11 @@ window.MathJax = {
         <a href="#sub">Δ &lt; 0</a>
         <a href="#critico">Δ = 0</a>
         <a href="#pvi">Solução do PVI</a>
+        <a href="#vdot">v̇(0⁺)</a>
+        <a href="#pvi-sub">PVI subamortecido</a>
+        <a href="#pvi-critico">PVI crítico</a>
+        <a href="#serie">RLC série</a>
+        <a href="#exercicios">Exercício</a>
       </div>
     </nav>
 
@@ -506,12 +519,544 @@ window.MathJax = {
     </div>
   </section>
 
+  <section id="vdot" class="panel">
+    <span class="eyebrow">5.8</span>
+    <h2>Onde \(\dot v(0^+)\) realmente aparece: o circuito instantâneo</h2>
+    <p>A condição inicial \(v(0^+)\) sai direto do balanço de carga. Já \(\dot v(0^+)\) <b style="color:var(--ink)">não é um dado do problema</b> — precisa ser construída. E o jeito mais seguro de construir é <b style="color:var(--ink)">redesenhar o circuito no instante \(t=0^+\)</b>, trocando cada elemento pelo valor que a sua corrente assume naquele instante congelado.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 560 250" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 55 L480 55"/>
+          <path d="M60 195 L480 195"/>
+          <path d="M60 55 L60 73"/><path d="M60 117 L60 195"/>
+          <path d="M190 55 L190 83"/><path d="M190 143 L190 195"/>
+          <path d="M310 55 L310 73"/><path d="M310 117 L310 195"/>
+          <path d="M420 55 L420 73"/><path d="M420 117 L420 195"/>
+        </g>
+        <!-- fonte is(0+) -->
+        <circle cx="60" cy="95" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M60 107 L60 83" stroke="#f5b942" stroke-width="2"/>
+        <path d="M55 89 L60 81 L65 89" fill="#f5b942"/>
+        <text x="0" y="99" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">iₛ(0⁺)</text>
+        <!-- R -->
+        <rect x="178" y="83" width="24" height="60" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="152" y="119" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+        <text x="146" y="45" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">j_R(0⁺)</text>
+        <path d="M190 30 L190 48" stroke="#f5b942" stroke-width="1.4"/>
+        <path d="M186 42 L190 50 L194 42" fill="#f5b942"/>
+        <!-- L trocado por fonte de corrente i0 -->
+        <circle cx="310" cy="95" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M310 107 L310 83" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M305 89 L310 81 L315 89" fill="#4ade9a"/>
+        <text x="258" y="99" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">i₀</text>
+        <text x="266" y="45" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">j_L(0⁺)=i₀</text>
+        <!-- C trocado por fonte de corrente C*vdot(0+) -->
+        <circle cx="420" cy="95" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <path d="M420 107 L420 83" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M415 89 L420 81 L425 89" fill="#4ade9a"/>
+        <text x="378" y="45" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">j_C(0⁺)</text>
+        <path d="M420 30 L420 48" stroke="#f5b942" stroke-width="1.4"/>
+        <path d="M416 42 L420 50 L424 42" fill="#f5b942"/>
+        <!-- terminais e v(0+) -->
+        <circle cx="480" cy="55" r="4" fill="none" stroke="rgba(231,237,233,0.8)" stroke-width="1.8"/>
+        <circle cx="480" cy="195" r="4" fill="none" stroke="rgba(231,237,233,0.8)" stroke-width="1.8"/>
+        <text x="496" y="90" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+        <text x="496" y="170" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+        <text x="490" y="130" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">v(0⁺)</text>
+        <text x="60" y="228" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">circuito instantâneo em t = 0⁺   ·   indutor → fonte de i₀   ·   capacitor → fonte de C·v̇(0⁺)</text>
+      </svg>
+    </div>
+
+    <p class="dim">A regra do circuito instantâneo: no instante \(0^+\), o <b style="color:var(--ink)">indutor</b> já tem corrente conhecida (\(j_L(0^+) = i_0\), pois o fluxo não salta) e por isso vira uma <em>fonte de corrente</em>; o <b style="color:var(--ink)">capacitor</b> tem corrente \(j_C(0^+) = C\,\dot v(0^+)\) — que é exatamente a incógnita que queremos.</p>
+
+    <div style="margin-top:1.4rem">
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Relação constitutiva do capacitor</div>
+          <div class="eq-block">\[ j_C(0^+) = C\,\dot v(0^+) \]</div>
+          <p class="dim">Essa é a chave da seção: achar \(\dot v(0^+)\) é o mesmo problema que achar a corrente no capacitor em \(0^+\).</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">1ª Lei de Kirchhoff no nó superior, em \(t=0^+\)</div>
+          <div class="eq-block">\[ -i_s(0^+) + j_R(0^+) + j_L(0^+) + j_C(0^+) = 0 \]</div>
+          <p>Substituindo cada ramo pelo que ele vale nesse instante — \(j_R(0^+) = G\,v(0^+)\), \(j_L(0^+) = i_0\), \(j_C(0^+) = C\,\dot v(0^+)\):</p>
+          <div class="eq-block">\[ -i_s(0^+) + G\,v(0^+) + i_0 + C\,\dot v(0^+) = 0 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Isolar a derivada</div>
+          <div class="eq-block">\[ \dot v(0^+) = \frac{i_s(0^+) - G\,v(0^+) - i_0}{C} \]</div>
+          <p>E como a seção 5.7 já entregou \(v(0^+) = v_0 + Q_s/C\), basta abrir:</p>
+          <div class="final-answer">\[ \dot v(0^+) = \frac{i_s(0^+)}{C} - \frac{G}{C}v_0 - \frac{G\,Q_s}{C^2} - \frac{i_0}{C} \]</div>
+          <p class="dim">Nota: no quadro o terceiro termo saiu como \(Q_s/C^2\) — falta o \(G\), que vem de \(G\,v(0^+) = G v_0 + G Q_s/C\). O restante bate.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="roc-grid" style="margin-top:1.4rem">
+      <div class="roc-card">
+        <span class="tag">Por que \(i_s(0^+)\) e não \(i_s(0)\)</span>
+        <p>Se a fonte tiver uma parcela impulsiva \(Q_s\delta(t)\), ela <em>não</em> entra aqui — o efeito dela já foi contabilizado no salto de \(v(0^+)\). O que entra em \(i_s(0^+)\) é só a parcela <b style="color:var(--ink)">regular</b> da excitação avaliada logo após o zero.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">O padrão que se repete</span>
+        <p>Vale para qualquer rede: escreva a lei de Kirchhoff em \(0^+\), troque indutores por fontes de corrente \(i_L(0^+)\) e capacitores por fontes de tensão \(v_C(0^+)\), e resolva um circuito <em>resistivo</em>. A derivada da variável de estado cai como subproduto.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="pvi-sub" class="panel">
+    <span class="eyebrow">5.9</span>
+    <h2>PVI da rede subamortecida: de \(V_1\) complexo ao cosseno real</h2>
+    <p>No caso \(\Delta &lt; 0\) as FCPs são conjugadas, \(s_2 = s_1^{*}\). O sistema \(2\times2\) da seção 5.7 continua valendo, mas o resultado sai <em>complexo</em> — e a graça está em mostrar que ele se recombina numa expressão puramente real.</p>
+
+    <div class="callout"><b>Um argumento de simetria primeiro.</b> Os coeficientes da ED são reais e \(v(t)\) é real. Logo, se \(s_2 = s_1^{*}\), obrigatoriamente \(V_2 = V_1^{*}\) — as duas constantes são conjugadas. Isso reduz duas incógnitas complexas a uma.
+      <div class="eq-block" style="margin-top:0.7rem">\[ \left.\begin{aligned} s_2 &= s_1^{*} \\ \text{coef.}, v(t) &\in \mathbb{R}\end{aligned}\right\} \;\Longrightarrow\; V_2 = V_1^{*} \]</div>
+    </div>
+
+    <div style="margin-top:1.4rem">
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">O sistema, agora com o conjugado</div>
+          <div class="eq-block">\[ \begin{bmatrix} V_1 \\ V_1^{*} \end{bmatrix} = \frac{1}{s_1^{*}-s_1}\begin{bmatrix} s_1^{*} & -1 \\ -s_1 & 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} \]</div>
+          <p>Com \(s_1 = -\alpha+j\omega_d\) e \(s_1^{*} = -\alpha-j\omega_d\), o determinante é \(s_1^{*}-s_1 = -2j\omega_d\):</p>
+          <div class="eq-block">\[ \begin{bmatrix} V_1 \\ V_1^{*} \end{bmatrix} = \frac{1}{-2j\omega_d}\begin{bmatrix} s_1^{*} & -1 \\ -s_1 & 1 \end{bmatrix}\begin{bmatrix} a \\ b \end{bmatrix} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Calcular \(V_1\)</div>
+          <div class="eq-block">\[ V_1 = \frac{a\,s_1^{*} - b}{s_1^{*}-s_1} = \frac{-\alpha a - j a\omega_d - b}{-2j\omega_d} \]</div>
+          <p>Multiplicando numerador e denominador por \(j\) e separando parte real de imaginária:</p>
+          <div class="final-answer">\[ V_1 = \frac{a}{2} - \frac{\alpha a + b}{2\omega_d}\,j \]</div>
+          <p class="dim">Note que \(a\) e \(b\) são reais (vêm de condições iniciais e de \(v_p\)), então \(V_1\) tem parte real \(a/2\) e parte imaginária \(-(\alpha a+b)/2\omega_d\) — as duas totalmente determinadas pelo PVI.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Definir o fasor da transitória</div>
+          <p>Como \(V_1\) e \(V_1^{*}\) sempre aparecem somados, é prático dobrar e trabalhar com um número complexo só:</p>
+          <div class="eq-block">\[ \hat V \triangleq 2V_1 = a - \frac{\alpha a + b}{\omega_d}\,j \]</div>
+          <div class="eq-block">\[ v_T(t) = v(t) - v_p(t) = V_1e^{s_1t} + V_1^{*}e^{s_1^{*}t} = 2\,\mathrm{Re}\big\{V_1e^{s_1t}\big\} = \mathrm{Re}\big\{\hat V\,e^{s_1t}\big\} \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Abrir a exponencial complexa</div>
+          <div class="eq-block">\[ v_T(t) = e^{-\alpha t}\,\mathrm{Re}\left\{\left(a - \frac{\alpha a+b}{\omega_d}j\right)\big[\cos(\omega_d t) + j\,\mathrm{sen}(\omega_d t)\big]\right\} \]</div>
+          <p>Multiplicando e ficando só com a parte real:</p>
+          <div class="eq-block">\[ v_T(t) = e^{-\alpha t}\underbrace{\left[a\cos(\omega_d t) + \frac{\alpha a+b}{\omega_d}\,\mathrm{sen}(\omega_d t)\right]}_{\textstyle C(t)} \]</div>
+          <p class="dim">Já é uma expressão real — o objetivo está cumprido. O que falta é só arrumá-la num único cosseno com fase.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Comprimir \(C(t)\) num único cosseno</h3>
+    <p>Queremos escrever \(C(t) = V\cos(\omega_d t + \psi)\). Abrindo o cosseno da soma:</p>
+    <div class="eq-block">\[ V\cos(\omega_d t + \psi) = \underbrace{V\cos\psi}_{\textstyle \triangleq\, a}\cos(\omega_d t) \;\underbrace{-\;V\,\mathrm{sen}\,\psi}_{\textstyle \triangleq\, \frac{\alpha a+b}{\omega_d}}\,\mathrm{sen}(\omega_d t) \]</div>
+
+    <p>Comparando termo a termo com \(C(t)\), tem-se \(V\cos\psi = a\) e \(V\,\mathrm{sen}\,\psi = -\dfrac{\alpha a+b}{\omega_d}\). Daí:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Amplitude</span>
+        <div class="eq-block">\[ V = \sqrt{a^2 + \left(\frac{\alpha a + b}{\omega_d}\right)^{\!2}} \]</div>
+        <p class="dim">É simplesmente \(|\hat V|\) — o módulo do fasor da transitória.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Fase</span>
+        <div class="eq-block">\[ \psi = \operatorname{atan2}\!\left(-\frac{\alpha a + b}{\omega_d},\; a\right) \]</div>
+        <p class="dim">É \(\angle\hat V\). O <b style="color:var(--ink)">atan2</b> (e não \(\arctan\)) é obrigatório: ele olha os dois sinais separadamente e devolve a fase no quadrante certo.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Por que atan2 e não arctan.</b> O \(\arctan\) de um único quociente devolve sempre um ângulo entre \(-90^\circ\) e \(+90^\circ\) — ou seja, só os quadrantes I e IV. Se \(a &lt; 0\), a fase verdadeira está em II ou III e o \(\arctan\) erra em exatamente \(180^\circ\). O \(\operatorname{atan2}(y,x)\) recebe as duas coordenadas e resolve isso.
+      <div class="flow-diagram" style="margin-top:0.9rem">
+        <div class="flow-box"><div class="big">I</div><div class="small">a &gt; 0<br>y &gt; 0</div></div>
+        <div class="flow-box"><div class="big">II</div><div class="small">a &lt; 0<br>y &gt; 0</div></div>
+        <div class="flow-box"><div class="big">III</div><div class="small">a &lt; 0<br>y &lt; 0</div></div>
+        <div class="flow-box"><div class="big">IV</div><div class="small">a &gt; 0<br>y &lt; 0</div></div>
+      </div>
+      <p class="flow-note" style="margin-top:0.6rem">com \(y \triangleq -\dfrac{\alpha a+b}{\omega_d}\) — a coordenada vertical do fasor \(\hat V\). O par \((a,\,y)\) é literalmente um ponto no plano complexo, e \(\psi\) é o ângulo desse ponto.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">A leitura fasorial</h3>
+    <p>Vale registrar a interpretação que o quadro deixa no canto: se definirmos a <b style="color:var(--ink)">exponencial complexa</b></p>
+    <div class="eq-block">\[ \hat E_T(t) = V e^{\,j\psi}\,e^{\,j\omega_d t} = V e^{\,j(\omega_d t + \psi)} \]</div>
+    <p>então \(C(t) = \mathrm{Re}\{\hat E_T(t)\}\). É a mesma mecânica dos fasores de Circuitos I, só que agora a "frequência" é \(\omega_d\) e há uma envoltória \(e^{-\alpha t}\) multiplicando tudo por fora — um <em>fasor girante que encolhe</em>.</p>
+
+    <div class="final-answer" style="margin-top:1.6rem">\[ v(t) = \underbrace{V e^{-\alpha t}\cos\!\big(\omega_d t + \psi\big)}_{\textstyle v_T(t)} \;+\; \underbrace{v_p(t)}_{\textstyle v_F(t)}, \qquad t \ge 0 \]</div>
+    <p class="dim" style="text-align:center">solução do PVI da rede subamortecida &nbsp;·&nbsp; \(v_T\) = transitória (morre com \(e^{-\alpha t}\)) &nbsp;·&nbsp; \(v_F\) = forçada (é o que sobra em regime)</p>
+  </section>
+
+  <section id="pvi-critico" class="panel">
+    <span class="eyebrow">5.10</span>
+    <h2>PVI da rede criticamente amortecida</h2>
+    <p>No caso \(\Delta = 0\) o discriminante zera e o polo é duplo:</p>
+    <div class="eq-block">\[ \Delta = 4\alpha^2 - 4\omega_0^2 = 0 \;\Longrightarrow\; \alpha^2 = \omega_0^2 \quad\text{ou}\quad s_1 = s_2 = -\alpha \]</div>
+
+    <p>A forma da solução geral já saiu na seção 5.6 — o segundo modo natural ganha um fator \(t\):</p>
+    <div class="eq-block">\[ v(t) = V_1e^{-\alpha t} + V_2\,t\,e^{-\alpha t} + v_p(t) \]</div>
+    <p>e derivando (regra do produto no segundo termo):</p>
+    <div class="eq-block">\[ \dot v(t) = -\alpha V_1e^{-\alpha t} + V_2e^{-\alpha t} - \alpha V_2\,t\,e^{-\alpha t} + \dot v_p(t) \]</div>
+
+    <p>Tomando os valores em \(t = 0^+\) (onde \(t\,e^{-\alpha t}\) se anula, mas sua derivada não):</p>
+    <div class="eq-block">\[ \begin{cases} v(0^+) = V_1 + v_p(0^+) \\[0.3em] \dot v(0^+) = -\alpha V_1 + V_2 + \dot v_p(0^+) \end{cases} \]</div>
+    <p class="dim">Nota: no quadro a primeira linha saiu com \(V_2\) no lugar de \(V_1\) — deslize de escrita; quem sobrevive em \(t=0^+\) é \(V_1\), como acima.</p>
+
+    <p>Com os mesmos \(a\) e \(b\) da seção 5.7, o sistema fica <b style="color:var(--ink)">triangular</b> — nem precisa inverter matriz:</p>
+    <div class="eq-block">\[ \begin{bmatrix} 1 & 0 \\ -\alpha & 1 \end{bmatrix}\begin{bmatrix} V_1 \\ V_2 \end{bmatrix} = \begin{bmatrix} a \\ b \end{bmatrix}, \qquad \begin{aligned} a &\triangleq v(0^+) - v_p(0^+) \\ b &\triangleq \dot v(0^+) - \dot v_p(0^+) \end{aligned} \]</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Primeira linha</span>
+        <div class="eq-block">\[ V_1 = a \]</div>
+        <p class="dim">Direto: em \(0^+\) só o primeiro modo contribui.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Segunda linha</span>
+        <div class="eq-block">\[ -\alpha a + V_2 = b \;\Longrightarrow\; V_2 = \alpha a + b \]</div>
+        <p class="dim">Substituição para trás, e acabou.</p>
+      </div>
+    </div>
+
+    <div class="final-answer">\[ v(t) = a\,e^{-\alpha t} + (\alpha a + b)\,t\,e^{-\alpha t} + v_p(t) = \big[\,a + (\alpha a + b)\,t\,\big]e^{-\alpha t} + v_p(t), \qquad t \ge 0 \]</div>
+
+    <div class="callout"><b>Comparando os três casos.</b> Em todos eles a receita é a mesma — montar \(a\) e \(b\), resolver um sistema \(2\times2\). O que muda é só a matriz: \(\begin{bmatrix}1&amp;1\\ s_1&amp;s_2\end{bmatrix}\) no superamortecido, a mesma coisa com \(s_2=s_1^{*}\) no subamortecido (e aí vale a pena passar para \(V\) e \(\psi\)), e \(\begin{bmatrix}1&amp;0\\ -\alpha&amp;1\end{bmatrix}\) no crítico. Guardar essas três matrizes é guardar o módulo inteiro.</div>
+  </section>
+
+
+  <section id="serie" class="panel">
+    <span class="eyebrow">5.11</span>
+    <h2>O RLC série: mesma forma canônica, outro \(\alpha\)</h2>
+    <p>Até aqui o circuito de referência foi o RLC paralelo com fonte de corrente. Trocando para o <b style="color:var(--ink)">RLC série ressonante</b> com fonte de tensão, tudo o que foi deduzido continua valendo — só a expressão de \(\alpha\) muda. Vale fazer a passagem uma vez com calma, porque é nessa forma que os exercícios normalmente aparecem.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 560 230" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M70 60 L150 60"/>
+          <path d="M210 60 L260 60"/>
+          <path d="M330 60 L420 60"/>
+          <path d="M420 60 L420 88"/>
+          <path d="M420 122 L420 180"/>
+          <path d="M70 180 L420 180"/>
+          <path d="M70 60 L70 78"/><path d="M70 122 L70 180"/>
+        </g>
+        <!-- fonte de tensão -->
+        <circle cx="70" cy="100" r="22" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="52" y="88" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="52" y="120" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+        <text x="6" y="105" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+        <!-- R -->
+        <rect x="150" y="48" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="174" y="38" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+        <text x="146" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">v_R(t)</text>
+        <!-- L -->
+        <path d="M260 60 q 9 -14 18 0 q 9 -14 18 0 q 9 -14 18 0 q 9 -14 16 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <text x="288" y="34" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L</text>
+        <text x="268" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">v_L(t)</text>
+        <!-- C -->
+        <g stroke="#4ade9a" stroke-width="2.6">
+          <line x1="402" y1="88" x2="438" y2="88"/>
+          <line x1="402" y1="122" x2="438" y2="122"/>
+        </g>
+        <text x="448" y="80" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="448" y="122" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v(t)</text>
+        <text x="448" y="104" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+ / −</text>
+        <!-- corrente -->
+        <path d="M164 152 L204 152" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+        <path d="M196 147 L206 152 L196 157" fill="#f5b942"/>
+        <text x="168" y="145" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i(t)</text>
+        <text x="70" y="214" fill="rgba(143,163,154,0.95)" font-family="IBM Plex Mono, monospace" font-size="11">RLC série ressonante   ·   incógnita: i(t)   ·   estado inicial: i(0⁻) e v(0⁻)</text>
+      </svg>
+    </div>
+
+    <div style="margin-top:1.4rem">
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª Lei de Kirchhoff na malha, e transformar</div>
+          <div class="eq-block">\[ -e_s(t) + v_R(t) + v_L(t) + v(t) = 0 \]</div>
+          <p>Aplicando \(\mathcal{L}\{\cdot\}\) termo a termo:</p>
+          <div class="eq-block">\[ -E_s(s) + V_R(s) + V_L(s) + V(s) = 0 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Relações constitutivas no domínio \(s\), com as c.i.</div>
+          <p>Aqui entram os teoremas da derivada e da integral do <a href="index.html#derivada-integral">módulo 01</a>, cada um carregando seu termo de condição inicial. Note que \(q(0^-) = C\,v(0^-)\):</p>
+          <div class="eq-block">\[ R\,I(s) + L\big[sI(s) - i(0^-)\big] + \frac{1}{C}\left[\frac{I(s)}{s} + \frac{q(0^-)}{s}\right] = E_s(s) \]</div>
+          <div class="eq-block">\[ \left[R + sL + \frac{1}{sC}\right]I(s) = E_s(s) + L\,i(0^-) - \frac{v(0^-)}{s} \]</div>
+          <p class="dim">Leitura física: o colchete é a <b style="color:var(--ink)">impedância generalizada</b> da malha, e o lado direito reúne a excitação mais duas "fontes equivalentes" de condição inicial — \(L\,i(0^-)\) (fluxo armazenado no indutor) e \(-v(0^-)/s\) (carga armazenada no capacitor).</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Fazer aparecer o polinômio característico</div>
+          <div class="eq-block">\[ R + sL + \frac{1}{sC} = \frac{s^2LC + sRC + 1}{sC} = \frac{L\left(s^2 + \dfrac{R}{L}s + \dfrac{1}{LC}\right)}{s} \]</div>
+          <p>Isolando \(I(s)\):</p>
+          <div class="final-answer">\[ I(s) = \underbrace{\frac{s\,E_s(s)/L}{D(s)}}_{\textstyle \text{excitação}} \;+\; \underbrace{\frac{i(0^-)\,s - v(0^-)/L}{D(s)}}_{\textstyle P_{ci}(s)/D(s)} \]</div>
+          <p class="dim">Nota: no quadro a primeira parcela saiu como \(E_s(s)/L\) sem o \(s\) no numerador — mas ele vem da multiplicação por \(s/L\) feita nos dois lados, e é ele que faz o degrau \(10/s\) virar a constante \(20\) no item (c). Fica registrado.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Identificar \(\alpha\) e \(\omega_0\) do circuito série</div>
+          <div class="eq-block">\[ D(s) = s^2 + \frac{R}{L}s + \frac{1}{LC} \equiv s^2 + 2\alpha s + \omega_0^2 \]</div>
+          <div class="roc-grid" style="margin-top:1rem">
+            <div class="roc-card">
+              <span class="tag">série (fonte de tensão)</span>
+              <div class="eq-block">\[ \alpha = \frac{R}{2L}, \qquad \omega_0 = \frac{1}{\sqrt{LC}} \]</div>
+              <p class="dim">Aqui \(\alpha\) <b style="color:var(--ink)">cresce</b> com \(R\): resistor grande em série dificulta a corrente e mata a oscilação.</p>
+            </div>
+            <div class="roc-card">
+              <span class="tag">paralelo (fonte de corrente)</span>
+              <div class="eq-block">\[ \alpha = \frac{1}{2RC} = \frac{G}{2C}, \qquad \omega_0 = \frac{1}{\sqrt{LC}} \]</div>
+              <p class="dim">Aqui é o contrário: \(\alpha\) <b style="color:var(--ink)">diminui</b> com \(R\). Mesmo \(\omega_0\), \(\alpha\) invertido — é o erro clássico de prova.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout"><b>Tudo o mais é reaproveitado.</b> Com \(D(s)\) na forma canônica, os três casos do discriminante, os modos naturais, o sistema \(2\times2\) e a compressão em \(V\cos(\omega_d t+\psi)\) valem sem mudar uma linha. A única coisa que se recalcula é \(\alpha = R/2L\).</div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">5.12</span>
+    <h2>Exercício resolvido: um circuito, três regimes</h2>
+    <p class="dim">O mesmo RLC série resolvido três vezes, com três valores de \(R\) e três tipos de excitação — de propósito, cada um cai num regime de amortecimento diferente. É o exercício mais completo do módulo: passa por Laplace, por regime permanente, por condições iniciais e pelos três formatos de solução.</p>
+
+    <div class="exercise-list">
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Exercício 1</span>Resposta completa de um RLC série ressonante</span>
+          <span class="q-prova">aula 26/08</span>
+        </div>
+        <p>Considere o circuito RLC série ressonante da seção 5.11, com</p>
+        <div class="given-box">
+          <span>\(L = 0{,}5\ \mathrm{H}\)</span>
+          <span>\(C = 0{,}25\ \mathrm{\mu F}\)</span>
+          <span>\(i(0^-) = 1\ \mathrm{mA}\)</span>
+          <span>\(v(0^-) = -10\ \mathrm{V}\)</span>
+        </div>
+        <p>Obtenha a resposta completa \(i(t)\) para \(t \ge 0\) em três condições:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(R = 5{,}7\ \mathrm{k\Omega}\) e \(e_s(t) = 10\cos(1000t - 45^\circ)\) &nbsp;(V, s)</li>
+          <li data-alt="b">\(R = 0{,}8\ \mathrm{k\Omega}\) e \(e_s(t) = 10\times10^{-3}\,\delta(t)\) &nbsp;(V, s)</li>
+          <li data-alt="c">\(R = 2{,}8284\ \mathrm{k\Omega}\) e \(e_s(t) = 10\,H(t)\) &nbsp;(V, s)</li>
+        </ul>
+
+        <div class="callout" style="margin-top:1.1rem"><b>Os dois números que servem para os três itens.</b> Como \(L\) e \(C\) não mudam, \(\omega_0\) é o mesmo sempre. E como \(2L = 1\), o valor de \(\alpha\) em \(\mathrm{s}^{-1}\) coincide numericamente com \(R\) em \(\Omega\) — um atalho que agiliza a comparação.
+          <div class="eq-block" style="margin-top:0.7rem">\[ \omega_0 = \frac{1}{\sqrt{LC}} = \frac{1}{\sqrt{0{,}5 \cdot 0{,}25\times10^{-6}}} = 2000\sqrt{2} \approx 2828{,}43\ \mathrm{rad/s} \]</div>
+          <div class="eq-block">\[ \alpha = \frac{R}{2L} = \frac{R}{1} \quad\Longrightarrow\quad \alpha_a = 5700, \quad \alpha_b = 800, \quad \alpha_c = 2828{,}43\ \mathrm{s^{-1}} \]</div>
+          <p style="margin-top:0.5rem">Comparando cada \(\alpha\) com \(\omega_0 = 2828{,}43\): o item (a) tem \(\alpha &gt; \omega_0\) (super), o (b) tem \(\alpha &lt; \omega_0\) (sub) e o (c) tem \(\alpha = \omega_0\) exatamente — o valor \(2{,}8284\ \mathrm{k\Omega}\) é justamente \(2\sqrt2\ \mathrm{k\Omega} = 2L\omega_0\), o \(R\) que torna \(\Delta = 0\).</p>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+
+          <div class="q-idea"><b>Ideia-chave</b> — a montagem em \(s\) é <em>uma só</em> para os três itens: \(I(s) = \big[s E_s(s)/L + i(0^-)s - v(0^-)/L\big]/D(s)\). O que muda de item para item é apenas (i) o valor de \(\alpha\), que decide como \(D(s)\) fatora, e (ii) o \(E_s(s)\). Vale montar essa fração antes de olhar os números.</div>
+
+          <h3 style="margin-top:1.6rem;font-size:1.05rem">Item (a) — \(R = 5{,}7\ \mathrm{k\Omega}\), fonte senoidal &nbsp;<span class="dim">(\(\Delta &gt; 0\): superamortecida)</span></h3>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Discriminante e FCPs</div>
+              <div class="eq-block">\[ \Delta = 4\big(\alpha^2 - \omega_0^2\big) = 4\big(5700^2 - 8\times10^6\big) = 97{,}96\times10^6 &gt; 0 \]</div>
+              <div class="eq-block">\[ \beta = \sqrt{\alpha^2-\omega_0^2} = \sqrt{24{,}49\times10^6} = 4948{,}74\ \mathrm{s^{-1}} \]</div>
+              <div class="eq-block">\[ s_1 = -\alpha+\beta = -751{,}26\ \mathrm{s^{-1}}, \qquad s_2 = -\alpha-\beta = -10648{,}74\ \mathrm{s^{-1}} \]</div>
+              <p class="dim">Duas exponenciais reais. A de \(s_1\) é quase 14 vezes mais lenta — é ela que domina a cauda da transitória.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Solução permanente por fasores (RPS)</div>
+              <p>Fonte senoidal com \(\omega = 1000\ \mathrm{rad/s}\). As reatâncias da malha:</p>
+              <div class="eq-block">\[ \omega L = 500\ \Omega, \qquad \frac{1}{\omega C} = \frac{1}{1000 \cdot 0{,}25\times10^{-6}} = 4000\ \Omega \]</div>
+              <div class="eq-block">\[ \hat Z = R + j\!\left(\omega L - \frac{1}{\omega C}\right) = 5700 - j3500 = 6688{,}80\ \underline{/-31{,}55^\circ}\ \Omega \]</div>
+              <div class="eq-block">\[ \hat I_p = \frac{\hat E_s}{\hat Z} = \frac{10\ \underline{/-45^\circ}}{6688{,}80\ \underline{/-31{,}55^\circ}} = 1{,}4950\ \underline{/-13{,}45^\circ}\ \mathrm{mA} \]</div>
+              <div class="result">\(i_p(t) = 1{,}4950\cos(1000t - 13{,}45^\circ)\ \mathrm{mA}\)</div>
+              <p class="dim" style="margin-top:0.6rem">Repare que a malha é <b style="color:var(--ink)">capacitiva</b> nessa frequência (\(1/\omega C &gt; \omega L\)), porque \(\omega = 1000\) está bem abaixo da ressonância \(\omega_0 = 2828\). Daí a reatância líquida negativa.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Condições iniciais em \(0^+\)</div>
+              <p>Não há impulso na excitação, então nada salta: \(i(0^+) = i(0^-) = 1\ \mathrm{mA}\) e \(v(0^+) = v(0^-) = -10\ \mathrm{V}\). A derivada vem da 2ª LK escrita em \(0^+\) — o mesmo raciocínio do circuito instantâneo da seção 5.8, agora numa malha:</p>
+              <div class="eq-block">\[ L\,\dot i(0^+) = e_s(0^+) - R\,i(0^+) - v(0^+) \]</div>
+              <div class="eq-block">\[ \dot i(0^+) = \frac{10\cos(-45^\circ) - 5700\cdot 10^{-3} - (-10)}{0{,}5} = \frac{7{,}0711 - 5{,}7 + 10}{0{,}5} = 22{,}742\ \mathrm{A/s} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Montar \(a\) e \(b\) e resolver o sistema</div>
+              <p>Descontando a permanente, avaliada em \(t=0\):</p>
+              <div class="eq-block">\[ i_p(0) = 1{,}4950\cos(-13{,}45^\circ) = 1{,}4540\ \mathrm{mA}, \qquad \dot i_p(0) = -1000\cdot 1{,}4950\times10^{-3}\,\mathrm{sen}(-13{,}45^\circ) = 0{,}3477\ \mathrm{A/s} \]</div>
+              <div class="eq-block">\[ a = i(0^+) - i_p(0^+) = -0{,}45404\ \mathrm{mA}, \qquad b = \dot i(0^+) - \dot i_p(0^+) = 22{,}394\ \mathrm{A/s} \]</div>
+              <p>Com \(s_2 - s_1 = -9897{,}47\):</p>
+              <div class="eq-block">\[ I_1 = \frac{a\,s_2 - b}{s_2-s_1} = 1{,}7741\ \mathrm{mA}, \qquad I_2 = \frac{-a\,s_1 + b}{s_2-s_1} = -2{,}2282\ \mathrm{mA} \]</div>
+              <p class="dim">Conferência rápida: \(I_1 + I_2 = -0{,}4541\ \mathrm{mA} = a\) ✓.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ i(t) = \Big[1{,}7741\,e^{-751{,}26\,t} - 2{,}2282\,e^{-10648{,}7\,t} + 1{,}4950\cos(1000t - 13{,}45^\circ)\Big]\ \mathrm{mA}, \quad t\ge 0 \]</div>
+          <p class="dim" style="text-align:center">verificação: \(i(0)=1{,}000\ \mathrm{mA}\) ✓ &nbsp;·&nbsp; \(i(0{,}1\,\mathrm{ms}) = 2{,}359\ \mathrm{mA}\) &nbsp;·&nbsp; \(i(1\,\mathrm{ms}) = 1{,}915\ \mathrm{mA}\) — batem com a integração numérica da ED</p>
+
+          <h3 style="margin-top:2rem;font-size:1.05rem">Item (b) — \(R = 0{,}8\ \mathrm{k\Omega}\), fonte impulsiva &nbsp;<span class="dim">(\(\Delta &lt; 0\): subamortecida)</span></h3>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Discriminante e FCPs</div>
+              <div class="eq-block">\[ \Delta = 4\big(800^2 - 8\times10^6\big) = -29{,}44\times10^6 &lt; 0 \]</div>
+              <div class="eq-block">\[ \omega_d = \sqrt{\omega_0^2-\alpha^2} = \sqrt{8\times10^6 - 0{,}64\times10^6} = 400\sqrt{46} = 2712{,}93\ \mathrm{rad/s} \]</div>
+              <div class="eq-block">\[ s_{1,2} = -800 \pm j\,2712{,}93\ \mathrm{s^{-1}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">O impulso: onde ele vai parar</div>
+              <p>Não há permanente a calcular (\(i_p \equiv 0\)): depois de \(t=0\) a fonte está morta. O impulso age só em \(t=0\), e num circuito <b style="color:var(--ink)">série</b> um impulso de <em>tensão</em> deposita fluxo no indutor. Integrando a 2ª LK entre \(0^-\) e \(0^+\):</p>
+              <div class="eq-block">\[ \Delta\Lambda = \int_{0^-}^{0^+}\! e_s(\lambda)\,d\lambda = 10\times10^{-3}\ \mathrm{V\cdot s} \quad\Longrightarrow\quad \Delta i = \frac{\Delta\Lambda}{L} = \frac{0{,}01}{0{,}5} = 20\ \mathrm{mA} \]</div>
+              <div class="eq-block">\[ i(0^+) = i(0^-) + \Delta i = 1 + 20 = 21\ \mathrm{mA}, \qquad v(0^+) = v(0^-) = -10\ \mathrm{V} \]</div>
+              <p class="dim">A tensão do capacitor <em>não</em> salta: a corrente na malha, mesmo saltando, é finita, então a carga transferida em intervalo nulo é nula.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A derivada em \(0^+\), e os coeficientes</div>
+              <p>Após o impulso, \(e_s(0^+) = 0\):</p>
+              <div class="eq-block">\[ \dot i(0^+) = \frac{0 - 800\cdot 0{,}021 - (-10)}{0{,}5} = \frac{-16{,}8 + 10}{0{,}5} = -13{,}6\ \mathrm{A/s} \]</div>
+              <div class="eq-block">\[ a = 21\ \mathrm{mA}, \qquad b = -13{,}6\ \mathrm{A/s} \]</div>
+              <p>Aplicando direto as fórmulas da seção 5.9:</p>
+              <div class="eq-block">\[ \frac{\alpha a + b}{\omega_d} = \frac{800\cdot 0{,}021 - 13{,}6}{2712{,}93} = \frac{3{,}2}{2712{,}93} = 1{,}17954\ \mathrm{mA} \]</div>
+              <div class="eq-block">\[ V = \sqrt{21^2 + 1{,}17954^2} = 21{,}033\ \mathrm{mA}, \qquad \psi = \operatorname{atan2}(-1{,}17954,\ 21) = -3{,}215^\circ \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ i(t) = 21{,}033\,e^{-800\,t}\cos\!\big(2712{,}93\,t - 3{,}215^\circ\big)\ \mathrm{mA}, \qquad t \ge 0 \]</div>
+          <p class="dim" style="text-align:center">verificação: \(i(0) = 21{,}00\ \mathrm{mA}\) ✓ &nbsp;·&nbsp; \(i(0{,}5\,\mathrm{ms}) = 3{,}767\ \mathrm{mA}\) &nbsp;·&nbsp; \(i(1\,\mathrm{ms}) = -8{,}362\ \mathrm{mA}\) (já inverteu o sinal — está oscilando)</p>
+
+          <div class="q-idea"><b>Atalho que vale a prova</b> — a fase \(\psi\) saiu quase nula e a amplitude \(V\) quase igual a \(a\). O motivo é que \(\alpha a = 16{,}8\) e \(b = -13{,}6\) quase se cancelam, deixando \(\alpha a + b = 3{,}2\) — pequeno perto de \(\omega_d a\). Sempre que a transitória começa perto do seu próprio máximo, é isso que acontece.</div>
+
+          <h3 style="margin-top:2rem;font-size:1.05rem">Item (c) — \(R = 2{,}8284\ \mathrm{k\Omega}\), degrau &nbsp;<span class="dim">(\(\Delta = 0\): criticamente amortecida)</span></h3>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Polo duplo</div>
+              <div class="eq-block">\[ \alpha = \frac{2828{,}43}{1} = 2828{,}43 = \omega_0 \quad\Longrightarrow\quad \Delta = 0 \quad\Longrightarrow\quad s_1 = s_2 = -2828{,}43\ \mathrm{s^{-1}} \]</div>
+              <div class="eq-block">\[ D(s) = s^2 + 5656{,}85\,s + 8\times10^6 = (s + 2828{,}43)^2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Permanente: RPCC num circuito série</div>
+              <p>Com \(e_s = 10\,H(t)\), em regime permanente de corrente contínua o <b style="color:var(--ink)">capacitor bloqueia</b> a corrente. Logo:</p>
+              <div class="result">\(i_p(t) = 0\)</div>
+              <p class="dim" style="margin-top:0.6rem">Toda a tensão da fonte acaba no capacitor (\(v \to 10\ \mathrm{V}\)) e a corrente volta a zero. É o oposto do caso paralelo, onde era o indutor que curto-circuitava a saída.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Condições iniciais e as constantes</div>
+              <p>Degrau não é impulso — não há salto de estado:</p>
+              <div class="eq-block">\[ i(0^+) = 1\ \mathrm{mA}, \qquad \dot i(0^+) = \frac{10 - 2828{,}43\cdot 10^{-3} - (-10)}{0{,}5} = \frac{17{,}1716}{0{,}5} = 34{,}343\ \mathrm{A/s} \]</div>
+              <div class="eq-block">\[ a = 1\ \mathrm{mA}, \qquad b = 34{,}343\ \mathrm{A/s} \]</div>
+              <p>E o sistema triangular da seção 5.10 entrega as duas constantes de imediato:</p>
+              <div class="eq-block">\[ I_1 = a = 1\ \mathrm{mA}, \qquad I_2 = \alpha a + b = 2{,}8284 + 34{,}343 = 37{,}172\ \mathrm{A/s} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ i(t) = \big[1 + 37171{,}6\,t\big]\,e^{-2828{,}43\,t}\ \mathrm{mA}, \qquad t \ge 0 \]</div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Onde está o pico</div>
+              <p>Derivando e igualando a zero, \(I_2 - \alpha(I_1 + I_2 t) = 0\):</p>
+              <div class="eq-block">\[ t_{\max} = \frac{I_2 - \alpha I_1}{\alpha I_2} = \frac{37{,}172 - 2{,}8284}{2828{,}43\cdot 37{,}172} = 326{,}65\ \mathrm{\mu s} \]</div>
+              <div class="eq-block">\[ i(t_{\max}) = 5{,}217\ \mathrm{mA} \]</div>
+              <p class="dim">Sem oscilar em nenhum momento: a corrente sobe de 1 mA até 5,22 mA, vira, e decai monotonicamente para zero. É o retrato do amortecimento crítico — o mais rápido possível sem ultrapassar.</p>
+            </div>
+          </div>
+
+          <div class="roc-grid" style="margin-top:1.6rem">
+            <div class="roc-card">
+              <span class="tag">Resumo dos três itens</span>
+              <p>(a) \(\alpha = 5700 &gt; \omega_0\) → duas exponenciais reais + senoide permanente. (b) \(\alpha = 800 &lt; \omega_0\) → cosseno amortecido puro, sem permanente. (c) \(\alpha = \omega_0\) → \((A + Bt)e^{-\alpha t}\), permanente nula.</p>
+            </div>
+            <div class="roc-card">
+              <span class="tag">O que checar sempre</span>
+              <p>Substituir \(t = 0\) na resposta final e conferir se dá \(i(0^+)\). Derivar e conferir \(\dot i(0^+)\). São duas contas de 10 segundos que pegam praticamente todo erro de sinal ou de álgebra.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
   <a class="next-module" href="modulo-04.html">
     <div>
       <span class="nm-label">Módulo anterior</span>
       <span class="nm-title">04 · Periódicas e ponta de prova</span>
     </div>
     <span class="nm-arrow">←</span>
+  </a>
+
+  <a class="next-module" href="modulo-revisao.html">
+    <div>
+      <span class="nm-label">Fechar a P1</span>
+      <span class="nm-title">R · Revisão — folha A4</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+  <a class="next-module" href="modulo-06.html">
+    <div>
+      <span class="nm-label">Começar a P2</span>
+      <span class="nm-title">06 · Funções de rede e de transferência</span>
+    </div>
+    <span class="nm-arrow">→</span>
   </a>
 
 </main>
@@ -525,7 +1070,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Baseado nas notas de aula de 24/08/2026 — Estudo de redes de 2ª ordem (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Baseado nas notas de aula de 24/08 e 26/08/2026 — Estudo de redes de 2ª ordem (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
 </footer>
 
   </div><!-- /content-col -->
@@ -691,6 +1236,19 @@ document.querySelectorAll('.demo-btn').forEach(btn => {
     btn.textContent = isOpen ? 'Ocultar demonstração ↑' : 'Ver demonstração ↓';
     if(window.MathJax && window.MathJax.typesetPromise){
       window.MathJax.typesetPromise([proof]);
+    }
+  });
+});
+
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
     }
   });
 });
