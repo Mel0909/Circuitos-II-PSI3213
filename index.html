@@ -310,7 +310,7 @@ window.MathJax = {
         <span class="tag">Degrau unitário de Heaviside</span>
         <div class="eq-block">\[ H(t) = \begin{cases} 0, & t<0, \\ 1, & t>0, \end{cases} \qquad \mathcal{L}\{H(t)\} = \frac{1}{s},\;\; \mathrm{Re}\{s\}>0 \]</div>
         <p class="dim">O valor exatamente em \(t=0\) não altera as integrais ordinárias usadas em Laplace — por isso a definição deixa esse ponto de fora.</p>
-        <p>Um degrau <b style="color:var(--ink)">deslocado</b> ativa uma ação em \(t=a\): \(H(t-a) = 0\) para \(t<a\) e \(1\) para \(t>a\). Com dois deles você monta um pulso retangular de amplitude \(A\), ativo apenas em \(a&lt;t&lt;b\):</p>
+        <p>Um degrau <b style="color:var(--ink)">deslocado</b> ativa uma ação em \(t=a\): \(H(t-a) = 0\) para \(t&lt;a\) e \(1\) para \(t>a\). Com dois deles você monta um pulso retangular de amplitude \(A\), ativo apenas em \(a&lt;t&lt;b\):</p>
         <div class="eq-block">\[ A\big[H(t-a) - H(t-b)\big] \]</div>
       </div>
 
@@ -462,7 +462,7 @@ window.MathJax = {
         <div class="proof-block">
           <div class="proof-steps">
             <span>Parte da definição aplicada a \(f(t-a)\), com \(a>0\): \(\displaystyle \mathcal{L}[f(t-a)] = \int_0^\infty f(t-a)\,e^{-st}\,dt\)</span>
-            <span>Como o sinal é causal, \(f(t-a)=0\) pra \(t<a\) — então a integral só "começa a valer" em \(t=a\):</span>
+            <span>Como o sinal é causal, \(f(t-a)=0\) pra \(t&lt;a\) — então a integral só "começa a valer" em \(t=a\):</span>
             <span class="proof-eq">\(\displaystyle \mathcal{L}[f(t-a)] = \int_a^\infty f(t-a)\,e^{-st}\,dt\)</span>
             <span>Faz a troca de variável \(\tau = t-a\) (logo \(t=\tau+a\), \(dt=d\tau\), e quando \(t=a\), \(\tau=0\)):</span>
             <span class="proof-eq">\(\displaystyle = \int_0^\infty f(\tau)\,e^{-s(\tau+a)}\,d\tau = e^{-as}\int_0^\infty f(\tau)\,e^{-s\tau}\,d\tau\)</span>
