@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P2 · Teoremas de rede em s</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">O que muda em s</a>
+        <a href="#equivalentes">Os dois equivalentes</a>
+        <a href="#vth">Calcular V<sub>Th</sub></a>
+        <a href="#zth">Calcular Z<sub>Th</sub></a>
+        <a href="#ci">Condições iniciais</a>
+        <a href="#superposicao">Superposição</a>
+        <a href="#polos">O que se perde</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P2 · Módulo 09 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">A rede inteira vira dois elementos.</span> <span class="tone-b">O que sobrevive nos terminais A–B?</span></h1>
+        <p class="hero-sub">Thévenin e Norton você já viu em Circuitos I, com \(R\) e números. Em Laplace a estrutura é a mesma e duas coisas mudam de verdade: a resistência vira uma <em>função</em> \(Z(s)\), e as condições iniciais — que em Circuitos I simplesmente não existiam — entram no equivalente como fontes, o que faz \(V_{Th}(s)\) ser diferente de zero mesmo numa rede sem nenhuma fonte independente. Com fonte vinculada, o atalho de "desligar tudo e olhar a resistência" deixa de valer, e a prova cobra exatamente o método que o substitui: injetar 1 A nos terminais e medir a tensão.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>09 · Teoremas de rede no domínio de \(s\)</span>
+          <span><b>Pré-requisito</b>Módulo 07 — Análise nodal e de malhas em \(s\)</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>DOIS TERMINAIS, DOIS ELEMENTOS</span>
+            <span>V_Th(s) = Z_Th(s) I_N(s)</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <text x="20" y="26" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">A REDE INTEIRA</text>
+
+              <rect x="20" y="42" width="168" height="160" fill="none" stroke="rgba(231,237,233,0.5)" stroke-width="1.6"/>
+              <text x="38" y="74" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">R · L · C</text>
+              <text x="38" y="100" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">fontes indep.</text>
+              <text x="38" y="126" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">vinculados</text>
+              <text x="38" y="152" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">c.i. ≠ 0</text>
+              <text x="38" y="186" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">qualquer topologia</text>
+
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M188 76 L224 76"/>
+                <path d="M188 168 L224 168"/>
+              </g>
+              <circle cx="229" cy="76" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <circle cx="229" cy="168" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="240" y="72" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">A</text>
+              <text x="240" y="180" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">B</text>
+
+              <path d="M262 122 L302 122" stroke="#5d6e67" stroke-width="1.6"/>
+              <path d="M296 117 L306 122 L296 127" fill="#5d6e67"/>
+
+              <text x="320" y="26" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">THÉVENIN</text>
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M344 42 L344 58"/>
+                <path d="M344 42 L400 42"/>
+                <path d="M456 42 L516 42"/>
+                <path d="M344 102 L344 130"/>
+                <path d="M344 130 L516 130"/>
+              </g>
+              <circle cx="344" cy="80" r="22" fill="none" stroke="#f5b942" stroke-width="2"/>
+              <text x="330" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+</text>
+              <text x="352" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+              <text x="298" y="118" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V_Th(s)</text>
+              <rect x="400" y="30" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="404" y="22" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Z_Th(s)</text>
+              <circle cx="521" cy="42" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <circle cx="521" cy="130" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="532" y="38" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">A</text>
+              <text x="532" y="142" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">B</text>
+
+              <text x="320" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">NORTON</text>
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M344 212 L516 212"/>
+                <path d="M344 300 L516 300"/>
+                <path d="M344 212 L344 234"/>
+                <path d="M344 278 L344 300"/>
+                <path d="M448 212 L448 238"/>
+                <path d="M448 286 L448 300"/>
+              </g>
+              <circle cx="344" cy="256" r="22" fill="none" stroke="#f5b942" stroke-width="2"/>
+              <path d="M344 268 L344 246" stroke="#f5b942" stroke-width="2"/>
+              <path d="M339 252 L344 244 L349 252" fill="#f5b942"/>
+              <text x="288" y="296" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">I_N(s)</text>
+              <rect x="436" y="238" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="470" y="268" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Z_Th(s)</text>
+              <circle cx="521" cy="212" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <circle cx="521" cy="300" r="4" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="532" y="208" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">A</text>
+              <text x="532" y="312" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">B</text>
+            </svg>
+          </div>
+          <div class="splane-readout">Vista de fora, qualquer rede linear com dois terminais acessíveis é indistinguível de uma fonte mais uma impedância. Vista de dentro, ela tem muito mais — e parte disso desaparece na troca.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">9.1</span>
+    <h2>A mesma ideia de Circuitos I, com duas mudanças que importam</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>O teorema de Thévenin diz que uma rede linear com dois terminais acessíveis, <em>por mais complicada que seja</em>, é externamente equivalente a uma única fonte de tensão em série com uma única impedância. O de Norton diz o mesmo com fonte de corrente e impedância em paralelo. Nada disso é novo — é o que você usou em Circuitos I com \(R\) e valores numéricos.</p>
+
+    <p>Passar para Laplace não muda a estrutura do teorema. Muda o que cada peça é.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">mudança 1 — a resistência virou uma função</span>
+        <p>Em Circuitos I, \(R_{Th}\) era um número. Em \(s\), \(Z_{Th}(s)\) é uma <b style="color:var(--ink)">função racional</b>: tem polos, tem zeros, tem grau. A conta é a mesma — série soma, paralelo combina — mas o resultado é uma razão de polinômios, e essa razão carrega informação sobre o comportamento próprio da rede.</p>
+        <div class="eq-block">\[ R_{Th} \;\longrightarrow\; Z_{Th}(s) = \frac{N(s)}{D(s)} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">mudança 2 — as c.i. são fontes, e entram no \(V_{Th}\)</span>
+        <p>Em Circuitos I não havia condição inicial. Em \(s\), cada indutor com \(i_L(0^-)\neq 0\) e cada capacitor com \(v_C(0^-)\neq 0\) <b style="color:var(--ink)">é</b> uma fonte independente (módulo 07, seção 7.2). Logo elas contribuem para \(V_{Th}(s)\) como qualquer outra fonte — e uma rede sem fonte alguma pode ter \(V_{Th}(s)\neq 0\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">e a armadilha — fontes vinculadas</span>
+        <p>Um vinculado não é excitação, é <b style="color:var(--ink)">elemento</b>. "Desligar todas as fontes e olhar a resistência equivalente" só funciona quando não há nenhum. Com vinculado, a única saída geral é excitar os terminais de fora e medir a resposta. É a <a href="#zth">seção 9.4</a>, e é o que a P2 2025 cobrou valendo 2,0 pontos.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">o que o equivalente é bom para</span>
+        <p>Trocar uma rede de seis elementos por dois quando você só precisa saber o que acontece na carga. Também é o caminho natural para <em>máxima transferência de potência</em> e para encadear blocos. O custo está na <a href="#polos">seção 9.7</a>: o equivalente é fiel nos terminais e cego para o resto.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Condição de validade.</b> O teorema exige que a rede interna seja <b>linear</b> e que o par de terminais seja o <em>único</em> acoplamento entre ela e o mundo externo. Se houver uma fonte vinculada cuja variável de controle está <em>fora</em> da rede que você está reduzindo — ou um acoplamento magnético atravessando a fronteira —, o equivalente não existe nessa forma. Na P2 isso nunca acontece por acidente; acontece quando você corta a rede no lugar errado.</div>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">1</div><div class="small">redesenhar em s<br>c.i. → fontes</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">2</div><div class="small">V_Th: tensão<br>em A–B em vazio</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">3</div><div class="small">Z_Th: inativar<br>ou fonte externa</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">4</div><div class="small">conferir polos<br>e grau</div></div>
+    </div>
+    <p class="flow-note">O passo 1 vem antes de qualquer decisão. Enquanto o circuito estiver no tempo, com c.i. anotadas ao lado da figura em vermelho, não há como aplicar teorema nenhum: as c.i. precisam estar desenhadas como fontes para que a pergunta "quais fontes eu inativo?" tenha resposta.</p>
+  </section>
+
+  <section id="equivalentes" class="panel">
+    <span class="eyebrow">9.2</span>
+    <h2>Os dois equivalentes, e a regra de inativar</h2>
+
+    <p>Os dois dipolos equivalentes descrevem a mesma rede e se convertem um no outro pela relação mais usada de todo o módulo:</p>
+
+    <div class="eq-block">\[ V_{Th}(s) = Z_{Th}(s)\,I_N(s) \qquad\Longleftrightarrow\qquad I_N(s) = \frac{V_{Th}(s)}{Z_{Th}(s)} \]</div>
+
+    <p>A impedância é a <b style="color:var(--ink)">mesma nos dois</b>. Só a fonte muda de natureza. Em particular, "impedância de Thévenin" e "impedância de Norton" são o mesmo objeto — e é por isso que a Questão 09 da folha 2 do formulário pede a \(Z_0\) "do equivalente Norton" e resolve exatamente como se pedisse a de Thévenin.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+        <text x="24" y="26" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">THÉVENIN — FONTE DE TENSÃO EM SÉRIE</text>
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 60 L60 82"/>
+          <path d="M60 60 L180 60"/>
+          <path d="M236 60 L300 60"/>
+          <path d="M60 130 L60 164"/>
+          <path d="M60 164 L300 164"/>
+        </g>
+        <circle cx="60" cy="106" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+        <text x="44" y="102" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+        <text x="68" y="102" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+        <text x="8" y="152" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V_Th(s)</text>
+        <rect x="180" y="48" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="184" y="40" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z_Th(s)</text>
+        <circle cx="305" cy="60" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <circle cx="305" cy="164" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="318" y="56" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+        <text x="318" y="178" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+        <text x="24" y="200" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">em vazio: V_AB = V_Th</text>
+
+        <path d="M360 20 L360 280" stroke="rgba(122,199,170,0.18)" stroke-width="1"/>
+
+        <text x="392" y="26" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">NORTON — FONTE DE CORRENTE EM PARALELO</text>
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M420 60 L660 60"/>
+          <path d="M420 164 L660 164"/>
+          <path d="M420 60 L420 82"/>
+          <path d="M420 130 L420 164"/>
+          <path d="M560 60 L560 88"/>
+          <path d="M560 136 L560 164"/>
+        </g>
+        <circle cx="420" cy="106" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+        <path d="M420 118 L420 96" stroke="#f5b942" stroke-width="2"/>
+        <path d="M415 102 L420 94 L425 102" fill="#f5b942"/>
+        <text x="376" y="152" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I_N(s)</text>
+        <rect x="548" y="88" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="584" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z_Th(s)</text>
+        <circle cx="665" cy="60" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <circle cx="665" cy="164" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="678" y="56" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+        <text x="678" y="178" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+        <text x="392" y="200" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">em curto: I_AB = I_N</text>
+
+        <path d="M60 240 L660 240" stroke="rgba(245,185,66,0.35)" stroke-width="1" stroke-dasharray="4 4"/>
+        <text x="236" y="272" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">V_Th(s) = Z_Th(s) · I_N(s)</text>
+      </svg>
+      <div class="pz-legend">A mesma \(Z_{Th}(s)\) nos dois lados. \(V_{Th}\) é a tensão nos terminais <em>em aberto</em>; \(I_N\) é a corrente nos terminais <em>em curto</em>. Cada um mede o equivalente por um extremo.</div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, caixa de inativação</span>
+      <p>Para inativar um gerador independente:</p>
+      <div class="roc-grid" style="margin-top:0.8rem">
+        <div class="roc-card">
+          <span class="tag">gerador de tensão</span>
+          <div class="final-answer">curto-circuito</div>
+          <p class="dim">Uma fonte de tensão nula é, por definição, um fio: \(v = 0\) entre seus terminais, qualquer corrente.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">gerador de corrente</span>
+          <div class="final-answer">circuito aberto</div>
+          <p class="dim">Uma fonte de corrente nula é, por definição, um corte: \(i = 0\) no ramo, qualquer tensão.</p>
+        </div>
+      </div>
+      <p style="margin-top:0.8rem">Essa mesma caixa do formulário é a que o professor usa também para obter FCPs (módulo 07, receitas "Obtendo FCPs com Análise Nodal / de Malhas", passo 1: "inativar geradores independentes") e para desativar as fontes antes de calcular \(Z_0\) — como no gabarito do Teste 8 de 2023: "para calcular \(Z_0(s)\), devemos desativar os geradores de tensão e calcular a impedância vista por A e B".</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a palavra "independentes" é a parte que se esquece</span>
+      <p>A regra vale para fontes <b style="color:var(--ink)">independentes</b>. Fontes vinculadas <b style="color:var(--ink)">ficam onde estão</b>, com o ganho intacto, porque não são excitação: são elementos do circuito, tão fixos quanto um resistor. Zerá-las muda a rede, e \(Z_{Th}\) sai errada.</p>
+      <p>O teste rápido: pergunte "esse gerador tem valor conhecido antes de eu resolver o circuito?". Se sim, é independente e você inativa. Se o valor depende de uma tensão ou corrente interna — \(g_m v\), \(\mu v\), \(\beta i\), \(r_m i\) —, é vinculado e ele permanece.</p>
+      <p>E ainda: as fontes que representam as <b style="color:var(--ink)">condições iniciais</b> são independentes (o valor \(L\,i_L(0^-)\) ou \(C\,v_C(0^-)\) é conhecido de antemão). Logo <em>também</em> são inativadas no cálculo de \(Z_{Th}\) — e é exatamente por isso que elas aparecem em \(V_{Th}\) e desaparecem de \(Z_{Th}\). Compare, no gabarito da Questão 03 da folha 2, a equação do nó A: \(\frac1s + s\,V_A = 0\), sem o termo \(C\,v_1(0^-) = 1\) que aparecia na Questão 02 da mesma folha. A c.i. foi inativada porque ali se calculava impedância.</p>
+      <table class="ltable" style="margin-top:1rem">
+        <thead><tr><th>gerador</th><th>entra em \(V_{Th}(s)\)?</th><th>no cálculo de \(Z_{Th}(s)\)</th></tr></thead>
+        <tbody>
+          <tr><td>tensão independente</td><td>sim</td><td>curto-circuito</td></tr>
+          <tr><td>corrente independente</td><td>sim</td><td>circuito aberto</td></tr>
+          <tr><td>fonte da c.i. de indutor, \(L\,i_L(0^-)\)</td><td>sim</td><td>curto-circuito</td></tr>
+          <tr><td>fonte da c.i. de capacitor, \(v_C(0^-)/s\)</td><td>sim</td><td>curto-circuito</td></tr>
+          <tr><td>qualquer vinculado</td><td>indiretamente, sim</td><td><b>permanece no circuito</b></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="vth" class="panel">
+    <span class="eyebrow">9.3</span>
+    <h2>Como calcular \(V_{Th}(s)\): a tensão que sobra quando nada é ligado</h2>
+
+    <p>A definição é literal e vale sempre:</p>
+
+    <div class="final-answer">\(V_{Th}(s)\) é a tensão \(V_{AB}(s)\) medida nos terminais A–B <b>em vazio</b> (terminais abertos), com todas as fontes ativas e com as condições iniciais já representadas por seus geradores equivalentes.</div>
+
+    <p>"Em vazio" tem uma consequência aritmética imediata: os ramos que só conduziriam corrente pela carga ficam com corrente nula, e a queda de tensão neles é zero. No Teste 8 de 2023, por exemplo, \(R_2\) está entre o nó central e o terminal A; com A aberto, \(R_2\) não conduz, não cai tensão nele, e a tensão em A é a mesma do nó central. \(R_2\) só reaparece em \(Z_{Th}\).</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Três caminhos, escolhidos pela topologia</h3>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">(i) divisor de tensão ou de corrente</span>
+        <p>O mais rápido, quando a rede em vazio degenera em uma <b style="color:var(--ink)">malha única</b> (divisor de tensão) ou em <b style="color:var(--ink)">dois ramos em paralelo</b> alimentados por uma fonte de corrente (divisor de corrente).</p>
+        <p class="dim">Divisor de tensão: gabarito do Teste 8/2023 e do Teste 4/2025. Divisor de corrente: gabarito da P2 2023, 1ª questão item c.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">(ii) transformação de fontes</span>
+        <p>Quando a rede em vazio <em>quase</em> é uma malha única, mas há uma fonte de corrente em paralelo com uma impedância. Troque-a por \(Z\,I_g\) em série com \(Z\) e o divisor volta a funcionar.</p>
+        <p class="dim">É exatamente a abertura do gabarito do Teste 4 de 2025: "fazendo transformação de fontes e substituindo o capacitor pelo modelo de fonte equivalente".</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">(iii) análise nodal (ou de malhas)</span>
+        <p>O caminho que sempre funciona, ao preço de montar a matriz. Escolha o terra em B; então \(V_{Th}(s)\) é diretamente a tensão nodal de A, e sai por Cramer. Obrigatório quando há fonte vinculada ou mais de dois nós essenciais.</p>
+        <p class="dim">É a verificação independente que o gabarito da P2 2023 item c faz depois do divisor de corrente.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">e a escolha do terra</span>
+        <p>Colocar o terra em B é quase sempre a melhor decisão: \(V_{Th} = E_A\), sem subtração nenhuma. Se B não puder ser terra (raro na P2), então \(V_{Th} = E_A - E_B\) — como na Questão 02 da folha 1 do formulário, em que a resposta é justamente \(E_A - E_B\).</p>
+      </div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito P2 2023, 1ª questão item c</span>
+      <p>Escrito à mão no gabarito, logo depois de identificar \(V_{Th}(s) = E_2(s)\):</p>
+      <div class="final-answer">Obs: a resistência nos terminais AB <b>não pode ser eliminada!</b></div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que esse aviso existe</span>
+      <p>No circuito daquele item, o resistor \(R = 2\ \Omega\) está ligado exatamente entre os terminais A e B — A é o nó \(e_2\), B é o terra. É tentador olhar a figura e pensar: "o resistor está em A–B, então ele é a carga; tiro ele e calculo o Thévenin do que sobra". Errado.</p>
+      <p>A distinção é de <b style="color:var(--ink)">quem o enunciado diz que é a rede</b>. O enunciado pede o equivalente "visto pelos terminais A e B" do circuito da Figura 1 — e a Figura 1 <em>inclui</em> esse resistor. Ele pertence à rede interna. Retirá-lo dá o equivalente de uma <em>outra</em> rede.</p>
+      <p>As duas consequências numéricas, no caso do item c:</p>
+      <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+        <li>em <b style="color:var(--ink)">\(V_{Th}\)</b>: é a queda nesse resistor que <em>produz</em> a tensão de saída, \(V_{Th} = 2\,I_1\). Sem ele, \(I_1\) não teria por onde circular em vazio e \(V_{Th}\) seria outro número inteiramente;</li>
+        <li>em <b style="color:var(--ink)">\(Z_{Th}\)</b>: ele aparece como \(2\parallel(\cdots)\). Eliminá-lo daria \(Z_{Th} = 2s + 2/s + 2\), grau errado e polo em \(s=0\) que não existe.</li>
+      </ul>
+      <p>Contraste com a Questão 03 da folha 2 do formulário, em que o enunciado diz explicitamente "suponha que o resistor <em>foi retirado</em> da rede". Ali a retirada é uma instrução, não uma dedução. A regra prática: <b style="color:var(--ink)">só sai da rede o que o enunciado manda sair.</b></p>
+    </div>
+
+    <div class="callout"><b>Um erro de leitura frequente.</b> "Terminais A–B em vazio" não significa apagar o que está entre A e B; significa não ligar <em>nada de fora</em> em A e B. Todo elemento desenhado na figura original continua lá.</div>
+  </section>
+
+  <section id="zth" class="panel">
+    <span class="eyebrow">9.4</span>
+    <h2>Como calcular \(Z_{Th}(s)\): dois cenários, e um deles é o da prova</h2>
+
+    <p>A impedância equivalente é a impedância vista de A–B com a rede <b style="color:var(--ink)">morta</b> — todas as fontes independentes inativadas, incluindo as das condições iniciais. O que muda entre os dois cenários é <em>como</em> se mede isso.</p>
+
+    <h3 style="margin-top:1.4rem;font-size:1.1rem">Cenário 1 — sem fontes vinculadas: associação série/paralelo</h3>
+
+    <p>Inative as fontes independentes pela regra da <a href="#equivalentes">seção 9.2</a> e reduza o que sobrou por associações. Fonte de tensão virou fio, fonte de corrente virou corte — e, feito isso, a rede geralmente colapsa em três ou quatro impedâncias.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito Teste 8 / P2 2023</span>
+      <p>"Para calcular \(Z_0(s)\), devemos desativar os geradores de tensão e calcular a impedância vista por A e B, ou seja,"</p>
+      <div class="eq-block">\[ Z_0(s) = R_1 \,/\!/\, sL + R_2 = \frac{R_1\,sL}{R_1 + sL} + R_2 \]</div>
+      <p class="dim">Note a ordem: o paralelo \(R_1\parallel sL\) primeiro (porque, com \(e_g\) em curto, \(R_1\) e \(sL\) ficam lado a lado entre o nó central e o terra), e só então a soma em série com \(R_2\), que está no caminho até A.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o roteiro de redução</span>
+      <ol style="margin:0.4rem 0 0 1.2rem;line-height:1.8">
+        <li><b style="color:var(--ink)">Apague</b>: fonte de tensão independente → fio; fonte de corrente independente → ramo removido. As fontes de c.i. contam como independentes e são apagadas com a mesma regra — indutor volta a ser \(sL\) puro, capacitor volta a ser \(1/sC\) puro.</li>
+        <li><b style="color:var(--ink)">Redesenhe</b> o esqueleto que sobrou. Depois de curtos e cortes, nós que pareciam distintos frequentemente se fundem; é aqui que a conta encurta.</li>
+        <li><b style="color:var(--ink)">Reduza de fora para dentro</b>, a partir de A–B: o que está em série no caminho de A soma por último, o que está em paralelo combina primeiro.</li>
+        <li><b style="color:var(--ink)">Confira o grau</b>. \(Z_{Th}(s)\) é uma razão de polinômios; conte quantos armazenadores sobraram e verifique se o denominador tem o grau compatível (\(\le\) número de armazenadores independentes).</li>
+      </ol>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Cenário 2 — com fontes vinculadas: o método da fonte externa</h3>
+
+    <p>Com um vinculado no circuito, a associação série/paralelo não se aplica: o vinculado injeta corrente (ou impõe tensão) em função do estado interno, e essa realimentação altera a relação tensão/corrente nos terminais de um modo que nenhuma redução topológica captura. Ele <em>não</em> pode ser inativado. A saída é voltar à definição de impedância:</p>
+
+    <div class="eq-block">\[ Z_{Th}(s) \;=\; \left.\frac{V_{AB}(s)}{I_{AB}(s)}\right|_{\substack{\text{fontes indep. inativadas}\\ \text{c.i. inativadas}}} \]</div>
+
+    <p>Se você mesmo escolher a excitação, a divisão desaparece. <b style="color:var(--ink)">Injete 1 A</b> nos terminais e a tensão que você medir <em>é</em> a impedância, numericamente. Ou aplique 1 V e a corrente medida é a admitância.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito P2 2025, 1ª questão item b</span>
+      <p>"Para obter a \(Z_o\) (Thévenin) deve-se inativar as fontes independentes e, por ter um vinculado no circuito, deve-se usar uma fonte externa (no caso, fonte de corrente cte. e igual a 1 A, por conveniência)"</p>
+      <div class="eq-block">\[ Z_o(s) = \frac{E_2(s)}{1} = E_2(s) \ \text{nesse caso.} \]</div>
+    </div>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 660 260" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="24" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">MÉTODO DA FONTE EXTERNA — A REDE MORTA, MAS COM O VINCULADO VIVO</text>
+
+        <rect x="30" y="50" width="200" height="150" fill="none" stroke="rgba(231,237,233,0.5)" stroke-width="1.6"/>
+        <text x="50" y="82" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">R, L, C</text>
+        <text x="50" y="108" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">fontes indep. → 0</text>
+        <text x="50" y="134" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">c.i. → 0</text>
+        <path d="M120 156 L168 132 L216 156 L168 180 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M168 170 L168 146" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M163 152 L168 144 L173 152" fill="#4ade9a"/>
+        <text x="46" y="174" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">g·v</text>
+        <text x="50" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">vinculado: permanece</text>
+
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M230 80 L330 80"/>
+          <path d="M230 170 L330 170"/>
+          <path d="M330 80 L470 80"/>
+          <path d="M330 170 L470 170"/>
+          <path d="M470 80 L470 102"/>
+          <path d="M470 148 L470 170"/>
+        </g>
+        <circle cx="335" cy="80" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <circle cx="335" cy="170" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="330" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+        <text x="330" y="192" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+        <circle cx="470" cy="125" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+        <path d="M470 137 L470 115" stroke="#f5b942" stroke-width="2"/>
+        <path d="M465 121 L470 113 L475 121" fill="#f5b942"/>
+        <text x="502" y="130" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">1 A</text>
+        <text x="496" y="154" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">fonte de prova</text>
+
+        <path d="M392 168 L392 84" stroke="#f5b942" stroke-width="1.6"/>
+        <path d="M387 92 L392 82 L397 92" fill="#f5b942"/>
+        <text x="352" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V_AB(s)</text>
+        <text x="352" y="240" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z_o = V_AB / 1</text>
+      </svg>
+      <div class="pz-legend">A rede é morta (fontes independentes e c.i. inativadas) mas o vinculado continua lá, com ganho intacto. A fonte de 1 A é externa, de prova, e não faz parte da rede: ela existe só para que haja algo para dividir.</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a economia central da questão de 2025</span>
+      <p>O que faz o item b) da P2 2025 valer 2,0 pontos não é a álgebra — é perceber que a matriz de análise nodal do item a) <b style="color:var(--ink)">serve inteira</b>, sem uma única alteração. Só o vetor de excitação muda.</p>
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix} 2+g_m &amp; -1 \\[4pt] -1 &amp; \dfrac{s+2}{2}\end{bmatrix}}_{\textstyle\text{igual nos dois itens}}
+        \begin{bmatrix} E_1(s) \\[4pt] E_2(s)\end{bmatrix}
+        = \begin{bmatrix} (g_m+1)E_s(s) \\[4pt] 0{,}5\,v_o \end{bmatrix}
+        \;\longrightarrow\;
+        \begin{bmatrix} 0 \\[4pt] 1 \end{bmatrix}
+      \]</div>
+      <p>E isso não é sorte: é a estrutura da análise nodal que vimos no <a href="modulo-07.html#nodal">módulo 07</a>. A matriz \(Y(s)\) é propriedade da <em>rede</em> — admitâncias e ganhos de vinculados. O vetor \(J(s)\) é propriedade da <em>excitação</em> — fontes independentes e c.i. Inativar fontes e c.i. zera \(J\); trocar a excitação por uma fonte de prova preenche \(J\) com um único 1 na linha do nó excitado. A matriz nunca é tocada.</p>
+      <p>Consequência prática na prova: se o enunciado já lhe deu a matriz nodal, <b style="color:var(--ink)">você não precisa redesenhar o circuito para achar \(Z_{Th}\)</b>. Zere o vetor, ponha 1 na linha do terminal A, resolva por Cramer para \(E_A\), e acabou. Duas linhas de conta em vez de meia página.</p>
+      <p class="dim">A única justificativa que o item pede é esta: por que a matriz não muda? Porque curto-circuitar \(e_s\) muda apenas o valor da variável de controle \(v_1 = e_s - e_1\) para \(v_1 = -e_1\), e o coeficiente \(g_m\) que ela gera na diagonal já estava contabilizado como \(2+g_m\) na montagem original. O que sai de \(J\) é só a parte que dependia de \(E_s\).</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">O terceiro método: a razão vazio/curto</h3>
+
+    <p>Da relação \(V_{Th} = Z_{Th} I_N\) sai um caminho que nem inativa nada:</p>
+
+    <div class="eq-block">\[ Z_{Th}(s) = \frac{V_{\text{vazio}}(s)}{I_{\text{curto}}(s)} = \frac{V_{Th}(s)}{I_N(s)} \]</div>
+
+    <p>Calcule a tensão nos terminais em aberto, depois a corrente nos terminais em curto, divida. É útil quando há vinculados <em>e</em> você já teve de calcular \(V_{Th}\) de qualquer maneira: a segunda conta (curto) costuma ser mais barata que a primeira.</p>
+
+    <div class="callout"><b>Quando a razão falha.</b> Se \(V_{Th}(s) = 0\) — rede sem fonte independente e com c.i. nulas, por exemplo — então \(I_N(s) = 0\) também, e a razão é \(0/0\): indeterminada. Nesse caso a impedância continua existindo e sendo bem definida, mas você <em>precisa</em> de um dos outros dois métodos. É a situação típica de "rede livre": não há o que dividir. Por isso o método da fonte externa é o único dos três que nunca falha — ele cria a excitação que a rede não tem.</div>
+
+    <table class="ltable">
+      <thead><tr><th>método</th><th>quando usar</th><th>quando não usar</th><th>onde aparece</th></tr></thead>
+      <tbody>
+        <tr><td>associação série/paralelo</td><td>sem vinculados</td><td>com qualquer vinculado</td><td>Teste 8/2023; formulário folha 2 Q09</td></tr>
+        <tr><td>fonte externa de 1 A (ou 1 V)</td><td><b>sempre</b> — em especial com vinculados</td><td>—</td><td>P2 2025 item b; formulário folha 2 Q03</td></tr>
+        <tr><td>razão \(V_{\text{vazio}}/I_{\text{curto}}\)</td><td>quando \(V_{Th}\) já foi calculado</td><td>quando \(V_{Th} = 0\)</td><td>verificação</td></tr>
+      </tbody>
+    </table>
+
+    <div class="history-note">
+      <span><b>1 A ou 1 V?</b>1 A dá \(Z\) direto; 1 V dá \(Y\) direto</span>
+      <span><b>escolha</b>a que evita divisão na sua topologia</span>
+      <span><b>na nodal</b>1 A é sempre melhor: entra direto em \(J\)</span>
+    </div>
+  </section>
+
+  <section id="ci" class="panel src-ext">
+    <span class="eyebrow">9.5</span>
+    <h2>Condições iniciais: o Thévenin de uma rede sem fontes</h2>
+
+    <p>Esta é a diferença que Circuitos I não tinha como mostrar. Uma rede com condições iniciais não nulas tem \(V_{Th}(s)\neq 0\) <b style="color:var(--ink)">mesmo sem nenhuma fonte independente</b>. O indutor que já conduzia e o capacitor que já estava carregado são, em Laplace, geradores.</p>
+
+    <p>Nada de novo é necessário: são os mesmos quatro modelos da <a href="modulo-07.html#elementos">seção 7.2 do módulo 07</a>. A única decisão é qual forma usar, e ela segue o método escolhido para achar \(V_{Th}\).</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">indutor com \(i_L(0^-) = j_0\)</span>
+        <div class="eq-block">\[ V_L(s) = sL\,I(s) - L\,j_0 \]</div>
+        <p>Forma <b style="color:var(--ink)">série</b>: impedância \(sL\) em série com uma fonte de tensão <em>constante</em> de valor \(L\,j_0\), orientada a favor de \(j_0\). Constante — não tem \(1/s\) — porque no tempo é um impulso \(L\,j_0\,\delta(t)\).</p>
+        <p>Forma <b style="color:var(--ink)">paralelo</b>: admitância \(1/sL\) em paralelo com uma fonte de corrente \(j_0/s\), no sentido de \(j_0\).</p>
+        <p class="dim">Contribuição típica para \(V_{Th}\): um degrau. No Teste 8/2023, \(L\,j_0 = 2\ \mathrm V\) sozinho responde por metade da resposta \(E_0 = 4/(s+1)\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">capacitor com \(v_C(0^-) = v_0\)</span>
+        <div class="eq-block">\[ V(s) = \frac{I(s)}{sC} + \frac{v_0}{s} \]</div>
+        <p>Forma <b style="color:var(--ink)">série</b>: impedância \(1/sC\) em série com uma fonte de tensão \(v_0/s\), com o "+" no mesmo lado do "+" de \(v_0\). O \(1/s\) está aí porque no tempo é um degrau \(v_0\,H(t)\).</p>
+        <p>Forma <b style="color:var(--ink)">paralelo</b>: admitância \(sC\) em paralelo com uma fonte de corrente <em>constante</em> \(C\,v_0\), apontando para o nó do "+".</p>
+        <p class="dim">Contribuição típica para \(V_{Th}\): um termo \(v_0/s\) que sobrevive intacto até a resposta final. Veja o Teste 4/2025, em que \(E_0 = (\cdots) + v_0/s\).</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>A fonte de c.i. não desaparece do \(V_{Th}\) — ela pode aparecer duas vezes.</b> No Teste 4/2025 o \(v_0\) entra no numerador do divisor (como \(-v_0/s\), porque a fonte se opõe à malha) <em>e</em> volta somado por fora (como \(+v_0/s\), porque \(E_0\) é a tensão do ramo <em>inteiro</em>, impedância mais fonte). Quem soma os dois termos precocemente perde a estrutura e cai na alternativa d).</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o que a c.i. faz e o que não faz</span>
+      <table class="ltable">
+        <thead><tr><th></th><th>afeta \(V_{Th}(s)\)?</th><th>afeta \(Z_{Th}(s)\)?</th><th>afeta os polos de \(Z_{Th}\)?</th></tr></thead>
+        <tbody>
+          <tr><td>valor de \(v_C(0^-)\), \(i_L(0^-)\)</td><td><b>sim</b></td><td>não</td><td>não</td></tr>
+          <tr><td>existência de \(L\) e \(C\)</td><td>sim</td><td><b>sim</b></td><td><b>sim</b></td></tr>
+          <tr><td>ganho do vinculado</td><td>sim</td><td><b>sim</b></td><td><b>sim</b></td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.9rem">A leitura da tabela: a c.i. é <em>estado</em>, não <em>estrutura</em>. Ela muda a fonte do equivalente e nunca a impedância. É por isso que se pode calcular \(Z_{Th}\) uma vez e reusá-la para qualquer conjunto de condições iniciais — e é a mesma razão pela qual, na <a href="modulo-07.html#nodal">análise nodal</a>, as c.i. moram no vetor \(J(s)\) e não na matriz \(Y(s)\).</p>
+      <p>Corolário útil para conferir resposta: se você mexeu no valor de uma c.i. e a sua \(Z_{Th}\) mudou, há erro. Se você mexeu numa c.i. e o \(V_{Th}\) <em>não</em> mudou, também há erro — a menos que aquela c.i. esteja num ramo que não vê os terminais, caso da <a href="#polos">seção 9.7</a>.</p>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 1, caixas "Capacitor" e "Indutor"</span>
+      <div class="eq-block">\[ i_C(t) = C\frac{dv}{dt} \;\leftrightarrow\; I_C(s) = sC\,V(s) - C\,v(0^-) \qquad\quad v_C(t) = \frac1C\!\int\! i\,dt \;\leftrightarrow\; V(s) = \frac{I(s)}{sC} + \frac{v(0^-)}{s} \]</div>
+      <div class="eq-block">\[ i_L(t) = \frac1L\!\int\! v_L\,dt \;\leftrightarrow\; I_L(s) = \frac{V_L(s)}{sL} + \frac{i(0^-)}{s} \qquad\quad v_L(t) = L\frac{di}{dt} \;\leftrightarrow\; V_L(s) = sL\,I(s) - L\,i(0^-) \]</div>
+      <p class="dim">As quatro relações estão no formulário e podem ser consultadas na prova. Os <em>circuitos</em> equivalentes não estão — essa tradução é sua.</p>
+    </div>
+  </section>
+
+  <section id="superposicao" class="panel src-ext">
+    <span class="eyebrow">9.6</span>
+    <h2>Superposição em \(s\): duas contas em vez de uma</h2>
+
+    <p>\(V_{Th}(s)\) é linear nas fontes, então pode ser quebrada. A partição que interessa na P2 é sempre a mesma:</p>
+
+    <div class="eq-block">\[ V_{Th}(s) \;=\; \underbrace{V_{Th}^{\text{ind}}(s)}_{\substack{\text{só fontes independentes,}\\ \text{c.i. inativadas}}} \;+\; \underbrace{V_{Th}^{\text{c.i.}}(s)}_{\substack{\text{só fontes das c.i.,}\\ \text{fontes indep. inativadas}}} \]</div>
+
+    <p>É a mesma divisão <b style="color:var(--ink)">resposta forçada / resposta livre</b> do <a href="modulo-06.html#sistema">módulo 06</a>. A primeira parcela é o que a excitação provoca; a segunda, o que o estado inicial deixa acontecer. As duas têm o <em>mesmo denominador</em>, porque o denominador é a rede — e a rede é a mesma nas duas contas.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">quando vale a pena separar</span>
+        <p>Quando há três ou mais fontes de naturezas diferentes e a topologia degenera de formas diferentes em cada caso — uma fonte de corrente inativada <em>abre</em> um ramo e pode simplificar muito a rede que sobra.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">quando não vale</span>
+        <p>Quando há fonte vinculada. Não é proibido (vinculados não são superpostos, ficam ativos em toda parcela), mas cada parcela exige resolver a rede inteira de novo, e você faz três vezes o trabalho de uma análise nodal única.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>O erro clássico de superposição.</b> Ao separar as parcelas, as fontes vinculadas <b>permanecem ativas em todas elas</b>. Só fontes independentes se alternam. Zerar o vinculado numa das parcelas é o mesmo erro da <a href="#equivalentes">seção 9.2</a> — e dá um resultado que não é a soma de nada.</div>
+  </section>
+
+  <section id="polos" class="panel src-ext">
+    <span class="eyebrow">9.7</span>
+    <h2>O que o equivalente preserva, e o que ele esconde</h2>
+
+    <p>O equivalente é fiel nos terminais e cego para o resto. Vale saber exatamente o que cada parte guarda.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">os polos de \(Z_{Th}(s)\)</span>
+        <p>São <b style="color:var(--ink)">FCPs da rede interna</b> — especificamente, as FCPs da rede livre com o acesso A–B <b style="color:var(--ink)">em aberto</b>. Faz sentido: \(Z_{Th} = V/I\) explode onde a rede sustenta tensão com corrente nula, e corrente nula nos terminais é o próprio circuito aberto.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">os zeros de \(Z_{Th}(s)\)</span>
+        <p>São as FCPs da rede livre com o acesso A–B <b style="color:var(--ink)">em curto</b> — os polos de \(Y_{Th} = 1/Z_{Th}\). Tensão nula com corrente não nula é curto nos terminais.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">o que o equivalente esconde</span>
+        <p>Toda FCP que <b style="color:var(--ink)">não se manifesta em A–B</b>. Um modo interno pode existir, oscilar e decair sem produzir nem tensão nem corrente nos terminais — e então não aparece nem nos polos nem nos zeros de \(Z_{Th}\), nem em \(V_{Th}\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">consequência para estabilidade</span>
+        <p>Um equivalente de Thévenin com \(Z_{Th}\) e \(V_{Th}\) impecavelmente estáveis <b style="color:var(--ink)">não garante</b> que a rede original seja estável. A pergunta de estabilidade do <a href="modulo-08.html#quantas">módulo 08</a> é sobre a rede, não sobre o dipolo, e tem de ser respondida pelo determinante da matriz de análise da rede inteira.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · verificação numérica no item c da P2 2023</span>
+      <p>O item c da P2 2023 permite checar as duas primeiras afirmações com números. A resposta do gabarito é</p>
+      <div class="eq-block">\[ Z_{Th}(s) = \frac{2\,(s^2+s+1)}{(s+1)^2} \]</div>
+      <p><b style="color:var(--ink)">Polos</b>: \(s = -1\), duplo. Com A–B em aberto e o circuito inativado, o que sobra é uma malha única — \(2\ \Omega\) (o resistor de A–B), \(2s\), \(2/s\), \(2\ \Omega\) — e a equação característica é a soma das impedâncias igualada a zero:</p>
+      <div class="eq-block">\[ 2 + 2s + \frac2s + 2 = 0 \;\Longleftrightarrow\; 2s^2 + 4s + 2 = 0 \;\Longleftrightarrow\; (s+1)^2 = 0 \;\Longrightarrow\; s = -1 \text{ (duplo)} \]</div>
+      <p>E, de fato, o determinante da matriz nodal daquele circuito, calculado no próprio gabarito, é \(\det Y = \dfrac{(s+1)^2}{8s}\) — mesmas duas FCPs. Bate.</p>
+      <p><b style="color:var(--ink)">Zeros</b>: raízes de \(s^2+s+1\). Com A–B em curto, o nó \(e_2\) vai ao terra e a malha que sobra é \(2s\), \(2/s\), \(2\ \Omega\) em série — sem o resistor de A–B, que foi curto-circuitado:</p>
+      <div class="eq-block">\[ 2s + \frac2s + 2 = 0 \;\Longleftrightarrow\; 2s^2 + 2s + 2 = 0 \;\Longleftrightarrow\; s^2 + s + 1 = 0 \]</div>
+      <p>Exatamente o numerador. As duas afirmações se confirmam no mesmo exercício.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · como uma FCP se esconde</span>
+      <p>O mecanismo é sempre algum tipo de <b style="color:var(--ink)">desacoplamento</b> entre o modo interno e o acesso. Três formas de isso acontecer:</p>
+      <ol style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+        <li><b style="color:var(--ink)">Cancelamento polo–zero.</b> Se um fator aparece no numerador e no denominador de \(Z_{Th}(s)\), ele desaparece da expressão final. A FCP continua na rede — e continua no determinante da matriz de análise —, mas o dipolo não a mostra. Note que no item c da P2 2023 <em>nada</em> cancela: \(s^2+s+1\) e \((s+1)^2\) são primos entre si, e por isso ali o equivalente é honesto.</li>
+        <li><b style="color:var(--ink)">Ponte equilibrada.</b> Uma sub-rede em ponte pode ter um modo próprio cuja resposta nos terminais é identicamente nula por simetria.</li>
+        <li><b style="color:var(--ink)">Trecho isolado.</b> Um laço de indutores ou um corte de capacitores (os mesmos suspeitos das receitas de FCP do <a href="modulo-07.html#malhas">módulo 07</a>) sustenta corrente ou carga sem trocar nada com o acesso. É aqui que aparecem as FCPs nulas que o método "puro" perde.</li>
+      </ol>
+      <p>A conclusão operacional é curta: <b style="color:var(--ink)">use o equivalente para responder sobre a carga; use o determinante para responder sobre a rede.</b> Se a pergunta é "quantas FCPs tem o circuito?" ou "para que \(g_m\) ele é estável?", o caminho é o do <a href="modulo-08.html">módulo 08</a> e não o deste. Se a pergunta é "qual corrente passa na carga ligada em A–B?", o equivalente é o caminho mais curto que existe.</p>
+    </div>
+
+    <div class="history-note">
+      <span><b>polos de \(Z_{Th}\)</b>FCPs com A–B em aberto</span>
+      <span><b>zeros de \(Z_{Th}\)</b>FCPs com A–B em curto</span>
+      <span><b>FCPs da rede</b>raízes de \(\det Y(s) = 0\) — módulo 08</span>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">9.8</span>
+    <h2>Exercícios de provas e testes</h2>
+    <p class="dim">Os oito exercícios cobrem os três métodos de \(Z_{Th}\) e os três de \(V_{Th}\). Em seis deles há condição inicial não nula; em três há fonte vinculada; em dois há acoplamento magnético. É a distribuição real da P2.</p>
+
+    <div class="q-intro">
+      <div><b>8 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>provas P2 de 2023 e 2025, formulário oficial e testes de 2023 e 2025</div>
+      <div><b>Foco</b>fonte externa de 1 A · divisor com c.i. · transformação de fontes · mútua</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, item b</span>\(Z_o(s)\) com fonte vinculada, pelo método da fonte de 1 A</span>
+          <span class="q-prova">P2/2025 — 2,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">b) (2,0 pontos)</b> Determine a impedância <em>de Thévenin</em>, \(Z_o(s)\), em função de \(E_s(s)\), \(v_o\) e \(g_m\), vista pelos terminais A e B do circuito. Apresente seus cálculos.</p>
+        <p><b style="color:var(--ink)">Dica:</b> note que você pode aproveitar parte da equação matricial fornecida no item (a), fazendo algumas modificações necessárias (justifique-as).</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 126"/>
+              <path d="M70 174 L70 250"/>
+              <path d="M70 70 L140 70"/>
+              <path d="M196 70 L300 70"/>
+              <path d="M300 70 L300 126"/>
+              <path d="M300 174 L300 250"/>
+              <path d="M300 70 L380 70"/>
+              <path d="M436 70 L520 70"/>
+              <path d="M520 70 L520 136"/>
+              <path d="M520 164 L520 250"/>
+              <path d="M520 70 L600 70"/>
+              <path d="M70 250 L600 250"/>
+            </g>
+
+            <circle cx="70" cy="150" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="54" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+            <text x="78" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+            <text x="4" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <rect x="140" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="156" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+            <path d="M188 30 L148 30" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M156 25 L146 30 L156 35" fill="#f5b942"/>
+            <text x="198" y="26" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+
+            <path d="M270 150 L300 120 L330 150 L300 180 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M300 166 L300 136" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M295 142 L300 134 L305 142" fill="#4ade9a"/>
+            <text x="336" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">g_m v₁(t)</text>
+            <circle cx="300" cy="70" r="4" fill="#4ade9a"/>
+            <text x="278" y="100" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+
+            <rect x="380" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="396" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="504" y1="136" x2="536" y2="136"/>
+              <line x1="504" y1="164" x2="536" y2="164"/>
+            </g>
+            <text x="440" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">0,5 F</text>
+            <circle cx="520" cy="70" r="4" fill="#4ade9a"/>
+            <text x="498" y="110" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₂(t)</text>
+            <path d="M566 200 L566 110" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M561 118 L566 108 L571 118" fill="#f5b942"/>
+            <text x="576" y="160" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v_o</text>
+
+            <circle cx="606" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <circle cx="606" cy="250" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="620" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="620" y="262" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+            <path d="M300 250 L300 266 M286 266 L314 266 M291 272 L309 272 M296 278 L304 278" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+            <text x="60" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Figura 1 — terminais A e B em aberto; o terra é o trilho inferior</text>
+          </svg>
+          <div class="pz-legend">Figura 1 — \(e_s\) à esquerda, dois resistores de \(1\ \Omega\) no trilho superior, o vinculado \(g_m v_1\) injetando no nó \(e_1\), o capacitor de \(0{,}5\ \mathrm F\) em \(e_2\), e A–B em aberto à direita. \(v_1\) é a tensão sobre o resistor da esquerda; \(v_o = e_2\).</div>
+        </div>
+
+        <div class="given-box">
+          <span>equação matricial de A.N. dada no item (a)</span>
+          <span>\(\begin{bmatrix} 2+g_m &amp; -1 \\ -1 &amp; \frac{s+2}{2}\end{bmatrix}\begin{bmatrix} E_1 \\ E_2\end{bmatrix} = \begin{bmatrix} (g_m+1)E_s(s) \\ 0{,}5\,v_o\end{bmatrix}\)</span>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — há vinculado, então não existe redução série/paralelo: injeta-se 1 A em A–B. E como a matriz nodal é propriedade da <em>rede</em>, ela serve inteira: só o vetor de excitação muda, de \([(g_m+1)E_s;\ 0{,}5v_o]\) para \([0;\ 1]\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Decidir o método</div>
+              <p>Do gabarito: "Para obter a \(Z_o\) (Thévenin) deve-se inativar as fontes independentes e, por ter um vinculado no circuito, deve-se usar uma fonte externa (no caso, fonte de corrente cte. e igual a 1 A, por conveniência)."</p>
+              <p>São duas decisões numa frase: <b style="color:var(--ink)">inativar</b> as independentes (\(e_s\) vira curto, a fonte da c.i. do capacitor desaparece) e <b style="color:var(--ink)">não inativar</b> o vinculado \(g_m v_1\), que permanece com o ganho intacto.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Redesenhar o circuito de prova</div>
+              <p>O circuito redesenhado pelo professor: \(e_s\) em curto (o nó à esquerda do primeiro \(1\ \Omega\) passa a ser o terra), o vinculado no lugar, a impedância do capacitor \(\frac{1}{sC} = \frac{1}{0{,}5\,s} = \frac{2}{s}\), e a fonte de prova de 1 A injetando no nó \(E_2\), que é o terminal A.</p>
+              <p>Com \(E_s = 0\), a variável de controle passa a ser</p>
+              <div class="eq-block">\[ V_1 = E_s - E_1 = -E_1 \qquad\Longrightarrow\qquad g_m V_1 = -g_m E_1 \]</div>
+              <p class="dim">Anotação do professor na figura: \(g_m V_1 = -g_m E_1\).</p>
+            </div>
+          </div>
+
+          <div class="pz-widget">
+            <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M70 70 L70 240"/>
+                <path d="M70 70 L140 70"/>
+                <path d="M196 70 L300 70"/>
+                <path d="M300 70 L300 126"/>
+                <path d="M300 174 L300 240"/>
+                <path d="M300 70 L380 70"/>
+                <path d="M436 70 L520 70"/>
+                <path d="M520 70 L520 126"/>
+                <path d="M520 174 L520 240"/>
+                <path d="M520 70 L600 70"/>
+                <path d="M600 70 L600 116"/>
+                <path d="M600 164 L600 240"/>
+                <path d="M70 240 L600 240"/>
+              </g>
+              <text x="14" y="160" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">e_s → curto</text>
+
+              <rect x="140" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="156" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+              <path d="M270 150 L300 120 L330 150 L300 180 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M300 166 L300 136" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M295 142 L300 134 L305 142" fill="#4ade9a"/>
+              <text x="212" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">g_m V₁ = −g_m E₁</text>
+              <circle cx="300" cy="70" r="4" fill="#4ade9a"/>
+              <text x="282" y="102" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">E₁</text>
+
+              <rect x="380" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="396" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+              <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+                <line x1="504" y1="138" x2="536" y2="138"/>
+                <line x1="504" y1="162" x2="536" y2="162"/>
+              </g>
+              <text x="452" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2/s</text>
+              <circle cx="520" cy="70" r="4" fill="#4ade9a"/>
+              <text x="500" y="102" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">E₂</text>
+
+              <circle cx="600" cy="140" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+              <path d="M600 152 L600 130" stroke="#f5b942" stroke-width="2"/>
+              <path d="M595 136 L600 128 L605 136" fill="#f5b942"/>
+              <text x="632" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">1 A</text>
+              <text x="524" y="274" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">A</text>
+              <text x="524" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">B (terra)</text>
+
+              <path d="M300 240 L300 256 M286 256 L314 256 M291 262 L309 262 M296 268 L304 268" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+            </svg>
+            <div class="pz-legend">Circuito de prova. Âmbar: a fonte externa de 1 A e o curto que substituiu \(e_s\). Verde: tudo que pertence à rede, inclusive o vinculado. A c.i. do capacitor foi inativada — o capacitor é \(2/s\) puro.</div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Por que a matriz não muda — a justificativa que o item pede</div>
+              <p>Reescrevendo a 1ª LK no nó \(E_1\) do circuito de prova, com todas as correntes saindo:</p>
+              <div class="eq-block">\[ \frac{E_1 - 0}{1} + \frac{E_1 - E_2}{1} - g_m V_1 = 0 \]</div>
+              <div class="eq-block">\[ 2E_1 - E_2 - g_m(-E_1) = 0 \;\Longleftrightarrow\; (2 + g_m)\,E_1 - E_2 = 0 \]</div>
+              <p>O coeficiente da diagonal é \(2+g_m\) — <b style="color:var(--ink)">idêntico</b> ao do item (a). E no nó \(E_2\), com a fonte de prova injetando 1 A:</p>
+              <div class="eq-block">\[ \frac{E_2 - E_1}{1} + \frac{E_2}{2/s} - 1 = 0 \;\Longleftrightarrow\; -E_1 + \left(1 + \frac{s}{2}\right)E_2 = 1 \;\Longleftrightarrow\; -E_1 + \frac{s+2}{2}\,E_2 = 1 \]</div>
+              <p>Também idêntico. A razão estrutural: a matriz guarda admitâncias e ganhos de vinculados, e nenhuma das duas coisas foi alterada — curtocircuitar \(e_s\) só muda o <em>valor</em> de \(v_1\), não o ganho \(g_m\). Tudo o que mudou migrou para o vetor.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A equação matricial do circuito de prova</div>
+              <div class="eq-block">\[
+                \begin{bmatrix} 2+g_m &amp; -1 \\[6pt] -1 &amp; \dfrac{s+2}{2}\end{bmatrix}
+                \begin{bmatrix} E_1(s) \\[6pt] E_2(s)\end{bmatrix}
+                = \begin{bmatrix} 0 \\[6pt] 1 \end{bmatrix}
+              \]</div>
+              <p>e, como a fonte de prova vale 1 A e \(E_2\) é a tensão em A–B,</p>
+              <div class="eq-block">\[ Z_o(s) = \frac{E_2(s)}{1} = E_2(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem cada zero do vetor</div>
+              <p>Linha 1: era \((g_m+1)E_s(s)\), que dependia só da fonte independente. Inativada \(e_s\), a linha zera.</p>
+              <p>Linha 2: era \(0{,}5\,v_o = C\,v_C(0^-)\), a fonte de corrente da condição inicial do capacitor. Como c.i. é fonte independente, ela também é inativada — e o lugar dela no vetor é ocupado pelo 1 A de prova, que injeta no <em>mesmo</em> nó.</p>
+              <p class="dim">É uma coincidência feliz de topologia: o capacitor e os terminais A–B estão no mesmo nó. Se a fonte de prova entrasse em outro nó, o 1 apareceria em outra linha.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Cramer para \(E_2\)</div>
+              <div class="eq-block">\[
+                E_2(s) = \frac{\begin{vmatrix} 2+g_m &amp; 0 \\[2pt] -1 &amp; 1\end{vmatrix}}{\begin{vmatrix} 2+g_m &amp; -1 \\[2pt] -1 &amp; \dfrac{s+2}{2}\end{vmatrix}}
+                = \frac{2+g_m}{(2+g_m)\left(\dfrac{s+2}{2}\right) - 1}
+              \]</div>
+              <p class="dim">Numerador: \((2+g_m)\cdot 1 - 0\cdot(-1) = 2+g_m\). Denominador: \((2+g_m)\frac{s+2}{2} - (-1)(-1)\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">A álgebra que o gabarito salta</div>
+              <p>O gabarito passa direto da fração acima para a forma final. A passagem é uma divisão do numerador e do denominador por \(\dfrac{2+g_m}{2}\):</p>
+              <div class="eq-block">\[ E_2(s) = \frac{(2+g_m)\cdot\dfrac{2}{2+g_m}}{\left[(2+g_m)\dfrac{s+2}{2} - 1\right]\cdot\dfrac{2}{2+g_m}} = \frac{2}{(s+2) - \dfrac{2}{2+g_m}} \]</div>
+              <p>Agora só falta juntar os dois termos do denominador:</p>
+              <div class="eq-block">\[ (s+2) - \frac{2}{2+g_m} = s + \frac{2(2+g_m) - 2}{2+g_m} = s + \frac{4 + 2g_m - 2}{2+g_m} = s + \frac{2 + 2g_m}{2+g_m} \]</div>
+              <div class="eq-block">\[ = s + \frac{2(1+g_m)}{2+g_m} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ Z_o(s) = \frac{2}{\,s + \dfrac{2(1+g_m)}{2+g_m}\,} \]</div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Duas conferências gratuitas</div>
+              <p><b style="color:var(--ink)">(i) o polo é a FCP.</b> O polo de \(Z_o\) está em \(s = -\dfrac{2(1+g_m)}{2+g_m}\) — exatamente a FCP calculada no item (a), \(s = \dfrac{-2-2g_m}{2+g_m}\). Coerente com a <a href="#polos">seção 9.7</a>: aqui o acesso A–B em aberto é a própria configuração do circuito original, então o polo de \(Z_o\) é a FCP da rede.</p>
+              <p><b style="color:var(--ink)">(ii) o limite em alta frequência.</b> Com \(s\to\infty\), \(Z_o \to 2/s\) — que é a impedância do capacitor de \(0{,}5\ \mathrm F\) sozinho. Faz sentido: em frequência muito alta o capacitor domina e curto-circuita tudo o que está atrás dele. Se a sua resposta não tendesse a \(2/s\), haveria erro na montagem.</p>
+              <p class="dim">Com \(g_m = 0\) (sem vinculado) sai \(Z_o = \dfrac{2}{s+1}\), que se confere por associação direta: \(\frac2s \parallel (1+1) = \frac{(2/s)\cdot 2}{2/s + 2} = \frac{4/s}{(2+2s)/s} = \frac{4}{2s+2} = \frac{2}{s+1}\). Bate.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · correção do professor no enunciado</span>
+            <p>O enunciado impresso pedia apenas "determine a impedância \(Z_o(s)\)". O professor acrescentou <b style="color:var(--ink)">à mão</b>, no enunciado, as palavras "<em>de Thévenin, \(Z_o(s)\)</em>". A emenda não é cosmética: sem ela, "a impedância vista pelos terminais" poderia ser lida como a impedância de entrada do circuito <em>com</em> as fontes ativas, o que não é uma quantidade bem definida quando há fonte independente dentro da rede. Dizer "de Thévenin" fixa o procedimento: inativar as independentes primeiro.</p>
+            <p>Na mesma prova, o item c) tem outra correção manuscrita — "o circuito" riscado e substituído por "\(e_2(t)\)". O padrão sugere um enunciado revisado na hora da aplicação; vale ler o enunciado da P2 atento a essas emendas, porque elas mudam o que se pede.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p><b style="color:var(--ink)">Erro 1 — inativar o vinculado.</b> Quem zera \(g_m v_1\) reduz a rede a \(\frac2s \parallel (1+1)\) e responde \(\frac{2}{s+1}\), que é o caso particular \(g_m=0\). É a resposta errada para o enunciado, que pede em função de \(g_m\).</p>
+            <p><b style="color:var(--ink)">Erro 2 — esquecer de inativar a c.i.</b> Manter \(0{,}5\,v_o\) na linha 2 e somar o 1 A de prova dá \(E_2\) com um termo extra proporcional a \(v_o\). Impedância não depende de estado inicial (<a href="#ci">seção 9.5</a>); a presença de \(v_o\) na resposta é sinal de erro — e o enunciado, ao pedir a resposta "em função de \(E_s(s)\), \(v_o\) e \(g_m\)", quase convida a esse escorregão. A resposta correta não contém nem \(E_s\) nem \(v_o\).</p>
+            <p><b style="color:var(--ink)">Erro 3 — refazer tudo do zero.</b> Redesenhar o circuito e remontar a matriz funciona, mas consome o tempo que a dica do enunciado estava tentando poupar. O item vale 2,0 pontos e a conta, aproveitando a matriz, tem seis linhas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, item c</span>\(V_{Th}(s)\) e \(Z_{Th}(s)\) em A–B por divisor de corrente, conferidos por A.N.</span>
+          <span class="q-prova">P2/2023 — 1,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">c) (1,0)</b> Somente para esse item considere condições iniciais nulas para o circuito da Figura 1. Os componentes \(R\), \(L\) e \(C\) permanecem com os mesmos valores do item b e as demais grandezas assumem os valores a seguir. Calcule as expressões da tensão e da impedância de Thévenin (\(V_{Th}(s)\) e \(Z_{Th}(s)\)) vistas pelos terminais A e B no domínio de Laplace. Apresente seu raciocínio.</p>
+
+        <div class="given-box">
+          <span>\(R = 2\ \Omega\)</span>
+          <span>\(L = 2\ \mathrm H\)</span>
+          <span>\(C = 0{,}5\ \mathrm F\)</span>
+          <span>\(g_m = 0\)</span>
+          <span>\(i_s(t) = 10\,\delta(t)\ (\mathrm A,\mathrm s)\)</span>
+          <span>c.i.n.</span>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 680 350" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 60 L60 156"/>
+              <path d="M60 204 L60 300"/>
+              <path d="M60 60 L200 60"/>
+              <path d="M200 60 L290 60"/>
+              <path d="M304 60 L460 60"/>
+              <path d="M200 60 L200 96"/>
+              <path d="M200 146 L200 205"/>
+              <path d="M200 253 L200 300"/>
+              <path d="M460 60 L460 156"/>
+              <path d="M460 204 L460 300"/>
+              <path d="M60 300 L460 300"/>
+            </g>
+
+            <circle cx="60" cy="180" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M60 192 L60 170" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M55 176 L60 168 L65 176" fill="#4ade9a"/>
+            <text x="4" y="230" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">10</text>
+            <text x="4" y="250" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">= L[10δ(t)]</text>
+
+            <path d="M200 96 q -15 9 0 18 q -15 9 0 18 q -15 9 0 14" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="222" y="126" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2s</text>
+            <path d="M160 100 L160 138" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M155 130 L160 140 L165 130" fill="#f5b942"/>
+            <text x="128" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I₁</text>
+
+            <circle cx="200" cy="175" r="4" fill="#4ade9a"/>
+            <text x="212" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="234" y="190" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">(nó E₂)</text>
+            <rect x="188" y="205" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="222" y="236" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 Ω</text>
+            <circle cx="200" cy="300" r="4" fill="#4ade9a"/>
+            <text x="212" y="324" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+            <path d="M132 300 L132 182" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <path d="M127 190 L132 180 L137 190" fill="#f5b942"/>
+            <text x="76" y="278" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V_Th</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="290" y1="44" x2="290" y2="76"/>
+              <line x1="304" y1="44" x2="304" y2="76"/>
+            </g>
+            <text x="278" y="32" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2/s</text>
+            <circle cx="200" cy="60" r="4" fill="#4ade9a"/>
+            <text x="166" y="46" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">E₁</text>
+            <circle cx="460" cy="60" r="4" fill="#4ade9a"/>
+            <text x="470" y="46" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">E₃</text>
+
+            <rect x="448" y="156" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="484" y="186" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 Ω</text>
+            <path d="M420 120 L420 158" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M415 150 L420 160 L425 150" fill="#f5b942"/>
+            <text x="392" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I₂</text>
+
+            <path d="M520 60 L560 60" stroke="#5d6e67" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <text x="512" y="100" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">ramo do vinculado:</text>
+            <text x="512" y="118" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">ausente (g_m = 0)</text>
+            <path d="M200 300 L200 316" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 1 reduzida ao caso do item c, já em Laplace. A fonte \(10\delta(t)\) vira a constante 10. O resistor de \(2\ \Omega\) entre A e B <b>pertence à rede</b> — é o aviso do gabarito. Com \(g_m = 0\) o ramo do vinculado desaparece e o nó \(E_3\) só tem o capacitor e o outro resistor.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a fonte de corrente vê dois caminhos em paralelo de \(E_1\) ao terra: \(2s+2\) e \(2/s+2\). Um divisor de corrente dá \(I_1\), e \(V_{Th} = 2I_1\). Para \(Z_{Th}\), a fonte de corrente é inativada (ramo aberto) e sobra o paralelo do resistor de A–B com o resto da malha.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Redesenhar em \(s\) e identificar o que \(V_{Th}\) é</div>
+              <p>Com \(g_m = 0\) o ramo da fonte vinculada some. Com c.i.n. não há fonte de c.i. nenhuma. As impedâncias:</p>
+              <div class="eq-block">\[ sL = 2s\ \Omega \qquad \frac{1}{sC} = \frac{1}{0{,}5\,s} = \frac{2}{s}\ \Omega \qquad \mathcal L[10\delta(t)] = 10 \]</div>
+              <p>Os terminais são A \(=\) nó \(E_2\) e B \(=\) terra. Logo</p>
+              <div class="eq-block">\[ V_{Th}(s) = V_{AB}(s) = E_2(s) \]</div>
+            </div>
+          </div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito P2 2023, item c</span>
+            <p>Escrito à mão, logo após identificar \(V_{Th} = E_2\):</p>
+            <div class="final-answer">Obs: a resistência nos terminais AB <b>não pode ser eliminada!</b></div>
+            <p class="dim">Ver a <a href="#vth">seção 9.3</a>: o resistor de \(2\ \Omega\) entre \(E_2\) e o terra faz parte da Figura 1, então faz parte da rede. É ele que produz \(V_{Th}\) e é ele que entra no paralelo de \(Z_{Th}\).</p>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Divisor de corrente no nó \(E_1\)</div>
+              <p>Do nó \(E_1\) saem dois caminhos até o terra, em paralelo:</p>
+              <div class="eq-block">\[ \text{ramo do indutor: } 2s + 2 \qquad\qquad \text{ramo do capacitor: } \frac{2}{s} + 2 \]</div>
+              <p>A corrente \(I_1\) que desce pelo indutor é a fração do total que vai pelo <em>outro</em> ramo dividida pela soma — a regra do divisor de corrente:</p>
+              <div class="eq-block">\[ I_1(s) = \frac{\dfrac{2}{s} + 2}{\dfrac{2}{s} + 2 + 2s + 2}\cdot 10 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Reduzir as frações</div>
+              <div class="eq-block">\[ I_1(s) = \frac{\dfrac{2+2s}{s}}{\dfrac{2s^2 + 4s + 2}{s}}\cdot 10 = \frac{2(s+1)}{2(s^2+2s+1)}\cdot 10 \]</div>
+              <div class="eq-block">\[ = \frac{2(s+1)}{2(s+1)^2}\cdot 10 = \frac{10}{s+1} \]</div>
+              <p class="dim">O denominador fatorou como quadrado perfeito e um \((s+1)\) cancelou. Cancelamento limpo é sinal de montagem correta.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">\(V_{Th}\) é a queda no resistor de A–B</div>
+              <div class="eq-block">\[ V_{AB}(s) = 2\,I_1(s) = \frac{10}{s+1}\cdot 2 = \frac{20}{s+1} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">\(Z_{Th}\): inativar a fonte de corrente e reduzir</div>
+              <p>Fonte de corrente independente \(\to\) circuito aberto. O ramo da esquerda desaparece e a rede vista de A–B fica: o resistor de \(2\ \Omega\) (que está entre A e B) em paralelo com o resto do caminho, que agora é uma série \(2s + \frac2s + 2\) de A até B pelo outro lado.</p>
+              <div class="eq-block">\[ Z_{Th}(s) = 2 \parallel \left(2s + \frac{2}{s} + 2\right) = 2 \parallel 2\left(\frac{s^2+s+1}{s}\right) \]</div>
+              <p class="dim">Conferência da série: \(2s + \frac2s + 2 = \frac{2s^2 + 2 + 2s}{s} = \frac{2(s^2+s+1)}{s}\). ✓</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Executar o paralelo</div>
+              <div class="eq-block">\[ Z_{Th}(s) = \frac{2\cdot 2\left(\dfrac{s^2+s+1}{s}\right)}{2 + \dfrac{2s^2+2s+2}{s}} = \frac{\dfrac{4(s^2+s+1)}{s}}{\dfrac{2s + 2s^2+2s+2}{s}} \]</div>
+              <div class="eq-block">\[ = \frac{4(s^2+s+1)}{2s^2+4s+2} = \frac{4(s^2+s+1)}{2(s+1)^2} = \frac{2(s^2+s+1)}{(s+1)^2} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ V_{Th}(s) = \frac{20}{s+1} \qquad\qquad Z_{Th}(s) = \frac{2\,(s^2+s+1)}{(s+1)^2} \]</div>
+
+          <h4 style="margin:1.6rem 0 0.4rem;font-size:1.02rem;color:var(--ink)">Verificação independente por análise nodal</h4>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito P2 2023, item c — segunda via</span>
+            <p>"A tensão \(V_{AB}(s) = E_2(s)\) também poderia ser calculada por A.N.":</p>
+            <div class="eq-block">\[
+              E_2(s) = \frac{\begin{vmatrix} \dfrac{1}{2s} + \dfrac{s}{2} &amp; 10 &amp; -\dfrac{s}{2} \\[4pt] -\dfrac{1}{2s} &amp; 0 &amp; 0 \\[4pt] -\dfrac{s}{2} &amp; 0 &amp; \dfrac{s}{2} + \dfrac{1}{2}\end{vmatrix}}
+              {\begin{vmatrix} \dfrac{1}{2s} + \dfrac{s}{2} &amp; -\dfrac{1}{2s} &amp; -\dfrac{s}{2} \\[4pt] -\dfrac{1}{2s} &amp; \dfrac{1}{2} + \dfrac{1}{2s} &amp; 0 \\[4pt] -\dfrac{s}{2} &amp; 0 &amp; \dfrac{s}{2} + \dfrac{1}{2}\end{vmatrix}}
+            \]</div>
+            <div class="eq-block">\[ V_{AB}(s) = E_2(s) = \frac{\dfrac{10}{4s}(s+1)}{\dfrac{1}{8s}\left(s^2 + 2s + 1\right)} = \frac{20}{s+1} \]</div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem cada elemento dessa matriz</div>
+              <p>É a montagem por inspeção do <a href="modulo-07.html#nodal">módulo 07</a>, com \(L=2\), \(C=0{,}5\), \(R=2\), \(g_m=0\):</p>
+              <div class="eq-block">\[ Y_{11} = \frac{1}{sL} + sC = \frac{1}{2s} + \frac{s}{2} \qquad Y_{12} = -\frac{1}{sL} = -\frac{1}{2s} \qquad Y_{13} = -sC = -\frac{s}{2} \]</div>
+              <div class="eq-block">\[ Y_{22} = \frac1R + \frac{1}{sL} = \frac12 + \frac{1}{2s} \qquad Y_{33} = sC + \frac1R = \frac{s}{2} + \frac12 \qquad Y_{32} = -g_m = 0 \]</div>
+              <div class="eq-block">\[ J(s) = \begin{bmatrix} 10 \\ 0 \\ 0\end{bmatrix} \]</div>
+              <p>A matriz é <em>simétrica</em> porque \(g_m = 0\) — sem vinculado, sem assimetria. E \(J\) tem dois zeros porque não há c.i. e não há outra fonte.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">O determinante, feito por extenso</div>
+              <p>Com \(a = \dfrac{1}{2s}+\dfrac{s}{2} = \dfrac{s^2+1}{2s}\), \(b = -\dfrac{1}{2s}\), \(c = -\dfrac{s}{2}\), \(d = \dfrac{s+1}{2s}\), \(e = \dfrac{s+1}{2}\), a matriz é \(\begin{bmatrix} a &amp; b &amp; c\\ b &amp; d &amp; 0\\ c &amp; 0 &amp; e\end{bmatrix}\) e</p>
+              <div class="eq-block">\[ \det = a\,d\,e - b^2 e - c^2 d \]</div>
+              <div class="eq-block">\[ a\,d\,e = \frac{(s^2+1)(s+1)^2}{8s^2} \qquad b^2 e = \frac{1}{4s^2}\cdot\frac{s+1}{2} = \frac{s+1}{8s^2} \qquad c^2 d = \frac{s^2}{4}\cdot\frac{s+1}{2s} = \frac{s^3(s+1)}{8s^2} \]</div>
+              <div class="eq-block">\[ \det = \frac{(s+1)\Big[(s^2+1)(s+1) - 1 - s^3\Big]}{8s^2} \]</div>
+              <div class="eq-block">\[ (s^2+1)(s+1) - 1 - s^3 = s^3 + s^2 + s + 1 - 1 - s^3 = s^2 + s = s(s+1) \]</div>
+              <div class="eq-block">\[ \det = \frac{(s+1)\cdot s(s+1)}{8s^2} = \frac{(s+1)^2}{8s} \]</div>
+              <p>que é exatamente o \(\frac{1}{8s}(s^2+2s+1)\) do gabarito.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">O numerador de Cramer, feito por extenso</div>
+              <p>Substituindo a <em>segunda</em> coluna por \(J = [10,0,0]^{\mathsf T}\) e expandindo pela segunda linha (que só tem o elemento \(b\)):</p>
+              <div class="eq-block">\[ N = \begin{vmatrix} a &amp; 10 &amp; c\\ b &amp; 0 &amp; 0\\ c &amp; 0 &amp; e\end{vmatrix} = -\,b\begin{vmatrix} 10 &amp; c\\ 0 &amp; e\end{vmatrix} = -b\cdot 10\,e \]</div>
+              <div class="eq-block">\[ N = -\left(-\frac{1}{2s}\right)\cdot 10\cdot\frac{s+1}{2} = \frac{10(s+1)}{4s} \]</div>
+              <p>idêntico ao \(\frac{10}{4s}(s+1)\) do gabarito. E então</p>
+              <div class="eq-block">\[ E_2(s) = \frac{N}{\det} = \frac{\dfrac{10(s+1)}{4s}}{\dfrac{(s+1)^2}{8s}} = \frac{10(s+1)}{4s}\cdot\frac{8s}{(s+1)^2} = \frac{20}{s+1} \]</div>
+              <p>Os dois métodos concordam. A A.N. tem a vantagem de, no mesmo esforço, entregar o determinante — e o determinante já diz que as FCPs são \(s=-1\) duplo, o que confere com o polo duplo de \(Z_{Th}\).</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p><b style="color:var(--ink)">Erro 1 — eliminar o resistor de A–B.</b> O erro que o próprio gabarito antecipa com um aviso sublinhado. Quem o elimina obtém \(V_{Th} = 0\) (sem caminho para a corrente em vazio) ou \(Z_{Th} = 2s + \frac2s + 2\), com um polo em \(s=0\) que não existe na rede.</p>
+            <p><b style="color:var(--ink)">Erro 2 — inverter o divisor de corrente.</b> A fração que multiplica o total é a impedância do <em>outro</em> ramo sobre a soma das duas. Trocando as duas, sai \(I_1 = \frac{10(2s+2)}{2(s+1)^2/s}\cdot\) — e o cancelamento limpo não acontece, que é o próprio aviso de que o divisor está invertido.</p>
+            <p><b style="color:var(--ink)">Erro 3 — tratar \(10\delta(t)\) como \(10/s\).</b> A transformada do impulso é 1, não \(1/s\) (tabela do formulário, linha \(\delta(t) \leftrightarrow 1\)). Trocar por \(10/s\) multiplica a resposta inteira por \(1/s\) e introduz um polo na origem.</p>
+            <p><b style="color:var(--ink)">Erro 4 — usar \(g_m = 10\) do item a.</b> O enunciado do item c redefine <em>todos</em> os valores, inclusive \(g_m = 0\). Manter o vinculado do item anterior torna a rede assimétrica e a resposta irreconhecível.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Questões do formulário</h3>
+      <p class="dim">Quatro questões resolvidas na própria folha-resumo que o professor permite levar para a P2. São curtas, mas cobrem os dois casos difíceis: vinculado (Q02 e Q03) e indutância mútua (Q08 e Q09).</p>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · folha 1, Questão 02</span>\(V_{AB}\) do Thévenin com fonte vinculada, por análise nodal</span>
+          <span class="q-prova">Formulário P2</span>
+        </div>
+
+        <p>Qual é a tensão \(V_{\mathrm{AB}}\) do gerador do Thévenin visto entre A e B com \(r = -4\).</p>
+
+        <div class="given-box">
+          <span>\(C_1 = 1\ \mathrm F\) (tensão \(v_1\))</span>
+          <span>\(C_2 = 2\ \mathrm F\) (tensão \(v_2\))</span>
+          <span>\(R = 1\ \Omega\) entre A e B</span>
+          <span>\(v_1(0^-) = 1\)</span>
+          <span>\(v_2(0^-) = 0\)</span>
+          <span>\(r = -4\)</span>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 146"/>
+              <path d="M70 194 L70 270"/>
+              <path d="M70 70 L200 70"/>
+              <path d="M200 70 L200 150"/>
+              <path d="M200 178 L200 270"/>
+              <path d="M200 70 L280 70"/>
+              <path d="M336 70 L400 70"/>
+              <path d="M400 70 L400 150"/>
+              <path d="M400 178 L400 270"/>
+              <path d="M400 70 L520 70"/>
+              <path d="M520 70 L520 146"/>
+              <path d="M520 194 L520 270"/>
+              <path d="M70 270 L520 270"/>
+            </g>
+
+            <circle cx="70" cy="170" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 182 L70 160" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M65 166 L70 158 L75 166" fill="#4ade9a"/>
+            <text x="6" y="220" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">i_s(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="184" y1="150" x2="216" y2="150"/>
+              <line x1="184" y1="178" x2="216" y2="178"/>
+            </g>
+            <text x="124" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 F</text>
+            <path d="M246 214 L246 132" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M241 140 L246 130 L251 140" fill="#f5b942"/>
+            <text x="256" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁</text>
+            <circle cx="200" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="188" y="50" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+
+            <rect x="280" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="292" y="104" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="384" y1="150" x2="416" y2="150"/>
+              <line x1="384" y1="178" x2="416" y2="178"/>
+            </g>
+            <text x="330" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 F</text>
+            <path d="M446 214 L446 132" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M441 140 L446 130 L451 140" fill="#f5b942"/>
+            <text x="456" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂</text>
+            <circle cx="400" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="390" y="50" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+            <path d="M490 170 L520 140 L550 170 L520 200 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M520 186 L520 156" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M515 162 L520 154 L525 162" fill="#4ade9a"/>
+            <text x="560" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">r·v₁</text>
+
+            <path d="M300 270 L300 286 M286 286 L314 286 M291 292 L309 292 M296 298 L304 298" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+            <text x="60" y="308" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">c.i.: v₁(0⁻) = 1, v₂(0⁻) = 0</text>
+          </svg>
+          <div class="pz-legend">A tensão pedida é a do gerador de Thévenin visto entre A e B, ou seja, \(V_{AB} = E_A - E_B\) com os terminais em vazio. Aqui B não é o terra, então a subtração é necessária.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — há vinculado e três elementos, então vai por análise nodal. A c.i. do capacitor de 1 F entra no vetor como uma fonte de corrente constante \(C_1 v_1(0^-) = 1\), e \(V_{Th}\) é a <em>diferença</em> \(E_A - E_B\), porque nenhum dos dois terminais é o terra.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · formulário P2, folha 1, Q02</span>
+            <p>As duas equações nodais, com a relação de controle:</p>
+            <div class="eq-block">\[ E_A:\; -I_s + s\cdot 1\,(E_A - 0) - 1 + \frac{E_A - E_B}{1} = 0 \]</div>
+            <div class="eq-block">\[ E_B:\; -r V_1 + s\cdot 2\,(E_B - 0) + \frac{E_B - E_A}{1} = 0, \qquad e_A = v_1 \implies E_A = V_1 \]</div>
+            <div class="eq-block">\[
+              \begin{bmatrix} s+1 &amp; -1\\ -1-r &amp; 2s+1\end{bmatrix}\begin{bmatrix}E_A\\E_B\end{bmatrix} = \begin{bmatrix}I_s+1\\0\end{bmatrix}
+              \;\Longleftrightarrow\;
+              \begin{bmatrix}E_A\\E_B\end{bmatrix} = \frac{1}{(s+1)(2s+1)-(1+r)}\begin{bmatrix}2s+1 &amp; 1\\ 1+r &amp; s+1\end{bmatrix}\begin{bmatrix}I_s+1\\0\end{bmatrix}
+            \]</div>
+            <div class="eq-block">\[ \begin{bmatrix}E_A\\E_B\end{bmatrix} = \frac{1}{2s^2+3s-r}\begin{bmatrix}(2s+1)(I_s+1)\\(1+r)(I_s+1)\end{bmatrix} \implies E_A - E_B = (2s - r)(I_s+1)\cdot\frac{1}{2s^2+3s-r} \]</div>
+            <p class="dim">No original, nas duas ocorrências o \(r\) está riscado e substituído à mão por \(-4\).</p>
+            <div class="final-answer">\[ V_{AB} = (I_s+1)\cdot\frac{2s+4}{2s^2+3s+4} \]</div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem o "\(-1\)" na equação do nó A</div>
+              <p>O capacitor de 1 F está entre A e o terra, com o "+" de \(v_1\) em cima. Na forma paralelo (a forma da análise nodal), ele é a admitância \(sC_1 = s\) em paralelo com uma fonte de corrente <em>constante</em> de valor</p>
+              <div class="eq-block">\[ C_1\,v_1(0^-) = 1\cdot 1 = 1\ \mathrm A \]</div>
+              <p>apontando para o nó A. Como a equação está escrita com todas as correntes <em>saindo</em> de A, uma fonte que injeta entra com sinal negativo: daí o \(-1\), que ao passar para o outro lado dá o \(+1\) do vetor, \(J_A = I_s + 1\).</p>
+              <p>O capacitor de 2 F tem \(v_2(0^-)=0\) e por isso não gera fonte nenhuma. É por isso que o vetor tem um zero na segunda linha.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A assimetria da matriz é o ganho do vinculado</div>
+              <p>Posição (1,2): \(-1\), que é \(-1/R\). Posição (2,1): \(-1-r\). A diferença entre as duas é exatamente \(r\) — a transcondutância do gerador \(r\,v_1\), que injeta no nó B e é controlado pela tensão do nó A. É o mecanismo descrito no <a href="modulo-07.html#vinculadas">módulo 07, seção 7.5</a>.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O determinante, por extenso</div>
+              <div class="eq-block">\[ \det = (s+1)(2s+1) - (-1)(-1-r) = (s+1)(2s+1) - (1+r) \]</div>
+              <div class="eq-block">\[ = 2s^2 + 3s + 1 - 1 - r = 2s^2 + 3s - r \]</div>
+              <p>Com \(r = -4\): \(\det = 2s^2 + 3s + 4\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A subtração \(E_A - E_B\), termo a termo</div>
+              <div class="eq-block">\[ E_A = \frac{(2s+1)(I_s+1)}{2s^2+3s-r} \qquad\qquad E_B = \frac{(1+r)(I_s+1)}{2s^2+3s-r} \]</div>
+              <div class="eq-block">\[ E_A - E_B = \frac{\big[(2s+1) - (1+r)\big](I_s+1)}{2s^2+3s-r} = \frac{(2s - r)(I_s+1)}{2s^2+3s-r} \]</div>
+              <p>Substituindo \(r = -4\) nos dois lugares:</p>
+              <div class="eq-block">\[ V_{AB} = \frac{(2s + 4)(I_s+1)}{2s^2+3s+4} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ V_{AB}(s) = (I_s + 1)\cdot\frac{2s+4}{2s^2+3s+4} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · o que \(r=-4\) faz com a rede</span>
+            <p>Na Questão 02 da <em>folha 2</em> o professor resolve o mesmo circuito perguntando qual \(r\) dá FCP nula, e o resultado é \(r = 0\): a equação característica é \(2s^2 + 3s - r = 0\), que só tem raiz em \(s=0\) se \(r=0\). Com \(r = -4\) as FCPs são as raízes de \(2s^2+3s+4=0\), complexas com parte real \(-3/4 < 0\) — rede assintoticamente estável. O \(r\) negativo aqui é benigno.</p>
+            <p><b style="color:var(--ink)">Onde se erra:</b> substituir \(r=-4\) em apenas uma das duas ocorrências. O \(r\) aparece no numerador (via \(2s-r\)) <em>e</em> no denominador (via \(-r\)); trocar só um deles dá \(\frac{2s+4}{2s^2+3s-4}\) ou \(\frac{2s-4}{2s^2+3s+4}\), ambos com o sinal errado em um lugar. Segundo erro: deixar \(V_{AB} = E_B - E_A\) por ter chamado B de "+". A polaridade do Thévenin segue a orientação A\(\to\)B do enunciado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · folha 2, Questão 03</span>\(Z_0(s)\) de Thévenin com o resistor retirado, por fonte de prova</span>
+          <span class="q-prova">Formulário P2</span>
+        </div>
+
+        <p>Suponha que o resistor foi retirado da rede. Quanto vale a impedância \(Z_0(s)\) de Thévenin visto entre A e B nessas condições?</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M200 70 L200 150"/>
+              <path d="M200 178 L200 270"/>
+              <path d="M200 70 L284 70"/>
+              <path d="M332 70 L400 70"/>
+              <path d="M400 70 L400 150"/>
+              <path d="M400 178 L400 270"/>
+              <path d="M400 70 L520 70"/>
+              <path d="M520 70 L520 146"/>
+              <path d="M520 194 L520 270"/>
+              <path d="M200 270 L520 270"/>
+            </g>
+            <text x="56" y="66" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i_s → aberto</text>
+            <text x="56" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">c.i. → 0</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="184" y1="150" x2="216" y2="150"/>
+              <line x1="184" y1="178" x2="216" y2="178"/>
+            </g>
+            <text x="126" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 F</text>
+            <path d="M246 214 L246 132" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M241 140 L246 130 L251 140" fill="#f5b942"/>
+            <text x="256" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁ = V_A</text>
+            <circle cx="200" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="188" y="50" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+
+            <circle cx="308" cy="70" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+            <path d="M296 70 L320 70" stroke="#f5b942" stroke-width="2"/>
+            <path d="M314 65 L324 70 L314 75" fill="#f5b942"/>
+            <text x="284" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">1 A</text>
+            <text x="266" y="136" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">(no lugar do 1 Ω)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="384" y1="150" x2="416" y2="150"/>
+              <line x1="384" y1="178" x2="416" y2="178"/>
+            </g>
+            <text x="330" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 F</text>
+            <path d="M446 214 L446 132" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M441 140 L446 130 L451 140" fill="#f5b942"/>
+            <text x="456" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂ = V_B</text>
+            <circle cx="400" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="390" y="50" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+            <path d="M490 170 L520 140 L550 170 L520 200 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M520 186 L520 156" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M515 162 L520 154 L525 162" fill="#4ade9a"/>
+            <text x="560" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">r·v₁</text>
+
+            <path d="M300 270 L300 286 M286 286 L314 286 M291 292 L309 292 M296 298 L304 298" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">O resistor de \(1\ \Omega\) foi retirado (por instrução do enunciado) e o seu lugar é ocupado pela fonte de prova de 1 A, apontando de A para B. A fonte independente \(i_s\) foi aberta e as c.i. inativadas; o vinculado \(r v_1\) permanece.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — retirando o resistor, A e B ficam sendo o acesso, e o método é o da fonte externa: 1 A entre A e B. Em Laplace, 1 A constante é \(1/s\) — e é esse \(1/s\) que aparece nas duas equações nodais do gabarito.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · formulário P2, folha 2, Q03</span>
+            <div class="eq-block">\[ \frac{1}{s} + s\cdot 1\cdot V_A = 0 \implies V_A = -\frac{1}{s^2},\qquad V_1 = V_A \]</div>
+            <div class="eq-block">\[ -r V_1 + s\cdot 2\, V_B - \frac{1}{s} = 0 \;\Longleftrightarrow\; V_B = \frac{1/s + rV_A}{2s} = \frac{1/s - r/s^2}{2s} = \frac{s-r}{2s^3} \]</div>
+            <div class="eq-block">\[ E_0 = V_B - V_A = \frac{s-r}{2s^3} + \frac{1}{s^2} = \frac{3s-r}{2s^3} \implies Z_0 = \frac{E_0}{1/s} = \frac{3s-r}{2s^2} \]</div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Por que a fonte de prova vale \(1/s\) e não 1</div>
+              <p>A fonte é de corrente <em>constante</em>, \(i(t) = 1\cdot H(t)\), e a transformada do degrau é \(1/s\) (tabela do formulário). Compare com a P2 2025, em que o professor escreve o vetor \([0;1]\): ali a leitura é "1 A" tratado como amplitude unitária, e a razão \(Z_o = E_2/1\) fica adimensionalmente correta do mesmo jeito, porque o \(1/s\) se cancela na divisão. Aqui o professor manteve o \(1/s\) explícito nas duas pontas — nas equações e no divisor \(Z_0 = E_0/(1/s)\) — e o resultado é idêntico. Qualquer das duas convenções serve, desde que seja a mesma nas duas pontas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A 1ª LK no nó A, por extenso</div>
+              <p>Correntes saindo de A: a que vai para a fonte de prova (que <em>leva</em> \(1/s\) de A para B, logo sai) e a que desce pelo capacitor de 1 F. A c.i. está inativada, então o capacitor é \(sC_1 = s\) puro:</p>
+              <div class="eq-block">\[ \underbrace{\frac{1}{s}}_{\text{sai para B}} + \underbrace{s\cdot 1\cdot(V_A - 0)}_{\text{desce pelo capacitor}} = 0 \;\Longrightarrow\; V_A = -\frac{1}{s^2} \]</div>
+              <p class="dim">\(V_A\) sai <em>negativo</em>: a fonte de prova está retirando corrente de A, então A fica com potencial abaixo do terra. Nada de errado.</p>
+              <p>Compare com a Questão 02 da mesma folha, cuja equação de nó A era \(-I_s + sV_1 - 1\cdot v_1(0^-) + \frac{V_1-V_2}{1} = 0\): desapareceram o \(-I_s\) (fonte independente inativada), o \(-1\) (c.i. inativada) e o termo do resistor (retirado), e entrou o \(1/s\) da prova.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A 1ª LK no nó B, por extenso</div>
+              <p>Em B: o vinculado \(r v_1\) injeta (entra com \(-\)), o capacitor de 2 F conduz para baixo (\(+2s V_B\)) e a fonte de prova <em>injeta</em> \(1/s\) em B (entra com \(-\)):</p>
+              <div class="eq-block">\[ -r V_1 + 2s\,V_B - \frac{1}{s} = 0 \]</div>
+              <p>Com \(V_1 = V_A = -1/s^2\):</p>
+              <div class="eq-block">\[ 2s\,V_B = \frac{1}{s} + r V_A = \frac1s - \frac{r}{s^2} = \frac{s - r}{s^2} \]</div>
+              <div class="eq-block">\[ V_B = \frac{s-r}{2s^3} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A tensão de prova é \(V_B - V_A\), e por quê</div>
+              <p>A fonte injeta em B e retira de A. Referida à própria fonte, B é o terminal "+": a impedância que ela vê é a razão entre \(V_B - V_A\) e a corrente injetada. Por isso o gabarito escreve \(E_0 = V_B - V_A\) e não o contrário — é o que faz \(Z_0\) sair positiva.</p>
+              <div class="eq-block">\[ E_0 = V_B - V_A = \frac{s-r}{2s^3} - \left(-\frac{1}{s^2}\right) = \frac{s-r}{2s^3} + \frac{1}{s^2} \]</div>
+              <p>Pondo sobre denominador comum \(2s^3\), com \(\frac{1}{s^2} = \frac{2s}{2s^3}\):</p>
+              <div class="eq-block">\[ E_0 = \frac{(s-r) + 2s}{2s^3} = \frac{3s - r}{2s^3} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Dividir pela corrente de prova</div>
+              <div class="eq-block">\[ Z_0(s) = \frac{E_0(s)}{1/s} = \frac{3s-r}{2s^3}\cdot s = \frac{3s-r}{2s^2} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ Z_0(s) = \frac{3s - r}{2s^2} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · conferência com \(r = 0\)</span>
+            <p>Com \(r=0\) o vinculado desaparece e a rede fica só com os dois capacitores em série entre A e B (o caminho passa por A, desce 1 F, sobe 2 F, chega em B). A associação série de capacitâncias:</p>
+            <div class="eq-block">\[ Z_0 = \frac{1}{s\cdot 1} + \frac{1}{s\cdot 2} = \frac{1}{s} + \frac{1}{2s} = \frac{3}{2s} \]</div>
+            <p>E a fórmula com \(r=0\) dá \(\frac{3s}{2s^2} = \frac{3}{2s}\). Bate. Esse é o teste que vale fazer em qualquer questão com parâmetro literal: zere o ganho e confira contra a associação direta.</p>
+            <p><b style="color:var(--ink)">Onde se erra:</b> (i) manter a c.i. — o termo \(C_1 v_1(0^-) = 1\) na equação de A, que estava na Q02 e <em>não</em> pode estar aqui, porque impedância não depende de estado; (ii) inativar o vinculado, o que dá \(3/(2s)\) para todo \(r\); (iii) trocar o sinal de \(E_0\), obtendo \(Z_0 = (r-3s)/(2s^2)\), negativa para \(r\) pequeno — resultado que já se denuncia.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · folha 2, Questão 08</span>\(E_0\) do Thévenin com indutores acoplados e c.i., \(k = 1/2\)</span>
+          <span class="q-prova">Formulário P2</span>
+        </div>
+
+        <p>A tensão \(E_0\) do equivalente de Thévenin em Laplace visto pelos terminais A e B do circuito da figura abaixo é (em unidades SI).</p>
+
+        <div class="given-box">
+          <span>\(e_g(t) = H(t)\)</span>
+          <span>\(R = 3\ \Omega\)</span>
+          <span>\(L_1 = 1\ \mathrm H\)</span>
+          <span>\(L_2 = 4\ \mathrm H\)</span>
+          <span>\(k = \tfrac12\)</span>
+          <span>\(i_L(0^-) = -1\ \mathrm A\)</span>
+        </div>
+
+        <div class="src-block src-ext">
+          <span class="src-kicker">complemento externo · pré-requisito adiantado</span>
+          <p>Esta questão e a próxima usam <b style="color:var(--ink)">indutância mútua</b>. A teoria completa — convenção dos pontos, sinal de \(M\), associações série e paralelo acopladas — é o assunto do <a href="modulo-10.html">módulo 10</a>. Aqui usamos apenas as duas relações constitutivas que já estão no formulário da P2, na caixa "Indutancia":</p>
+          <div class="eq-block">\[ v_1 = L_1\frac{di_1}{dt} + M\frac{di_2}{dt} \qquad\qquad v_2 = M\frac{di_1}{dt} + L_2\frac{di_2}{dt} \]</div>
+          <p>e o coeficiente de acoplamento \(|M| = k\sqrt{L_1L_2}\), com \(0\le k\le 1\). Em Laplace, com c.i., cada \(\frac{di}{dt}\) vira \(sI(s) - i(0^-)\).</p>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 136"/>
+              <path d="M70 184 L70 250"/>
+              <path d="M70 70 L150 70"/>
+              <path d="M206 70 L262 70"/>
+              <path d="M320 70 L400 70"/>
+              <path d="M400 70 L400 110"/>
+              <path d="M400 190 L400 250"/>
+              <path d="M400 70 L540 70"/>
+              <path d="M70 250 L540 250"/>
+            </g>
+
+            <circle cx="70" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="54" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+            <text x="78" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+            <text x="4" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">H(t)</text>
+
+            <rect x="150" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="164" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">3 Ω</text>
+
+            <path d="M262 70 q 9 -16 18 0 q 9 -16 18 0 q 9 -16 18 0 q 9 -16 4 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="252" y="40" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 H</text>
+            <circle cx="318" cy="56" r="4" fill="#4ade9a"/>
+
+            <path d="M400 110 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="416" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">4 H</text>
+            <circle cx="386" cy="112" r="4" fill="#4ade9a"/>
+
+            <path d="M312 84 q 30 24 62 24" fill="none" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <text x="316" y="122" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">k = 1/2</text>
+
+            <path d="M226 34 L258 34" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M252 29 L262 34 L252 39" fill="#f5b942"/>
+            <text x="212" y="22" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i_L</text>
+
+            <path d="M470 220 L470 96" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <path d="M465 104 L470 94 L475 104" fill="#f5b942"/>
+            <text x="482" y="164" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">E₀ = V₂</text>
+
+            <circle cx="546" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <circle cx="546" cy="250" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="560" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="560" y="262" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+            <text x="60" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">c.i.: i_L(0⁻) = −1 A · pontos em extremidades opostas ⇒ M &lt; 0</text>
+          </svg>
+          <div class="pz-legend">\(L_1 = 1\ \mathrm H\) está <em>em série</em> no ramo superior (ponto no terminal direito); \(L_2 = 4\ \mathrm H\) é o ramo vertical (ponto no terminal superior). A–B em aberto, então a mesma corrente \(i_L\) atravessa as duas bobinas.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — com A–B em aberto, as duas bobinas são percorridas pela <em>mesma</em> corrente \(i_L\). Isso reduz a relação constitutiva matricial a duas expressões escalares, e o número \(|M| = 1\) faz \(V_1\) desaparecer por completo (\(L_1 - |M| = 0\)). Sobra uma 2ª LK de uma linha.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · formulário P2, folha 2, Q08</span>
+            <div class="eq-block">\[ \begin{pmatrix}V_1\\V_2\end{pmatrix} = \begin{pmatrix}1 &amp; -1\\ -1 &amp; 4\end{pmatrix}\begin{pmatrix}sI_L - i_L(0^-)\\ sI_L - i_L(0^-)\end{pmatrix} \]</div>
+            <div class="eq-block">\[ |M| = k\sqrt{L_1L_2} = \frac{1}{2}\sqrt{1\cdot\frac{1}{4}} = 1 \]</div>
+            <div class="eq-block">\[ -\frac{1}{s} + 3I_L + V_1 + V_2 = 0 \;\Longleftrightarrow\; 3I_L + 3(sI_L + 1) = \frac{1}{s} \]</div>
+            <div class="eq-block">\[ \Longleftrightarrow\; I_L = \frac{\frac{1}{s} - 3}{3(s+1)} = \frac{1-3s}{3s(s+1)} \]</div>
+            <div class="final-answer">\[ V_2 = 3\left(sI_L + 1\right) = 3\left(\frac{1-3s}{3(s+1)} + 1\right) = \frac{4}{s+1} \]</div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · inconsistência do formulário nesta questão</span>
+            <p>Está escrito, literalmente:</p>
+            <div class="eq-block">\[ |M| = k\sqrt{L_1L_2} = \frac{1}{2}\sqrt{1\cdot\frac{1}{4}} = 1 \]</div>
+            <p>O radicando \(\frac14\) é <b style="color:var(--ink)">incompatível com o resultado</b>: \(\frac12\sqrt{1\cdot\frac14} = \frac12\cdot\frac12 = \frac14\), e não 1. A forma coerente com os dados da figura (\(L_1 = 1\ \mathrm H\), \(L_2 = 4\ \mathrm H\)) é</p>
+            <div class="eq-block">\[ |M| = \frac{1}{2}\sqrt{1\cdot 4} = \frac12\cdot 2 = 1 \]</div>
+            <p>Ou seja: o <b style="color:var(--ink)">valor final \(|M| = 1\) está certo</b> e é o que o resto da resolução usa (a matriz \(\begin{pmatrix}1 &amp; -1\\ -1 &amp; 4\end{pmatrix}\) tem \(|M|=1\) nas posições fora da diagonal); o que está errado é o \(\frac14\) escrito no radicando, provavelmente um \(4\) trocado por \(\frac14\) na transcrição do próprio professor. Nenhuma conta posterior é afetada.</p>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Por que as duas correntes são iguais</div>
+              <p>Com A e B em aberto, não há corrente saindo pelos terminais. Então a única malha fechada do circuito é: fonte \(\to\) \(3\ \Omega\) \(\to\) \(L_1\) \(\to\) \(L_2\) \(\to\) volta pelo trilho inferior. As duas bobinas estão <b style="color:var(--ink)">em série</b>, e portanto \(i_1 = i_2 = i_L\). Daí o vetor da relação constitutiva ter as duas entradas iguais a \(sI_L - i_L(0^-)\).</p>
+              <p>Com \(i_L(0^-) = -1\):</p>
+              <div class="eq-block">\[ sI_L - i_L(0^-) = sI_L - (-1) = sI_L + 1 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">O sinal de \(M\) vem da posição dos pontos</div>
+              <p>O ponto de \(L_1\) está no terminal <em>direito</em>; o ponto de \(L_2\) está no terminal <em>superior</em>. Percorrendo a malha, a corrente entra em \(L_1\) pelo terminal <em>sem</em> ponto e entra em \(L_2\) pelo terminal <em>com</em> ponto — extremidades não correspondentes. Logo o acoplamento é <b style="color:var(--ink)">subtrativo</b>, \(M = -|M| = -1\), e é isso que produz os \(-1\) fora da diagonal na matriz do professor.</p>
+              <p class="dim">Convenção do formulário: pontos em extremidades correspondentes \(\Rightarrow M>0\); em extremidades opostas \(\Rightarrow M<0\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Abrir as duas tensões — e o colapso de \(V_1\)</div>
+              <p>Escrevendo as duas linhas da matriz com \(x \equiv sI_L + 1\):</p>
+              <div class="eq-block">\[ V_1 = L_1\,x + M\,x = (1 - 1)\,x = 0 \]</div>
+              <div class="eq-block">\[ V_2 = M\,x + L_2\,x = (-1 + 4)\,x = 3x = 3\,(sI_L + 1) \]</div>
+              <p>\(V_1\) é <b style="color:var(--ink)">identicamente nula</b>: com \(k = 1/2\), \(L_1 = 1\) e \(L_2 = 4\), sai \(|M| = 1 = L_1\), e a f.e.m. induzida em \(L_1\) pela mútua cancela exatamente a sua própria autoindução. É o que faz a 2ª LK ter um único termo indutivo — o gabarito escreve \(V_1 + V_2 = 3(sI_L+1)\) direto, sem explicar que a parcela de \(V_1\) é zero.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">2ª LK na malha, por extenso</div>
+              <p>Percorrendo no sentido de \(i_L\), com \(\mathcal L[H(t)] = 1/s\):</p>
+              <div class="eq-block">\[ -\frac{1}{s} + 3\,I_L + V_1 + V_2 = 0 \]</div>
+              <div class="eq-block">\[ -\frac{1}{s} + 3I_L + 0 + 3(sI_L + 1) = 0 \]</div>
+              <div class="eq-block">\[ 3I_L + 3sI_L + 3 = \frac1s \;\Longleftrightarrow\; 3I_L(1 + s) = \frac1s - 3 \]</div>
+              <div class="eq-block">\[ I_L = \frac{\dfrac1s - 3}{3(s+1)} = \frac{\dfrac{1-3s}{s}}{3(s+1)} = \frac{1-3s}{3s(s+1)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">\(E_0\) é a tensão em \(L_2\), e a álgebra final</div>
+              <p>Com A–B em aberto e B ligado ao trilho inferior, a tensão de circuito aberto é exatamente a tensão sobre \(L_2\): \(E_0 = V_2\). Substituindo \(I_L\):</p>
+              <div class="eq-block">\[ s\,I_L = s\cdot\frac{1-3s}{3s(s+1)} = \frac{1-3s}{3(s+1)} \]</div>
+              <div class="eq-block">\[ E_0 = V_2 = 3\left(\frac{1-3s}{3(s+1)} + 1\right) = \frac{1-3s}{s+1} + 3 \]</div>
+              <div class="eq-block">\[ = \frac{1 - 3s + 3(s+1)}{s+1} = \frac{1 - 3s + 3s + 3}{s+1} = \frac{4}{s+1} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ E_0(s) = \frac{4}{s+1} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p><b style="color:var(--ink)">Erro 1 — o sinal da c.i.</b> \(i_L(0^-) = -1\) é negativo, e a relação é \(sI_L - i_L(0^-)\): duas negações que dão \(sI_L + 1\). Quem escreve \(sI_L - 1\) obtém \(E_0 = \frac{1-3s}{s+1} - 3\) e a resposta desanda.</p>
+            <p><b style="color:var(--ink)">Erro 2 — tomar \(M\) positivo.</b> Com \(M = +1\) sairia \(V_1 = 2x\) e \(V_2 = 5x\), portanto \(V_1+V_2 = 7x\) em vez de \(3x\). A posição dos pontos é o único dado que fixa o sinal, e ela está na figura.</p>
+            <p><b style="color:var(--ink)">Erro 3 — esquecer \(V_1\) da 2ª LK por não calculá-la.</b> Aqui dá no mesmo, porque \(V_1 = 0\), mas é coincidência numérica desta questão. Em qualquer outra combinação de \(L_1\), \(L_2\) e \(k\) a parcela de \(V_1\) é não nula e omiti-la é fatal. Calcule \(V_1\) sempre — descobrir que ela é zero é o resultado, não a hipótese.</p>
+            <p class="dim">Curiosidade: \(E_0 = 4/(s+1)\) é literalmente a mesma expressão do \(E_0\) do Teste 8 de 2023, que é um circuito diferente e sem mútua. Coincidência numérica — não use um para conferir o outro.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · folha 2, Questão 09</span>\(Z_0\) do equivalente Norton com indutores em paralelo acoplados</span>
+          <span class="q-prova">Formulário P2</span>
+        </div>
+
+        <p>A impedância \(Z_0\) do equivalente Norton em Laplace visto pelos terminais A e B do circuito da figura abaixo é (unidades SI).</p>
+
+        <div class="given-box">
+          <span>\(R = 5\ \Omega\)</span>
+          <span>\(L_1 = 4\ \mathrm H\)</span>
+          <span>\(L_2 = 1\ \mathrm H\)</span>
+          <span>\(|M| = 1\ \mathrm H\)</span>
+          <span>fluxo aditivo (pontos nos topos)</span>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 136"/>
+              <path d="M70 184 L70 250"/>
+              <path d="M70 70 L170 70"/>
+              <path d="M226 70 L320 70"/>
+              <path d="M320 70 L320 110"/>
+              <path d="M320 190 L320 250"/>
+              <path d="M320 70 L440 70"/>
+              <path d="M440 70 L440 110"/>
+              <path d="M440 190 L440 250"/>
+              <path d="M440 70 L520 70"/>
+              <path d="M70 250 L520 250"/>
+            </g>
+
+            <circle cx="70" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="54" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+            <text x="78" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+            <text x="4" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">e_g(t)</text>
+
+            <rect x="170" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="184" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">5 Ω</text>
+
+            <path d="M320 110 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="262" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">4 H</text>
+            <circle cx="306" cy="112" r="4" fill="#4ade9a"/>
+
+            <path d="M440 110 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="456" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 H</text>
+            <circle cx="426" cy="112" r="4" fill="#4ade9a"/>
+
+            <path d="M334 100 q 44 -26 88 0" fill="none" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <text x="356" y="96" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">|M| = 1 H</text>
+
+            <circle cx="526" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <circle cx="526" cy="250" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="540" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="540" y="262" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+            <text x="60" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">pontos nos dois topos ⇒ extremidades correspondentes ⇒ fluxo aditivo, M &gt; 0</text>
+          </svg>
+          <div class="pz-legend">As duas bobinas acopladas estão <em>em paralelo</em> entre o trilho superior e o trilho inferior — mesma tensão nas duas. Com \(e_g\) inativada (curto), o resistor de \(5\ \Omega\) fica em paralelo com esse conjunto, entre A e B.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — impedância de Norton e de Thévenin são o mesmo objeto. Sem vinculado, é redução direta: curto na fonte, reduzir as duas bobinas acopladas a uma \(L_{\text{eq}}\) pela fórmula do formulário, e então \(5 \parallel sL_{\text{eq}}\).</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · formulário P2, folha 2, Q09</span>
+            <p>"Fluxo aditivo com associação em paralelo de indutores com mútua:"</p>
+            <div class="eq-block">\[ L_{\mathrm{eq}} = \frac{L_1L_2 - |M|^2}{L_1 + L_2 - 2|M|} = \frac{4-1}{4+1-2} = 1\ \mathrm H \]</div>
+            <div class="final-answer">\[ Z_0 = \frac{5\cdot s}{5+s} = \frac{5s}{s+5} \]</div>
+            <p class="dim">O professor também desenha a "rede inativada para cálculo da impedância": um resistor de \(5\ \Omega\) em paralelo com um indutor de \(1\ \mathrm H\) entre A e B.</p>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Norton ou Thévenin — a impedância é a mesma</div>
+              <p>O enunciado pede a \(Z_0\) "do equivalente Norton", mas o procedimento é o de sempre: inativar as fontes independentes e olhar a impedância de A–B. Pela relação \(V_{Th} = Z_{Th}I_N\) da <a href="#equivalentes">seção 9.2</a>, a impedância dos dois equivalentes é a mesma; só a fonte muda de natureza. Ler "Norton" não muda nada nesta conta.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Inativar \(e_g\) e ver a topologia que sobra</div>
+              <p>\(e_g\) é gerador de tensão independente \(\Rightarrow\) curto-circuito. O terminal esquerdo do resistor de \(5\ \Omega\) passa a estar ligado ao trilho inferior, isto é, a B. Portanto:</p>
+              <ul style="margin:0.5rem 0 0 1.2rem;line-height:1.7">
+                <li>o resistor de \(5\ \Omega\) fica entre A e B;</li>
+                <li>as duas bobinas acopladas, que já estavam em paralelo entre os trilhos, também ficam entre A e B.</li>
+              </ul>
+              <p>Dois ramos entre os mesmos dois nós: um paralelo.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O sinal de \(M\) e qual fórmula usar</div>
+              <p>Os pontos estão nos <em>topos das duas bobinas</em> — extremidades correspondentes. Pela convenção do formulário isso é <b style="color:var(--ink)">fluxo aditivo</b>, \(M > 0\), e a caixa "associação em PARALELO de indutores acoplados, a) \(M>0\)" dá</p>
+              <div class="eq-block">\[ L_{\mathrm{eq}} = \frac{L_1L_2 - |M|^2}{L_1 + L_2 - 2|M|} \]</div>
+              <p class="dim">A outra caixa, para \(M<0\), tem \(+2|M|\) no denominador. Escolher a errada é o principal erro possível nesta questão — e daria \(L_{\text{eq}} = 3/7\ \mathrm H\), que é justamente o valor que aparece no Teste 4 de 2023 (caso subtrativo).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Substituir os números</div>
+              <div class="eq-block">\[ L_1L_2 - |M|^2 = 4\cdot 1 - 1^2 = 3 \qquad\qquad L_1 + L_2 - 2|M| = 4 + 1 - 2\cdot 1 = 3 \]</div>
+              <div class="eq-block">\[ L_{\mathrm{eq}} = \frac{3}{3} = 1\ \mathrm H \qquad\Longrightarrow\qquad Z_{L} = s\,L_{\mathrm{eq}} = s\ \Omega \]</div>
+              <p class="dim">Conferência de consistência: \(k = \frac{|M|}{\sqrt{L_1L_2}} = \frac{1}{\sqrt 4} = \frac12 \le 1\). Acoplamento fisicamente admissível.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">O paralelo final</div>
+              <div class="eq-block">\[ Z_0(s) = 5 \parallel s = \frac{5\cdot s}{5 + s} \]</div>
+              <div class="eq-block">\[ Z_0(s) = \frac{5s}{s+5} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ Z_0(s) = \frac{5s}{s+5} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · conferências e onde se erra</span>
+            <p><b style="color:var(--ink)">Comportamento nos extremos.</b> Em \(s\to 0\), \(Z_0\to 0\): o indutor é um curto em regime contínuo, e ele curto-circuita o resistor. Em \(s\to\infty\), \(Z_0\to 5\): o indutor é um aberto, sobra o resistor. Os dois limites são o teste mais rápido de qualquer \(Z_0\) de rede \(RL\) paralela.</p>
+            <p><b style="color:var(--ink)">Erro 1 — somar as indutâncias.</b> Para bobinas em paralelo <em>sem</em> mútua seria \(\frac{L_1L_2}{L_1+L_2} = \frac{4}{5}\), e com mútua a fórmula muda. O termo \(-|M|^2\) no numerador e o \(\mp 2|M|\) no denominador não são opcionais.</p>
+            <p><b style="color:var(--ink)">Erro 2 — sinal de \(M\) errado</b>, já descrito no passo 03: dá \(L_{\text{eq}} = \frac{3}{7}\) e \(Z_0 = \frac{15s}{3s+35}\).</p>
+            <p><b style="color:var(--ink)">Erro 3 — pôr o resistor em série.</b> Depois do curto em \(e_g\), o resistor está em <em>paralelo</em>, não em série. Quem mantém a série responde \(5 + s\), que viola os dois limites acima.</p>
+            <p>O caso \(L_1 + L_2 = 2|M|\) merece nota: o denominador zera, \(L_{\text{eq}}\to\infty\) e o ramo indutivo se comporta como aberto. É o acoplamento perfeito com bobinas iguais (\(k=1\), \(L_1=L_2\)), assunto do <a href="modulo-10.html">módulo 10</a> — e o mesmo mecanismo de degeneração de ordem que o \(k=1\) provoca nas questões de estabilidade do <a href="modulo-08.html">módulo 08</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 8 · Questão única</span>\(E_0(s)\) e \(Z_0(s)\) com indutor com c.i., por divisor de tensão</span>
+          <span class="q-prova">Teste 8 · P2/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">8 –</b> O gerador equivalente de Thévenin no domínio de Laplace visto pelos terminais A e B do circuito da Figura 10 está mostrado na Figura 10a. As expressões de \(E_0(s)\) e \(Z_0(s)\) são respectivamente iguais a:</p>
+
+        <div class="given-box">
+          <span>\(e_g(t) = 2H(t)\ (\mathrm V,\mathrm s)\)</span>
+          <span>\(R_1 = R_2 = 1\ \Omega\)</span>
+          <span>\(L = 1\ \mathrm H\)</span>
+          <span>\(i_L(0^-) = j_0 = 2\ \mathrm A\)</span>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 136"/>
+              <path d="M70 184 L70 250"/>
+              <path d="M70 70 L150 70"/>
+              <path d="M206 70 L330 70"/>
+              <path d="M330 70 L330 110"/>
+              <path d="M330 190 L330 250"/>
+              <path d="M330 70 L410 70"/>
+              <path d="M466 70 L550 70"/>
+              <path d="M70 250 L550 250"/>
+            </g>
+
+            <circle cx="70" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="54" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+            <text x="78" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+            <text x="4" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2H(t)</text>
+
+            <rect x="150" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="166" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+
+            <path d="M330 110 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="346" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+            <path d="M288 196 L288 112" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M283 120 L288 110 L293 120" fill="#f5b942"/>
+            <text x="238" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i_L(t)</text>
+
+            <rect x="410" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="426" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+
+            <circle cx="556" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <circle cx="556" cy="250" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="570" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="570" y="262" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+            <text x="500" y="164" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">aberto</text>
+            <text x="60" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Figura 10 — c.i.: i_L(0⁻) = j₀ = 2 A, seta para cima</text>
+          </svg>
+          <div class="pz-legend">Figura 10. Note que \(R_2\) está no caminho de A: com os terminais abertos ele não conduz, e por isso não entra em \(E_0\) — mas entra em \(Z_0\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{4}{s+2}\) e \(\dfrac{2s+1}{s+1}\)</li>
+          <li data-alt="b">\(\dfrac{2}{s+1}\) e \(\dfrac{s+2}{2s+1}\)</li>
+          <li data-alt="c">\(\dfrac{3}{s+1}\) e \(\dfrac{1-s}{s+1}\)</li>
+          <li data-alt="d">\(\dfrac{1-s}{s+2}\) e \(\dfrac{s+2}{2s+1}\)</li>
+          <li data-alt="e">\(\dfrac{4}{s+1}\) e \(\dfrac{2s+1}{s+1}\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — \(R_2\) é um espectador em \(E_0\) (não conduz, com A–B aberto) e participante em \(Z_0\) (está em série no caminho). E \(E_0\) é a tensão do <em>ramo inteiro</em> do indutor: impedância mais a fonte da c.i., que aparece duas vezes na conta.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito Teste 8 / P2 2023</span>
+            <p>"Vamos redesenhar o circuito no domínio de Laplace, substituindo o indutor por seu modelo equivalente." Ramo central: impedância \(sL\) em série com uma fonte de tensão de valor \(L\,j_0\); a tensão sobre \(sL\) é \(V_{sL}(s)\).</p>
+            <p>"Com A e B em aberto, podemos calcular a tensão que cai na impedância \(sL\) por divisão de tensão, ou seja,"</p>
+            <div class="eq-block">\[ V_{sL}(s) = \big[E_g(s) - L j_0\big]\frac{sL}{R_1 + sL} \]</div>
+            <p>"A tensão \(E_0(s)\) do gerador equivalente de Thévenin é a tensão que cai em A e B quando em aberto. Assim, temos"</p>
+            <div class="eq-block">\[ E_0(s) = V_{sL}(s) + L j_0 = \big[E_g(s) - L j_0\big]\frac{sL}{R_1 + sL} + L j_0 \]</div>
+            <div class="final-answer">\[ E_0(s) = \frac{4}{s+1} \]</div>
+            <p>"Para calcular \(Z_0(s)\), devemos desativar os geradores de tensão e calcular a impedância vista por A e B, ou seja,"</p>
+            <div class="eq-block">\[ Z_0(s) = R_1 /\!/\, sL + R_2 = \frac{R_1 sL}{R_1 + sL} + R_2 \]</div>
+            <div class="final-answer">\[ Z_0(s) = \frac{2s+1}{s+1} \]</div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · sobre o "substituindo o indutor"</span>
+            <p>O gabarito abre com "substituindo o indutor por seu modelo equivalente". <b style="color:var(--ink)">Aqui a frase está correta</b>: este circuito tem, de fato, um indutor com condição inicial, e o modelo usado em todo o resto do gabarito é o do indutor — \(sL\) em série com a fonte constante \(L\,j_0\), que é a forma série do <a href="modulo-07.html#elementos">módulo 07</a>. Nenhuma imprecisão a registrar neste teste.</p>
+            <p>Vale notar, porém, que a <em>mesma frase</em> abre o gabarito do Teste 7 da mesma prova, onde ela está errada: naquele circuito o elemento com c.i. é um capacitor, e o modelo efetivamente aplicado é o do capacitor. O lapso ali é cópia desta frase — que nasceu certa aqui. Se você estudar os dois gabaritos em sequência, é útil saber qual é o original.</p>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A polaridade da fonte da c.i., deduzida</div>
+              <p>O gabarito escreve \(E_g - L j_0\) no numerador sem justificar o sinal. Ele sai do modelo. Chamando \(I\) a corrente de malha no sentido horário — do "+" de \(e_g\), por \(R_1\), <em>descendo</em> pelo ramo central —, a corrente de \(i_L\) é definida <em>subindo</em>, logo \(i_L = -I\) e \(i_L(0^-) = 2\) significa \(i_{\text{desc}}(0^-) = -2\). A tensão do ramo, do topo para a base, é</p>
+              <div class="eq-block">\[ V_{\text{ramo}} = sL\,I - L\,i_{\text{desc}}(0^-) = sL\,I - L\cdot(-2) = sL\,I + L j_0 \]</div>
+              <p>2ª LK na malha (com A–B aberto, \(R_2\) fora do circuito):</p>
+              <div class="eq-block">\[ -E_g + R_1 I + sL\,I + L j_0 = 0 \;\Longrightarrow\; I\,(R_1 + sL) = E_g - L j_0 \]</div>
+              <p>que é exatamente o numerador do divisor do gabarito. A fonte da c.i. <b style="color:var(--ink)">se opõe</b> a \(e_g\) porque a corrente inicial subia pelo indutor, no sentido contrário ao que \(e_g\) empurra.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Por que \(R_2\) não aparece em \(E_0\)</div>
+              <p>A–B em aberto \(\Rightarrow\) corrente nula em \(R_2\) \(\Rightarrow\) queda nula em \(R_2\). O potencial de A é o mesmo do nó central. Formalmente, \(E_0 = V_{\text{ramo}} - R_2\cdot 0 = V_{\text{ramo}}\).</p>
+              <p class="dim">É o mecanismo descrito na <a href="#vth">seção 9.3</a>. E é também a razão pela qual as alternativas erradas conseguem misturar um \(E_0\) plausível com um \(Z_0\) implausível: são contas independentes.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O divisor de tensão, com números</div>
+              <p>Com \(L = 1\ \mathrm H\), \(R_1 = 1\ \Omega\), \(j_0 = 2\ \mathrm A\) e \(E_g(s) = \mathcal L[2H(t)] = 2/s\):</p>
+              <div class="eq-block">\[ L j_0 = 1\cdot 2 = 2 \qquad\qquad E_g - L j_0 = \frac{2}{s} - 2 = \frac{2 - 2s}{s} \]</div>
+              <div class="eq-block">\[ V_{sL}(s) = \frac{2-2s}{s}\cdot\frac{s}{1 + s} = \frac{2 - 2s}{s+1} \]</div>
+              <p class="dim">O \(s\) do numerador de \(\frac{sL}{R_1+sL} = \frac{s}{1+s}\) cancela o \(s\) do denominador de \(\frac{2-2s}{s}\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Somar a fonte da c.i. de volta — o passo que decide a questão</div>
+              <p>\(E_0\) é a tensão do ramo <em>inteiro</em>: a impedância <b style="color:var(--ink)">mais</b> a fonte. Logo</p>
+              <div class="eq-block">\[ E_0(s) = V_{sL}(s) + L j_0 = \frac{2-2s}{s+1} + 2 \]</div>
+              <div class="eq-block">\[ = \frac{2 - 2s + 2(s+1)}{s+1} = \frac{2 - 2s + 2s + 2}{s+1} = \frac{4}{s+1} \]</div>
+              <p>O termo em \(s\) do numerador cancela, e sobra uma constante sobre \((s+1)\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">\(Z_0\) com números</div>
+              <p>Inativando \(e_g\) (curto) e a fonte da c.i. (também curto — é fonte independente), o ramo central volta a ser \(sL\) puro e fica em paralelo com \(R_1\); depois \(R_2\) em série até A:</p>
+              <div class="eq-block">\[ R_1 \parallel sL = \frac{1\cdot s}{1+s} = \frac{s}{s+1} \]</div>
+              <div class="eq-block">\[ Z_0(s) = \frac{s}{s+1} + 1 = \frac{s + (s+1)}{s+1} = \frac{2s+1}{s+1} \]</div>
+              <p class="dim">Conferência nos extremos: \(s\to0\) dá \(Z_0\to 1 = R_2\) (indutor em curto, \(R_1\) curto-circuitado); \(s\to\infty\) dá \(Z_0\to 2 = R_1 + R_2\) (indutor aberto). Os dois limites conferem.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ E_0(s) = \frac{4}{s+1} \qquad\text{e}\qquad Z_0(s) = \frac{2s+1}{s+1} \qquad\Longrightarrow\qquad \textbf{alternativa e} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>As alternativas são um mapa dos erros. <b style="color:var(--ink)">a)</b> tem o \(Z_0\) correto e \(E_0 = \frac{4}{s+2}\): é o polo errado, de quem escreveu \(R_1 + sL = 2 + s\) em vez de \(1+s\) — somou \(R_2\) no divisor, esquecendo que ele não conduz. <b style="color:var(--ink)">b)</b> e <b style="color:var(--ink)">d)</b> trazem \(Z_0 = \frac{s+2}{2s+1}\), que é o <em>inverso</em> da resposta: confundiram impedância com admitância no paralelo. <b style="color:var(--ink)">c)</b> tem \(E_0 = \frac{3}{s+1}\), de quem somou mal as frações no passo 04, e um \(Z_0\) negativo para \(s>1\) — fisicamente impossível numa rede passiva, sinal para descartar de imediato.</p>
+            <p><b style="color:var(--ink)">O erro estrutural</b>, no entanto, é o de esquecer o \(+L j_0\) do passo 04, respondendo \(E_0 = V_{sL} = \frac{2-2s}{s+1}\). Nenhuma alternativa traz esse valor — o que é uma pista: se a sua resposta não está na lista, procure primeiro pelo termo de c.i. que ficou de fora.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 4 · Questão 1</span>\(E_0(s)\) com c.i. de capacitor, por transformação de fontes</span>
+          <span class="q-prova">Teste 4 · P2/2025 — Q1</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1 –</b> O gerador equivalente de Thévenin "visto" pelos terminais A e B do circuito da Figura 1a está indicado na Figura 1b no domínio de Laplace. A expressão de \(E_0(s)\) é dada por:</p>
+
+        <div class="given-box">
+          <span>\(i_g(t)\) — fonte de corrente independente</span>
+          <span>\(R\), \(L\), \(C\) literais</span>
+          <span>\(i_L(0^-) = 0\)</span>
+          <span>\(v_C(0^-) = v_0\)</span>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 136"/>
+              <path d="M70 184 L70 250"/>
+              <path d="M70 70 L200 70"/>
+              <path d="M200 70 L200 110"/>
+              <path d="M200 190 L200 250"/>
+              <path d="M200 70 L280 70"/>
+              <path d="M336 70 L440 70"/>
+              <path d="M440 70 L440 136"/>
+              <path d="M440 164 L440 250"/>
+              <path d="M440 70 L540 70"/>
+              <path d="M70 250 L540 250"/>
+            </g>
+
+            <circle cx="70" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 172 L70 150" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M65 156 L70 148 L75 156" fill="#4ade9a"/>
+            <text x="4" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">i_g(t)</text>
+
+            <path d="M200 110 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20 q -16 10 0 20" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="216" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+            <path d="M158 112 L158 196" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M153 188 L158 198 L163 188" fill="#f5b942"/>
+            <text x="112" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i_L(t)</text>
+
+            <rect x="280" y="58" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="300" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="424" y1="136" x2="456" y2="136"/>
+              <line x1="424" y1="164" x2="456" y2="164"/>
+            </g>
+            <text x="470" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+            <path d="M386 200 L386 116" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M381 124 L386 114 L391 124" fill="#f5b942"/>
+            <text x="336" y="220" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v_C(t)</text>
+
+            <circle cx="546" cy="70" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <circle cx="546" cy="250" r="5" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="560" y="66" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="560" y="262" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+
+            <path d="M200 250 L200 266 M186 266 L214 266 M191 272 L209 272 M196 278 L204 278" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+            <text x="60" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Figura 1a — c.i.: i_L(0⁻) = 0, v_C(0⁻) = v₀</text>
+          </svg>
+          <div class="pz-legend">Figura 1a. \(i_g\) e \(L\) estão em paralelo entre o trilho superior e o terra — o par que a transformação de fontes converte em \(sL\,I_g\) em série com \(sL\). O capacitor é o último elemento antes de A.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{sL\,I_g(s) + v_0/s}{s^{2}LC + sRC + 1} - \dfrac{v_0}{s}\)</li>
+          <li data-alt="b">\(\dfrac{sL\,I_g(s)}{s^{2}LC + sRC + 1}\)</li>
+          <li data-alt="c">\(\dfrac{sL\,I_g(s) - v_0/s}{s^{2}LC + sRC + 1} + \dfrac{v_0}{s}\)</li>
+          <li data-alt="d">\(\dfrac{sL\,I_g(s) - v_0/s}{s^{2}LC + sRC + 1}\)</li>
+          <li data-alt="e">\(\dfrac{sL\,I_g(s)}{s^{2}LC + sRC + 1} + \dfrac{v_0}{s}\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a transformação de fontes converte \(i_g \parallel L\) numa fonte de tensão em série, e o circuito degenera em malha única. O \(v_0\) então entra <em>duas vezes</em>: com sinal negativo dentro do divisor (porque a fonte da c.i. se opõe) e com sinal positivo somado por fora (porque \(E_0\) é a tensão do ramo inteiro). Todas as alternativas erradas erram uma dessas duas aparições.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito Teste 4 / P2 2025, Q1</span>
+            <p>"Fazendo transformação de fontes e substituindo o capacitor pelo modelo de fonte equivalente no domínio de Laplace, obtém-se" uma malha única: fonte de tensão \(I_g(s)\,sL\), impedância \(sL\), resistor \(R\), e o ramo do capacitor com \(\frac{1}{sC}\) em série com \(v_0/s\).</p>
+            <p>"Por divisão de tensão, obtém-se \(V_C(s)\):"</p>
+            <div class="eq-block">\[ V_C(s) = \frac{\big[\,sL\,I_g(s) - v_0/s\,\big]\cdot\dfrac{1}{sC}}{R + sL + \dfrac{1}{sC}} = \frac{sL\,I_g(s) - v_0/s}{s^{2}LC + sRC + 1} \]</div>
+            <p>"A tensão \(E_0(s)\) do equivalente de Thévenin é dada por:"</p>
+            <div class="eq-block">\[ E_0(s) = V_C(s) + \frac{v_0}{s} \]</div>
+            <div class="final-answer">\[ E_0(s) = \frac{sL\,I_g(s) - v_0/s}{s^{2}LC + sRC + 1} + \frac{v_0}{s} \]</div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A transformação de fontes, por extenso</div>
+              <p>\(i_g\) é uma fonte de corrente em paralelo com o indutor entre o mesmo par de nós. Como \(i_L(0^-) = 0\), o indutor é \(sL\) puro (nenhuma fonte de c.i.). Esse é um dipolo de Norton, e o Thévenin equivalente é:</p>
+              <div class="eq-block">\[ I_N = I_g(s),\quad Z = sL \qquad\Longrightarrow\qquad V_{Th} = Z\,I_N = sL\,I_g(s) \ \text{em série com}\ sL \]</div>
+              <p>É a relação \(V_{Th} = Z_{Th}I_N\) da <a href="#equivalentes">seção 9.2</a> aplicada a uma <em>parte</em> do circuito. Feita a troca, o que era um nó com três ramos passa a ser uma malha única — e o divisor de tensão fica disponível.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">O modelo série do capacitor e a sua polaridade</div>
+              <p>Método de malha única \(\Rightarrow\) forma série: \(\frac{1}{sC}\) em série com uma fonte de tensão \(\frac{v_0}{s}\), com o "+" no mesmo lado do "+" de \(v_C\), isto é, no topo — no lado de A.</p>
+              <p>Percorrendo a malha no sentido da corrente \(I\) (da fonte transformada, por \(sL\), por \(R\), descendo pelo ramo do capacitor):</p>
+              <div class="eq-block">\[ -\,sL\,I_g(s) + sL\,I + R\,I + \frac{I}{sC} + \frac{v_0}{s} = 0 \]</div>
+              <div class="eq-block">\[ I\left(sL + R + \frac{1}{sC}\right) = sL\,I_g(s) - \frac{v_0}{s} \]</div>
+              <p>O \(-v_0/s\) do numerador do divisor sai daqui: a fonte da c.i., com "+" em cima, <b style="color:var(--ink)">opõe-se</b> à circulação que a fonte transformada impõe.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A tensão na impedância do capacitor</div>
+              <div class="eq-block">\[ V_C(s) = \frac{I(s)}{sC} = \frac{\Big[sL\,I_g(s) - \dfrac{v_0}{s}\Big]\cdot\dfrac{1}{sC}}{R + sL + \dfrac{1}{sC}} \]</div>
+              <p>que é o divisor do gabarito. Multiplicando numerador e denominador por \(sC\) — a passagem intermediária que o gabarito não escreve:</p>
+              <div class="eq-block">\[ V_C(s) = \frac{\Big[sL\,I_g(s) - \dfrac{v_0}{s}\Big]\cdot\dfrac{1}{sC}\cdot sC}{\left(R + sL + \dfrac{1}{sC}\right)\cdot sC} = \frac{sL\,I_g(s) - \dfrac{v_0}{s}}{sRC + s^2LC + 1} \]</div>
+              <p class="dim">No denominador: \(R\cdot sC = sRC\), \(sL\cdot sC = s^2LC\), \(\frac{1}{sC}\cdot sC = 1\). Reordenando, \(s^2LC + sRC + 1\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">\(E_0\) é \(V_C\) mais a fonte da c.i.</div>
+              <p>\(V_C(s)\), como marcado na figura do professor, é a tensão sobre a impedância \(\frac{1}{sC}\) <b style="color:var(--ink)">apenas</b>. Mas os terminais A–B abraçam o ramo <em>inteiro</em> — impedância e fonte em série. Subindo do terminal B até A:</p>
+              <div class="eq-block">\[ E_0(s) = V_C(s) + \frac{v_0}{s} = \frac{sL\,I_g(s) - v_0/s}{s^2LC + sRC + 1} + \frac{v_0}{s} \]</div>
+              <p>Não simplifique: a alternativa correta está escrita exatamente nessa forma, com as duas aparições de \(v_0/s\) separadas.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ E_0(s) = \frac{sL\,I_g(s) - \dfrac{v_0}{s}}{s^{2}LC + sRC + 1} + \frac{v_0}{s} \qquad\Longrightarrow\qquad \textbf{alternativa c} \]</div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conferência pelo valor final</div>
+              <p>Faça \(i_g \equiv 0\) (\(I_g = 0\)). A rede fica livre, com apenas a carga inicial do capacitor:</p>
+              <div class="eq-block">\[ E_0(s)\big|_{I_g=0} = \frac{-v_0/s}{s^2LC + sRC + 1} + \frac{v_0}{s} \]</div>
+              <p>Aplicando o teorema do valor final (válido: os polos do denominador têm parte real negativa para \(R,L,C>0\)):</p>
+              <div class="eq-block">\[ \lim_{t\to\infty} e_0(t) = \lim_{s\to 0} s\,E_0(s) = \frac{-v_0}{1} + v_0 = 0 \]</div>
+              <p>A tensão em A–B tende a zero: o capacitor descarrega pelo laço \(R\)–\(L\). Faz sentido. Compare com a alternativa <b style="color:var(--ink)">e)</b>, que daria \(0 + v_0 = v_0\) — o capacitor nunca descarregaria, apesar de estar em série com um resistor e um indutor. Absurdo físico que elimina a alternativa sem nenhuma conta.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>As cinco alternativas cobrem as quatro combinações possíveis de erro nas duas aparições de \(v_0\):</p>
+            <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+              <li><b style="color:var(--ink)">b)</b> — esqueceu \(v_0\) nas duas pontas. É a resposta de quem tratou o capacitor como descarregado.</li>
+              <li><b style="color:var(--ink)">d)</b> — acertou o \(-v_0/s\) dentro do divisor e esqueceu de somar o \(+v_0/s\) por fora. O erro mais frequente: confundiu \(V_C\) com \(E_0\).</li>
+              <li><b style="color:var(--ink)">e)</b> — inverso do anterior: somou por fora e esqueceu dentro. Eliminada pelo valor final, como no passo 05.</li>
+              <li><b style="color:var(--ink)">a)</b> — inverteu <em>os dois</em> sinais: \(+v_0/s\) dentro e \(-v_0/s\) fora. É o resultado de desenhar a fonte da c.i. com a polaridade trocada.</li>
+            </ul>
+            <p>A defesa é escrever a 2ª LK com o dedo, como no passo 02, em vez de tentar decorar o sinal. E lembrar da distinção que aparece em três exercícios deste módulo: <b style="color:var(--ink)">a tensão do ramo não é a tensão da impedância.</b></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-08.html">
+    <div>
+      <span class="nm-label">Módulo anterior</span>
+      <span class="nm-title">08 · FCPs e estabilidade</span>
+    </div>
+    <span class="nm-arrow">←</span>
+  </a>
+
+  <a class="next-module" href="modulo-10.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">10 · Acoplamento magnético</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Montado a partir do formulário oficial da P2 (Questão 02 da folha 1; Questões 03, 08 e 09 da folha 2; caixas "Capacitor", "Indutor", "Indutancia", "Coeficiente de acoplamento" e a caixa de inativação de geradores), dos gabaritos da P2 de 2023 (1ª questão item c e Teste 8), da P2 de 2025 (1ª questão item b) e do 4º Teste de 2025 (questão 1) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+</div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

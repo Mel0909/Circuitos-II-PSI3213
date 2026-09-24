@@ -16,6 +16,8 @@
     --phosphor-dim: rgba(74, 222, 154, 0.14);
     --amber: #f5b942;
     --red: #e0625a;
+    --ext: #7aa7f5;
+    --ext-dim: rgba(122, 167, 245, 0.08);
     --radius: 3px;
   }
 
@@ -849,6 +851,86 @@
     color: var(--phosphor);
     font-size: 1.3rem;
   }
+
+  /* ============================================================
+     PROCEDÊNCIA DO CONTEÚDO — barra lateral colorida
+     Verde (fósforo) = material do professor: quadro, notas de aula,
+                       enunciado e gabarito oficial das provas/testes.
+     Azul             = complemento externo: teoria de apoio, deduções
+                       intermediárias, comentários e verificações.
+     ============================================================ */
+
+  .src-legend{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    align-items: center;
+    padding: 0.85rem 1.1rem;
+    margin-top: 1rem;
+    background: var(--bg-panel-2);
+    border: 1px dashed var(--line-strong);
+    border-radius: 2px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--ink-dim);
+  }
+  .src-legend > span{ display: flex; align-items: center; gap: 0.5rem; }
+  .src-legend i{
+    display: inline-block;
+    width: 3px;
+    height: 15px;
+    border-radius: 1px;
+    flex: 0 0 auto;
+  }
+  .src-legend i.k-prof{ background: var(--phosphor); }
+  .src-legend i.k-ext{ background: var(--ext); }
+
+  /* painéis e cartões inteiros */
+  .panel.src-prof,
+  .q-card.src-prof,
+  .eq-block.src-prof{ border-left: 3px solid var(--phosphor); }
+  .panel.src-ext,
+  .q-card.src-ext,
+  .eq-block.src-ext{ border-left: 3px solid var(--ext); }
+
+  /* blocos internos: um trecho de outra procedência dentro de um painel */
+  .src-block{
+    padding: 0.9rem 1.15rem;
+    margin: 1.1rem 0;
+    background: var(--bg-panel-2);
+    border-radius: 2px;
+    font-size: 0.93rem;
+    color: #cdd8d2;
+  }
+  .src-block > :first-child{ margin-top: 0; }
+  .src-block > :last-child{ margin-bottom: 0; }
+  .src-block.src-prof{ border-left: 3px solid var(--phosphor); }
+  .src-block.src-ext{
+    border-left: 3px solid var(--ext);
+    background: var(--ext-dim);
+  }
+  .src-block .src-kicker{
+    display: block;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 0.45rem;
+  }
+  .src-block.src-prof .src-kicker{ color: var(--phosphor); }
+  .src-block.src-ext .src-kicker{ color: var(--ext); }
+
+  /* passos de resolução: distingue a passagem do gabarito do comentário */
+  .solve-step.src-ext{
+    border-left: 3px solid var(--ext);
+    padding-left: 0.9rem;
+    background: var(--ext-dim);
+  }
+  .solve-step.src-ext .step-title{ color: var(--ext); }
+  .solve-step.src-ext .step-num{ color: var(--ext); }
+
+  /* links e destaques dentro de bloco externo */
+  .src-block.src-ext b{ color: var(--ext); font-weight: 500; }
 
   @media (prefers-reduced-motion: reduce){
     html{ scroll-behavior: auto; }

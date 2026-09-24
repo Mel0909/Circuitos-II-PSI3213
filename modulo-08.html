@@ -1,0 +1,2178 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P2 · FCPs e estabilidade</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">Onde as FCPs moram</a>
+        <a href="#receita">As duas receitas</a>
+        <a href="#quantas">Quantas FCPs</a>
+        <a href="#classificacao">Os três comportamentos</a>
+        <a href="#coeficientes">Critério dos coeficientes</a>
+        <a href="#ganho">Faixas de ganho</a>
+        <a href="#revisao2a">Volta ao 2º grau</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P2 · Módulo 08 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">O determinante é o circuito.</span> <span class="tone-b">O que ele sabe fazer sozinho?</span></h1>
+        <p class="hero-sub">Desligue todas as fontes independentes. O que resta é a <em>rede livre</em> — e ela ainda tem vida própria: carga presa em capacitores, fluxo preso em indutores, e um conjunto finito de maneiras de trocar as duas coisas. Essas maneiras são as frequências complexas próprias, e elas estão inteiras dentro de uma única equação escalar: \(\det[Y(s)]=0\). Este módulo é sobre ler essa equação — contar quantas raízes ela tem, onde elas caem no plano-\(s\), e para quais ganhos de fonte vinculada elas se comportam.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>08 · FCPs e estabilidade</span>
+          <span><b>Pré-requisito</b>Módulo 07 — Análise nodal e de malhas em \(s\)</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>DO DETERMINANTE AO PLANO-s</span>
+            <span>det Y(s) = 0</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <text x="20" y="28" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">1 · REDE LIVRE</text>
+              <rect x="18" y="40" width="156" height="40" fill="none" stroke="rgba(231,237,233,0.5)" stroke-width="1.6"/>
+              <text x="30" y="65" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">fontes indep. OFF</text>
+
+              <text x="20" y="112" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">2 · MATRIZ</text>
+              <rect x="18" y="124" width="156" height="40" fill="none" stroke="#4ade9a" stroke-width="1.8"/>
+              <text x="42" y="149" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Y(s) ou Z(s)</text>
+
+              <text x="20" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">3 · ESCALAR</text>
+              <rect x="18" y="208" width="156" height="40" fill="none" stroke="#f5b942" stroke-width="1.8"/>
+              <text x="44" y="233" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">det = 0 → D(s)</text>
+
+              <text x="20" y="280" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">4 · RAÍZES</text>
+              <rect x="18" y="292" width="156" height="24" fill="none" stroke="rgba(231,237,233,0.5)" stroke-width="1.6"/>
+              <text x="52" y="309" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="12">s₁ … s_n = FCPs</text>
+
+              <path d="M182 304 L228 304 L228 170" stroke="#5d6e67" stroke-width="1.4" fill="none"/>
+              <path d="M223 176 L228 166 L233 176" fill="#5d6e67"/>
+
+              <rect x="248" y="24" width="292" height="284" fill="none" stroke="rgba(122,199,170,0.2)" stroke-width="1"/>
+              <rect x="249" y="25" width="145" height="282" fill="rgba(74,222,154,0.06)"/>
+              <rect x="394" y="25" width="145" height="282" fill="rgba(224,98,90,0.07)"/>
+              <path d="M258 166 L530 166" stroke="rgba(231,237,233,0.5)" stroke-width="1.4"/>
+              <path d="M394 32 L394 300" stroke="#f5b942" stroke-width="1.8"/>
+              <text x="512" y="158" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">σ</text>
+              <text x="400" y="42" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">jω</text>
+
+              <g stroke="#4ade9a" stroke-width="2">
+                <path d="M308 94 L322 108 M322 94 L308 108"/>
+                <path d="M308 224 L322 238 M322 224 L308 238"/>
+              </g>
+              <text x="262" y="72" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">estável</text>
+
+              <g stroke="#f5b942" stroke-width="2">
+                <path d="M387 74 L401 88 M401 74 L387 88"/>
+                <path d="M387 244 L401 258 M401 244 L387 258"/>
+              </g>
+              <text x="338" y="290" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">marginal</text>
+
+              <g stroke="#e0625a" stroke-width="2">
+                <path d="M456 130 L470 144 M470 130 L456 144"/>
+                <path d="M456 188 L470 202 M470 188 L456 202"/>
+              </g>
+              <text x="450" y="72" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="11">instável</text>
+            </svg>
+          </div>
+          <div class="splane-readout">Toda a informação sobre o comportamento próprio da rede cabe na posição de um punhado de cruzes. À esquerda do eixo, a resposta livre morre; sobre o eixo, ela oscila para sempre; à direita, explode.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">8.1</span>
+    <h2>Onde as FCPs moram: dentro de um determinante</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>No <a href="modulo-07.html#nodal">módulo 07</a> você montou o sistema \(Y(s)E(s)=J(s)\) — ou \(Z(s)I(s)=E(s)\) — e resolveu por Cramer. Cada incógnita saiu como uma fração cujo <b style="color:var(--ink)">denominador é sempre o mesmo</b>: o determinante da matriz. Esse denominador comum não é coincidência nem conveniência algébrica. Ele é a assinatura da rede.</p>
+
+    <div class="eq-block">\[ \det[Y(s)] = 0 \qquad\text{ou}\qquad \det[Z(s)] = 0 \]</div>
+
+    <p>Essa é a <b style="color:var(--ink)">equação característica</b> do circuito. Suas raízes são as <b style="color:var(--ink)">frequências complexas próprias</b> — as FCPs. Cada FCP \(s_k\) é um modo que a rede sabe sustentar sozinha, sem nenhuma fonte independente ligada: um termo \(e^{s_k t}\) que satisfaz as leis de Kirchhoff e as relações constitutivas por conta própria, alimentado apenas pela energia que já estava guardada nos elementos reativos.</p>
+
+    <div class="callout"><b>Por que o determinante.</b> Com todas as fontes independentes desligadas, o sistema fica \(Y(s)E(s)=0\). Um sistema linear homogêneo só tem solução não trivial quando a matriz é <em>singular</em>. Logo existe resposta livre não nula exatamente nos valores de \(s\) em que \(\det Y(s)=0\). A equação característica não é um truque de cálculo: é a condição de existência da vida própria da rede.</div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">FCP não é polo — é o conjunto de onde os polos saem</h3>
+
+    <p>O <a href="modulo-06.html#fcp">módulo 06</a> já registrou a relação, e ela é fácil de inverter por engano. Uma função de rede \(F(s)=N(s)/D(s)\) tem polos; a rede tem FCPs. Os polos de <em>qualquer</em> função de rede formam um <b style="color:var(--ink)">submulticonjunto</b> das FCPs, nunca mais do que isso.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">as FCPs são propriedade da rede</span>
+        <p>Não dependem de onde você excita nem de onde você mede. Dependem apenas da topologia e dos valores dos elementos — inclusive dos ganhos das fontes vinculadas, que são elementos, não excitações.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">os polos são propriedade do par entrada-saída</span>
+        <p>Um cancelamento de \(N(s)\) com \(D(s)\) apaga um polo sem apagar a FCP. O modo continua existindo; ele apenas não é <em>observável</em> naquela saída com aquela entrada. O Teste 1 da P2 2023 é o exemplo canônico: a FCP em \(s=-1\) existe e não aparece em \(e_2\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">consequência prática</span>
+        <p>Para responder "este circuito é estável?" você <b style="color:var(--ink)">não</b> pode usar os polos de uma função de rede qualquer: um cancelamento pode esconder justamente a FCP instável. Use o determinante.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">a recíproca também é útil</span>
+        <p>Se a prova entrega uma função de rede e pede estabilidade, o denominador <em>dado</em> é a melhor informação disponível — e é assim que o item c) da 1ª questão da P2 2025 é resolvido. Mas a resposta rigorosa é sobre aquele par entrada-saída.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o que o determinante entrega e o que ele não entrega</span>
+      <p>O determinante de uma matriz de admitâncias em \(s\) quase nunca é um polinômio: é uma <b style="color:var(--ink)">função racional</b>, porque cada indutor entra como \(1/sL\) e cada capacitor da matriz de malhas entra como \(1/sC\). O que interessa é o <em>numerador</em> dessa racional. Por isso o padrão de todos os gabaritos é o mesmo: calcula-se o determinante, coloca-se em evidência a potência de \(s\) do denominador e trabalha-se com o polinômio que sobrou.</p>
+      <div class="eq-block">\[ \det Y(s) = \frac{1}{s}\Big(s^2 + (4-2g_m)s + 2\Big) = 0 \;\Longleftrightarrow\; s^2 + (4-2g_m)s + 2 = 0 \]</div>
+      <p class="dim">Esse é literalmente o passo final da 1ª questão item b) da P2 2023. O fator \(1/s\) <em>não</em> contribui com FCP: ele é um polo do determinante, não um zero. Confundir os dois é o caminho mais rápido para inventar uma FCP nula que não existe.</p>
+    </div>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">1</div><div class="small">inativar fontes<br>independentes</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">2</div><div class="small">montar Y(s)<br>ou Z(s)</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">3</div><div class="small">det = 0<br>→ numerador</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">4</div><div class="small">raízes<br>= FCPs</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">5</div><div class="small">classificar<br>no plano-s</div></div>
+    </div>
+    <p class="flow-note">Os passos 1 a 4 são a receita literal do professor, transcrita na <a href="#receita">seção 8.2</a>. O passo 5 é o critério de estabilidade da <a href="#classificacao">seção 8.4</a>. Na prova, os dois vêm sempre juntos.</p>
+  </section>
+
+  <section id="receita" class="panel src-prof">
+    <span class="eyebrow">8.2</span>
+    <h2>As duas receitas do professor, quatro passos cada</h2>
+
+    <p>O formulário oficial da P2 traz duas caixas gêmeas, uma para cada método. Elas estão reproduzidas aqui palavra por palavra, porque a prova cobra exatamente esses passos — inclusive o passo 2, que é o único que exige pensar antes de escrever.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, caixa "Obtendo FCPs com Análise de Malhas"</span>
+      <div class="problem-list">
+        <div class="problem-item"><span class="num">1</span> Inativar geradores independentes.</div>
+        <div class="problem-item"><span class="num">2</span> Se houver <b style="color:var(--ink)">corte de capacitores</b>, manter suas tensões incógnitas — não substituir por correntes de malha — e adicionar a equação \(sC\,V_c - I_c = 0\).</div>
+        <div class="problem-item"><span class="num">3</span> Aplicar a análise de malhas e igualar a zero o determinante da matriz das impedâncias.</div>
+        <div class="problem-item"><span class="num">4</span> As FCPs são as raízes da equação obtida em 3.</div>
+      </div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, caixa "Obtendo FCPs com Análise Nodal"</span>
+      <div class="problem-list">
+        <div class="problem-item"><span class="num">1</span> Inativar Geradores Independentes.</div>
+        <div class="problem-item"><span class="num">2</span> Se houver <b style="color:var(--ink)">laços de indutores</b>, manter suas correntes incógnitas — não substituir por tensões nodais — e adicionar a equação \(V_L - (sL)I_L = 0\).</div>
+        <div class="problem-item"><span class="num">3</span> Aplicar a análise nodal e igualar a zero o determinante da matriz das admitâncias.</div>
+        <div class="problem-item"><span class="num">4</span> As FCPs são as raízes da equação obtida em 3.</div>
+      </div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, caixa de inativação</span>
+      <p>Como inativar, no passo 1:</p>
+      <div class="roc-grid" style="margin-top:0.8rem">
+        <div class="roc-card">
+          <span class="tag">gerador de tensão</span>
+          <div class="final-answer">curto-circuito</div>
+        </div>
+        <div class="roc-card">
+          <span class="tag">gerador de corrente</span>
+          <div class="final-answer">circuito aberto</div>
+        </div>
+      </div>
+      <p class="dim">A mesma caixa registra, ao lado, a decomposição \(\dfrac{N(s)}{D(s)} = \dfrac{R(s)}{D(s)} + Q(s)\), usada quando a função não é estritamente própria.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que "inativar" e não "remover"</span>
+      <p>Inativar uma fonte de tensão é zerar o seu valor, e uma fonte de tensão de valor zero <em>é</em> um curto-circuito: impõe \(v=0\) e deixa passar qualquer corrente. Inativar uma fonte de corrente é zerar a corrente, e isso é um aberto: impõe \(i=0\) e suporta qualquer tensão. Note que o <b style="color:var(--ink)">elemento continua no circuito</b> — só muda de identidade. É por isso que inativar altera a topologia e pode criar laços e cortes que não existiam: um gerador de tensão curto-circuitado pode fechar um laço de indutores; um gerador de corrente aberto pode isolar um corte de capacitores.</p>
+      <p><b style="color:var(--ink)">Fontes vinculadas nunca são inativadas.</b> Elas não são excitações — são elementos, tão parte da rede quanto um resistor. Todo ganho \(g_m\), \(\mu\), \(\beta\), \(r_m\), \(\alpha\) permanece na matriz e aparece na equação característica. É exatamente isso que torna possível a pergunta favorita da P2: "para que faixa de ganho a rede é estável?"</p>
+    </div>
+
+    <div class="callout"><b>O passo 2 é o passo que a prova cobra.</b> Sem ele, a análise nodal pura escreve \(I_L = V_L/(sL)\) e a análise de malhas pura escreve \(V_C = I_C/(sC)\) — o que elimina uma variável de estado do sistema e <em>derruba o grau</em> do determinante. O grau derrubado significa uma FCP perdida, e a FCP perdida é justamente a nula. O enunciado da 2ª questão da P2 2025 diz isso com todas as letras: "para contemplar todas as FCPs do circuito, decidiu-se utilizar análise de malhas em Laplace, <em>considerando a tensão do capacitor como incógnita</em>".</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a forma das matrizes estendidas</span>
+      <p>Quando o passo 2 entra em ação, a matriz deixa de ser uma matriz de admitâncias (ou de impedâncias) pura: uma das linhas é uma relação constitutiva, com unidade mista. Os dois formatos que aparecem nos gabaritos:</p>
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix} G+sC &amp; +1 \\[4pt] 1 &amp; -sL \end{bmatrix}}_{\text{nodal estendida}}
+        \begin{bmatrix} E_1 \\[4pt] I_L \end{bmatrix} = \begin{bmatrix} \text{c.i.} \\[4pt] \text{c.i.} \end{bmatrix}
+        \qquad
+        \underbrace{\begin{bmatrix} Z_{11} &amp; Z_{12} &amp; 0 \\[3pt] Z_{21} &amp; Z_{22} &amp; 1 \\[3pt] 0 &amp; 1 &amp; -sC \end{bmatrix}}_{\text{malhas estendida}}
+        \begin{bmatrix} I_1 \\[3pt] I_2 \\[3pt] V_C \end{bmatrix} = \begin{bmatrix} \text{f.e.m.} \\[3pt] 0 \\[3pt] -Cv_C(0^-) \end{bmatrix}
+      \]</div>
+      <p>À esquerda, o formato do Teste 4 da P2 2025 (questões 2 e 4): a linha extra é \(E_1 - sL\,I_L = -L\,i_L(0^-)\). À direita, o formato da 2ª questão da P2 2025: a linha extra é \(I_2 - sC\,V_C = -C\,v_C(0^-)\). Nos dois casos o determinante volta a ter o grau certo, e nenhuma FCP se perde. O preço é uma incógnita a mais.</p>
+    </div>
+  </section>
+
+  <section id="quantas" class="panel src-ext">
+    <span class="eyebrow">8.3</span>
+    <h2>Quantas FCPs a rede tem, e quando uma delas é nula</h2>
+
+    <p>Antes de calcular qualquer determinante vale contar. A contagem serve de conferência: se o polinômio que você obteve tem grau diferente do esperado, há erro de montagem — ou uma degeneração que você não notou.</p>
+
+    <div class="final-answer">nº de FCPs = nº de elementos reativos − nº de degenerações</div>
+
+    <p>Elemento reativo é indutor ou capacitor. Cada um deles carrega uma variável de estado — a corrente do indutor, a tensão do capacitor — e cada variável de estado independente contribui com uma FCP. As <b style="color:var(--ink)">degenerações</b> são as situações em que uma dessas variáveis <em>não</em> é independente das outras.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">laço de capacitores → uma FCP a menos</span>
+        <p>Se um conjunto de capacitores forma um laço fechado, a 2ª LK amarra as tensões: \(v_1+v_2+\dots=0\). Uma delas deixa de ser variável de estado independente, e o grau do polinômio cai de um.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">corte de indutores → uma FCP a menos</span>
+        <p>Se um conjunto de indutores é o único caminho entre duas partes da rede, a 1ª LK amarra as correntes: \(i_1+i_2+\dots=0\). Mesma consequência, pelo dual.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">laço de indutores → FCP em \(s=0\)</span>
+        <p>A contagem <em>não</em> cai; o que acontece é que uma das FCPs vai para a origem. É o caso da questão 4 do Teste 4 da P2 2025: três elementos reativos, três FCPs, uma delas nula.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">corte de capacitores → FCP em \(s=0\)</span>
+        <p>O dual do anterior. A contagem também não cai — mas o método puro perde a raiz nula se você não aplicar o passo 2 da receita.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, Questão 06</span>
+      <p>A questão pergunta: "Considere o circuito da figura abaixo. Quantas frequências complexas próprias há? Há alguma FCP nula?" A rede é uma escada com \(C_1\), \(L_1\), \(L_2\), \(R\) e \(C_2\). Depois de calcular o determinante \(2\times2\) da análise de malhas, o professor chega a</p>
+      <div class="eq-block">\[ \frac{s^3RC_1C_2(L_1+L_2) + s^2C_1(L_1+L_2) + sR(C_1+C_2) + 1}{s^2C_1C_2} = 0 \]</div>
+      <p>e conclui, literalmente:</p>
+      <div class="final-answer">"Polinômio de terceiro grau, como não há laços de indutores, cortes de capacitores e nem vinculados, não há FCP nula."</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · lendo essa conclusão devagar</span>
+      <p>A rede tem <em>quatro</em> elementos reativos (\(C_1\), \(L_1\), \(L_2\), \(C_2\)) e o polinômio tem grau <em>três</em>. A degeneração que falta uma FCP está à vista: \(L_1\) e \(L_2\) estão em série no mesmo caminho, o que é um <b style="color:var(--ink)">corte de indutores</b> — a corrente é obrigatoriamente a mesma nos dois, \(i_{L_1}=i_{L_2}\), e elas contam como uma única variável de estado. Daí a soma \(L_1+L_2\) que aparece em todos os coeficientes: os dois indutores viraram um só.</p>
+      <p>A lista de três suspeitos da FCP nula — laço de indutores, corte de capacitores, vinculados — é a lista completa dos mecanismos que põem uma raiz na origem. Os dois primeiros são topológicos e você identifica olhando o desenho. O terceiro é algébrico: um ganho ajustado pode zerar o termo independente do polinômio e produzir \(s=0\) numa rede sem nenhuma degeneração topológica. É exatamente o que a Questão 02 da mesma folha pede — \(2s^2+3s-r=0\) com \(s=0\) dá \(r=0\).</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Por que um laço de indutores põe uma raiz na origem</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a explicação física</span>
+      <p>Imagine dois indutores em paralelo, e nada mais no caminho que os une. Estabeleça uma corrente circulando <em>só</em> por esse laço: descendo por \(L_1\) e subindo por \(L_2\), de modo que a corrente total entregue ao resto da rede seja zero. O resto do circuito não vê nada. E o laço, por sua vez, não encontra <b style="color:var(--ink)">nenhuma resistência</b> no percurso.</p>
+      <p>Sem resistência não há dissipação, e a 2ª LK ao longo do laço diz</p>
+      <div class="eq-block">\[ L_1\frac{di}{dt} + L_2\frac{di}{dt} = 0 \;\Longrightarrow\; (L_1+L_2)\frac{di}{dt} = 0 \;\Longrightarrow\; \frac{di}{dt}=0 \]</div>
+      <p>A corrente circulante é <b style="color:var(--ink)">constante no tempo</b>. Uma constante é \(e^{0\cdot t}\): o modo tem \(s=0\). Em linguagem de fluxo, o enlace \(L_1 i - L_2 i'\) desse laço está aprisionado — não existe caminho pelo qual ele possa decair.</p>
+      <p>O corte de capacitores é o mesmo argumento no dual. Se os capacitores são a única ligação entre duas partes da rede, a <em>carga total</em> de cada lado do corte não pode mudar: não há por onde escoar. Existe uma combinação de tensões de capacitor que nada altera, e ela corresponde a \(s=0\).</p>
+      <p class="dim">A conferência numérica está na questão 4 do Teste 4 da P2 2025: com \(L_1=L_2=2\ \mathrm H\), \(C=1\ \mathrm F\) e \(R=1\ \Omega\), o determinante \(3\times3\) dá \(s^3+s^2+s = s(s^2+s+1)=0\). O fator \(s\) isolado é a FCP nula do laço.</p>
+    </div>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+        <text x="20" y="24" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">LAÇO DE INDUTORES</text>
+        <text x="396" y="24" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">CORTE DE CAPACITORES</text>
+        <path d="M366 14 L366 288" stroke="rgba(122,199,170,0.18)" stroke-width="1"/>
+
+        <!-- laço de indutores -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 70 L300 70"/>
+          <path d="M60 250 L300 250"/>
+          <path d="M120 70 L120 116"/>
+          <path d="M120 204 L120 250"/>
+          <path d="M240 70 L240 116"/>
+          <path d="M240 204 L240 250"/>
+          <path d="M60 70 L60 110"/>
+          <path d="M60 210 L60 250"/>
+        </g>
+        <rect x="36" y="110" width="48" height="100" fill="none" stroke="#5d6e67" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <text x="40" y="156" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="10">resto</text>
+        <text x="40" y="172" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="10">da rede</text>
+
+        <path d="M120 116 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <text x="86" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁</text>
+        <path d="M240 116 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <text x="256" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+
+        <path d="M120 88 L240 88" stroke="#f5b942" stroke-width="1.8" fill="none"/>
+        <path d="M232 83 L242 88 L232 93" fill="#f5b942"/>
+        <path d="M240 232 L120 232" stroke="#f5b942" stroke-width="1.8" fill="none"/>
+        <path d="M128 227 L118 232 L128 237" fill="#f5b942"/>
+        <text x="146" y="284" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i = cte → s = 0</text>
+        <text x="152" y="60" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nenhum R no laço</text>
+
+        <!-- corte de capacitores -->
+        <rect x="396" y="100" width="88" height="120" fill="none" stroke="#5d6e67" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <text x="412" y="152" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">sub-rede</text>
+        <text x="434" y="172" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">A</text>
+        <rect x="596" y="100" width="88" height="120" fill="none" stroke="#5d6e67" stroke-width="1.6" stroke-dasharray="4 4"/>
+        <text x="612" y="152" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">sub-rede</text>
+        <text x="634" y="172" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">B</text>
+
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M484 128 L526 128"/>
+          <path d="M554 128 L596 128"/>
+          <path d="M484 196 L526 196"/>
+          <path d="M554 196 L596 196"/>
+        </g>
+        <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+          <line x1="532" y1="112" x2="532" y2="144"/>
+          <line x1="546" y1="112" x2="546" y2="144"/>
+          <line x1="532" y1="180" x2="532" y2="212"/>
+          <line x1="546" y1="180" x2="546" y2="212"/>
+        </g>
+        <text x="528" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+        <text x="528" y="232" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+
+        <path d="M540 66 L540 258" stroke="#f5b942" stroke-width="1.8" stroke-dasharray="6 5" fill="none"/>
+        <text x="552" y="62" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">corte</text>
+        <text x="420" y="284" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">carga de cada lado = cte → s = 0</text>
+      </svg>
+      <div class="pz-legend">À esquerda: \(L_1\) e \(L_2\) fecham um laço sem resistência — a corrente circulante não decai e produz \(s=0\). À direita: \(C_1\) e \(C_2\) são a única ligação entre A e B — cortá-los parte a rede, e a carga acumulada em cada lado fica presa, o que também produz \(s=0\).</div>
+    </div>
+  </section>
+
+  <section id="classificacao" class="panel src-prof">
+    <span class="eyebrow">8.4</span>
+    <h2>Os três comportamentos: estável, marginal, instável</h2>
+
+    <p>Sabendo onde estão as FCPs, a classificação é mecânica. O formulário da P2 traz as três definições em caixas seguidas, na folha 2, logo depois do item b) da Questão 01. Estão reproduzidas abaixo <em>exatamente como estão escritas</em>.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">Assintoticamente Estável</span>
+        <p>Parte real de todas as FCPs são negativas.</p>
+        <div class="eq-block">\[ \mathrm{Re}[s_k] &lt; 0 \quad \forall k \]</div>
+        <p>\(\text{Resposta} \to 0\) com \(\text{tempo} \to \infty\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Marginalmente Estável</span>
+        <p>Parte real de todas as FCPs são negativas ou nulas e uma delas \(s_k = \pm j\omega_k\).</p>
+        <div class="eq-block">\[ \mathrm{Re}[s_k] \le 0 \quad\text{e}\quad \exists\, s_k = \pm j\omega_k \]</div>
+        <p>\(\text{Resposta limitada}\) com \(\text{tempo} \to \infty\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">Instáveis</span>
+        <p>Parte real de todas as FCPs são positivas ou nulas com multiplicidade maior que 1 ou \(s_k = \pm j\omega_k\) com multiplicidade maior que 1.</p>
+        <div class="eq-block">\[ \mathrm{Re}[s_k] &gt; 0 \quad\text{ou}\quad s_k \in j\mathbb{R} \text{ com mult.} &gt; 1 \]</div>
+        <p>\(\text{Resposta} \to \infty\) com \(\text{tempo} \to \infty\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">como o professor usa isso na prova</span>
+        <p>No item b) da Questão 01 da folha 2 a rede tem uma única FCP, \(s = \dfrac{r-R}{L}\), e a conclusão é imediata: assintoticamente estável se \(s&lt;0 \Rightarrow r&lt;R\); marginalmente estável se \(s=0 \Rightarrow r=R\).</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a leitura precisa das três caixas</span>
+      <p>As caixas do formulário são resumos de quadro e têm dois descuidos de redação que vale corrigir antes de usá-las numa prova.</p>
+      <ol style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+        <li><b style="color:var(--ink)">"Parte real de todas as FCPs são positivas"</b>, na caixa de instáveis, deve ser lida como <em>alguma</em>. Basta <b style="color:var(--ink)">uma</b> FCP com \(\mathrm{Re}[s_k]&gt;0\) para a rede ser instável — as outras podem estar todas no semiplano esquerdo. O modo que cresce domina a soma.</li>
+        <li><b style="color:var(--ink)">A multiplicidade é decisiva no eixo imaginário.</b> Uma FCP simples em \(s=\pm j\omega_0\) gera \(\cos(\omega_0 t + \phi)\), que é limitado — rede marginalmente estável. A mesma FCP <em>dupla</em> gera \(t\cos(\omega_0 t+\phi)\), que não é limitado — rede instável. A distinção é exatamente esta e não outra.</li>
+        <li><b style="color:var(--ink)">\(s=0\) é caso do eixo imaginário com \(\omega_0=0\).</b> Uma FCP nula simples produz uma <em>constante</em> na resposta livre: limitada, logo marginalmente estável. Uma FCP nula dupla produz um termo em \(t\): instável. É por isso que um laço de indutores, sozinho, deixa a rede marginalmente estável e não instável.</li>
+      </ol>
+      <table class="ltable" style="margin-top:1rem">
+        <thead><tr><th>FCP</th><th>termo na resposta livre</th><th>veredito</th></tr></thead>
+        <tbody>
+          <tr><td>\(s=-\sigma\), \(\sigma&gt;0\)</td><td>\(e^{-\sigma t}\)</td><td>morre — contribui para estabilidade assintótica</td></tr>
+          <tr><td>\(s=-\sigma \pm j\omega_d\)</td><td>\(e^{-\sigma t}\cos(\omega_d t + \phi)\)</td><td>morre oscilando</td></tr>
+          <tr><td>\(s=0\) simples</td><td>constante</td><td>limitada — marginal</td></tr>
+          <tr><td>\(s=\pm j\omega_0\) simples</td><td>\(\cos(\omega_0 t+\phi)\)</td><td>limitada — marginal</td></tr>
+          <tr><td>\(s=0\) dupla</td><td>\(A_1 + A_2 t\)</td><td>cresce — instável</td></tr>
+          <tr><td>\(s=\pm j\omega_0\) dupla</td><td>\(t\cos(\omega_0 t+\phi)\)</td><td>cresce — instável</td></tr>
+          <tr><td>\(\mathrm{Re}[s]&gt;0\)</td><td>\(e^{+\sigma t}\)</td><td>explode — instável</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg">
+        <rect x="40" y="30" width="300" height="340" fill="rgba(74,222,154,0.06)"/>
+        <rect x="340" y="30" width="320" height="340" fill="rgba(224,98,90,0.07)"/>
+
+        <path d="M40 200 L672 200" stroke="rgba(231,237,233,0.6)" stroke-width="1.6" fill="none"/>
+        <path d="M664 195 L676 200 L664 205" fill="rgba(231,237,233,0.6)"/>
+        <text x="656" y="224" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">σ</text>
+
+        <path d="M340 380 L340 26" stroke="#f5b942" stroke-width="2" fill="none"/>
+        <path d="M335 34 L340 22 L345 34" fill="#f5b942"/>
+        <text x="352" y="26" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">jω</text>
+
+        <text x="56" y="56" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">Re[s] &lt; 0</text>
+        <text x="56" y="76" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">ASSINTOTICAMENTE</text>
+        <text x="56" y="94" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">ESTÁVEL</text>
+        <g stroke="#4ade9a" stroke-width="2.4">
+          <path d="M162 126 L180 144 M180 126 L162 144"/>
+          <path d="M162 256 L180 274 M180 256 L162 274"/>
+          <path d="M240 191 L258 209 M258 191 L240 209"/>
+        </g>
+        <text x="152" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">−σ+jω</text>
+        <text x="152" y="296" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">−σ−jω</text>
+
+        <text x="420" y="56" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">Re[s] &gt; 0</text>
+        <text x="420" y="76" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="12">INSTÁVEL</text>
+        <g stroke="#e0625a" stroke-width="2.4">
+          <path d="M486 146 L504 164 M504 146 L486 164"/>
+          <path d="M486 236 L504 254 M504 236 L486 254"/>
+          <path d="M566 191 L584 209 M584 191 L566 209"/>
+        </g>
+        <text x="500" y="192" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="11">qualquer uma basta</text>
+
+        <g stroke="#f5b942" stroke-width="2.4">
+          <path d="M331 96 L349 114 M349 96 L331 114"/>
+          <path d="M331 286 L349 304 M349 286 L331 304"/>
+          <circle cx="340" cy="200" r="7" fill="none"/>
+        </g>
+        <text x="356" y="106" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">+jω₀ simples</text>
+        <text x="356" y="300" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">−jω₀ simples</text>
+        <text x="352" y="196" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">s = 0 simples</text>
+        <text x="188" y="348" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">SOBRE O EIXO, SIMPLES → MARGINALMENTE ESTÁVEL</text>
+        <text x="188" y="368" fill="#e0625a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">SOBRE O EIXO, MÚLTIPLA → INSTÁVEL</text>
+      </svg>
+      <div class="pz-legend">O plano-\(s\) partido em três. O eixo \(j\omega\) (âmbar) é a fronteira e tem status próprio: uma FCP simples sobre ele deixa a rede marginalmente estável; a mesma FCP repetida a torna instável. Não existe "quase estável": a classificação é uma partição.</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a consequência que a P2 mais explora</span>
+      <p>A estabilidade não é um adorno teórico: ela é a <b style="color:var(--ink)">condição de existência</b> do regime permanente senoidal. Excite uma rede com \(e_s(t)=E\cos(\omega t+\theta)\). A resposta completa é a soma da parcela forçada (na frequência \(\omega\)) com a resposta livre (nas FCPs). Para que a saída <em>tenda</em> a uma senoide pura, a resposta livre precisa desaparecer — e ela só desaparece se toda FCP tiver parte real estritamente negativa.</p>
+      <div class="roc-grid" style="margin-top:0.8rem">
+        <div class="roc-card">
+          <span class="tag">assintoticamente estável</span>
+          <p>A parcela livre morre. Sobra a senoide. <b style="color:var(--ink)">Há RPS</b>, e o cálculo fasorial do <a href="modulo-11.html">módulo 11</a> é válido.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">marginalmente estável</span>
+          <p>A parcela livre não morre — oscila ou fica constante para sempre. A saída é limitada, mas <b style="color:var(--ink)">não é uma senoide pura</b>: não há RPS.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">instável</span>
+          <p>A parcela livre cresce e engole a forçada. <b style="color:var(--ink)">Não há RPS</b> — e é literalmente a resposta do item c) da 1ª questão da P2 2025 para \(g_m=-1\): "o circuito é instável visto que terá polo positivo".</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">a exceção do enunciado</span>
+          <p>A questão 4 do Teste 3 da P2 2025 fecha o raciocínio pelo outro lado: mesmo numa rede marginalmente estável a saída pode ser limitada e ter "dois cossenos de frequências \(\omega_1\) e \(\omega_2\)" — o professor sublinha duas vezes que isso <b style="color:var(--ink)">não</b> é RPS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="coeficientes" class="panel src-prof">
+    <span class="eyebrow">8.5</span>
+    <h2>O critério dos coeficientes: nunca calcule as raízes</h2>
+
+    <p>Em quase toda questão de estabilidade da P2 o polinômio característico é de segundo grau e tem um parâmetro livre dentro. Calcular as raízes em função do parâmetro e depois exigir parte real negativa é possível, e é trabalhoso. O professor não faz isso. A observação que ele escreve na Questão 04 da folha 2 do formulário é uma frase de sete palavras:</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, folha 2, Questão 04 — observação manuscrita</span>
+      <div class="final-answer">"Os coeficientes devem apresentar mesmo sinal"</div>
+      <p>Na sequência da mesma questão, o polinômio obtido é organizado e a condição sai direto:</p>
+      <div class="eq-block">\[ s^2LC + s\big(GL(1-\alpha) - gL\big) + 1 = 0 \;\Longrightarrow\; GL(1-\alpha) - gL &gt; 0 \]</div>
+      <div class="final-answer">\[ G(1-\alpha) - g &gt; 0 \]</div>
+      <p class="dim">Os coeficientes extremos, \(LC\) e \(1\), são positivos por construção; basta então exigir que o do meio também seja.</p>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito P2 2023, 1ª questão item b</span>
+      <p>A mesma regra, escrita em prosa: "Para o circuito ser assintoticamente estável, os coeficientes da equação de segundo grau devem ser todos positivos ou todos negativos."</p>
+      <div class="eq-block">\[ s^2 + (4-2g_m)s + 2 = 0 \;\Longrightarrow\; 4 - 2g_m &gt; 0 \;\Longrightarrow\; g_m &lt; 2 \]</div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito Teste 5 / P2 2023 — o complemento sobre a degeneração</span>
+      <p>O gabarito do Teste 5 acrescenta a regra que falta quando o coeficiente do termo de maior grau também depende do parâmetro:</p>
+      <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+        <li>"Caso o circuito do exercício seja de 2ª ordem, o coeficiente de \(s^2\) deve ser maior que zero;"</li>
+        <li>"Caso o circuito do exercício seja de 1ª ordem, o coeficiente de \(s^2\) deve ser igual a zero."</li>
+      </ul>
+      <p class="dim">É por isso que a resposta daquele teste sai com \(\ge\) e não com \(&gt;\): o valor que anula o coeficiente de \(s^2\) não é proibido — ele apenas derruba a ordem da rede, e a rede de 1ª ordem que sobra ainda pode ser assintoticamente estável.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Por que o critério funciona no 2º grau</h3>
+
+    <button class="demo-btn">Demonstração — coeficientes de mesmo sinal ⟺ raízes no semiplano esquerdo</button>
+    <div class="proof-block">
+      <div class="proof-steps">
+        <p>Escreva o polinômio mônico, na forma do formulário:</p>
+        <div class="proof-eq">\[ s^2 + 2\alpha s + \omega_o^2 = (s-s_1)(s-s_2) \]</div>
+        <p>Comparando termo a termo (Vieta):</p>
+        <div class="proof-eq">\[ s_1 + s_2 = -2\alpha \qquad\qquad s_1 s_2 = \omega_o^2 \]</div>
+        <p><b style="color:var(--ink)">Ida.</b> Se \(\mathrm{Re}[s_1]&lt;0\) e \(\mathrm{Re}[s_2]&lt;0\), então a soma tem parte real negativa, logo \(-2\alpha&lt;0\) e \(\alpha&gt;0\). Quanto ao produto: se as raízes são reais, ambas negativas, o produto é positivo; se são complexas conjugadas, \(s_1s_2=|s_1|^2&gt;0\). Nos dois casos \(\omega_o^2&gt;0\). Logo os três coeficientes \(1\), \(2\alpha\), \(\omega_o^2\) são positivos.</p>
+        <p><b style="color:var(--ink)">Volta.</b> Suponha \(\alpha&gt;0\) e \(\omega_o^2&gt;0\). Duas possibilidades:</p>
+        <div class="proof-eq">\[ s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_o^2} \]</div>
+        <p>Se \(\alpha^2 &lt; \omega_o^2\), a raiz quadrada é imaginária pura e \(\mathrm{Re}[s_{1,2}]=-\alpha&lt;0\). Se \(\alpha^2 \ge \omega_o^2\), a raiz é real e satisfaz \(0 \le \sqrt{\alpha^2-\omega_o^2} &lt; \alpha\) — a desigualdade estrita vem de \(\omega_o^2&gt;0\) —, de modo que as duas raízes são reais e negativas. Em todos os casos, semiplano esquerdo. \(\blacksquare\)</p>
+        <p class="dim">O caso "todos negativos" é o mesmo enunciado: multiplicar o polinômio por \(-1\) não muda as raízes. Por isso a frase do professor diz "todos positivos <em>ou</em> todos negativos" — o que importa é a <b style="color:var(--ink)">ausência de troca de sinal</b>, não o sinal em si.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o limite do critério, e o nome que ele tem</span>
+      <p>A demonstração acima usa a fórmula das raízes do 2º grau. Ela não se estende. Para grau \(\ge 3\), coeficientes todos de mesmo sinal são <b style="color:var(--ink)">necessários mas não suficientes</b>.</p>
+      <p><b style="color:var(--ink)">Necessários:</b> se todas as raízes têm parte real negativa, \(D(s)\) se fatora em blocos \((s+\sigma)\) e \((s^2+2\sigma s + |s_k|^2)\) com todos os coeficientes positivos; produto de polinômios de coeficientes positivos tem coeficientes positivos. Logo qualquer troca de sinal — ou qualquer coeficiente ausente — <em>já</em> denuncia instabilidade, e essa conferência é gratuita.</p>
+      <p><b style="color:var(--ink)">Não suficientes:</b> o contraexemplo clássico é</p>
+      <div class="eq-block">\[ s^3 + s^2 + s + 6 = (s+2)(s^2 - s + 3) \]</div>
+      <p>Todos os quatro coeficientes positivos, e ainda assim há um par de raízes com parte real \(+1/2\). A rede correspondente seria instável.</p>
+      <p>O teste completo para grau arbitrário chama-se <b style="color:var(--ink)">critério de Routh-Hurwitz</b>, e monta uma tabela de determinantes a partir dos coeficientes. <em>Ele não está no programa de PSI3213</em> e nenhuma questão de P2 o exige — porque nenhuma questão pede a faixa de estabilidade de um polinômio de grau \(\ge3\) com parâmetro livre. Fica registrado como o nome a procurar em Controle.</p>
+      <p class="dim">Quando o grau é 3 e você precisa mesmo decidir, há o caminho artesanal que a Questão 06 da folha 2 sugere: fatorar. Um polinômio cúbico de circuito quase sempre tem uma raiz reconhecível, e o que sobra é um 2º grau onde o critério vale.</p>
+    </div>
+
+    <div class="callout"><b>Duas conferências antes de responder.</b> <em>(i)</em> Termo independente nulo significa FCP em \(s=0\) — a rede não é assintoticamente estável, é marginal na melhor das hipóteses. <em>(ii)</em> Coeficiente de maior grau nulo significa que a ordem caiu; recomece a análise com o polinômio de grau menor, como no Teste 5 de 2023 e na 2ª questão da P2 2025. As duas situações são <b>fronteiras</b>, e a prova mira nelas.</div>
+  </section>
+
+  <section id="ganho" class="panel src-ext">
+    <span class="eyebrow">8.6</span>
+    <h2>Faixas de ganho de fonte vinculada: o formato clássico da prova</h2>
+
+    <p>Junte as três peças anteriores e você tem a questão que a P2 faz em todos os anos. Uma fonte vinculada com ganho simbólico está dentro da rede; o ganho entra na matriz e sobrevive até a equação característica; a pergunta é <b style="color:var(--ink)">para quais valores do ganho a rede permanece estável</b>.</p>
+
+    <p>A razão de ser dessa questão é física, não algébrica. Uma fonte vinculada pode injetar energia. Um resistor só dissipa, um indutor e um capacitor só trocam — nenhum dos três consegue levar uma FCP para o semiplano direito. Um vinculado com o ganho errado consegue: ele realimenta a rede com energia que vem da alimentação do transistor ou do amp-op, e a realimentação positiva excessiva transforma o circuito num oscilador que cresce. A faixa de ganho é a fronteira entre amplificar e explodir.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">1</div><div class="small">inativar indep.<br>manter o ganho</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">2</div><div class="small">matriz com o<br>ganho simbólico</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">3</div><div class="small">det = 0<br>→ D(s; k)</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">4</div><div class="small">impor mesmo<br>sinal aos coef.</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">5</div><div class="small">resolver a<br>inequação</div></div>
+    </div>
+    <p class="flow-note">O passo 5 é onde se perde ponto, e não por álgebra: por lógica. A inequação pode ter solução em duas faixas disjuntas, e quem resolve no automático entrega apenas uma delas.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">O catálogo das cinco questões resolvidas</h3>
+
+    <table class="ltable">
+      <thead><tr><th>origem</th><th>vinculado</th><th>equação característica</th><th>condição</th></tr></thead>
+      <tbody>
+        <tr><td>formulário, folha 2, Q01b</td><td>\(r\,i\) (CCVS)</td><td>\(s = \dfrac{r-R}{L}\)</td><td>\(r &lt; R\) (assint.); \(r=R\) (marginal)</td></tr>
+        <tr><td>formulário, folha 2, Q04</td><td>\(\alpha v\) e \(g v\)</td><td>\(s^2LC + s\big(GL(1-\alpha)-gL\big) + 1\)</td><td>\(G(1-\alpha) - g &gt; 0\)</td></tr>
+        <tr><td>formulário, folha 2, Q05</td><td>\(\mu v_1\) (VCVS)</td><td>\(s = -\dfrac{G_1+G_2(1+\mu)}{C}\)</td><td>\(\mu &gt; -\dfrac{G_1+G_2}{G_2}\)</td></tr>
+        <tr><td>formulário, folha 2, Q07</td><td>\(\alpha i_C\), com \(k=1\)</td><td>\(s^2(|M|C\alpha + RCL_1) + sL_2 + R\)</td><td>\(\alpha \ge -\dfrac{RL_1}{|M|}\)</td></tr>
+        <tr><td>P2 2023, 1ª questão b</td><td>\(g_m e_2\) (VCCS)</td><td>\(s^2 + (4-2g_m)s + 2\)</td><td>\(g_m &lt; 2\)</td></tr>
+        <tr><td>P2 2025, 1ª questão a</td><td>\(g_m v_1\) (VCCS)</td><td>\((2+g_m)s + (2+2g_m)\)</td><td>\(g_m &gt; -1\) <b>ou</b> \(g_m &lt; -2\)</td></tr>
+      </tbody>
+    </table>
+    <p class="dim">Seis linhas, um único método. Repare que em quatro delas a rede é de 1ª ordem e a "equação característica" é apenas \(s = \text{expressão}\) — nesse caso a condição é diretamente \(s&lt;0\), sem critério de coeficientes nenhum.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Duas faixas disjuntas: a armadilha da P2 2025</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde a inequação se parte em duas</span>
+      <p>Quando a rede é de 1ª ordem, a FCP sai como uma <b style="color:var(--ink)">função racional do ganho</b>. No item a) da 1ª questão da P2 2025:</p>
+      <div class="eq-block">\[ s(g_m) = \frac{-2-2g_m}{2+g_m} \]</div>
+      <p>A condição \(s&lt;0\) é a condição de uma fração ser negativa — e uma fração é negativa quando numerador e denominador têm <em>sinais opostos</em>. São dois casos, não um:</p>
+      <table class="ltable" style="margin-top:0.8rem">
+        <thead><tr><th>caso</th><th>numerador \(-2-2g_m\)</th><th>denominador \(2+g_m\)</th><th>interseção</th></tr></thead>
+        <tbody>
+          <tr><td>N &lt; 0, D &gt; 0</td><td>\(g_m &gt; -1\)</td><td>\(g_m &gt; -2\)</td><td>\(g_m &gt; -1\)</td></tr>
+          <tr><td>N &gt; 0, D &lt; 0</td><td>\(g_m &lt; -1\)</td><td>\(g_m &lt; -2\)</td><td>\(g_m &lt; -2\)</td></tr>
+        </tbody>
+      </table>
+      <div class="final-answer">\[ g_m &gt; -1 \quad\text{ou}\quad g_m &lt; -2 \]</div>
+      <p>A união é obrigatória. E o motivo de existir um <b style="color:var(--ink)">buraco</b> entre \(-2\) e \(-1\) é geométrico: a função \(g_m \mapsto s\) tem um <em>polo</em> em \(g_m=-2\). Ao atravessar esse polo, \(s\) vai a \(+\infty\), reaparece em \(-\infty\) e volta ao semiplano esquerdo pelo outro lado. O intervalo \(-2 &lt; g_m &lt; -1\) é a janela em que \(s\) está do lado errado do eixo.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a alternativa segura — trabalhe com o polinômio, não com a raiz</span>
+      <p>Há um jeito de nunca errar isso: não isole \(s\). Mantenha o determinante em <b style="color:var(--ink)">forma polinomial</b> e aplique o critério dos coeficientes. Para a mesma questão,</p>
+      <div class="eq-block">\[ (2+g_m)\frac{s+2}{2} - 1 = 0 \;\Longrightarrow\; (2+g_m)(s+2) - 2 = 0 \;\Longrightarrow\; \underbrace{(2+g_m)}_{a_1}\,s + \underbrace{(2+2g_m)}_{a_0} = 0 \]</div>
+      <p>Mesmo sinal para \(a_1\) e \(a_0\), que é a condição de \(s = -a_0/a_1 &lt; 0\):</p>
+      <div class="eq-block">\[ \begin{cases} 2+g_m &gt; 0 \;\wedge\; 2+2g_m &gt; 0 &amp;\Longrightarrow\; g_m &gt; -1 \\[4pt] 2+g_m &lt; 0 \;\wedge\; 2+2g_m &lt; 0 &amp;\Longrightarrow\; g_m &lt; -2 \end{cases} \]</div>
+      <p>A estrutura "dois casos" fica explícita desde o começo, porque o critério dos coeficientes <em>já</em> é uma disjunção: todos positivos <b style="color:var(--ink)">ou</b> todos negativos. Quem o aplica mecanicamente encontra as duas faixas sem precisar pensar no polo.</p>
+      <p><b style="color:var(--ink)">Conferência numérica obrigatória.</b> Escolha um valor em cada região e teste:</p>
+      <table class="ltable" style="margin-top:0.8rem">
+        <thead><tr><th>\(g_m\)</th><th>\(s = \dfrac{-2-2g_m}{2+g_m}\)</th><th>veredito</th><th>bate com a resposta?</th></tr></thead>
+        <tbody>
+          <tr><td>\(0\)</td><td>\(-2/2 = -1\)</td><td>assint. estável</td><td>sim — está em \(g_m&gt;-1\)</td></tr>
+          <tr><td>\(-1\)</td><td>\(0/1 = 0\)</td><td>marginal</td><td>sim — é a fronteira, excluída</td></tr>
+          <tr><td>\(-1{,}5\)</td><td>\(+1/0{,}5 = +2\)</td><td>instável</td><td>sim — está no buraco</td></tr>
+          <tr><td>\(-2\)</td><td>indefinido</td><td>sem FCP</td><td>excluído (veja abaixo)</td></tr>
+          <tr><td>\(-3\)</td><td>\(+4/(-1) = -4\)</td><td>assint. estável</td><td>sim — está em \(g_m&lt;-2\)</td></tr>
+        </tbody>
+      </table>
+      <p class="dim">Em \(g_m=-2\) o coeficiente \(a_1\) se anula e o determinante fica igual a \(-1\), constante: nunca zero. A rede perde sua única FCP — deixa de ter dinâmica própria. É um ponto de degeneração isolado, e por isso não pertence a nenhuma das duas faixas.</p>
+    </div>
+
+    <div class="callout"><b>Três frases para levar para a prova.</b> <em>(i)</em> Ganho de vinculado entra na matriz e vive na equação característica; nunca se inativa. <em>(ii)</em> Se você isolou \(s\) e ele ficou uma fração com o ganho no denominador, a resposta tem grande chance de ser uma <b>união de intervalos</b> — examine os dois casos de sinal. <em>(iii)</em> Sempre teste um valor numérico de cada lado antes de escrever a resposta final. Custa trinta segundos e pega o erro de lógica que a álgebra não pega.</div>
+  </section>
+
+  <section id="revisao2a" class="panel src-prof">
+    <span class="eyebrow">8.7</span>
+    <h2>Volta ao 2º grau: \(\alpha\), \(\omega_o\) e os três regimes</h2>
+
+    <p>Uma vez obtido o polinômio característico, ele é o mesmo objeto do <a href="modulo-05.html">módulo 05</a>. As três caixas finais do formulário fecham o ciclo: da equação diferencial ao polinômio, e do polinômio ao formato da resposta livre.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, caixa "Equação diferencial de segunda ordem"</span>
+      <div class="eq-block">\[ \ddot x(t) + 2\alpha\dot x(t) + \omega_o^2 x(t) = f_s(t) \]</div>
+      <p>"A transformada de laplace dessa equação é dada por"</p>
+      <div class="eq-block">\[ X(s) = \underbrace{\frac{F_s(s)}{s^2 + 2\alpha s + \omega_o^2}}_{\text{resposta forçada}} + \underbrace{\frac{x(0^-)(s+2\alpha) + \dot x(0^-)}{s^2 + 2\alpha s + \omega_o^2}}_{\text{resposta livre}} \]</div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, caixa "Polinômio característico"</span>
+      <div class="eq-block">\[ s^2 + 2\alpha s + \omega^2 = 0 \;\Longrightarrow\; s_{1,2} = -\alpha \pm \sqrt{\alpha^2 - \omega_o^2} \]</div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P2, caixa "Comportamento"</span>
+      <div class="roc-grid" style="margin-top:0.8rem">
+        <div class="roc-card">
+          <span class="tag">Super Amortecido</span>
+          <div class="eq-block">\[ s_1 \ne s_2 \;\text{ou}\; \alpha &gt; \omega_o \]</div>
+          <div class="eq-block">\[ X_l(s) = \frac{A_1}{s-s_1} + \frac{A_2}{s-s_2} \]</div>
+          <div class="eq-block">\[ x_l(t) = \big[A_1e^{s_1t} + A_2e^{s_2t}\big]H(t) \]</div>
+        </div>
+        <div class="roc-card">
+          <span class="tag">Sub Amortecido</span>
+          <div class="eq-block">\[ s_1 = s_1^{*},\; s_1 \ne s_2 \;\text{ou}\; \alpha &lt; \omega_o \]</div>
+          <div class="eq-block">\[ s_{1,2} = -\alpha \pm j\underbrace{\sqrt{\omega_o^2-\alpha^2}}_{\omega_d} \]</div>
+          <div class="eq-block">\[ x(t) = 2|A_1|e^{-\alpha t}\cos(\omega_d t + \phi_1) \]</div>
+          <p class="dim">com \(s_1 = -\alpha + j\omega_d\) e \(A_1 = |A_1|e^{j\phi_1}\).</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">Amortecimento Crítico</span>
+          <div class="eq-block">\[ s_1 = s_2 = -\alpha \qquad \alpha = \omega_o \]</div>
+          <p class="dim">O formulário termina exatamente aqui. Não há expressão de \(x_l(t)\) escrita para o caso crítico — a caixa enuncia a condição e para.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">como isso se liga às FCPs</span>
+          <p>\(s_1\) e \(s_2\) <em>são</em> as duas FCPs da rede de 2ª ordem. "Superamortecido", "subamortecido" e "criticamente amortecido" são três maneiras de as FCPs estarem no semiplano esquerdo — todas assintoticamente estáveis, desde que \(\alpha&gt;0\).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · completando a caixa do amortecimento crítico</span>
+      <p>Com \(\alpha=\omega_o\) o polinômio é um quadrado perfeito e o polo é duplo:</p>
+      <div class="eq-block">\[ s^2 + 2\alpha s + \alpha^2 = (s+\alpha)^2 \]</div>
+      <p>Polo duplo exige <b style="color:var(--ink)">duas</b> frações parciais, uma para cada potência:</p>
+      <div class="eq-block">\[ X_l(s) = \frac{A_1}{s+\alpha} + \frac{A_2}{(s+\alpha)^2} \]</div>
+      <p>e, pela tabela de transformadas do próprio formulário (\(t^k e^{at} \leftrightarrow k!/(s-a)^{k+1}\), com \(k=1\)),</p>
+      <div class="final-answer">\[ x_l(t) = \big(A_1 + A_2\,t\big)e^{-\alpha t}\,H(t) \]</div>
+      <p>As constantes saem do problema de valor inicial, como no <a href="modulo-05.html#pvi-critico">módulo 05</a>: \(A_1 = x(0^-)\) e \(A_2 = \dot x(0^-) + \alpha\,x(0^-)\).</p>
+      <p><b style="color:var(--ink)">O detalhe de estabilidade que importa aqui.</b> O termo \(t\,e^{-\alpha t}\) tem um \(t\) que cresce, mas \(e^{-\alpha t}\) decai mais rápido do que qualquer polinômio cresce — logo, com \(\alpha&gt;0\), \(x_l(t)\to 0\) e a rede é assintoticamente estável, exatamente como nos outros dois regimes. Multiplicidade só é problema <em>sobre o eixo imaginário</em>, onde não há exponencial decrescente para segurar o \(t\). É a mesma distinção da <a href="#classificacao">seção 8.4</a>.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o mapa completo do 2º grau</span>
+      <table class="ltable">
+        <thead><tr><th>\(\alpha\)</th><th>\(\omega_o^2\)</th><th>FCPs</th><th>regime</th><th>estabilidade</th></tr></thead>
+        <tbody>
+          <tr><td>\(&gt;0\)</td><td>\(&gt;0\), \(\alpha&gt;\omega_o\)</td><td>duas reais negativas</td><td>superamortecido</td><td>assintoticamente estável</td></tr>
+          <tr><td>\(&gt;0\)</td><td>\(&gt;0\), \(\alpha=\omega_o\)</td><td>\(-\alpha\) dupla</td><td>crítico</td><td>assintoticamente estável</td></tr>
+          <tr><td>\(&gt;0\)</td><td>\(&gt;0\), \(\alpha&lt;\omega_o\)</td><td>\(-\alpha\pm j\omega_d\)</td><td>subamortecido</td><td>assintoticamente estável</td></tr>
+          <tr><td>\(=0\)</td><td>\(&gt;0\)</td><td>\(\pm j\omega_o\) simples</td><td>oscilador puro</td><td>marginalmente estável</td></tr>
+          <tr><td>\(=0\)</td><td>\(=0\)</td><td>\(0\) dupla</td><td>—</td><td>instável</td></tr>
+          <tr><td>\(&gt;0\)</td><td>\(=0\)</td><td>\(0\) e \(-2\alpha\)</td><td>—</td><td>marginalmente estável</td></tr>
+          <tr><td>\(&lt;0\)</td><td>qualquer</td><td>alguma com \(\mathrm{Re}&gt;0\)</td><td>—</td><td>instável</td></tr>
+        </tbody>
+      </table>
+      <p class="dim">As três primeiras linhas são o módulo 05; as quatro últimas são o que este módulo acrescenta. Note que \(\omega_o^2=0\) com \(\alpha&gt;0\) é o caso da FCP nula simples — um laço de indutores numa rede com resistência, por exemplo.</p>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">8.8</span>
+    <h2>Exercícios de provas e testes</h2>
+    <p class="dim">Todos treinam a mesma sequência: determinante → equação característica → condição de sinal. O que muda é o tamanho da matriz e o que se pede no fim — faixa de ganho, valor exato de ganho, ou a lista das FCPs.</p>
+
+    <div class="q-intro">
+      <div><b>7 exercícios</b>3 de prova dissertativa e 4 de teste, todos resolvidos passo a passo</div>
+      <div><b>Origem</b>P2 de 2023 e 2025; Testes 3 e 5 de 2023; Teste 4 de 2025</div>
+      <div><b>Foco</b>faixa de ganho · FCP nula · estabilidade marginal · laço de indutores</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, item a</span>Intervalos de \(g_m\) para estabilidade assintótica — a resposta em duas faixas</span>
+          <span class="q-prova">P2/2025 — 1,5 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">a) (1,5 pontos)</b> Determine o(s) intervalo(s) de \(g_m\) para que o circuito livre seja assintoticamente estável. Justifique sua resposta.</p>
+
+        <div class="given-box">
+          <p>A equação matricial de A.N. no domínio de Laplace em função de \(g_m\), \(v_o\) e \(E_s(s)\) é dada por</p>
+          <div class="eq-block">\[
+            \begin{bmatrix} 2+g_m &amp; -1 \\[4pt] -1 &amp; \dfrac{s+2}{2} \end{bmatrix}
+            \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \end{bmatrix}
+            = \begin{bmatrix} (g_m+1)E_s(s) \\[4pt] 0{,}5\,v_o \end{bmatrix}
+          \]</div>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 136"/>
+              <path d="M70 184 L70 260"/>
+              <path d="M70 70 L156 70"/>
+              <path d="M204 70 L290 70"/>
+              <path d="M290 70 L356 70"/>
+              <path d="M404 70 L500 70"/>
+              <path d="M500 70 L590 70"/>
+              <path d="M290 70 L290 136"/>
+              <path d="M290 184 L290 260"/>
+              <path d="M500 70 L500 142"/>
+              <path d="M500 168 L500 260"/>
+              <path d="M70 260 L590 260"/>
+            </g>
+
+            <circle cx="70" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="62" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="62" y="180" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="4" y="212" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <rect x="156" y="58" width="48" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="164" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+            <path d="M212 34 L148 34" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M156 29 L146 34 L156 39" fill="#f5b942"/>
+            <text x="218" y="38" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₁(t)</text>
+
+            <rect x="356" y="58" width="48" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="364" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+            <path d="M266 160 L290 136 L314 160 L290 184 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M290 172 L290 150" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M285 156 L290 148 L295 156" fill="#4ade9a"/>
+            <text x="228" y="216" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">g_m v₁(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="484" y1="142" x2="516" y2="142"/>
+              <line x1="484" y1="168" x2="516" y2="168"/>
+            </g>
+            <text x="524" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">0,5 F</text>
+            <path d="M462 200 L462 132" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M457 140 L462 130 L467 140" fill="#f5b942"/>
+            <text x="432" y="220" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v_o</text>
+
+            <circle cx="290" cy="70" r="4" fill="#4ade9a"/>
+            <circle cx="500" cy="70" r="4" fill="#4ade9a"/>
+            <text x="278" y="52" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₁</text>
+            <text x="488" y="52" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₂</text>
+            <circle cx="596" cy="70" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="596" cy="260" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="612" y="76" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">A</text>
+            <text x="612" y="266" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">B</text>
+
+            <path d="M290 260 L290 274 M276 274 L304 274 M281 280 L299 280 M286 286 L294 286" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 1 — \(e_s\) à esquerda; \(1\ \Omega\) até \(e_1\) com \(v_1\) medida sobre ele; \(g_m v_1\) injetando em \(e_1\); \(1\ \Omega\) de \(e_1\) a \(e_2\); \(0{,}5\ \mathrm F\) de \(e_2\) ao terra com tensão \(v_o\); terminais A–B abertos em \(e_2\) e no terra.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a matriz já está dada; o trabalho todo é o determinante. E como a rede é de 1ª ordem, a FCP sai como uma fração com \(g_m\) no denominador — o que faz a resposta ser uma <em>união</em> de intervalos.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">O que "circuito livre assintoticamente estável" pede</div>
+              <p>Do gabarito: "deve-se obter a equação característica do circuito e analisar as raízes da equação. O determinante da matriz de Admitâncias deve ser igualado a zero".</p>
+              <div class="eq-block">\[ \begin{vmatrix} 2+g_m &amp; -1 \\[4pt] -1 &amp; \dfrac{s+2}{2} \end{vmatrix} = 0 \]</div>
+              <p class="dim">Note que o lado direito da equação matricial — com \(E_s\) e \(v_o\) — é simplesmente ignorado. Circuito livre é fonte independente inativada, e a c.i. também não entra na equação característica.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Determinante \(2\times2\)</div>
+              <div class="eq-block">\[ (2+g_m)\left(\frac{s+2}{2}\right) - (-1)(-1) = 0 \]</div>
+              <div class="eq-block">\[ (2+g_m)\left(\frac{s+2}{2}\right) - 1 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Isolar \(s\)</div>
+              <div class="eq-block">\[ \frac{s+2}{2} = \frac{1}{2+g_m} \]</div>
+              <div class="eq-block">\[ s + 2 = \frac{2}{2+g_m} \]</div>
+              <div class="eq-block">\[ s = \frac{2}{2+g_m} - 2 = \frac{2 - 2(2+g_m)}{2+g_m} = \frac{-2-2g_m}{2+g_m} \]</div>
+              <p>Uma única FCP: a rede é de 1ª ordem, com um só elemento reativo.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Impor \(s &lt; 0\)</div>
+              <p>"Se \(s&lt;0\), o circuito livre será assintoticamente estável." Logo:</p>
+              <div class="eq-block">\[ -2 - 2g_m &lt; 0 \;\Longrightarrow\; -2 &lt; 2g_m \;\Longrightarrow\; g_m &gt; -1 \]</div>
+              <p>ou</p>
+              <div class="eq-block">\[ 2 + g_m &lt; 0 \;\Longrightarrow\; g_m &lt; -2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">O passo lógico que o gabarito escreve em duas linhas</div>
+              <p>O gabarito salta da fração para as duas desigualdades. A ponte é: <b style="color:var(--ink)">uma fração é negativa quando numerador e denominador têm sinais opostos</b>, e isso são dois casos que devem ser resolvidos separadamente e depois unidos.</p>
+              <table class="ltable" style="margin-top:0.6rem">
+                <thead><tr><th>caso</th><th>\(-2-2g_m\)</th><th>\(2+g_m\)</th><th>interseção</th></tr></thead>
+                <tbody>
+                  <tr><td>N \(&lt;0\), D \(&gt;0\)</td><td>\(g_m &gt; -1\)</td><td>\(g_m &gt; -2\)</td><td>\(g_m &gt; -1\)</td></tr>
+                  <tr><td>N \(&gt;0\), D \(&lt;0\)</td><td>\(g_m &lt; -1\)</td><td>\(g_m &lt; -2\)</td><td>\(g_m &lt; -2\)</td></tr>
+                </tbody>
+              </table>
+              <p>Em cada linha, a interseção é a desigualdade <em>mais restritiva</em> das duas. A resposta é a união das duas linhas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Conferência pelo critério dos coeficientes</div>
+              <p>O mesmo resultado sem nunca isolar \(s\). Multiplicando o determinante por \(2\):</p>
+              <div class="eq-block">\[ (2+g_m)(s+2) - 2 = 0 \;\Longrightarrow\; (2+g_m)s + \big[2(2+g_m) - 2\big] = 0 \]</div>
+              <div class="eq-block">\[ \underbrace{(2+g_m)}_{a_1}\,s + \underbrace{(2+2g_m)}_{a_0} = 0 \]</div>
+              <p>Critério: \(a_1\) e \(a_0\) de mesmo sinal.</p>
+              <div class="eq-block">\[ \begin{cases} a_1 &gt; 0 \wedge a_0 &gt; 0: &amp; g_m &gt; -2 \;\wedge\; g_m &gt; -1 \;\Rightarrow\; g_m &gt; -1 \\[4pt] a_1 &lt; 0 \wedge a_0 &lt; 0: &amp; g_m &lt; -2 \;\wedge\; g_m &lt; -1 \;\Rightarrow\; g_m &lt; -2 \end{cases} \]</div>
+              <p class="dim">A disjunção do critério ("todos positivos ou todos negativos") já carrega a estrutura de duas faixas. Nesta rota é quase impossível esquecer a segunda.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Teste numérico nos três trechos</div>
+              <div class="eq-block">\[ g_m=0 \;\Rightarrow\; s=\frac{-2}{2}=-1 &lt; 0 \quad\checkmark\ \text{estável} \]</div>
+              <div class="eq-block">\[ g_m=-1{,}5 \;\Rightarrow\; s=\frac{-2+3}{0{,}5}=+2 &gt; 0 \quad\times\ \text{instável (buraco)} \]</div>
+              <div class="eq-block">\[ g_m=-3 \;\Rightarrow\; s=\frac{-2+6}{-1}=-4 &lt; 0 \quad\checkmark\ \text{estável} \]</div>
+              <p>Confirma as duas faixas e confirma o buraco entre elas.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ g_m &gt; -1 \quad\text{ou}\quad g_m &lt; -2 \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · por que a resposta é uma união e não um intervalo</span>
+            <p>Porque o mapa \(g_m \mapsto s\) é uma função racional com um <b style="color:var(--ink)">polo em \(g_m=-2\)</b>. Percorra \(g_m\) da esquerda para a direita: em \(g_m=-3\) a FCP está em \(-4\); subindo até \(g_m\to-2^-\), ela vai para \(-\infty\); atravessado o polo, em \(g_m\to-2^+\) ela reaparece em \(+\infty\) e desce; passa por \(+2\) em \(g_m=-1{,}5\); cruza a origem em \(g_m=-1\); e a partir daí fica negativa para sempre, tendendo a \(-2\) quando \(g_m\to\infty\). A janela instável é exatamente \(-2 &lt; g_m &lt; -1\).</p>
+            <p>O ponto \(g_m=-2\) merece nota separada: ali \(a_1=0\) e o determinante vale \(-1\), constante — não se anula para nenhum \(s\). A rede perde sua única FCP. Fisicamente, o vinculado com esse ganho cancela exatamente a condutância vista pelo nó \(e_1\), o capacitor deixa de ter caminho de descarga definido e a rede deixa de ter dinâmica própria. Não é estável nem instável: é degenerada, e por isso fica fora da resposta.</p>
+            <p><b style="color:var(--ink)">Onde se erra.</b> O erro dominante é resolver \(-2-2g_m&lt;0\) e parar — entregando só \(g_m&gt;-1\), o que vale 1,5 pt pela metade. O segundo erro é multiplicar a inequação por \((2+g_m)\) <em>sem</em> discutir o sinal do multiplicador: quem faz isso obtém \(-2-2g_m&lt;0\) como se o denominador fosse sempre positivo, e perde a faixa \(g_m&lt;-2\). Multiplicar uma inequação por uma quantidade de sinal desconhecido é a operação proibida do problema. O terceiro erro é trazer \(E_s\) ou \(v_o\) para a conta: a equação característica não os enxerga.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, item b</span>Faixa de \(g_m\) por determinante \(3\times3\) — e por que não pode haver FCP nula</span>
+          <span class="q-prova">P2/2023 — 1,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">b) (1,0)</b> Que faixa de valores poderá ter \(g_m\) para que o circuito apresente um comportamento assintoticamente estável? Apresente seus cálculos.</p>
+
+        <div class="given-box">
+          <p>Do item a), a equação matricial da análise nodal do circuito da Figura 1, agora com \(g_m\) mantido como incógnita na posição (3,2):</p>
+          <div class="eq-block">\[
+            \begin{bmatrix} \dfrac{s^2+2}{s} &amp; -\dfrac{2}{s} &amp; -s \\[6pt] -\dfrac{2}{s} &amp; \dfrac{s+2}{s} &amp; 0 \\[6pt] -s &amp; -g_m &amp; s+1 \end{bmatrix}
+            \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \\[4pt] E_3(s) \end{bmatrix}
+            = \begin{bmatrix} I_s - \dfrac{2}{s} + 4 \\[6pt] \dfrac{i_L(0^-)}{s} \\[6pt] -4 \end{bmatrix}
+          \]</div>
+          <p class="dim">Valores identificados no item a): \(R=1\ \Omega\), \(L=0{,}5\ \mathrm H\), \(C=1\ \mathrm F\), \(g_m=10\), \(v_C(0^-)=4\ \mathrm V\), \(i_L(0^-)=2\ \mathrm A\).</p>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 146"/>
+              <path d="M70 194 L70 278"/>
+              <path d="M70 70 L212 70"/>
+              <path d="M212 70 L300 70"/>
+              <path d="M334 70 L430 70"/>
+              <path d="M430 70 L560 70"/>
+              <path d="M212 80 L212 132"/>
+              <path d="M212 148 L212 162"/>
+              <path d="M212 218 L212 278"/>
+              <path d="M430 70 L430 152"/>
+              <path d="M430 208 L430 278"/>
+              <path d="M560 70 L560 146"/>
+              <path d="M560 194 L560 278"/>
+              <path d="M70 278 L560 278"/>
+              <path d="M212 162 L160 162"/>
+              <path d="M160 278 L100 278"/>
+            </g>
+
+            <circle cx="70" cy="170" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 182 L70 158" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M65 164 L70 156 L75 164" fill="#4ade9a"/>
+            <text x="4" y="222" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">i_s(t)</text>
+
+            <path d="M212 80 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="234" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L</text>
+            <path d="M252 84 L252 128" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M247 120 L252 130 L257 120" fill="#f5b942"/>
+            <text x="262" y="142" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">i_L(0⁻)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="306" y1="54" x2="306" y2="86"/>
+              <line x1="320" y1="54" x2="320" y2="86"/>
+            </g>
+            <text x="304" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <path d="M352 36 L286 36" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M294 31 L284 36 L294 41" fill="#f5b942"/>
+            <text x="358" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">v_C(0⁻)</text>
+
+            <rect x="200" y="162" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="236" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+            <rect x="418" y="152" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="454" y="186" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+
+            <path d="M536 170 L560 146 L584 170 L560 194 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M560 182 L560 160" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M555 166 L560 158 L565 166" fill="#4ade9a"/>
+            <text x="594" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">g_m e₂</text>
+
+            <circle cx="212" cy="70" r="4" fill="#4ade9a"/>
+            <circle cx="212" cy="162" r="4" fill="#4ade9a"/>
+            <circle cx="430" cy="70" r="4" fill="#4ade9a"/>
+            <text x="200" y="52" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₁</text>
+            <text x="168" y="152" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₂</text>
+            <text x="418" y="52" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₃</text>
+
+            <circle cx="152" cy="162" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="94" cy="278" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="126" y="166" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">A</text>
+            <text x="76" y="300" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">B</text>
+
+            <path d="M330 278 L330 292 M316 292 L344 292 M321 298 L339 298 M326 304 L334 304" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 1 — \(i_s\) injeta em \(e_1\); \(L\) vertical de \(e_1\) a \(e_2\) com \(i_L(0^-)\) descendo; \(C\) no ramo superior entre \(e_1\) e \(e_3\), "+" do lado de \(e_1\); \(R\) de \(e_2\) ao terra (terminais A–B); \(R\) de \(e_3\) ao terra; \(g_m e_2\) injeta em \(e_3\).</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — um determinante \(3\times3\) com frações em \(s\), que colapsa num polinômio de 2º grau. Antes de calcular, o professor <em>prevê</em> o resultado: rede de 2ª ordem, sem laço de indutores e sem corte de capacitores, logo nenhuma FCP nula — e o polinômio de grau 2 com termo independente não nulo confirma a previsão.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A previsão topológica, antes da álgebra</div>
+              <p>Do gabarito, textualmente: "Note que o circuito é de segunda ordem, ou seja, terá 2 frequências próprias, e como não tem <em>looping</em> de indutor nem corte de capacitor, não é possível ter uma frequência própria igual a zero."</p>
+              <p>De fato: dois elementos reativos (\(L\) e \(C\)), nenhuma degeneração. O \(L\) está sozinho no seu ramo — não fecha laço só com indutores. O \(C\) está sozinho no ramo superior — remover só ele não parte a rede, porque \(e_1\) e \(e_3\) continuam ligados pelo caminho \(L\)–\(R\)–terra–\(R\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Montar o determinante com \(g_m\) simbólico</div>
+              <div class="eq-block">\[ \det \begin{vmatrix} \dfrac{s^2+2}{s} &amp; -\dfrac{2}{s} &amp; -s \\[6pt] -\dfrac{2}{s} &amp; \dfrac{s+2}{s} &amp; 0 \\[6pt] -s &amp; -g_m &amp; s+1 \end{vmatrix} = 0 \]</div>
+              <p class="dim">Conveniente reescrever a diagonal: \(\dfrac{s^2+2}{s} = s + \dfrac{2}{s}\) e \(\dfrac{s+2}{s} = 1 + \dfrac{2}{s}\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Expansão (linha do gabarito)</div>
+              <div class="eq-block">\[ \left(\frac{2}{s}+s\right)\left(1+\frac{2}{s}\right)(s+1) - 2g_m - (s)\left(1+\frac{2}{s}\right)(s) - (s+1)\left(\frac{4}{s^2}\right) = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A expansão completa, termo a termo</div>
+              <p>O gabarito escreve a linha acima já organizada. Vale refazê-la pela regra de Laplace na primeira linha, para conferir cada sinal. Com \(a_{ij}\) os elementos da matriz:</p>
+              <div class="eq-block">\[ \det = a_{11}(a_{22}a_{33} - a_{23}a_{32}) - a_{12}(a_{21}a_{33} - a_{23}a_{31}) + a_{13}(a_{21}a_{32} - a_{22}a_{31}) \]</div>
+              <p>Primeiro cofator, com \(a_{23}=0\):</p>
+              <div class="eq-block">\[ T_1 = \left(s+\frac{2}{s}\right)\left(1+\frac{2}{s}\right)(s+1) \]</div>
+              <div class="eq-block">\[ \left(s+\frac{2}{s}\right)\left(1+\frac{2}{s}\right) = s + 2 + \frac{2}{s} + \frac{4}{s^2} \]</div>
+              <div class="eq-block">\[ T_1 = \left(s + 2 + \frac{2}{s} + \frac{4}{s^2}\right)(s+1) = s^2 + 3s + 4 + \frac{6}{s} + \frac{4}{s^2} \]</div>
+              <p>Segundo cofator:</p>
+              <div class="eq-block">\[ T_2 = -\left(-\frac{2}{s}\right)\left[\left(-\frac{2}{s}\right)(s+1) - 0\right] = \frac{2}{s}\cdot\left(-\frac{2(s+1)}{s}\right) = -\frac{4}{s} - \frac{4}{s^2} \]</div>
+              <p>Terceiro cofator:</p>
+              <div class="eq-block">\[ T_3 = (-s)\left[\left(-\frac{2}{s}\right)(-g_m) - \left(1+\frac{2}{s}\right)(-s)\right] = (-s)\left[\frac{2g_m}{s} + s + 2\right] \]</div>
+              <div class="eq-block">\[ T_3 = -2g_m - s^2 - 2s \]</div>
+              <p>Somando os três:</p>
+              <div class="eq-block">\[ T_1+T_2+T_3 = \cancel{s^2} + 3s + 4 + \frac{6}{s} + \cancel{\frac{4}{s^2}} - \frac{4}{s} - \cancel{\frac{4}{s^2}} - 2g_m - \cancel{s^2} - 2s \]</div>
+              <div class="eq-block">\[ = s + 4 - 2g_m + \frac{2}{s} \]</div>
+              <p class="dim">Os dois termos em \(1/s^2\) se cancelam e os dois em \(s^2\) também. É a mesma linha do gabarito, que registra o resultado como \(\frac{2}{s} + s - 2g_m + 4 = 0\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Pôr \(1/s\) em evidência e ficar com o polinômio</div>
+              <div class="eq-block">\[ \frac{2}{s} + s - 2g_m + 4 = 0 \;\Longrightarrow\; \frac{1}{s}\Big(s^2 + s(4-2g_m) + 2\Big) = 0 \]</div>
+              <div class="eq-block">\[ s^2 + (4-2g_m)s + 2 = 0 \]</div>
+              <p>Grau 2, como previsto no passo 01. Termo independente \(=2\neq0\): sem FCP nula, como previsto.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Critério dos coeficientes</div>
+              <p>"Para o circuito ser assintoticamente estável, os coeficientes da equação de segundo grau devem ser todos positivos ou todos negativos."</p>
+              <p>Os coeficientes extremos são \(1\) e \(2\), ambos positivos e <em>fixos</em>. Logo o caso "todos negativos" é impossível, e resta:</p>
+              <div class="eq-block">\[ 4 - 2g_m &gt; 0 \;\Longrightarrow\; 2g_m &lt; 4 \;\Longrightarrow\; g_m &lt; 2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Por que aqui a resposta é um intervalo só</div>
+              <p>Contraste com a P2 2025: lá o coeficiente de maior grau dependia do ganho, e havia dois casos de sinal. Aqui \(a_2=1\) e \(a_0=2\) são constantes positivas — a disjunção "todos negativos" morre de imediato, e sobra <b style="color:var(--ink)">uma</b> desigualdade. A resposta é uma semirreta, sem buraco.</p>
+              <p>Verificação nas fronteiras:</p>
+              <div class="eq-block">\[ g_m = 2:\quad s^2 + 2 = 0 \;\Longrightarrow\; s = \pm j\sqrt2 \quad\text{(FCPs simples no eixo — marginalmente estável)} \]</div>
+              <div class="eq-block">\[ g_m = 3:\quad s^2 - 2s + 2 = 0 \;\Longrightarrow\; s = 1 \pm j \quad\text{(}\mathrm{Re}&gt;0\text{ — instável)} \]</div>
+              <div class="eq-block">\[ g_m = 0:\quad s^2 + 4s + 2 = 0 \;\Longrightarrow\; s = -2 \pm \sqrt2 \quad\text{(duas reais negativas — estável)} \]</div>
+              <p>Confere: a fronteira \(g_m=2\) é exatamente onde \(\alpha\) se anula e a rede passa de subamortecida estável a oscilador puro. Para \(g_m&gt;2\) o coeficiente de \(s\) fica negativo, \(\alpha&lt;0\), e o par conjugado atravessa para a direita.</p>
+              <p class="dim">Conferência por Vieta, sem resolver nada: o produto das raízes é \(a_0/a_2 = 2 &gt; 0\), logo as raízes nunca têm sinais reais opostos; e a soma é \(-(4-2g_m)\), que é negativa exatamente quando \(4-2g_m&gt;0\). Soma negativa com produto positivo ⟹ ambas no semiplano esquerdo.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ g_m &lt; 2 \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> A questão é a continuação natural do item a): a matriz já foi obtida por engenharia reversa, e o item b) apenas troca o número \(10\) pelo símbolo \(g_m\) na posição (3,2) e manda calcular o determinante. Reconhecer isso economiza a montagem inteira. Repare que o valor real do circuito, \(g_m=10\), <b style="color:var(--ink)">viola</b> a condição \(g_m&lt;2\): o circuito da Figura 1 é instável, e o item b) pergunta o que teria de mudar.</p>
+            <p><b style="color:var(--ink)">Erro 1 — inventar FCP nula.</b> O determinante tem um fator \(1/s\). Quem multiplica tudo por \(s\) e depois esquece que aquilo era um <em>denominador</em> chega a \(s^3 + \dots\) e conclui que há três FCPs, uma delas nula. Não há: \(1/s\) é polo do determinante, não raiz. A previsão topológica do passo 01 existe justamente para barrar esse erro.</p>
+            <p><b style="color:var(--ink)">Erro 2 — sinal do \(g_m\) na matriz.</b> O elemento (3,2) é \(-g_m\), não \(+g_m\). Ele vem de a fonte vinculada <em>injetar</em> corrente no nó 3, entrando na 1ª LK com sinal negativo. Trocar esse sinal dá \(s^2+(4+2g_m)s+2\) e a resposta \(g_m&gt;-2\) — plausível o bastante para passar despercebida.</p>
+            <p><b style="color:var(--ink)">Erro 3 — calcular as raízes.</b> Resolver \(s^2+(4-2g_m)s+2=0\) em função de \(g_m\), com raiz quadrada e tudo, e depois tentar impor parte real negativa. Funciona, custa cinco vezes mais tempo e abre três oportunidades de erro de sinal. O critério dos coeficientes existe para isso.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 2ª questão, item b</span>FCP única: o ganho que derruba a ordem da rede</span>
+          <span class="q-prova">P2/2025 — 2,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">b) (2,0)</b> Para que o circuito tivesse uma única FCP, alterou-se apenas o valor da transresistência \(r_m\), mantendo-se os valores dos demais componentes. Nesta condição, determine o valor de \(r_m\) e da FCP única.</p>
+
+        <div class="given-box">
+          <p>Enunciado comum: "Considere o circuito da Figura 1, em que \(e_g(t)=2H(t)\), \((\mathrm V,\mathrm s)\). <b>Para contemplar todas as FCPs do circuito, decidiu-se utilizar análise de malhas em Laplace, considerando a tensão do capacitor como incógnita.</b> A equação matricial resultante, no sistema internacional de unidades, é dada por"</p>
+          <div class="eq-block">\[
+            \begin{bmatrix} 10+2s &amp; -10 &amp; 0 \\[4pt] -8 &amp; 8 &amp; 1 \\[4pt] 0 &amp; 1 &amp; -0{,}5s \end{bmatrix}
+            \begin{bmatrix} I_1(s) \\[4pt] I_2(s) \\[4pt] V_C(s) \end{bmatrix}
+            = \begin{bmatrix} \dfrac{2(1-s)}{s} \\[8pt] 0 \\[8pt] -1 \end{bmatrix}
+          \]</div>
+          <p class="dim">Do item a): \(R=10\ \Omega\), \(L=2\ \mathrm H\), \(C=0{,}5\ \mathrm F\), \(r_m=2\ \Omega\), \(i_L(0^-)=-1\ \mathrm A\), \(v_C(0^-)=2\ \mathrm V\).</p>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 310" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 146"/>
+              <path d="M70 194 L70 270"/>
+              <path d="M70 70 L130 70"/>
+              <path d="M190 70 L330 70"/>
+              <path d="M330 70 L406 70"/>
+              <path d="M434 70 L560 70"/>
+              <path d="M330 70 L330 140"/>
+              <path d="M330 196 L330 270"/>
+              <path d="M560 70 L560 146"/>
+              <path d="M560 194 L560 270"/>
+              <path d="M70 270 L560 270"/>
+            </g>
+
+            <circle cx="70" cy="170" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="62" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="62" y="190" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="4" y="224" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">e_g(t)</text>
+
+            <path d="M130 70 q 9 -16 18 0 q 9 -16 18 0 q 9 -16 18 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="150" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L</text>
+            <path d="M212 70 L270 70" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M262 65 L272 70 L262 75" fill="#f5b942"/>
+            <text x="216" y="58" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">i_L(t)</text>
+
+            <rect x="318" y="140" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="354" y="174" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+            <path d="M296 118 L296 166" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M291 158 L296 168 L301 158" fill="#f5b942"/>
+            <text x="252" y="114" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">i_R(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="406" y1="54" x2="406" y2="86"/>
+              <line x1="420" y1="54" x2="420" y2="86"/>
+            </g>
+            <text x="404" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <path d="M462 34 L378 34" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M386 29 L376 34 L386 39" fill="#f5b942"/>
+            <text x="468" y="38" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v_C(t)</text>
+
+            <path d="M536 170 L560 146 L584 170 L560 194 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="552" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="552" y="190" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="594" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">r_m i_R(t)</text>
+
+            <path d="M186 168 a 34 34 0 1 1 22 30" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M200 192 L210 200 L204 188" fill="#f5b942"/>
+            <text x="176" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₁</text>
+            <path d="M446 168 a 34 34 0 1 1 22 30" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M460 192 L470 200 L464 188" fill="#f5b942"/>
+            <text x="436" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₂</text>
+
+            <path d="M330 270 L330 284 M316 284 L344 284 M321 290 L339 290 M326 296 L334 296" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 1 — duas malhas horárias. \(e_g\) e \(L\) na malha 1; \(R\) no ramo comum com \(i_R = i_1 - i_2\); \(C\) no ramo superior da malha 2, "+" do lado direito; fonte vinculada \(r_m i_R\) no ramo direito. \(i_L = i_1\).</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a matriz é a <em>estendida</em> de malhas, com \(V_C\) como terceira incógnita (veja a <a href="modulo-07.html#malhas">seção 7.4</a>). O determinante dá um polinômio de 2º grau cujo coeficiente de \(s^2\) contém \(r_m\). "Uma única FCP" é o professor pedindo o valor de \(r_m\) que <b>anula esse coeficiente</b> e derruba a rede de 2ª para 1ª ordem.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Reescrever a matriz com \(r_m\) explícito</div>
+              <p>Do item a), as linhas da matriz vêm de</p>
+              <div class="eq-block">\[ (R+sL)I_1 - R\,I_2 = E_g + L\,i_L(0^-) \]</div>
+              <div class="eq-block">\[ (r_m - R)I_1 + (R - r_m)I_2 + V_C = 0 \]</div>
+              <div class="eq-block">\[ I_2 - sC\,V_C = -C\,v_C(0^-) \]</div>
+              <p>Substituindo \(R=10\), \(L=2\), \(C=0{,}5\) e deixando \(r_m\) simbólico, o determinante a anular é</p>
+              <div class="eq-block">\[ \begin{vmatrix} 10+2s &amp; -10 &amp; 0 \\[4pt] r_m-10 &amp; 10-r_m &amp; 1 \\[4pt] 0 &amp; 1 &amp; -0{,}5s \end{vmatrix} = 0 \]</div>
+              <p class="dim">Com \(r_m=2\) esta matriz reproduz a do enunciado: \(r_m-10=-8\) e \(10-r_m=8\). Confere.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Expandir o determinante (linha do gabarito)</div>
+              <div class="eq-block">\[ (10+2s)(10-r_m)(-0{,}5s) - (1)(1)(10+2s) - (-0{,}5s)(-10)(r_m-10) = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">De onde vêm esses três termos</div>
+              <p>Expansão pela primeira linha, aproveitando que \(a_{13}=0\):</p>
+              <div class="eq-block">\[ \det = (10+2s)\big[(10-r_m)(-0{,}5s) - (1)(1)\big] - (-10)\big[(r_m-10)(-0{,}5s) - (1)(0)\big] \]</div>
+              <div class="eq-block">\[ = (10+2s)(10-r_m)(-0{,}5s) - (10+2s) + 10\,(r_m-10)(-0{,}5s) \]</div>
+              <p class="dim">O terceiro termo do gabarito, \(-(-0{,}5s)(-10)(r_m-10)\), é o mesmo com os dois sinais negativos já multiplicados. Nenhuma diferença.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Reduzir a um polinômio — a passagem que o gabarito salta</div>
+              <p>O gabarito vai da linha do passo 02 direto para o resultado. Vale fazer as contas. Chame \(k = 0{,}5s\,(10-r_m)\). Então:</p>
+              <div class="eq-block">\[ \det = -k(10+2s) - (10+2s) + 10k \]</div>
+              <div class="eq-block">\[ = -10k - 2sk - 10 - 2s + 10k = -2sk - 2s - 10 \]</div>
+              <p>Substituindo \(k\) de volta:</p>
+              <div class="eq-block">\[ -2s\,k = -2s\cdot 0{,}5s(10-r_m) = -s^2(10-r_m) = (r_m-10)s^2 \]</div>
+              <div class="eq-block">\[ \det = (r_m-10)s^2 - 2s - 10 \]</div>
+              <p>Igualando a zero, a equação característica é</p>
+              <div class="eq-block">\[ (-10+r_m)s^2 - 2s - 10 = 0 \]</div>
+              <p class="dim">Idêntica à do gabarito. Conferência com os valores originais (\(r_m=2\)): \(-8s^2-2s-10=0\), ou \(4s^2+s+5=0\) — coeficientes de mesmo sinal, rede assintoticamente estável, duas FCPs complexas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Impor "uma única FCP"</div>
+              <p>Um polinômio de 2º grau tem duas raízes. Para haver <b style="color:var(--ink)">uma única</b> FCP, o polinômio tem de deixar de ser de 2º grau: o coeficiente de \(s^2\) deve se anular.</p>
+              <div class="eq-block">\[ r_m - 10 = 0 \;\Longrightarrow\; r_m = 10\ \Omega \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A FCP que sobra</div>
+              <div class="eq-block">\[ -2s - 10 = 0 \;\Longrightarrow\; s = -5 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">O que acontece fisicamente em \(r_m = 10\)</div>
+              <p>Com \(r_m = R = 10\), a segunda linha do sistema vira</p>
+              <div class="eq-block">\[ (10-10)I_1 + (10-10)I_2 + V_C = 0 \;\Longrightarrow\; V_C(s) = 0 \]</div>
+              <p>A fonte vinculada passa a produzir exatamente a tensão que \(R\) desenvolve, e as duas se cancelam ao longo da malha 2. A tensão do capacitor fica <b style="color:var(--ink)">amarrada a zero</b> — deixa de ser variável de estado. A rede tem dois elementos reativos mas apenas um estado independente: é uma degeneração provocada pelo ganho, não pela topologia. O grau cai de 2 para 1, e sobra a FCP do indutor.</p>
+              <p>Confirmação pela constante de tempo: com \(V_C\) travado em zero, a malha 1 fica com \(L\) em série com \(R\) (a malha 2 não circula mais corrente própria), e</p>
+              <div class="eq-block">\[ s = -\frac{R}{L} = -\frac{10}{2} = -5 \quad\checkmark \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">A outra leitura possível de "FCP única" — e por que não é a pedida</div>
+              <p>"Uma única FCP" poderia significar uma <em>raiz dupla</em>: duas FCPs coincidentes. Vale calcular esse caso para saber por que ele não é a resposta. Com \(a=r_m-10\), \(b=-2\), \(c=-10\), o discriminante zera quando</p>
+              <div class="eq-block">\[ b^2 - 4ac = 4 + 40(r_m - 10) = 0 \;\Longrightarrow\; r_m - 10 = -\frac{1}{10} \;\Longrightarrow\; r_m = 9{,}9\ \Omega \]</div>
+              <div class="eq-block">\[ -0{,}1s^2 - 2s - 10 = 0 \;\Longrightarrow\; s^2 + 20s + 100 = 0 \;\Longrightarrow\; (s+10)^2 = 0 \;\Longrightarrow\; s = -10 \text{ (dupla)} \]</div>
+              <p>Resultado limpo — mas <b style="color:var(--ink)">não</b> é "uma única FCP". São duas FCPs iguais, com multiplicidade 2, e a rede continua de 2ª ordem: a resposta livre contém \((A_1 + A_2 t)e^{-10t}\), dois modos independentes. É o amortecimento crítico da <a href="#revisao2a">seção 8.7</a>.</p>
+              <p>A resposta do gabarito, \(r_m=10\), é a única em que a rede passa a ter <em>um</em> modo próprio e um só. O enunciado reforça a leitura ao pedir "o valor de \(r_m\) <b>e da FCP única</b>" — no singular, uma FCP, não um par coincidente.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ r_m = 10\ \Omega \qquad\qquad s = -5 \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> Toda a questão é "determinante da matriz dada, com o parâmetro simbólico, igual a zero". A única sutileza é entender o pedido: "FCP única" é condição sobre o <em>grau</em> do polinômio, não sobre suas raízes. Sempre que um coeficiente de grau máximo depende de um parâmetro, essa é a pergunta que o professor pode fazer.</p>
+            <p><b style="color:var(--ink)">Erro 1 — usar a matriz com \(r_m=2\).</b> A matriz do enunciado tem \(-8\) e \(8\) numéricos. Quem esquece de "desfazer" esses números para \(r_m-10\) e \(10-r_m\) obtém um determinante sem parâmetro e não tem o que resolver. Recuperar a dependência em \(r_m\) exige ter feito o item a).</p>
+            <p><b style="color:var(--ink)">Erro 2 — resolver o discriminante.</b> Entregar \(r_m = 9{,}9\) e \(s=-10\) é o erro conceitualmente mais interessante e o mais comum: confunde raiz dupla com FCP única. Uma FCP de multiplicidade 2 são duas FCPs.</p>
+            <p><b style="color:var(--ink)">Erro 3 — perder a terceira linha.</b> Quem "simplifica" o sistema eliminando \(V_C\) por \(V_C = I_2/(sC)\) volta à matriz \(2\times2\) de malhas pura e perde justamente a estrutura que o enunciado montou de propósito. O grau do determinante muda e a resposta sai errada. O enunciado avisa: a tensão do capacitor é incógnita <em>para contemplar todas as FCPs</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 3 · Questão única</span>FCP de 1ª ordem com CCCS vinculada — assinale a FALSA</span>
+          <span class="q-prova">Teste 3 · P2/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">3 –</b> Considere o circuito da Figura 5 em unidades SI.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 131"/>
+              <path d="M70 179 L70 250"/>
+              <path d="M70 70 L150 70"/>
+              <path d="M198 70 L290 70"/>
+              <path d="M290 70 L430 70"/>
+              <path d="M290 70 L290 130"/>
+              <path d="M290 156 L290 250"/>
+              <path d="M430 70 L430 131"/>
+              <path d="M430 179 L430 250"/>
+              <path d="M70 250 L430 250"/>
+            </g>
+
+            <circle cx="70" cy="155" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="62" y="151" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="62" y="175" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="0" y="208" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">cos 2t</text>
+
+            <rect x="150" y="58" width="48" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="168" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1</text>
+            <path d="M212 38 L262 38" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M254 33 L264 38 L254 43" fill="#f5b942"/>
+            <text x="226" y="28" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="274" y1="130" x2="306" y2="130"/>
+              <line x1="274" y1="156" x2="306" y2="156"/>
+            </g>
+            <text x="314" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 F</text>
+
+            <path d="M406 155 L430 131 L454 155 L430 179 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M430 167 L430 145" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M425 151 L430 143 L435 151" fill="#4ade9a"/>
+            <text x="464" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">α·i</text>
+
+            <circle cx="290" cy="70" r="4" fill="#4ade9a"/>
+            <text x="278" y="52" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">e₁</text>
+            <text x="484" y="44" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">c.i.n.</text>
+
+            <path d="M290 250 L290 264 M276 264 L304 264 M281 270 L299 270 M286 276 L294 276" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 5 — fonte \(\cos 2t\); resistor de \(1\ \Omega\) com a corrente \(i\) entrando em \(e_1\); capacitor de \(1\ \mathrm F\) de \(e_1\) ao terra; fonte de corrente vinculada \(\alpha i\) injetando em \(e_1\). Condições iniciais nulas.</div>
+        </div>
+
+        <p><b style="color:var(--ink)">Assinale a opção falsa:</b></p>
+
+        <ul class="q-alts">
+          <li data-alt="a">Para o circuito entrar em RPS \(\alpha\) deve ser maior que \(-1\).</li>
+          <li data-alt="b">Se \(\alpha = 0\) a resposta completa terá, além do termo cossenoidal, uma exponencial \(+\dfrac15 e^{-t}\).</li>
+          <li data-alt="c">Se \(\alpha = -1\), \(e_1(t) = 0\).</li>
+          <li data-alt="d">Se \(\alpha = 1\) tem-se \(e_1(t) = \dfrac{1}{\sqrt2}\cos(2t - 45^\circ)\).</li>
+          <li data-alt="e">O circuito tem uma única FCP igual a \(-(1+\alpha)\).</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — uma única equação nodal resolve as cinco alternativas de uma vez. Escrita a relação de controle \(i = E_s - E_1\), a rede fica \(E_1 = \frac{1+\alpha}{s+1+\alpha}E_s\): o denominador dá a FCP, o numerador explica a alternativa c), e o único cálculo extra é o resíduo que decide a b).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">1ª LK no nó \(e_1\), com a relação de controle</div>
+              <p>A corrente de controle é a do resistor, entrando em \(e_1\): \(i = 1\cdot(e_s - e_1)\). A fonte vinculada injeta \(\alpha i\) no nó, logo entra com sinal negativo na soma das correntes que saem:</p>
+              <div class="eq-block">\[ 1\,(E_1 - E_s) + sE_1 - \alpha\,\underbrace{I}_{=\,1(E_s-E_1)} = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Substituir e agrupar</div>
+              <div class="eq-block">\[ (E_1 - E_s) + sE_1 - \alpha(E_s - E_1) = 0 \]</div>
+              <div class="eq-block">\[ (E_1 - E_s) + \alpha(E_1 - E_s) + sE_1 = 0 \]</div>
+              <div class="eq-block">\[ 1\,(E_1 - E_s)(1+\alpha) + sE_1 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Isolar \(E_1\) — a função de rede</div>
+              <div class="eq-block">\[ E_1\big[(1+\alpha) + s\big] = (1+\alpha)E_s \]</div>
+              <div class="eq-block">\[ E_1 = \frac{1+\alpha}{s + (1+\alpha)}\,E_s \]</div>
+              <p>Rede de 1ª ordem — um só elemento reativo. A FCP é a raiz do denominador:</p>
+              <div class="eq-block">\[ s = -(1+\alpha) \qquad\Longrightarrow\qquad \textbf{alternativa e) é verdadeira} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Alternativa a) — condição de RPS</div>
+              <p>Do gabarito: "para \(\mathrm{Re}[s_i] &lt; 0 \Rightarrow 1+\alpha &gt; 0\) ou \(\alpha &gt; -1\)". Só rede assintoticamente estável tem RPS.</p>
+              <div class="eq-block">\[ -(1+\alpha) &lt; 0 \;\Longleftrightarrow\; \alpha &gt; -1 \qquad\Longrightarrow\qquad \textbf{a) é verdadeira} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Alternativa c) — \(\alpha = -1\)</div>
+              <p>O numerador da função de rede é \((1+\alpha)\), que também se anula:</p>
+              <div class="eq-block">\[ \alpha = -1 \;\Longrightarrow\; E_1 = \frac{0}{s+0}E_s = 0 \qquad\Longrightarrow\qquad \textbf{c) é verdadeira} \]</div>
+              <p class="dim">Fisicamente: com \(\alpha=-1\) a fonte vinculada devolve exatamente a corrente que o resistor entrega, e nada sobra para carregar o capacitor.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Alternativa d) — \(\alpha = 1\), por fasores</div>
+              <div class="eq-block">\[ \hat E_1 = \left.\frac{2}{j\omega + 2}\right|_{\omega=2}\hat E_s, \qquad \hat E_s = 1\angle0^\circ \]</div>
+              <div class="eq-block">\[ \hat E_1 = \frac{2}{2 + j2} = \frac{1}{1+j} = \frac{1}{\sqrt2}\angle{-45^\circ} \]</div>
+              <div class="eq-block">\[ e_1(t) = \frac{1}{\sqrt2}\cos(2t - 45^\circ) \qquad\Longrightarrow\qquad \textbf{d) é verdadeira} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Alternativa b) — \(\alpha = 0\), o resíduo que decide</div>
+              <p>Com \(\alpha=0\) a função de rede é \(1/(s+1)\), e \(\mathcal L[\cos 2t] = s/(s^2+4)\):</p>
+              <div class="eq-block">\[ E_1 = \frac{1}{s+1}\cdot\frac{s}{s^2+4} = \frac{-1/5}{s+1} + \frac{As+B}{s^2+4} \]</div>
+              <p>O gabarito registra apenas o resíduo do polo real, e é o que basta:</p>
+              <div class="eq-block">\[ \text{exponencial: } -\frac15 e^{-t} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">O resíduo, calculado — e a resposta completa</div>
+              <p>O gabarito escreve \(-1/5\) sem mostrar a conta. Pelo método do resíduo em polo simples:</p>
+              <div class="eq-block">\[ A_{-1} = \left.(s+1)\cdot\frac{s}{(s+1)(s^2+4)}\right|_{s=-1} = \left.\frac{s}{s^2+4}\right|_{s=-1} = \frac{-1}{1+4} = -\frac15 \]</div>
+              <p>Negativo. A alternativa b) afirma \(+\frac15 e^{-t}\) — sinal trocado. É a FALSA.</p>
+              <p>Completando as outras constantes, para fechar a resposta. Multiplicando a identidade por \((s+1)(s^2+4)\):</p>
+              <div class="eq-block">\[ s = -\tfrac15(s^2+4) + (As+B)(s+1) \]</div>
+              <div class="eq-block">\[ s^2:\; -\tfrac15 + A = 0 \;\Rightarrow\; A = \tfrac15 \qquad s^1:\; A + B = 1 \;\Rightarrow\; B = \tfrac45 \]</div>
+              <div class="eq-block">\[ s^0:\; -\tfrac45 + B = 0 \;\Rightarrow\; B = \tfrac45 \quad\checkmark \]</div>
+              <div class="eq-block">\[ e_1(t) = \left[-\frac15 e^{-t} + \frac15\cos 2t + \frac25\sin 2t\right]H(t) \]</div>
+              <p>A parcela senoidal, em amplitude e fase:</p>
+              <div class="eq-block">\[ \sqrt{\left(\tfrac15\right)^2 + \left(\tfrac25\right)^2} = \frac{\sqrt5}{5} = \frac{1}{\sqrt5}, \qquad \phi = -\arctan\frac{2/5}{1/5} = -63{,}43^\circ \]</div>
+              <div class="eq-block">\[ e_1(t) = \left[-\frac15 e^{-t} + \frac{1}{\sqrt5}\cos(2t - 63{,}43^\circ)\right]H(t) \]</div>
+              <p><b style="color:var(--ink)">Conferência independente:</b> o mesmo resultado tem de sair pelo teorema do RPS, já que \(\alpha=0&gt;-1\) e a rede é estável. Com \(F(s)=1/(s+1)\) em \(s=j2\):</p>
+              <div class="eq-block">\[ \hat E_1 = \frac{1}{1+j2} = \frac{1}{\sqrt5}\angle{-63{,}43^\circ} \quad\checkmark \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ \text{o termo exponencial é } -\tfrac15 e^{-t} \qquad\Longrightarrow\qquad \textbf{alternativa b (FALSA)} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> Numa questão de "assinale a falsa", o caminho econômico é montar <em>uma</em> expressão geral e testá-la contra as cinco afirmações, em vez de resolver cinco problemas. Aqui a expressão \(E_1 = \frac{1+\alpha}{s+1+\alpha}E_s\) responde a), c), d) e e) por inspeção, e só a b) exige cálculo. Repare também que as alternativas foram escritas em ordem crescente de esforço — a) e e) são de leitura direta, b) é a única que pede frações parciais. Isso é uma dica de onde está a resposta.</p>
+            <p><b style="color:var(--ink)">Erro 1 — o sinal do vinculado.</b> A fonte \(\alpha i\) <em>injeta</em> corrente no nó, então entra na 1ª LK como \(-\alpha i\). Quem põe \(+\alpha i\) obtém \(E_1 = \frac{1-\alpha}{s+1-\alpha}E_s\), FCP em \(-(1-\alpha)\), e passa a considerar a alternativa e) falsa. Duas alternativas falsas na mesma prova é o sinal de que o erro é seu.</p>
+            <p><b style="color:var(--ink)">Erro 2 — esquecer que \(i\) depende de \(E_1\).</b> Deixar \(\alpha I\) no lado direito como se fosse excitação conhecida. O sistema não fecha, e o "polo" que sai é \(s=-1\) independente de \(\alpha\) — o que torna a alternativa e) falsa e a a) também. Novamente, dois falsos denunciam o erro.</p>
+            <p><b style="color:var(--ink)">Erro 3 — decorar o sinal do resíduo.</b> O resíduo em \(s=-1\) de \(\frac{s}{(s+1)(s^2+4)}\) é negativo porque o numerador \(s\) é avaliado em \(s=-1\). Quem calcula \(\left|\frac{s}{s^2+4}\right|\) e escreve \(+1/5\) marca a b) como verdadeira e não acha nenhuma falsa. A armadilha da questão é exatamente esta: um sinal.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão única</span>Estabilidade com bobinas acopladas \(k=1\) — e uma contradição no gabarito</span>
+          <span class="q-prova">Teste 5 · P2/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">5 –</b> Considere o circuito da Figura 7. Qual é a condição em \(\alpha\) para rede livre assintoticamente estável?</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- malha 1 -->
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 70 L60 136"/>
+              <path d="M60 184 L60 250"/>
+              <path d="M60 70 L166 70"/>
+              <path d="M194 70 L300 70"/>
+              <path d="M300 70 L300 110"/>
+              <path d="M300 180 L300 250"/>
+              <path d="M60 250 L300 250"/>
+            </g>
+            <circle cx="60" cy="160" r="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="52" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="52" y="180" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="0" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="166" y1="54" x2="166" y2="86"/>
+              <line x1="180" y1="54" x2="180" y2="86"/>
+            </g>
+            <text x="158" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 F</text>
+            <path d="M252 36 L180 36" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M188 31 L178 36 L188 41" fill="#f5b942"/>
+            <text x="258" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i_C</text>
+
+            <path d="M300 110 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <circle cx="310" cy="106" r="4" fill="#f5b942"/>
+            <text x="316" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁ = 1 H</text>
+
+            <!-- malha 2 -->
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M420 70 L420 110"/>
+              <path d="M420 180 L420 250"/>
+              <path d="M420 70 L510 70"/>
+              <path d="M558 70 L650 70"/>
+              <path d="M650 70 L650 136"/>
+              <path d="M650 184 L650 250"/>
+              <path d="M420 250 L650 250"/>
+            </g>
+            <path d="M420 110 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <circle cx="430" cy="184" r="4" fill="#f5b942"/>
+            <text x="332" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂ = 4 H</text>
+
+            <rect x="510" y="58" width="48" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="512" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">10 Ω</text>
+
+            <path d="M626 160 L650 136 L674 160 L650 184 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="642" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="642" y="180" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="608" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">α·i_C</text>
+
+            <!-- acoplamento -->
+            <path d="M318 112 Q 360 148 424 180" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4" fill="none"/>
+            <text x="336" y="122" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">k = 1</text>
+            <text x="336" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">|M|</text>
+
+            <path d="M176 168 a 34 34 0 1 1 22 30" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M190 192 L200 200 L194 188" fill="#f5b942"/>
+            <text x="166" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₁</text>
+            <path d="M524 168 a 34 34 0 1 1 22 30" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M538 192 L548 200 L542 188" fill="#f5b942"/>
+            <text x="514" y="216" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₂</text>
+          </svg>
+          <div class="pz-legend">Figura 7 — duas malhas <em>sem</em> conexão condutiva, ligadas apenas pelo acoplamento magnético com \(k=1\). Ponto no terminal <b>superior</b> de \(L_1\) e no terminal <b>inferior</b> de \(L_2\). A corrente \(i_C\) do capacitor está marcada para a <b>esquerda</b>, o que dá \(i_C = -i_1\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\alpha &gt; -10\)</li>
+          <li data-alt="b">\(\alpha &lt; 10\)</li>
+          <li data-alt="c">\(\alpha \le -20\)</li>
+          <li data-alt="d">\(\alpha \ge -5\)</li>
+          <li data-alt="e">Qualquer \(\alpha\) serve.</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — com \(k=1\) o termo de maior grau do determinante <b>se cancela</b>: a rede de três elementos reativos degenera para 2ª ordem. Só depois disso o critério dos coeficientes é aplicado, e o coeficiente que sobra com \(\alpha\) dentro é o de \(s^2\) — o que faz a resposta sair com \(\ge\) e não com \(&gt;\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Polaridade magnética e 2ª LK na malha 1</div>
+              <p>Do gabarito: "Nota-se que a polaridade magnética desse circuito é \(&gt;0\)." Aplicando a 2ª LK em Laplace no laço 1:</p>
+              <div class="eq-block">\[ -E_s - V_C - V_{L1} = 0 \]</div>
+              <div class="eq-block">\[ -E_s - \frac{1}{2s}I_C - sI_C - sM\,I'_2 = 0 \]</div>
+              <p>Substituindo pelas correntes de malha, com \(I_C = -I_1\) e \(I'_2 = -I_2\):</p>
+              <div class="eq-block">\[ -E_s + \frac{1}{2s}I_1 + sI_1 + sM\,I_2 = 0 \]</div>
+              <div class="eq-block">\[ \left(\frac{1}{2s} + s\right)I_1 + sM\,I_2 = -E_s \]</div>
+              <p class="dim">Fidelidade: o gabarito registra o lado direito como \(-E_s\). O sinal do lado direito é irrelevante aqui — a equação característica sai do determinante da matriz, e a rede livre tem \(E_s = 0\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">2ª LK na malha 2</div>
+              <div class="eq-block">\[ -V_{L2} - R_2 I'_2 + \alpha I_C = 0 \]</div>
+              <div class="eq-block">\[ -\big(s4\,I'_2 + sM\,I_C\big) - R_2 I'_2 + \alpha I_C = 0 \]</div>
+              <p>Com \(I'_2 = -I_2\) e \(I_C = -I_1\):</p>
+              <div class="eq-block">\[ sM\,I_1 - \alpha I_1 + s4\,I_2 + R\,I_2 = 0 \]</div>
+              <div class="eq-block">\[ (sM - \alpha)I_1 + (s4 + 10)I_2 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Forma matricial</div>
+              <div class="eq-block">\[
+                \begin{pmatrix} \dfrac{1}{2s} + s &amp; sM \\[8pt] sM - \alpha &amp; s4 + 10 \end{pmatrix}
+                \begin{pmatrix} I_1 \\[4pt] I_2 \end{pmatrix}
+                = \begin{pmatrix} -E_s \\[4pt] 0 \end{pmatrix}
+              \]</div>
+              <p>"O determinante da matriz de inspeção irá nos fornecer a equação característica do circuito":</p>
+              <div class="eq-block">\[ s^3(8 - M^2C) + s^2(20 + M2\alpha) + s4 + 10 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem esse polinômio</div>
+              <p>O gabarito entrega o polinômio pronto. Refazendo:</p>
+              <div class="eq-block">\[ \det = \left(\frac{1}{2s}+s\right)(4s+10) - sM(sM-\alpha) \]</div>
+              <div class="eq-block">\[ = \frac{4s+10}{2s} + s(4s+10) - s^2M^2 + sM\alpha \]</div>
+              <div class="eq-block">\[ = 2 + \frac{5}{s} + 4s^2 + 10s - s^2M^2 + sM\alpha \]</div>
+              <p>Multiplicando por \(2s\) para limpar o denominador (o fator \(2s\) é o denominador do determinante e não contribui com FCP):</p>
+              <div class="eq-block">\[ 2s\cdot\det = 4s + 10 + 8s^3 + 20s^2 - 2s^3M^2 + 2s^2M\alpha \]</div>
+              <div class="eq-block">\[ = s^3(8 - 2M^2) + s^2(20 + 2M\alpha) + 4s + 10 \]</div>
+              <p class="dim">Idêntico à linha do gabarito, que escreve \(8 - M^2C\) com \(C=2\) e \(20 + M2\alpha\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">O cancelamento provocado por \(k=1\)</div>
+              <p>"Como: \(M = k\sqrt{L_1L_2} = 2\), onde \(k=1\) (pelo enunciado), temos:"</p>
+              <div class="eq-block">\[ M = 1\cdot\sqrt{1\cdot 4} = 2 \;\Longrightarrow\; 8 - M^2C = 8 - 4\cdot2 = 0 \]</div>
+              <div class="eq-block">\[ s^2(20 + M2\alpha) + s4 + 10 = 0 \]</div>
+              <p>Com \(M=2\):</p>
+              <div class="eq-block">\[ s^2(20 + 4\alpha) + 4s + 10 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Por que o acoplamento perfeito derruba o grau</div>
+              <p>O coeficiente de \(s^3\) é \(2(4 - M^2) = 2(L_1L_2C\cdot 4/(L_1L_2) - M^2)\) — mais simplesmente, é proporcional a \(L_1L_2 - M^2\). E \(M^2 = k^2L_1L_2\), logo</p>
+              <div class="eq-block">\[ L_1L_2 - M^2 = L_1L_2(1 - k^2) \;\xrightarrow{\;k=1\;}\; 0 \]</div>
+              <p>Com acoplamento perfeito as duas bobinas deixam de ser independentes: a matriz de indutâncias \(\begin{bmatrix}L_1 &amp; M\\ M &amp; L_2\end{bmatrix}\) fica <b style="color:var(--ink)">singular</b>, e o par de indutores carrega uma única variável de estado em vez de duas. Três elementos reativos, duas FCPs — uma degeneração idêntica em espírito à de um corte de indutores.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Critério dos coeficientes, com a ressalva da ordem</div>
+              <p>Do gabarito, textualmente: "Para que o circuito seja assintoticamente estável, os coeficientes da equação de 2º grau devem ser todos maiores que zero (ou todos menores que zero). Com isso as raízes da equação terão parte real negativa."</p>
+              <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+                <li>"Caso o circuito do exercício seja de 2ª ordem, o coeficiente de \(s^2\) deve ser maior que zero;"</li>
+                <li>"Caso o circuito do exercício seja de 1ª ordem, o coeficiente de \(s^2\) deve ser igual a zero;"</li>
+              </ul>
+              <p>"Então:"</p>
+              <div class="final-answer">\[ 20 + 4\alpha \ge 0; \qquad \alpha \ge -5 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Verificando os três casos de \(\alpha\)</div>
+              <p><b style="color:var(--ink)">\(\alpha &gt; -5\)</b> — coeficiente de \(s^2\) positivo, junto com \(4\) e \(10\). Todos de mesmo sinal: assintoticamente estável. Exemplo \(\alpha=0\):</p>
+              <div class="eq-block">\[ 20s^2 + 4s + 10 = 0 \;\Longrightarrow\; s = \frac{-4 \pm \sqrt{16 - 800}}{40} = -0{,}1 \pm j0{,}70 \quad\checkmark \]</div>
+              <p><b style="color:var(--ink)">\(\alpha = -5\)</b> — o coeficiente de \(s^2\) se anula e a rede vira de 1ª ordem:</p>
+              <div class="eq-block">\[ 4s + 10 = 0 \;\Longrightarrow\; s = -2{,}5 &lt; 0 \quad\checkmark\ \text{ainda assintoticamente estável} \]</div>
+              <p>É por isso que a desigualdade é \(\ge\) e não \(&gt;\): o valor de fronteira <em>pertence</em> à resposta. Nenhum dos três coeficientes ser "todos positivos" é exigido quando um deles deixa de existir.</p>
+              <p><b style="color:var(--ink)">\(\alpha &lt; -5\)</b> — coeficiente de \(s^2\) negativo, os outros dois positivos: há troca de sinal, logo instável. Exemplo \(\alpha=-7\):</p>
+              <div class="eq-block">\[ -8s^2 + 4s + 10 = 0 \;\Longrightarrow\; 8s^2 - 4s - 10 = 0 \;\Longrightarrow\; 4s^2 - 2s - 5 = 0 \]</div>
+              <div class="eq-block">\[ s = \frac{2 \pm \sqrt{4 + 80}}{8} = \frac{2 \pm 9{,}165}{8} \;\Longrightarrow\; s_1 = +1{,}396,\quad s_2 = -0{,}896 \]</div>
+              <p>Uma raiz positiva: <b style="color:var(--ink)">instável</b>. Isso é decisivo para descartar a alternativa a), que afirmaria estabilidade em \(\alpha = -7\).</p>
+              <p class="dim">O gabarito acrescenta, na Questão 07 do formulário (que é a mesma questão em forma simbólica), a conferência: \(\alpha = -RL_1/|M|\) dá \(s = -R/L_2\). Com \(R=10\), \(L_1=1\), \(|M|=2\): \(\alpha=-5\) e \(s=-10/4=-2{,}5\) ✓ — exatamente o valor obtido acima.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ 20 + 4\alpha \ge 0 \;\Longrightarrow\; \alpha \ge -5 \qquad\Longrightarrow\qquad \textbf{alternativa d} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · INCONSISTÊNCIA NO GABARITO — registrada, não escondida</span>
+            <p>Este teste tem uma contradição interna no material oficial, e ela precisa ficar visível.</p>
+            <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.85">
+              <li>A <b style="color:var(--ink)">dedução</b> do gabarito digitado (p. 18 do PDF da P2 2023) termina em \(20+4\alpha \ge 0 \Rightarrow \alpha \ge -5\), que corresponde à <b style="color:var(--ink)">alternativa d)</b>.</li>
+              <li>A alternativa <b style="color:var(--ink)">circulada a caneta</b> na folha de testes digitalizada é a <b style="color:var(--ink)">d)</b>.</li>
+              <li>A <b style="color:var(--ink)">linha seguinte</b> do documento, no topo da p. 19, diz literalmente: <em>"Resposta: item (a)"</em> — isto é, \(\alpha &gt; -10\).</li>
+            </ul>
+            <p>As três informações não podem estar todas certas. A verificação numérica do passo 08 resolve a questão pelo mérito: em \(\alpha = -7\), que satisfaz a) e não satisfaz d), o polinômio característico é \(-8s^2+4s+10\), com uma raiz em \(s = +1{,}396\). A rede é <b style="color:var(--ink)">instável</b> nesse ponto. Logo a alternativa a) é <em>falsa</em> e a linha "Resposta: item (a)" está errada.</p>
+            <p>A explicação mais provável é material, não matemática: o Teste 6 da mesma prova — que é a questão seguinte no mesmo arquivo — tem, de fato, o <b style="color:var(--ink)">item (a)</b> como resposta correta. A linha parece ser um resíduo de diagramação, pertencente ao Teste 6 e impressa fora de ordem no início da página.</p>
+            <p><b style="color:var(--ink)">O que fazer com isso.</b> Para estudar, use a dedução: ela é consistente, a álgebra fecha, e concorda com a alternativa circulada e com a Questão 07 do formulário. Mas vale saber que a discrepância existe — se a mesma questão reaparecer com o gabarito "a)" em alguma lista, você já sabe de onde vem.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> Três passos, nesta ordem: (i) escrever as duas malhas com a relação constitutiva das bobinas acopladas, cuidando dos sinais de \(I'_2\) e \(I_C\); (ii) calcular o determinante e <em>só então</em> substituir \(M=k\sqrt{L_1L_2}\), para ver o cancelamento acontecer; (iii) aplicar o critério dos coeficientes ao polinômio reduzido, lembrando que o coeficiente que contém o parâmetro é o de maior grau — o que admite igualdade.</p>
+            <p><b style="color:var(--ink)">Erro 1 — substituir \(M=2\) antes do determinante.</b> Funciona, mas esconde a razão do cancelamento e torna impossível conferir o resultado. Pior: quem substitui e depois erra uma conta não tem como perceber, porque perdeu a estrutura \(L_1L_2-M^2\).</p>
+            <p><b style="color:var(--ink)">Erro 2 — responder \(\alpha &gt; -5\).</b> A alternativa d) traz \(\ge\). Quem aplica o critério "todos positivos" sem a ressalva da 1ª ordem exclui \(\alpha=-5\) e fica sem alternativa que corresponda — e pode acabar chutando a a).</p>
+            <p><b style="color:var(--ink)">Erro 3 — os sinais de \(I'_2\) e \(I_C\).</b> As duas malhas são horárias, mas \(i_C\) está marcada para a <em>esquerda</em> no ramo superior da malha 1, logo \(I_C = -I_1\); e \(I'_2\) é a corrente que sobe por \(L_2\), logo \(I'_2 = -I_2\). Dois sinais invertidos trocam o sinal do termo \(2M\alpha\), o que dá \(20-4\alpha\ge0 \Rightarrow \alpha \le 5\) — e nenhuma alternativa bate, o que ao menos avisa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 4 · Questão 2</span>Estabilidade marginal: o \(r_m\) que põe as FCPs sobre o eixo \(j\omega\)</span>
+          <span class="q-prova">Teste 4 · P2/2025 — Q2</span>
+        </div>
+
+        <p><b style="color:var(--ink)">2 –</b> No circuito da Figura 2, indique o item que dá o valor da transresistência \(r_m\) para que o circuito livre se torne marginalmente estável.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 290" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M80 70 L80 120"/>
+              <path d="M80 190 L80 250"/>
+              <path d="M80 70 L200 70"/>
+              <path d="M228 70 L350 70"/>
+              <path d="M350 70 L500 70"/>
+              <path d="M350 70 L350 132"/>
+              <path d="M350 188 L350 250"/>
+              <path d="M500 70 L500 136"/>
+              <path d="M500 184 L500 250"/>
+              <path d="M80 250 L500 250"/>
+            </g>
+
+            <path d="M80 120 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="94" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L</text>
+            <path d="M46 190 L46 124" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M41 132 L46 122 L51 132" fill="#f5b942"/>
+            <text x="18" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="200" y1="54" x2="200" y2="86"/>
+              <line x1="214" y1="54" x2="214" y2="86"/>
+            </g>
+            <text x="198" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <path d="M262 106 L184 106" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+            <path d="M192 101 L182 106 L192 111" fill="#f5b942"/>
+            <text x="268" y="110" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v(t)</text>
+
+            <rect x="338" y="132" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="374" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+
+            <path d="M476 160 L500 136 L524 160 L500 184 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="492" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="492" y="180" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+            <text x="534" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">r_m i(t)</text>
+
+            <circle cx="350" cy="70" r="4" fill="#4ade9a"/>
+            <path d="M350 250 L350 264 M336 264 L364 264 M341 270 L359 270 M346 276 L354 276" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          </svg>
+          <div class="pz-legend">Figura 2 — \(L\) no ramo esquerdo com \(i(t)\) subindo; \(C\) no ramo superior, "+" na placa da esquerda; \(R\) e a fonte vinculada \(r_m i(t)\) <b>em paralelo</b> no nó da direita, ambos até o terra.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(-\sqrt{\dfrac{L}{C}}\)</li>
+          <li data-alt="b">\(-R\)</li>
+          <li data-alt="c">\(\sqrt{\dfrac{L}{C}}\)</li>
+          <li data-alt="d">\(R\)</li>
+          <li data-alt="e">\(0\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o polinômio característico sai \(LCs^2 + r_mCs + 1\), que é o de um RLC série com \(r_m\) no papel da resistência. FCP sobre o eixo \(j\omega\) exige amortecimento nulo, isto é, coeficiente do termo em \(s\) igual a zero. E \(R\) <b>não aparece</b> no polinômio, porque está em paralelo com uma fonte de tensão ideal.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Resolução 1 (por malhas) — tensão do indutor</div>
+              <p>Com \(i(0^-)=i_0\) e \(v(0^-)=v_0\) anotados na figura do gabarito:</p>
+              <div class="eq-block">\[ V_L(s) = sL\,I(s) - L\,i_0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">2ª LK na malha da esquerda</div>
+              <div class="eq-block">\[ V_L(s) + V(s) + r_m\,I(s) = 0 \]</div>
+              <p>Substituindo \(V_L\):</p>
+              <div class="eq-block">\[ sL\,I(s) - L\,i_0 + V(s) + r_m\,I(s) = 0 \]</div>
+              <div class="eq-block">\[ (r_m + sL)\,I(s) + V(s) = L\,i_0 \]</div>
+              <p class="dim">Note que a malha percorre \(L\), \(C\) e a fonte vinculada — \(R\) fica fora dela.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Relação constitutiva do capacitor</div>
+              <div class="eq-block">\[ I(s) = sC\,V(s) - C\,v_0 \;\Longrightarrow\; 1\cdot I(s) - sC\,V(s) = -C\,v_0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Sistema nas variáveis de estado</div>
+              <p>"Assim, montamos as equações com as variáveis de estado \(I(s)\) e \(V(s)\):"</p>
+              <div class="eq-block">\[
+                \underbrace{\begin{bmatrix} r_m + sL &amp; 1 \\[4pt] 1 &amp; -sC \end{bmatrix}}_{T(s)}
+                \begin{bmatrix} I(s) \\[4pt] V(s) \end{bmatrix}
+                = \begin{bmatrix} L\,i_0 \\[4pt] -C\,v_0 \end{bmatrix}
+              \]</div>
+              <p>"O polinômio característico do circuito é proporcional a \(\det(T(s))\):"</p>
+              <div class="eq-block">\[ \det T(s) = (r_m + sL)(-sC) - (1)(1) = -LC\,s^2 - r_mC\,s - 1 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Condição de estabilidade marginal</div>
+              <p>"As FCPs do circuito são as raízes de \(\det(T(s))\). Para que, ao menos uma, esteja no eixo \(j\omega\), temos que ter"</p>
+              <div class="eq-block">\[ -r_mC = 0 \;\Longrightarrow\; r_m = 0 \]</div>
+              <p>"tornando o circuito marginalmente estável."</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Conferindo que as FCPs ficam de fato sobre o eixo</div>
+              <p>Trocando o sinal do polinômio (o que não altera as raízes) e pondo \(r_m=0\):</p>
+              <div class="eq-block">\[ LC\,s^2 + 1 = 0 \;\Longrightarrow\; s^2 = -\frac{1}{LC} \;\Longrightarrow\; s = \pm\frac{j}{\sqrt{LC}} \]</div>
+              <p>Par conjugado puramente imaginário, <b style="color:var(--ink)">simples</b>. Pela <a href="#classificacao">seção 8.4</a>, isso é exatamente estabilidade marginal: a resposta livre é \(\cos(\omega_0 t + \phi)\) com \(\omega_0 = 1/\sqrt{LC}\), limitada e eterna.</p>
+              <p>Comparando com a forma padrão \(s^2 + 2\alpha s + \omega_o^2\):</p>
+              <div class="eq-block">\[ s^2 + \frac{r_m}{L}s + \frac{1}{LC} = 0 \;\Longrightarrow\; 2\alpha = \frac{r_m}{L}, \qquad \omega_o = \frac{1}{\sqrt{LC}} \]</div>
+              <p>Ou seja: \(r_m\) é literalmente a <b style="color:var(--ink)">resistência série equivalente</b> da malha. \(r_m&gt;0\) amortece, \(r_m=0\) oscila puro, \(r_m&lt;0\) é resistência negativa e a oscilação cresce — instável.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Resolução 2 (análise nodal estendida) — a relação do indutor</div>
+              <p>Do gabarito: "Alternativamente, podemos centrar a resolução na análise nodal, porém, introduzindo a relação constitutiva <em>diferencial</em> do ramo indutivo para usar apenas derivadas e não integrais."</p>
+              <div class="eq-block">\[ e_1(t) = -L\frac{d}{dt}i(t) \;\longleftrightarrow\; E_1(s) = -L\big[sI(s) - i_0\big] \]</div>
+              <div class="eq-block">\[ \begin{bmatrix} 1 &amp; sL \end{bmatrix}\begin{bmatrix} E_1(s) \\[4pt] I(s) \end{bmatrix} = L\,i_0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Equação nodal em \(e_1\)</div>
+              <p>"Escrevemos a equação nodal em \(e_1(t)\) considerando a incidência de corrente \(-i(t)\) como"</p>
+              <div class="eq-block">\[ \begin{bmatrix} sC &amp; -sC &amp; -1 \end{bmatrix}\begin{bmatrix} E_1(s) \\[3pt] E_2(s) \\[3pt] I(s) \end{bmatrix} = C\,v_0 \]</div>
+              <p>"Porém, conhecemos \(E_2(s)\), dada como \(E_2(s) = r_m I(s)\), que converte a equação nodal em"</p>
+              <div class="eq-block">\[ \begin{bmatrix} sC &amp; -\big(s\,r_mC + 1\big) \end{bmatrix}\begin{bmatrix} E_1(s) \\[4pt] I(s) \end{bmatrix} = C\,v_0 \]</div>
+              <p class="dim">A substituição \(E_2 = r_m I\) é a chave: o nó \(e_2\) é o terminal "+" de uma fonte de tensão <em>ideal</em> ligada ao terra, logo sua tensão é imposta pela fonte — e \(R\), em paralelo com ela, não tem voz nenhuma.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">Sistema nodal estendido e determinante</div>
+              <div class="eq-block">\[
+                \underbrace{\begin{bmatrix} sC &amp; -\big(s\,r_mC+1\big) \\[4pt] 1 &amp; sL \end{bmatrix}}_{T_n(s)}
+                \begin{bmatrix} E_1(s) \\[4pt] I(s) \end{bmatrix}
+                = \begin{bmatrix} C\,v_0 \\[4pt] L\,i_0 \end{bmatrix}
+              \]</div>
+              <div class="eq-block">\[ \det T_n(s) = sC\cdot sL + \big(s\,r_mC + 1\big) = LC\,s^2 + r_mC\,s + 1 \]</div>
+              <p>"Para ter FCPs no eixo \(j\omega\), deixando o circuito marginalmente estável, temos que ter"</p>
+              <div class="eq-block">\[ r_mC = 0 \;\Longrightarrow\; r_m = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">10</span>
+            <div class="step-body">
+              <div class="step-title">As duas rotas dão o mesmo polinômio</div>
+              <div class="eq-block">\[ \det T(s) = -\big(LC\,s^2 + r_mC\,s + 1\big) \qquad \det T_n(s) = +\big(LC\,s^2 + r_mC\,s + 1\big) \]</div>
+              <p>Diferem por um fator \(-1\), que não altera raiz nenhuma. É a conferência esperada: o polinômio característico é propriedade da rede, e qualquer sistema completo que a descreva tem de produzi-lo a menos de constante multiplicativa. Nos dois casos a matriz é \(2\times2\) porque a rede tem dois elementos reativos — duas FCPs, sem degeneração.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ r_m = 0 \qquad\Longrightarrow\qquad \textbf{alternativa e} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> Duas rotas equivalentes, e a mais curta é a das <b style="color:var(--ink)">variáveis de estado</b>: tome \(I(s)\) e \(V(s)\) como incógnitas, escreva uma 2ª LK e uma relação constitutiva, e o determinante \(2\times2\) sai em três linhas. A rota nodal estendida é útil por outro motivo: ela mostra explicitamente por que \(R\) desaparece, ao escrever \(E_2 = r_m I\).</p>
+            <p><b style="color:var(--ink)">A observação que resolve metade das alternativas.</b> \(R\) não aparece no polinômio característico. A nota do gabarito é explícita: "como \(R\) está em paralelo com uma fonte <b>ideal</b> de tensão (vinculada), ela não influi nas FCPs". Uma fonte de tensão ideal fixa a tensão do nó independentemente da corrente que \(R\) desvia. Isso elimina de saída as alternativas <b style="color:var(--ink)">b)</b> \(-R\) e <b style="color:var(--ink)">d)</b> \(R\): nenhuma resposta correta pode conter \(R\).</p>
+            <p><b style="color:var(--ink)">As alternativas \(\pm\sqrt{L/C}\).</b> São a armadilha do <em>amortecimento crítico</em>. Raiz dupla exige \(\alpha = \omega_o\), isto é \(\frac{r_m}{2L} = \frac{1}{\sqrt{LC}}\), o que dá \(r_m = 2\sqrt{L/C}\) — o dobro do que as alternativas c) e a) oferecem. \(\sqrt{L/C}\) é a impedância característica do LC, número que aparece em toda parte no assunto e que serve de chamariz aqui. E amortecimento crítico é estabilidade <em>assintótica</em>, não marginal: mesmo o valor certo não responderia à pergunta.</p>
+            <p><b style="color:var(--ink)">Erro de leitura do enunciado.</b> "Marginalmente estável" não é "no limite da estabilidade" no sentido vago: é FCP sobre o eixo imaginário, com multiplicidade 1. Quem lê como "na fronteira entre superamortecido e subamortecido" vai procurar o amortecimento crítico e marcar c).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 4 · Questão 4</span>FCPs com laço de indutores — três elementos reativos, três FCPs</span>
+          <span class="q-prova">Teste 4 · P2/2025 — Q4</span>
+        </div>
+
+        <p><b style="color:var(--ink)">4 –</b> Quais são as frequências complexas próprias (FCPs) do circuito da Figura 4?</p>
+
+        <div class="given-box">
+          <div class="eq-block">\[ L_1 = 2\ \mathrm H, \qquad L_2 = 2\ \mathrm H, \qquad C = 1\ \mathrm F, \qquad R = 1\ \Omega \]</div>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 80 L540 80"/>
+              <path d="M70 250 L540 250"/>
+              <path d="M110 80 L110 138"/>
+              <path d="M110 194 L110 250"/>
+              <path d="M250 80 L250 126"/>
+              <path d="M250 198 L250 250"/>
+              <path d="M390 80 L390 152"/>
+              <path d="M390 178 L390 250"/>
+              <path d="M510 80 L510 126"/>
+              <path d="M510 198 L510 250"/>
+              <path d="M70 80 L70 250"/>
+              <path d="M540 80 L540 250"/>
+            </g>
+
+            <rect x="98" y="138" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="134" y="172" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R = 1 Ω</text>
+
+            <path d="M250 126 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="266" y="168" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁ = 2 H</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+              <line x1="374" y1="152" x2="406" y2="152"/>
+              <line x1="374" y1="178" x2="406" y2="178"/>
+            </g>
+            <text x="332" y="222" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C = 1 F</text>
+
+            <path d="M510 126 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="446" y="238" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂ = 2 H</text>
+
+            <path d="M232 62 L232 268 L528 268 L528 62 Z" fill="none" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="6 5"/>
+            <text x="236" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">laço de indutores — FCP em s = 0</text>
+            <text x="20" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">circuito livre — sem fontes e sem terra marcado</text>
+          </svg>
+          <div class="pz-legend">Figura 4 — quatro ramos em paralelo: \(R\), \(L_1\), \(C\) e \(L_2\). \(L_1\) e \(L_2\) em paralelo fecham um laço só de indutores (tracejado âmbar), o que garante uma FCP em \(s=0\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{-1+j\sqrt5}{2}\ ;\ \dfrac{-1-j\sqrt5}{2}\ ;\ 0\)</li>
+          <li data-alt="b">\(\dfrac{-1+j\sqrt3}{2}\ ;\ \dfrac{-1-j\sqrt3}{2}\)</li>
+          <li data-alt="c">\(\dfrac{-1}{2}\ ;\ \dfrac{-1}{3}\ ;\ 0\)</li>
+          <li data-alt="d">\(\dfrac{-1+j\sqrt3}{2}\ ;\ \dfrac{-1-j\sqrt3}{2}\ ;\ 0\)</li>
+          <li data-alt="e">\(\dfrac{-1+j\sqrt5}{2}\ ;\ \dfrac{-1-j\sqrt5}{2}\ ;\ 0\) (duplo)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — três elementos reativos, logo três FCPs. Duas saem de um RLC paralelo com \(L = L_1\parallel L_2\); a terceira é a FCP nula do laço de indutores, que a associação <em>esconde</em> e o professor recupera pela contagem. A segunda resolução, com as duas correntes de indutor como incógnitas, faz a raiz nula aparecer sozinha no determinante.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Resolução 1 — RLC paralelo com \(i_L\) como incógnita</div>
+              <p>"Em um RLC paralelo, adotando \(i_L\) como incógnita":</p>
+              <div class="eq-block">\[ G\,E_1 + sC\,E_1 + I_L = \text{c.i.} \]</div>
+              <div class="eq-block">\[ E_1 - sL\,I_L = \text{c.i.} \]</div>
+              <p class="dim">A primeira linha é a 1ª LK no nó superior; a segunda é a relação constitutiva do indutor, mantida como equação extra — o passo 2 da receita nodal.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Sistema e determinante</div>
+              <div class="eq-block">\[
+                \begin{bmatrix} G + sC &amp; +1 \\[4pt] 1 &amp; -sL \end{bmatrix}
+                \begin{bmatrix} E_1 \\[4pt] I_L \end{bmatrix}
+                = \begin{bmatrix} \text{c.i.} \\[4pt] \text{c.i.} \end{bmatrix}
+              \]</div>
+              <div class="eq-block">\[ \det = (G + sC)\cdot(-sL) - 1 \]</div>
+              <p>Igualando a zero e trocando o sinal global:</p>
+              <div class="eq-block">\[ s^2LC + s\,GL + 1 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Associar os indutores e substituir os números</div>
+              <div class="eq-block">\[ L = L_1 \parallel L_2 = \frac{L_1L_2}{L_1+L_2} = \frac{2\cdot2}{2+2} = 1\ \mathrm H \]</div>
+              <p>Com \(C=1\ \mathrm F\), \(G = 1/R = 1\ \mathrm S\) e \(L = 1\ \mathrm H\):</p>
+              <div class="eq-block">\[ s^2 + s + 1 = 0 \]</div>
+              <div class="eq-block">\[ s_{1,2} = \frac{-1 \pm \sqrt{1-4}}{2} = \frac{-1 \pm j\sqrt3}{2} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A terceira FCP, pela contagem</div>
+              <p>Do gabarito, escrito à mão na margem: "Como há laço de indutor temos FCP \(s_3 = 0\) \(\to\) 3 FCPs = nº de elementos reativos ✓".</p>
+              <div class="eq-block">\[ s_1 = \frac{-1+j\sqrt3}{2}, \qquad s_2 = \frac{-1-j\sqrt3}{2}, \qquad s_3 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Por que a associação esconde a FCP nula</div>
+              <p>Trocar \(L_1\) e \(L_2\) por \(L_1\parallel L_2\) é legítimo para a corrente <em>total</em> que os dois entregam ao nó, mas apaga um grau de liberdade: a corrente que circula <b style="color:var(--ink)">entre</b> os dois indutores, sem passar pelo resto da rede. Depois da associação a rede tem dois elementos reativos e o determinante é de 2º grau — duas FCPs, e a terceira desapareceu junto com a informação sobre a corrente circulante.</p>
+              <p>O professor recupera a raiz perdida pelo argumento de contagem: três elementos reativos, nenhum laço de capacitores, nenhum corte de indutores, logo três FCPs; duas foram calculadas; a que falta é a do laço, e a do laço é \(s=0\) pelo argumento da <a href="#quantas">seção 8.3</a>. É correto, mas é um argumento externo ao cálculo — e é justamente por isso que o gabarito traz a segunda resolução.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Resolução 2 — A.N. \(3\times3\), sem associar os indutores</div>
+              <p>"Alternativamente, considerando AN com as correntes dos indutores como incógnitas (sem associar os indutores), obtemos", com c.i. nulas:</p>
+              <div class="eq-block">\[ (G + sC)\,E_1(s) + I_{L_1}(s) + I_{L_2}(s) = 0 \]</div>
+              <p>"Dos indutores":</p>
+              <div class="eq-block">\[ E_1(s) = sL_1\,I_1(s) \qquad\qquad E_1(s) = sL_2\,I_2(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Sistema \(3\times3\)</div>
+              <div class="eq-block">\[
+                \underbrace{\begin{bmatrix} G+sC &amp; 1 &amp; 1 \\[4pt] 1 &amp; -sL_1 &amp; 0 \\[4pt] 1 &amp; 0 &amp; -sL_2 \end{bmatrix}}_{Y_{nm}(s)}
+                \begin{bmatrix} E_1(s) \\[4pt] I_{L_1}(s) \\[4pt] I_{L_2}(s) \end{bmatrix}
+                = \begin{bmatrix} 0 \\[4pt] 0 \\[4pt] 0 \end{bmatrix}
+              \]</div>
+              <p>"Calculando \(\det(Y_{nm}(s)) = 0\)":</p>
+              <div class="eq-block">\[ (G + sC)\,s^2L_1L_2 + sL_1 + sL_2 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">A expansão do determinante \(3\times3\)</div>
+              <p>Pela primeira linha, aproveitando os dois zeros:</p>
+              <div class="eq-block">\[ \det = (G+sC)\big[(-sL_1)(-sL_2) - 0\big] - 1\big[(1)(-sL_2) - 0\big] + 1\big[0 - (-sL_1)\big] \]</div>
+              <div class="eq-block">\[ = (G+sC)\,s^2L_1L_2 + sL_2 + sL_1 \]</div>
+              <p>Exatamente a linha do gabarito.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">Substituir os valores</div>
+              <p>Com \(G=1\), \(C=1\), \(L_1=L_2=2\):</p>
+              <div class="eq-block">\[ (1+s)\cdot 4s^2 + 2s + 2s = 4s^3 + 4s^2 + 4s = 0 \]</div>
+              <div class="eq-block">\[ s^3 + s^2 + s = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">10</span>
+            <div class="step-body">
+              <div class="step-title">Fatorar — e a raiz nula aparece sozinha</div>
+              <div class="eq-block">\[ s\big(s^2 + s + 1\big) = 0 \]</div>
+              <div class="eq-block">\[ s_1 = 0 \qquad s_{2,3} = \frac{-1 \pm j\sqrt3}{2} \]</div>
+              <p>As mesmas três FCPs da resolução 1 — agora todas saindo do determinante, sem argumento externo. Polinômio de grau 3, três elementos reativos: fecha.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">11</span>
+            <div class="step-body">
+              <div class="step-title">Descartando as alternativas erradas</div>
+              <p>Os três números \(\frac{-1\pm j\sqrt3}{2}\) e \(0\) identificam a <b style="color:var(--ink)">d)</b> sem ambiguidade. As outras quatro erram cada uma de um jeito:</p>
+              <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+                <li><b style="color:var(--ink)">b)</b> tem as duas raízes certas e <em>esquece</em> a nula — é o resultado de quem associa os indutores e para no 2º grau. É a armadilha principal.</li>
+                <li><b style="color:var(--ink)">a)</b> e <b style="color:var(--ink)">e)</b> trazem \(\sqrt5\) no lugar de \(\sqrt3\): vem de \(s^2+s-1\) ou de errar o discriminante \(1-4=-3\) como \(1-(-4)=5\).</li>
+                <li><b style="color:var(--ink)">e)</b> além disso declara a nula <em>dupla</em> — o que faria a rede instável e daria quatro FCPs para três elementos reativos. A contagem já a descarta.</li>
+                <li><b style="color:var(--ink)">c)</b> traz duas raízes reais, o que exigiria \(\alpha&gt;\omega_o\); aqui \(2\alpha = 1\) e \(\omega_o = 1\), logo \(\alpha = 0{,}5 &lt; 1\) — a rede é subamortecida e as raízes são complexas, obrigatoriamente.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="final-answer">\[ s = \frac{-1+j\sqrt3}{2}\ ;\quad \frac{-1-j\sqrt3}{2}\ ;\quad 0 \qquad\Longrightarrow\qquad \textbf{alternativa d} \]</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b style="color:var(--ink)">Método.</b> Numa questão que pede a <em>lista</em> de FCPs, a primeira coisa a fazer é <b style="color:var(--ink)">contar os elementos reativos</b>: isso dá o grau esperado do polinômio e permite descartar alternativas antes de qualquer conta. Aqui são três, e duas alternativas (b, com duas FCPs; e, com quatro) já caem por contagem. Depois disso, escolha a rota: associar e completar pela contagem (rápida, exige o argumento do laço) ou montar o sistema estendido (mais longo, autossuficiente).</p>
+            <p><b style="color:var(--ink)">Erro 1 — associar e parar.</b> O erro que a alternativa b) existe para capturar. Associação de indutores em paralelo é uma simplificação que <em>perde</em> uma FCP, e a FCP perdida é sempre a nula do laço. Se você associar, tem de somar \(s=0\) à lista no fim — e essa regra é exatamente o que o passo 2 da receita do professor evita.</p>
+            <p><b style="color:var(--ink)">Erro 2 — tratar a rede como se tivesse terra e três nós.</b> O circuito é livre, sem terra marcado. Adotar o trilho inferior como referência é o que o gabarito faz e é o certo — há um só nó independente, \(E_1\). Quem tenta numerar dois ou três nós inventa incógnitas e chega a um determinante identicamente nulo.</p>
+            <p><b style="color:var(--ink)">Erro 3 — não perceber que \(R\) e \(C\) também entram.</b> A FCP nula é do laço de indutores, mas as duas outras dependem de \(G\), \(C\) e do \(L\) equivalente. Quem só olha o laço responde \(s=0\) e para.</p>
+            <p class="dim">Vale registrar o que esse resultado diz sobre a rede: uma FCP nula simples e um par com parte real \(-1/2\). Pela <a href="#classificacao">seção 8.4</a>, a rede é <b style="color:var(--ink)">marginalmente estável</b> — a resposta livre tende a uma constante (a corrente aprisionada no laço) e não a zero. Não há RPS nessa rede.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-07.html">
+    <div>
+      <span class="nm-label">Módulo anterior</span>
+      <span class="nm-title">07 · Análise nodal e de malhas em \(s\)</span>
+    </div>
+    <span class="nm-arrow">←</span>
+  </a>
+
+  <a class="next-module" href="modulo-09.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">09 · Teoremas de rede em \(s\)</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+<footer>
+  <div class="agenda">
+    <div><b>P1</b>26/10 · 14:20</div>
+    <div><b>P2</b>02/12</div>
+    <div><b>T1</b>02/09</div>
+    <div><b>T2</b>14/10</div>
+    <div><b>T3</b>18/11</div>
+    <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+  </div>
+  <p class="foot-note">Montado a partir da folha 2 do formulário oficial da P2 (caixas "Assintoticamente Estável", "Marginalmente Estável", "Instáveis", "Obtendo FCPs com Análise de Malhas", "Obtendo FCPs com Análise Nodal", inativação de geradores, "Equação diferencial de segunda ordem", "Polinômio característico" e "Comportamento"; Questões 01b, 02, 04, 05, 06 e 07), do gabarito da P2 de 2023 (1ª questão item b; Testes 3 e 5), da P2 de 2025 (1ª questão item a e 2ª questão item b) e do 4º Teste de 2025 (questões 2 e 4) — PSI3213 Circuitos Elétricos II</p>
+</footer>
+
+  </div><!-- /content-col -->
+</div><!-- /app-shell -->
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

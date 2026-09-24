@@ -63,6 +63,30 @@ window.MathJax = {
         <span class="side-num">06</span>
         <span class="side-title">Funções de rede e de transferência</span>
       </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
     </div>
   </aside>
 
@@ -84,6 +108,8 @@ window.MathJax = {
         <a href="#catalogo">As oito funções</a>
         <a href="#fcp">FCPs e modos naturais</a>
         <a href="#alicate">Alicate e ferro de solda</a>
+        <a href="#inversa">Inverter T(s)</a>
+        <a href="#tvi">TVI e TVF</a>
         <a href="#exercicios">Exercícios</a>
       </div>
     </nav>
@@ -94,7 +120,7 @@ window.MathJax = {
         <h1><span class="tone-a">Uma razão de dois polinômios.</span> <span class="tone-b">E a rede inteira cabe dentro dela.</span></h1>
         <p class="hero-sub">Até aqui cada circuito era um problema novo. A partir de agora a rede vira uma caixa com uma assinatura só: \(G(s) = N(s)/D(s)\). O denominador guarda tudo o que a rede faz sozinha — os modos naturais. O numerador guarda o caminho entre uma porta e outra. Mas atenção: a <em>mesma</em> caixa tem oito funções de rede diferentes, e cada definição exige uma fiação de bancada distinta. Clique nos botões e veja.</p>
         <div class="hero-meta">
-          <span><b>Aula</b>31/08/2026</span>
+          <span><b>Aulas</b>31/08 e 14/09/2026</span>
           <span><b>Pré-requisito</b>Módulos 02, 03 e 05</span>
         </div>
       </div>
@@ -556,6 +582,12 @@ window.MathJax = {
     <h2>Alicate e ferro de solda: como não perder FCPs</h2>
     <p>Para <b style="color:var(--ink)">"não perder" FCPs</b> no cálculo, temos que identificar as entradas <em>por alicate</em> e as entradas <em>por ferro de solda</em>. A imagem é literalmente de bancada: pense em como você instalaria fisicamente cada fonte numa placa já montada.</p>
 
+    <div class="theorem-card" style="margin-top:1.2rem">
+      <span class="tag">a regra, como foi enunciada em aula</span>
+      <p style="font-size:1.05rem">As FCPs devem ser determinadas com a rede livre, ou seja, sem excitações. <b style="color:var(--ink)">O lugar das excitações por alicate deve ser fechado, e o lugar das excitações por ferro de solda deve ser mantido aberto.</b></p>
+      <p class="dim">É uma regra sobre o <em>lugar</em> onde a fonte estava, não sobre a fonte: o que fica no desenho depois de desligar tudo é um curto onde havia alicate e um vão onde havia ferro de solda.</p>
+    </div>
+
     <div class="pz-widget">
       <svg viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg">
         <text x="30" y="26" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">ALICATE — CORTA O RAMO, INSERE EM SÉRIE</text>
@@ -619,15 +651,365 @@ window.MathJax = {
     <div class="callout"><b>Onde se perde uma FCP.</b> Trocar as duas coisas não é um erro de sinal — é um erro de <em>ordem</em>. Se você abre um ramo que deveria ter ficado em curto, some um elemento armazenador inteiro, o grau de \(D(s)\) cai e uma FCP desaparece do cálculo. A rede continua com aquele modo; só a sua conta é que não o vê mais. O exercício abaixo mostra isso acontecendo com números.</div>
   </section>
 
-  <section id="exercicios" class="panel">
+  <section id="inversa" class="panel">
     <span class="eyebrow">6.9</span>
+    <h2>Inverter \(T(s)\): todas as funções de rede de uma vez</h2>
+    <p>As seções 6.7 e 6.8 usaram a rede <em>livre</em> para achar as FCPs. Agora fazemos o caminho complementar: a mesma rede com as duas excitações ligadas e <b style="color:var(--ink)">c.i.s nulas</b>. O sistema fica com o mesmo formato, só troca o lado direito — e invertê-lo entrega as funções de rede todas juntas, sem calcular nenhum divisor à mão.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 640 262" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M75 60 L130 60"/>
+          <path d="M180 60 L220 60"/>
+          <path d="M268 60 L560 60"/>
+          <path d="M75 200 L560 200"/>
+          <path d="M75 60 L75 108"/>
+          <path d="M75 152 L75 200"/>
+          <path d="M340 60 L340 102"/>
+          <path d="M340 158 L340 200"/>
+          <path d="M420 60 L420 120"/>
+          <path d="M420 136 L420 200"/>
+          <path d="M560 60 L560 108"/>
+          <path d="M560 152 L560 200"/>
+        </g>
+        <circle cx="75" cy="130" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="69" y="124" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+        <text x="69" y="144" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+        <text x="8" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+        <circle cx="560" cy="130" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M560 142 L560 118" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M555 124 L560 116 L565 124" fill="#4ade9a"/>
+        <text x="590" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">i₂(t)</text>
+        <rect x="130" y="48" width="50" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M220 60 q 8 -13 16 0 q 8 -13 16 0 q 8 -13 16 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <rect x="328" y="102" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <g stroke="#4ade9a" stroke-width="2.6">
+          <line x1="400" y1="120" x2="440" y2="120"/>
+          <line x1="400" y1="136" x2="440" y2="136"/>
+        </g>
+        <text x="142" y="96" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₁</text>
+        <text x="234" y="96" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L₁</text>
+        <text x="362" y="136" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₂</text>
+        <text x="450" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <path d="M282 40 L314 40" stroke="#f5b942" stroke-width="1.6"/>
+        <path d="M308 36 L316 40 L308 44" fill="#f5b942"/>
+        <text x="278" y="28" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t)</text>
+        <text x="492" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="492" y="152" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+        <text x="484" y="120" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+        <text x="180" y="240" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">rede forçada — as duas excitações ligadas, c.i.s nulas</text>
+      </svg>
+    </div>
+
+    <div class="given-box">
+      <span>\(v_2(0^-) = 0\)</span>
+      <span>\(i_1(0^-) = 0\)</span>
+      <span>entrada 1: alicate \(\Rightarrow v_1\)</span>
+      <span>entrada 2: ferro de solda \(\Rightarrow i_2\)</span>
+    </div>
+
+    <div style="margin-top:1.4rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª Lei de Kirchhoff na malha da esquerda</div>
+          <div class="eq-block">\[ -V_1(s) + R_1 I_1(s) + L_1\big[s\,I_1(s)\big] + V_2(s) = 0 \]</div>
+          <div class="eq-block">\[ V_2(s) + \big(R_1 + sL_1\big)I_1(s) = V_1(s) \]</div>
+          <p class="dim">Sem o termo de c.i. do indutor, porque \(i_1(0^-) = 0\). É a única diferença em relação à rede livre.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">1ª Lei de Kirchhoff no nó superior direito</div>
+          <div class="eq-block">\[ -I_1(s) - I_2(s) + G_2 V_2(s) + C\big[s\,V_2(s)\big] = 0 \]</div>
+          <div class="eq-block">\[ \big(G_2 + sC\big)V_2(s) - I_1(s) = I_2(s) \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">O sistema — mesma \(T(s)\), outro lado direito</div>
+          <div class="eq-block">\[
+            \underbrace{\begin{bmatrix} 1 &amp; R_1 + sL_1 \\[2pt] G_2 + sC &amp; -1 \end{bmatrix}}_{\textstyle T(s)}
+            \begin{bmatrix} V_2(s) \\[2pt] I_1(s) \end{bmatrix}
+            =
+            \begin{bmatrix} V_1(s) \\[2pt] I_2(s) \end{bmatrix}
+          \]</div>
+          <p>Agora o lado direito são as <b style="color:var(--ink)">excitações</b>, não as condições iniciais. As incógnitas continuam sendo \(V_2\) e \(I_1\).</p>
+          <div class="eq-block">\[ D(s) \;\triangleq\; \det\big[T(s)\big] = -1 - \big(R_1+sL_1\big)\big(G_2+sC\big) = -\,L_1C\;P(s) \]</div>
+          <p class="dim">A rede livre do exercício 1 (seção 6.11) tinha uma linha com o sinal trocado e devolvia \(+L_1C\,P(s)\). As duas versões diferem por um fator \(-1\) e têm <b style="color:var(--ink)">exatamente as mesmas raízes</b> — é o conteúdo do "\(\propto\)".</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Inverter a \(2\times2\)</div>
+          <p>Para \(T = \begin{bmatrix} 1 &amp; a \\ b &amp; -1\end{bmatrix}\), a adjunta troca a diagonal e inverte o sinal dos outros dois:</p>
+          <div class="eq-block">\[
+            \begin{bmatrix} V_2(s) \\[2pt] I_1(s) \end{bmatrix}
+            = \frac{1}{D(s)}
+            \begin{bmatrix} -1 &amp; -\big(R_1+sL_1\big) \\[2pt] -\big(G_2+sC\big) &amp; 1 \end{bmatrix}
+            \begin{bmatrix} V_1(s) \\[2pt] I_2(s) \end{bmatrix}
+          \]</div>
+          <p>Cada elemento dessa matriz, dividido por \(D(s)\), <b style="color:var(--ink)">é</b> uma função de rede: basta anular a excitação que não interessa.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Ler as quatro funções de rede</div>
+          <div class="theorem-grid">
+            <div class="theorem-card">
+              <span class="tag">ganho de tensão</span>
+              <div class="eq-block">\[ G_v(s) = \left.\frac{V_2(s)}{V_1(s)}\right|_{I_2(s)=0} = \frac{-1}{D(s)} = \frac{1}{L_1C\;P(s)} \]</div>
+              <p class="dim">É o \(G_{v21}\) do catálogo da seção 6.6.</p>
+            </div>
+            <div class="theorem-card">
+              <span class="tag">admitância vista da porta 1</span>
+              <div class="eq-block">\[ Y(s) = \left.\frac{I_1(s)}{V_1(s)}\right|_{I_2(s)=0} = \frac{-\big(G_2+sC\big)}{D(s)} = \frac{G_2+sC}{L_1C\;P(s)} \]</div>
+              <p class="dim">Igual a \(1/Z_{11}(s)\) — porta 2 aberta nos dois casos.</p>
+            </div>
+            <div class="theorem-card">
+              <span class="tag">impedância vista da porta 2</span>
+              <div class="eq-block">\[ Z(s) = \left.\frac{V_2(s)}{I_2(s)}\right|_{V_1(s)=0} = \frac{-\big(R_1+sL_1\big)}{D(s)} = \frac{R_1+sL_1}{L_1C\;P(s)} \]</div>
+              <p class="dim">Com a porta 1 <b style="color:var(--ink)">em curto</b>, porque a entrada 1 é por alicate.</p>
+            </div>
+            <div class="theorem-card">
+              <span class="tag">ganho de corrente</span>
+              <div class="eq-block">\[ G_i(s) = \left.\frac{I_1(s)}{I_2(s)}\right|_{V_1(s)=0} = \frac{1}{D(s)} = \frac{-1}{L_1C\;P(s)} \]</div>
+              <p class="dim">O sinal vem da referência de \(i_1\) adotada na figura.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">06</span>
+        <div class="step-body">
+          <div class="step-title">A conclusão</div>
+          <p>Quatro funções de rede, quatro numeradores diferentes, <b style="color:var(--ink)">um denominador só</b>: \(P(s)\). Nenhum dos numeradores compartilha raiz com \(P(s)\) para valores genéricos dos componentes, logo</p>
+          <div class="final-answer">\[ \text{todas as FCPs são polos de todas as quatro funções de rede} \]</div>
+          <p class="dim">Esse é o desfecho <em>deste</em> exemplo, não um teorema. O enunciado geral continua sendo o da seção 6.7: os polos são um <em>sub</em>multiconjunto das FCPs. Quando há fator comum, o "sub" aparece — e aí alguma função de rede deixa de ver algum modo.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout"><b>Duas convenções de "porta que sobra" — e por que isso muda o número de polos.</b> No catálogo da seção 6.6, a condição na outra porta faz parte da <em>definição do parâmetro</em>: \(Z_{22}\) é medido com a porta 1 <b style="color:var(--ink)">aberta</b>. Aqui, a condição veio de <em>desligar a outra excitação declarada</em>: como a entrada 1 é por alicate, desligá-la fecha a porta 1. São redes diferentes e, por isso, contas diferentes. Com a porta 1 aberta, o ramo \(R_1\text{–}L_1\) sai do circuito e \(Z_{22}(s) = 1/(G_2+sC)\) tem <b style="color:var(--ink)">um</b> polo; com a porta 1 em curto, \(Z(s)\) acima tem <b style="color:var(--ink)">dois</b>. Moral: FCPs são propriedade da rede <em>com sua configuração de excitações</em>, e é por isso que a aula gasta tempo no alicate e no ferro de solda antes de qualquer conta.</div>
+
+    <div class="theorem-card" style="margin-top:1.4rem">
+      <span class="tag">aviso de notação</span>
+      <p>As duas aulas usam \(P(s)\) e \(D(s)\) em papéis trocados. Em 31/08: \(P(s) = \det[T(s)] \propto D(s)\). Em 14/09: \(D(s) = \det[T(s)]\) e \(P(s)\) é o polinômio mônico. Nesta página o símbolo \(D(s)\) é o determinante quando aparece como \(\det[T(s)]\), e \(P(s)\) é sempre a versão mônica.</p>
+      <p class="dim">Como os dois diferem apenas por uma constante multiplicativa, as <b style="color:var(--ink)">raízes</b> — que é tudo o que se pede — são as mesmas. Em prova, escreva qual dos dois você está chamando de quê e siga em frente. A lousa de 14/09 também chama o capacitor de \(C_2\); aqui ele é \(C\).</p>
+    </div>
+  </section>
+
+  <section id="tvi" class="panel">
+    <span class="eyebrow">6.10</span>
+    <h2>Teorema do Valor Inicial e Teorema do Valor Final</h2>
+    <p>Os dois teoremas resolvem o mesmo tipo de pergunta: você conhece \(F(s)\) e quer <b style="color:var(--ink)">um valor</b> de \(f(t)\) — no instante inicial ou no limite final — <em>sem ter que calcular \(f(t)\)</em>. Nenhuma expansão em frações parciais, nenhuma antitransformação: um limite algébrico e pronto.</p>
+
+    <p>A troca de variáveis por trás dos dois é a mesma intuição, em dois extremos:</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><div class="big">s → ∞</div><div class="small">TVI<br>t → 0⁺</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">F(s)</div><div class="small">o que você tem<br>na mão</div></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><div class="big">s → 0</div><div class="small">TVF<br>t → ∞</div></div>
+    </div>
+    <p class="flow-note">\(s\) grande é o comportamento rápido, de curtíssimo prazo; \(s\) pequeno é o comportamento lento, de longo prazo. Os dois teoremas são a versão precisa dessa troca. Há uma prévia do TVI no <a href="modulo-03.html#tvi">módulo 03</a> e a forma compacta na <a href="modulo-revisao.html">folha de revisão</a>; aqui está o tratamento formal.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.15rem">6.10.1 &nbsp;Teorema do Valor Inicial (TVI)</h3>
+
+    <div class="theorem-card" style="margin-top:1.1rem">
+      <span class="tag">enunciado</span>
+      <p>Seja \(f(t)\) uma função <b style="color:var(--ink)">contínua</b> e de <b style="color:var(--ink)">ordem exponencial</b>, da qual é dada a transformada de Laplace \(F(s)\). Se \(F(s)\) for uma função racional <b style="color:var(--ink)">estritamente própria</b>, então o valor inicial é</p>
+      <div class="final-answer">\[ f(0^+) = \lim_{s\to\infty}\big[s\,F(s)\big] \]</div>
+    </div>
+
+    <h4 style="margin-top:1.6rem;font-size:1rem;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">DEMONSTRAÇÃO — CASO \(f(t)\) CONTÍNUA NA ORIGEM</h4>
+
+    <div style="margin-top:1rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">A derivada tem transformada</div>
+          <p>Como \(F(s)\) é estritamente própria, \(\mathcal{L}[\dot f(t)]\) existe e vale o teorema da derivada no tempo:</p>
+          <div class="eq-block">\[ \mathcal{L}\big[\dot f(t)\big] = s\,F(s) - f(0^-) \]</div>
+          <p class="dim">É aqui que a hipótese de propriedade estrita entra: se \(\deg N = \deg D\), então \(sF(s)\) cresce sem limite e \(\mathcal{L}[\dot f]\) não é a transformada de nenhuma função ordinária — \(f\) teria um salto impulsivo na origem.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">A mesma coisa, pela definição</div>
+          <div class="eq-block">\[ \mathcal{L}\big[\dot f(t)\big] = \int_{0^-}^{\infty} \dot f(t)\,e^{-st}\,dt \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">A continuidade na origem elimina o salto</div>
+          <p>Integrando \(\dot f\) sobre o intervalo degenerado \([0^-,\,0^+]\):</p>
+          <div class="eq-block">\[ \int_{0^-}^{0^+}\dot f(t)\,dt = f(t)\Big|_{0^-}^{0^+} = f(0^+) - f(0^-) = 0 \]</div>
+          <div class="eq-block">\[ \Longrightarrow\quad f(0^+) = f(0^-) \]</div>
+          <p class="dim">Esse é o único lugar onde a hipótese de continuidade é usada — e é o que permite trocar \(f(0^-)\) por \(f(0^+)\) no fim. Se \(f\) tiver um salto na origem (um degrau, por exemplo), esse passo falha e a conclusão precisa ser reescrita: veja o quadro logo abaixo.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">04</span>
+        <div class="step-body">
+          <div class="step-title">Tomar \(s \to \infty\) na integral</div>
+          <div class="eq-block">\[ \lim_{s\to\infty}\mathcal{L}\big[\dot f(t)\big] = \int_{0^-}^{\infty} \dot f(t)\,\underbrace{\Big[\lim_{s\to\infty} e^{-st}\Big]}_{=\;0}\,dt = 0 \]</div>
+          <p class="dim">A troca do limite com a integral é legítima porque \(\dot f\) é de ordem exponencial: para \(s\) suficientemente grande o integrando é dominado por uma exponencial decrescente integrável.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">05</span>
+        <div class="step-body">
+          <div class="step-title">Juntar as duas expressões</div>
+          <div class="eq-block">\[ \therefore\quad \lim_{s\to\infty}\big[s\,F(s) - f(0^-)\big] = 0 \]</div>
+          <div class="eq-block">\[ \Longrightarrow\quad \lim_{s\to\infty}\big[s\,F(s)\big] = f(0^-) \]</div>
+          <p>E como o passo 03 garantiu \(f(0^+) = f(0^-)\), vale que</p>
+          <div class="final-answer">\[ f(0^+) = \lim_{s\to\infty}\big[s\,F(s)\big] \qquad\blacksquare \]</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout"><b>Quando \(f\) salta na origem.</b> O limite \(\lim_{s\to\infty}sF(s)\) sempre entrega \(f(0^+)\) — o valor <em>depois</em> do salto — e não \(f(0^-)\). A demonstração acima, feita no caso contínuo, faz os dois coincidirem; no caso descontínuo é o \(0^+\) que sobrevive. Exemplo: \(f(t) = u(t)\) tem \(F(s) = 1/s\) e \(\lim_{s\to\infty}s\cdot(1/s) = 1 = f(0^+)\), enquanto \(f(0^-) = 0\). Por isso a fórmula é sempre escrita com \(0^+\).</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">extensão — valor inicial da derivada</span>
+        <p>Aplicando o TVI à própria \(\dot f(t)\), cuja transformada é \(sF(s) - f(0^-)\):</p>
+        <div class="eq-block">\[ \dot f(0^+) = \lim_{s\to\infty} s\Big[s\,F(s) - f(0^-)\Big] \]</div>
+        <p class="dim">Exige que \(sF(s) - f(0^-)\) seja, por sua vez, estritamente própria. É o atalho que resolve item de prova sem antitransformar — e é a versão que aparece na folha de revisão.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">leitura de circuito</span>
+        <p>Para uma rede com c.i.s nulas excitada por degrau, \(Y(s) = G(s)/s\) e o TVI dá</p>
+        <div class="eq-block">\[ y(0^+) = \lim_{s\to\infty} s\,\frac{G(s)}{s} = \lim_{s\to\infty} G(s) \]</div>
+        <p class="dim">Que é exatamente o que o <b style="color:var(--ink)">circuito instantâneo</b> em \(t=0^+\) prevê: indutor descarregado vira aberto, capacitor descarregado vira curto.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.2 &nbsp;Teorema do Valor Final (TVF)</h3>
+
+    <div class="theorem-card" style="margin-top:1.1rem">
+      <span class="tag">enunciado</span>
+      <p>Seja \(f(t)\) de ordem exponencial com transformada \(F(s)\). Se <b style="color:var(--ink)">todos os polos de \(s\,F(s)\)</b> estiverem no semiplano esquerdo aberto \((\operatorname{Re} s &lt; 0)\), então \(f(t)\) tem limite quando \(t\to\infty\) e</p>
+      <div class="final-answer">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}\big[s\,F(s)\big] \]</div>
+      <p class="dim">Dito em termos de \(F(s)\): ela pode ter <em>no máximo</em> um polo simples na origem — que o fator \(s\) cancela — e todos os outros polos têm de estar estritamente à esquerda do eixo imaginário.</p>
+    </div>
+
+    <h4 style="margin-top:1.6rem;font-size:1rem;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">DEMONSTRAÇÃO</h4>
+
+    <div style="margin-top:1rem">
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">Mesmo ponto de partida do TVI</div>
+          <p>As mesmas duas expressões para \(\mathcal{L}[\dot f(t)]\) — só que agora o limite tomado é o outro:</p>
+          <div class="eq-block">\[ s\,F(s) - f(0^-) = \int_{0^-}^{\infty} \dot f(t)\,e^{-st}\,dt \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">Tomar \(s \to 0\)</div>
+          <p>Agora \(e^{-st} \to 1\), e a integral vira uma integral de \(\dot f\) pura:</p>
+          <div class="eq-block">\[ \lim_{s\to 0}\big[s\,F(s) - f(0^-)\big] = \int_{0^-}^{\infty} \dot f(t)\,dt = \lim_{T\to\infty}\Big[f(T) - f(0^-)\Big] \]</div>
+          <p class="dim">É exatamente aqui que a hipótese sobre os polos trabalha: ela garante que \(\int_{0^-}^{\infty}\dot f\,dt\) converge, isto é, que \(f(T)\) tem limite finito. Sem isso, o lado direito simplesmente não existe e a igualdade não significa nada.</p>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">Cancelar \(f(0^-)\)</div>
+          <div class="eq-block">\[ \lim_{s\to 0}\big[s\,F(s)\big] - f(0^-) = f(\infty) - f(0^-) \]</div>
+          <div class="final-answer">\[ f(\infty) = \lim_{s\to 0}\big[s\,F(s)\big] \qquad\blacksquare \]</div>
+          <p class="dim">O estado inicial cai fora dos dois lados — como tinha de ser: o valor final de uma rede estável não depende de onde ela começou.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout"><b>O TVF é o teorema traiçoeiro dos dois.</b> O TVI só pede propriedade estrita, e essa hipótese é fácil de checar de relance. O TVF pede uma condição sobre <em>a posição de todos os polos</em>, e quando ela é violada o limite \(\lim_{s\to0}sF(s)\) muitas vezes <b style="color:var(--ink)">continua existindo e devolve um número errado</b>, sem nenhum aviso. Verificar os polos <em>antes</em> de aplicar não é formalidade: é a única defesa.</div>
+
+    <div class="examples-grid">
+      <div class="example-card">
+        <span class="tag">armadilha 1 — polo no eixo \(j\omega\)</span>
+        <div class="steps">
+          <span>\(F(s) = \dfrac{\omega}{s^2+\omega^2} \;\Longrightarrow\; f(t) = \operatorname{sen}(\omega t)\)</span>
+          <span>Polos em \(\pm j\omega\): sobre o eixo, <b style="color:var(--ink)">hipótese violada</b>.</span>
+          <span>\(\displaystyle\lim_{s\to0}\frac{s\,\omega}{s^2+\omega^2} = 0\)</span>
+        </div>
+        <div class="result">o TVF "responde" 0</div>
+        <p class="dim" style="margin-top:0.6rem">Mas \(\operatorname{sen}(\omega t)\) não tem limite nenhum. A conta deu um número; o número não quer dizer nada.</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">armadilha 2 — polo à direita</span>
+        <div class="steps">
+          <span>\(F(s) = \dfrac{1}{s-1} \;\Longrightarrow\; f(t) = e^{t}\)</span>
+          <span>Polo em \(s=+1\): semiplano direito, <b style="color:var(--ink)">hipótese violada</b>.</span>
+          <span>\(\displaystyle\lim_{s\to0}\frac{s}{s-1} = 0\)</span>
+        </div>
+        <div class="result">o TVF "responde" 0</div>
+        <p class="dim" style="margin-top:0.6rem">E \(e^t \to \infty\). O erro não é de sinal nem de fator: é qualitativo.</p>
+      </div>
+
+      <div class="example-card">
+        <span class="tag">caso legítimo — polo simples na origem</span>
+        <div class="steps">
+          <span>\(F(s) = \dfrac{1}{s(s+3)}\)</span>
+          <span>\(sF(s) = \dfrac{1}{s+3}\): único polo em \(-3\), à esquerda. <b style="color:var(--ink)">Hipótese satisfeita.</b></span>
+          <span>\(\displaystyle\lim_{s\to0}\frac{1}{s+3} = \frac{1}{3}\)</span>
+        </div>
+        <div class="result">\(f(\infty) = 1/3\)</div>
+        <p class="dim" style="margin-top:0.6rem">Confere: \(f(t) = \tfrac13\big(1 - e^{-3t}\big)\). O polo na origem de \(F(s)\) é o degrau da excitação, não uma instabilidade da rede.</p>
+      </div>
+    </div>
+
+    <div class="theorem-card" style="margin-top:1.4rem">
+      <span class="tag">os dois teoremas lidos como circuito</span>
+      <p>Para uma rede estável com c.i.s nulas e excitação em degrau, \(Y(s) = G(s)/s\), e os dois teoremas devolvem os dois circuitos-limite que você já sabe desenhar:</p>
+      <table class="ltable">
+        <thead><tr><th>teorema</th><th>limite</th><th>resultado</th><th>circuito equivalente</th></tr></thead>
+        <tbody>
+          <tr><td>TVI</td><td>\(s\to\infty\)</td><td>\(y(0^+) = G(\infty)\)</td><td>indutor \(\to\) aberto, capacitor \(\to\) curto</td></tr>
+          <tr><td>TVF</td><td>\(s\to 0\)</td><td>\(y(\infty) = G(0)\)</td><td>indutor \(\to\) curto, capacitor \(\to\) aberto (RPCC)</td></tr>
+        </tbody>
+      </table>
+      <p class="dim" style="margin-top:0.9rem">É uma checagem de graça em qualquer exercício: calcule \(G(0)\) e \(G(\infty)\) pela álgebra e confira contra os dois circuitos desenhados à mão. Se não baterem, o erro está na montagem, não na antitransformação.</p>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">6.11</span>
     <h2>Exercícios resolvidos</h2>
     <p class="dim">A mesma rede de dois elementos reativos, atacada duas vezes: primeiro pela rede livre, para achar as FCPs; depois pelas funções de rede, para verificar que os polos delas são realmente um submulticonjunto daquelas FCPs.</p>
 
     <div class="q-intro">
-      <div><b>2 exercícios</b>ambos resolvidos passo a passo</div>
-      <div><b>Origem</b>exemplo da aula de 31/08/2026</div>
-      <div><b>Foco</b>rede livre · det T(s) · polos × FCPs</div>
+      <div><b>3 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>exemplos das aulas de 31/08 e 14/09/2026</div>
+      <div><b>Foco</b>rede livre · det T(s) · polos × FCPs · TVI e TVF</div>
     </div>
 
     <div class="pz-widget">
@@ -917,6 +1299,92 @@ window.MathJax = {
         </div>
       </div>
 
+      <div class="q-card">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Exercício 3</span>TVI e TVF sem antitransformar nada</span>
+          <span class="q-prova">aula 14/09</span>
+        </div>
+        <p>A mesma rede, com \(R_1 = L_1 = R_2 = C = 1\) e condições iniciais nulas, é excitada por um degrau de tensão na porta 1, com a porta 2 em vazio:</p>
+        <div class="given-box">
+          <span>\(v_1(t) = 10\,u(t)\ \mathrm{V}\)</span>
+          <span>\(i_2(t) = 0\)</span>
+          <span>\(v_2(0^-) = 0\)</span>
+          <span>\(i_1(0^-) = 0\)</span>
+        </div>
+        <p>Sem calcular \(v_2(t)\), obtenha:</p>
+        <ul class="q-alts">
+          <li data-alt="a">\(v_2(0^+)\) e \(\dot v_2(0^+)\)</li>
+          <li data-alt="b">\(v_2(\infty)\), depois de verificar que o TVF pode ser aplicado</li>
+          <li data-alt="c">a conferência dos dois resultados pelos circuitos-limite desenhados à mão</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+
+          <div class="q-idea"><b>Ideia-chave</b> — monte \(V_2(s)\) e não toque mais nela. Todos os itens são limites algébricos dessa mesma fração: \(s\to\infty\) para o começo, \(s\to0\) para o fim. A antitransformação existe, dá um cosseno amortecido, e é trabalho perdido aqui.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Montar \(V_2(s)\)</div>
+              <p>Com a porta 2 em vazio \((i_2 = 0)\) e c.i.s nulas, quem manda é \(G_{v21}\) da seção 6.9:</p>
+              <div class="eq-block">\[ G_{v21}(s) = \frac{1}{\big(R_1+sL_1\big)\big(G_2+sC\big)+1} = \frac{1}{(1+s)^2+1} = \frac{1}{s^2+2s+2} \]</div>
+              <div class="eq-block">\[ V_2(s) = G_{v21}(s)\,V_1(s) = \frac{1}{s^2+2s+2}\cdot\frac{10}{s} = \frac{10}{s\big(s^2+2s+2\big)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">(a) TVI — o valor inicial</div>
+              <p>\(V_2(s)\) é estritamente própria (grau 1 sobre grau 3), então o TVI vale:</p>
+              <div class="eq-block">\[ v_2(0^+) = \lim_{s\to\infty} s\,V_2(s) = \lim_{s\to\infty}\frac{10}{s^2+2s+2} \]</div>
+              <div class="final-answer">\[ v_2(0^+) = 0 \]</div>
+              <p>Para a derivada, aplica-se o TVI à \(\dot v_2\), cuja transformada é \(sV_2(s) - v_2(0^-) = sV_2(s)\):</p>
+              <div class="eq-block">\[ \dot v_2(0^+) = \lim_{s\to\infty} s\big[s\,V_2(s)\big] = \lim_{s\to\infty}\frac{10\,s}{s^2+2s+2} \]</div>
+              <div class="final-answer">\[ \dot v_2(0^+) = 0 \]</div>
+              <p class="dim">Dois zeros seguidos não é coincidência: \(V_2(s)\) tem excesso de <b style="color:var(--ink)">dois</b> graus entre denominador e numerador, e cada aplicação do TVI consome um. A primeira derivada não-nula é a segunda: \(\lim_{s\to\infty} s^3V_2(s) = 10\), ou seja \(\ddot v_2(0^+) = 10\ \mathrm{V/s^2}\). Em prova, essa contagem de graus diz de antemão quantas derivadas iniciais serão nulas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">(b) TVF — verificar a hipótese <em>primeiro</em></div>
+              <div class="eq-block">\[ s\,V_2(s) = \frac{10}{s^2+2s+2} \qquad\text{polos: } s = -1 \pm j1 \]</div>
+              <p>Os dois estão no semiplano esquerdo aberto — são as FCPs da rede, que já sabíamos estáveis. <b style="color:var(--ink)">Hipótese satisfeita</b>, o TVF pode ser aplicado:</p>
+              <div class="eq-block">\[ v_2(\infty) = \lim_{s\to0} s\,V_2(s) = \lim_{s\to0}\frac{10}{s^2+2s+2} = \frac{10}{2} \]</div>
+              <div class="final-answer">\[ v_2(\infty) = 5\ \mathrm{V} \]</div>
+              <p class="dim">Note que o polo de \(V_2(s)\) na origem — o único que o fator \(s\) precisava cancelar — vem do <em>degrau</em>, não da rede. É o caso legítimo do terceiro cartão da seção 6.10.2.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">(c) Conferência pelos circuitos-limite</div>
+              <div class="roc-grid">
+                <div class="roc-card">
+                  <span class="tag">\(t = 0^+\) — circuito instantâneo</span>
+                  <p>Indutor descarregado \(\Rightarrow\) <b style="color:var(--ink)">aberto</b>. Nenhuma corrente chega ao nó 2, e o capacitor descarregado já estava em \(0\ \mathrm{V}\).</p>
+                  <div class="result">\(v_2(0^+) = 0\ \mathrm{V}\) &nbsp;✓</div>
+                </div>
+                <div class="roc-card">
+                  <span class="tag">\(t \to \infty\) — RPCC</span>
+                  <p>Indutor \(\Rightarrow\) <b style="color:var(--ink)">curto</b>, capacitor \(\Rightarrow\) <b style="color:var(--ink)">aberto</b>. Sobra o divisor resistivo \(R_1\)–\(R_2\):</p>
+                  <div class="eq-block">\[ v_2(\infty) = \frac{R_2}{R_1+R_2}\,\cdot 10 = \frac{1}{2}\cdot 10 \]</div>
+                  <div class="result">\(v_2(\infty) = 5\ \mathrm{V}\) &nbsp;✓</div>
+                </div>
+              </div>
+              <p style="margin-top:1rem">Os dois circuitos desenhados em dez segundos confirmam os dois limites algébricos. É essa redundância que torna o par TVI/TVF tão útil: ele <b style="color:var(--ink)">não é só um atalho</b>, é também o teste que pega erro de montagem antes de você gastar meia página em frações parciais.</p>
+            </div>
+          </div>
+
+          <div class="q-idea"><b>Para comparação</b> — a resposta completa, que não foi necessária em nenhum item, é \(v_2(t) = 5\big[1 - e^{-t}\big(\cos t + \operatorname{sen} t\big)\big]\ \mathrm{V}\), para \(t \ge 0\). Confira: em \(t=0\) dá \(0\); o limite em \(t\to\infty\) dá \(5\); e \(\dot v_2(t) = 10\,e^{-t}\operatorname{sen} t\) vale \(0\) na origem. Os três valores que os teoremas entregaram de graça.</div>
+
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -947,7 +1415,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Baseado nas notas de aula de 31/08/2026 — Funções de rede e funções de transferência (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Baseado nas notas de aula de 31/08 e 14/09/2026 — Funções de rede, funções de transferência e os teoremas do valor inicial e final (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
 </footer>
 
   </div><!-- /content-col -->
