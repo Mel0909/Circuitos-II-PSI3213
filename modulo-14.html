@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P3</div>
+      <a class="side-item" href="modulo-13.html">
+        <span class="side-num">13</span>
+        <span class="side-title">Potência em regime senoidal</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">14</span>
+        <span class="side-title">Fator de potência e instalações</span>
+      </a>
+      <a class="side-item" href="modulo-15.html">
+        <span class="side-num">15</span>
+        <span class="side-title">Transformador ideal</span>
+      </a>
+      <a class="side-item" href="modulo-16.html">
+        <span class="side-num">16</span>
+        <span class="side-title">Bipórticos: z, y, h e ABCD</span>
+      </a>
+      <a class="side-item" href="modulo-17.html">
+        <span class="side-num">17</span>
+        <span class="side-title">Bode assintótico: critérios e erros</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P3 · Fator de potência e instalações</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">Dinheiro e cobre</a>
+        <a href="#fp">Definição de fp</a>
+        <a href="#correcao">Correção</a>
+        <a href="#sinal">O sinal de Q<sub>C</sub></a>
+        <a href="#trifio">Três fios</a>
+        <a href="#trafo-fp">Através do TI</a>
+        <a href="#linha">Perdas na linha</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P3 · Módulo 14 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">A carga quer \(P\).</span> <span class="tone-b">A linha tem de carregar \(|S|\).</span></h1>
+        <p class="hero-sub">O <a href="modulo-13.html">módulo 13</a> separou o que fica do que volta. Este módulo cobra a conta. O motor precisa de potência ativa; o condutor, o disjuntor e o transformador são dimensionados pela corrente, e a corrente responde à potência aparente. Corrigir o fator de potência é reduzir \(|S|\) sem tocar em \(P\) — e isso se faz com um capacitor em paralelo, três linhas de conta e um cuidado obsessivo com o sinal de \(Q\).</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>14 · Fator de potência, correção e instalações</span>
+          <span><b>Pré-requisito</b>Módulo 13 — Potência em regime senoidal</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>TRIÂNGULO DE POTÊNCIAS</span>
+            <span>antes e depois do capacitor</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <path d="M60 270 L520 270" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+              <path d="M60 40 L60 290" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+              <text x="524" y="266" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Re → P</text>
+              <text x="66" y="50" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Im → Q</text>
+
+              <path d="M60 270 L420 270" stroke="#4ade9a" stroke-width="3"/>
+              <path d="M420 270 L420 90" stroke="rgba(245,90,90,0.75)" stroke-width="2.4"/>
+              <path d="M60 270 L420 90" stroke="rgba(245,90,90,0.75)" stroke-width="2.4" stroke-dasharray="7 5"/>
+              <text x="428" y="150" fill="rgba(245,90,90,0.9)" font-family="IBM Plex Mono, monospace" font-size="12">Q₁</text>
+              <text x="200" y="150" fill="rgba(245,90,90,0.9)" font-family="IBM Plex Mono, monospace" font-size="12">|S₁| grande</text>
+
+              <path d="M420 270 L420 205" stroke="#f5b942" stroke-width="2.4"/>
+              <path d="M60 270 L420 205" stroke="#f5b942" stroke-width="2.4" stroke-dasharray="7 5"/>
+              <text x="428" y="240" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Q₂</text>
+              <text x="180" y="252" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">|S₂| menor</text>
+
+              <path d="M470 92 L470 203" stroke="#4ade9a" stroke-width="2" stroke-dasharray="4 4"/>
+              <path d="M470 203 L465 191 L475 191 Z" fill="#4ade9a"/>
+              <text x="478" y="152" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Q_C &lt; 0</text>
+              <text x="478" y="170" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">o capacitor</text>
+
+              <text x="215" y="292" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">P — não muda</text>
+            </svg>
+          </div>
+          <div class="splane-readout">A base verde é a potência ativa \(P\): ela não se mexe, porque o capacitor ideal não consome ativa. O capacitor injeta \(Q_C&lt;0\) e encurta o cateto vertical de \(Q_1\) para \(Q_2\). A hipotenusa \(|S|\) encolhe junto — e com ela a corrente de linha.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">14.1</span>
+    <h2>Fator de potência é um problema de dinheiro e de cobre, não de física</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>Nenhuma lei da natureza é violada por um fator de potência ruim. A energia se conserva, o motor gira, a lâmpada acende. O problema é de contabilidade: a carga <em>paga</em> por \(P\), mas a instalação <em>é dimensionada</em> por \(|S|\).</p>
+
+    <p>A cadeia de causa e efeito é curta. Num ramo sob tensão eficaz \(|\hat V|\), a potência aparente complexa vale \(S=\hat V\hat I^{*}\) (<a href="modulo-13.html#complexa">módulo 13, seção 13.5</a>), logo</p>
+
+    <div class="eq-block">\[ |\hat I| \;=\; \frac{|S|}{|\hat V|} \;=\; \frac{P}{|\hat V|\,\mathrm{fp}} \]</div>
+
+    <p>A tensão da rede é fixa. A potência ativa que o processo exige é fixa. Só sobra o fator de potência no denominador: <b style="color:var(--ink)">quanto menor o fp, maior a corrente para o mesmo trabalho útil</b>. Com \(\mathrm{fp}=0{,}6\), a corrente é \(1/0{,}6=1{,}67\) vez a corrente do caso ideal — 67 % a mais de corrente circulando para entregar exatamente a mesma potência.</p>
+
+    <p>E a punição é quadrática, porque a linha de transmissão tem resistência \(R_{linha}\):</p>
+
+    <div class="eq-block">\[ P_{perda} \;=\; R_{linha}\,|\hat I|^{2} \;=\; R_{linha}\,\frac{P^{2}}{|\hat V|^{2}\,\mathrm{fp}^{2}} \]</div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">cobre</span>
+        <p>Corrente maior exige condutor de seção maior, disjuntor maior, transformador maior. Tudo isso é <b style="color:var(--ink)">investimento</b> que não entrega nenhum watt a mais ao cliente.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">dinheiro</span>
+        <p>A perda \(R_{linha}|\hat I|^2\) é energia dissipada no caminho, paga por alguém. Por isso a concessionária multa o consumidor industrial cujo fp cai abaixo do limite regulatório.</p>
+      </div>
+    </div>
+
+    <p>Daí o objetivo deste módulo: <b style="color:var(--ink)">reduzir \(|S|\) mantendo \(P\)</b>. Como \(P\) é imposto pela carga, a única alavanca é \(Q\) — e a maneira barata de mexer em \(Q\) sem tocar em \(P\) é pendurar um capacitor em paralelo com a instalação.</p>
+
+    <div class="callout"><b>O que este módulo não repete.</b> As definições de \(P\), \(Q\), \(|S|\), a potência complexa \(S=\hat V\hat I^{*}\), o triângulo de potências e a conservação estão no módulo 13: <a href="modulo-13.html#pqs">13.4 — P, Q e |S|</a>, <a href="modulo-13.html#complexa">13.5 — potência complexa</a>, <a href="modulo-13.html#triangulo">13.6 — triângulo</a> e <a href="modulo-13.html#conservacao">13.7 — conservação</a>. Aqui elas são ferramenta, não assunto. Como lá, <b>todos os fasores são eficazes</b>.</div>
+  </section>
+
+  <section id="fp" class="panel src-prof">
+    <span class="eyebrow">14.2</span>
+    <h2>Fator de potência: um cosseno que esconde metade da informação</h2>
+
+    <p>O formulário da P3 define a potência aparente complexa e o triângulo que a acompanha:</p>
+
+    <div class="eq-block">\[ S \;\overset{\triangle}{=}\; \hat V\hat I^{*} \;=\; |\hat V|\,|\hat I|\,e^{j\varphi} \;=\; \underbrace{|\hat V||\hat I|\cos\varphi}_{P} \;+\; j\underbrace{|\hat V||\hat I|\operatorname{sen}\varphi}_{Q} \quad[\mathrm{VA}] \]</div>
+
+    <p>com \(\varphi=\theta-\psi\) a diferença entre a fase da tensão e a fase da corrente. Dividindo a parte real pelo módulo, sai a definição:</p>
+
+    <div class="eq-block">\[ \boxed{\;\mathrm{fp} \;=\; \cos\varphi \;=\; \frac{P}{|S|}\;} \qquad 0 \le \mathrm{fp} \le 1 \]</div>
+
+    <p>É a fração da potência aparente que vira trabalho. \(\mathrm{fp}=1\) significa \(Q=0\): tudo o que circula na linha é útil. \(\mathrm{fp}=0\) significa \(P=0\): a linha trabalha e o cliente não recebe nada.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">indutivo · atrasado</span>
+        <p>A corrente <b style="color:var(--ink)">atrasa</b> da tensão: \(\psi&lt;\theta\), logo \(\varphi&gt;0\) e \(Q&gt;0\). É o caso de motores, transformadores, reatores — a instalação industrial típica. O fasor \(S\) aponta para o primeiro quadrante.</p>
+        <p class="dim">\(Z=R+jX\) com \(X&gt;0\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">capacitivo · adiantado</span>
+        <p>A corrente <b style="color:var(--ink)">adianta</b> da tensão: \(\psi&gt;\theta\), logo \(\varphi&lt;0\) e \(Q&lt;0\). É o caso de bancos de capacitores e linhas longas em vazio. O fasor \(S\) aponta para o quarto quadrante.</p>
+        <p class="dim">\(Z=R+jX\) com \(X&lt;0\).</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a ambiguidade do cosseno</span>
+      <p>O cosseno é uma função par: \(\cos(+37^\circ)=\cos(-37^\circ)=0{,}8\). Dizer "\(\mathrm{fp}=0{,}8\)" <b>não determina o circuito</b> — determina apenas \(|\varphi|\). Existem duas cargas completamente diferentes com esse mesmo fp: uma com \(Q=+0{,}75P\) e outra com \(Q=-0{,}75P\).</p>
+      <p>Por isso todo enunciado honesto acrescenta a palavra que falta. "\(0{,}6\) indutivo" na 1ª questão da P3 2023, "\(0{,}98\) atrasado" no Teste 8 de 2023, "\(0{,}8\) indutivo" no Teste 6 de 2025, "\(0{,}86\) indutivo" na questão 3 da P2 2021. <b>Indutivo = atrasado = \(Q&gt;0\)</b>; <b>capacitivo = adiantado = \(Q&lt;0\)</b>. Sem esse adjetivo o problema não tem solução única.</p>
+    </div>
+
+    <div class="callout"><b>Leia o adjetivo antes de escrever a primeira linha.</b> Numa correção de fp, o adjetivo decide o <em>sinal</em> de \(Q_1\) e de \(Q_2\). Trocar "indutivo" por "capacitivo" em qualquer um dos dois inverte o sinal de \(Q_C\) e devolve uma capacitância negativa — que é exatamente a armadilha da <a href="#sinal">seção 14.4</a>.</div>
+
+    <table class="ltable">
+      <tr><th>Grandeza</th><th>Expressão</th><th>Unidade</th><th>Sinal</th></tr>
+      <tr><td>\(P\) — ativa</td><td>\(|\hat V||\hat I|\cos\varphi = R|\hat I|^2\)</td><td>W</td><td>\(\ge 0\) em elemento passivo</td></tr>
+      <tr><td>\(Q\) — reativa</td><td>\(|\hat V||\hat I|\operatorname{sen}\varphi = X|\hat I|^2\)</td><td>VAr</td><td>\(&gt;0\) indutivo · \(&lt;0\) capacitivo</td></tr>
+      <tr><td>\(|S|\) — aparente</td><td>\(|\hat V||\hat I| = \sqrt{P^2+Q^2}\)</td><td>VA</td><td>\(\ge 0\) sempre</td></tr>
+      <tr><td>\(\mathrm{fp}\)</td><td>\(P/|S| = \cos\varphi\)</td><td>—</td><td>indutivo ou capacitivo</td></tr>
+    </table>
+
+    <div class="history-note">
+      <span><b>relação útil</b>\(Q = P\tan\varphi\)</span>
+      <span><b>com fp dado</b>\(\tan\varphi = \dfrac{\operatorname{sen}\varphi}{\cos\varphi} = \dfrac{\sqrt{1-\mathrm{fp}^2}}{\mathrm{fp}}\)</span>
+      <span><b>fp 0,6</b>\(\tan\varphi = 0{,}8/0{,}6 = 4/3\)</span>
+      <span><b>fp 0,8</b>\(\tan\varphi = 0{,}6/0{,}8 = 3/4\)</span>
+    </div>
+  </section>
+
+  <section id="correcao" class="panel src-ext">
+    <span class="eyebrow">14.3</span>
+    <h2>Correção com capacitor em paralelo: a receita inteira em quatro passos</h2>
+
+    <p>O pedido típico de prova tem sempre a mesma forma: <em>a carga consome \(P\) com fator de potência \(\mathrm{fp}_1\); calcule o capacitor que leva o fp da instalação a \(\mathrm{fp}_2\)</em>. A conta é sempre esta.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box">
+        <span class="big">\(Q_1\)</span>
+        <span class="small">da carga: \(\varphi_1=\arccos \mathrm{fp}_1\), \(Q_1 = P\tan\varphi_1\)</span>
+      </div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box">
+        <span class="big">\(Q_2\)</span>
+        <span class="small">do alvo: \(\varphi_2=\arccos \mathrm{fp}_2\), \(Q_2 = P\tan\varphi_2\)</span>
+      </div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box">
+        <span class="big">\(Q_C\)</span>
+        <span class="small">o que falta: \(Q_C = Q_2 - Q_1 &lt; 0\)</span>
+      </div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box">
+        <span class="big">\(C\)</span>
+        <span class="small">\(|Q_C| = |\hat V|^2\omega C\)</span>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">01</span>
+      <div class="step-body">
+        <div class="step-title">A reativa que a carga já consome</div>
+        <p>Do enunciado vêm \(P\) e \(\mathrm{fp}_1\). O ângulo sai do arco-cosseno e a reativa sai do triângulo:</p>
+        <div class="eq-block">\[ \varphi_1 = \arccos(\mathrm{fp}_1) \qquad\Longrightarrow\qquad Q_1 = P\tan\varphi_1 = P\,\frac{\sqrt{1-\mathrm{fp}_1^{\,2}}}{\mathrm{fp}_1} \]</div>
+        <p class="dim">Com fp indutivo, \(Q_1&gt;0\). O atalho que o professor usa no quadro dispensa a calculadora: \(\mathrm{fp}=0{,}6\Rightarrow \operatorname{sen}\varphi=0{,}8\Rightarrow Q_1 = P\cdot\tfrac{0{,}8}{0{,}6}\).</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">02</span>
+      <div class="step-body">
+        <div class="step-title">A reativa que a instalação deve passar a ter</div>
+        <p>O alvo \(\mathrm{fp}_2\) fixa um novo ângulo. E aqui entra o fato central: <b style="color:var(--ink)">\(P\) é o mesmo</b> antes e depois, porque o capacitor ideal não dissipa nada.</p>
+        <div class="eq-block">\[ \varphi_2 = \arccos(\mathrm{fp}_2) \qquad\Longrightarrow\qquad Q_2 = P\tan\varphi_2 \]</div>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">03</span>
+      <div class="step-body">
+        <div class="step-title">A reativa que o capacitor tem de fornecer</div>
+        <p>Pela conservação da reativa (<a href="modulo-13.html#conservacao">13.7</a>), a reativa total é a soma das reativas dos ramos. Com o capacitor em paralelo, \(Q_2 = Q_1 + Q_C\), donde</p>
+        <div class="eq-block">\[ \boxed{\;Q_C = Q_2 - Q_1 = P\,(\tan\varphi_2 - \tan\varphi_1)\;} \]</div>
+        <p>Se o alvo é melhor que o original — \(\mathrm{fp}_2&gt;\mathrm{fp}_1\), logo \(\varphi_2&lt;\varphi_1\) —, então \(\tan\varphi_2&lt;\tan\varphi_1\) e <b style="color:var(--ink)">\(Q_C&lt;0\)</b>. Tem de ser: quem fornece reativa negativa é capacitor.</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">04</span>
+      <div class="step-body">
+        <div class="step-title">Do \(Q_C\) para a capacitância</div>
+        <p>O capacitor está sob a tensão \(\hat V\) da instalação, com admitância \(Y_C=j\omega C\). Pela forma (b) do formulário, \(S = |\hat V|^2 Y_C^{*}\):</p>
+        <div class="eq-block">\[ S_C = |\hat V|^{2}\,(j\omega C)^{*} = -j\,\omega C\,|\hat V|^{2} \qquad\Longrightarrow\qquad Q_C = -\omega C\,|\hat V|^{2} \]</div>
+        <p>Isolando \(C\) e substituindo \(Q_C\) do passo 03:</p>
+        <div class="eq-block">\[ C = \frac{-Q_C}{\omega|\hat V|^{2}} = \frac{|Q_C|}{\omega|\hat V|^{2}} \qquad\Longrightarrow\qquad \boxed{\;C = \frac{P\,(\tan\varphi_1 - \tan\varphi_2)}{\omega\,|\hat V|^{2}}\;} \]</div>
+        <p><b style="color:var(--ink)">\(\hat V\) é eficaz</b>, e é a tensão <em>sobre o capacitor</em> — que nem sempre é a tensão sobre a carga, como mostra a <a href="#trifio">seção 14.5</a>.</p>
+      </div>
+    </div>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 660 300" xmlns="http://www.w3.org/2000/svg">
+        <path d="M40 240 L300 240" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+        <path d="M40 240 L40 40" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+        <text x="150" y="266" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ANTES — fp₁</text>
+
+        <path d="M40 240 L240 240" stroke="#4ade9a" stroke-width="3"/>
+        <path d="M240 240 L240 70" stroke="rgba(245,90,90,0.8)" stroke-width="2.4"/>
+        <path d="M40 240 L240 70" stroke="#f5b942" stroke-width="2.4"/>
+        <text x="120" y="234" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">P</text>
+        <text x="248" y="160" fill="rgba(245,90,90,0.9)" font-family="IBM Plex Mono, monospace" font-size="13">Q₁</text>
+        <text x="100" y="140" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">|S₁|</text>
+        <path d="M80 240 a 40 40 0 0 0 5 -28" fill="none" stroke="#5d6e67" stroke-width="1.4"/>
+        <text x="86" y="226" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">φ₁</text>
+
+        <path d="M320 150 L376 150" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M376 150 L366 144 L366 156 Z" fill="#4ade9a"/>
+        <text x="312" y="136" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">+ Q_C</text>
+
+        <path d="M400 240 L640 240" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+        <path d="M400 240 L400 40" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+        <text x="500" y="266" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">DEPOIS — fp₂</text>
+
+        <path d="M400 240 L600 240" stroke="#4ade9a" stroke-width="3"/>
+        <path d="M600 240 L600 170" stroke="rgba(245,90,90,0.8)" stroke-width="2.4"/>
+        <path d="M400 240 L600 170" stroke="#f5b942" stroke-width="2.4"/>
+        <path d="M600 70 L600 170" stroke="#4ade9a" stroke-width="2" stroke-dasharray="5 4"/>
+        <path d="M600 170 L595 158 L605 158 Z" fill="#4ade9a"/>
+        <text x="480" y="234" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">P — o mesmo</text>
+        <text x="608" y="210" fill="rgba(245,90,90,0.9)" font-family="IBM Plex Mono, monospace" font-size="13">Q₂</text>
+        <text x="608" y="120" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">|Q_C|</text>
+        <text x="452" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">|S₂|</text>
+        <path d="M440 240 a 40 40 0 0 0 3 -14" fill="none" stroke="#5d6e67" stroke-width="1.4"/>
+        <text x="446" y="228" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">φ₂</text>
+      </svg>
+      <div class="pz-legend">A base verde \(P\) é idêntica nos dois triângulos. O capacitor injeta \(Q_C&lt;0\) e encurta o cateto vertical; a hipotenusa \(|S|\) — e portanto a corrente de linha — encolhe junto. O ângulo cai de \(\varphi_1\) para \(\varphi_2\).</div>
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Por que em paralelo, e por que \(P\) não muda</h3>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">em paralelo</span>
+        <p>Ligado em paralelo, o capacitor fica submetido à <b style="color:var(--ink)">mesma tensão</b> da carga. A carga não percebe nada: continua vendo \(\hat V\) nos seus terminais e continua drenando exatamente a mesma \(\hat I_{carga}\). O que muda é a corrente <em>antes</em> do nó: \(\hat I_{linha} = \hat I_{carga} + \hat I_C\), e como \(\hat I_C\) está a \(90^\circ\) adiantada de \(\hat V\), ela cancela parte da componente em quadratura de \(\hat I_{carga}\).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">e não em série</span>
+        <p>Em série, o capacitor cairia uma tensão sobre si e <b style="color:var(--ink)">alteraria a tensão na carga</b> — o motor passaria a receber menos que os 220 V de projeto e deixaria de entregar o torque nominal. Compensação série existe (em linhas de transmissão longas), mas não é isso que se pede aqui.</p>
+      </div>
+    </div>
+
+    <p>Quanto a \(P\): o capacitor ideal tem \(Y_C=j\omega C\) puramente imaginária, logo \(G=0\) e \(P_C = G|\hat V|^2 = 0\). Ele não dissipa. A potência ativa total da instalação é a mesma antes e depois, e é por isso que o <em>mesmo</em> \(P\) aparece nos dois triângulos. A conta de luz do processo não muda; muda a corrente que a concessionária precisa entregar.</p>
+
+    <div class="callout"><b>Três formas da mesma fórmula.</b> \(Q_C=-\omega C|\hat V|^2\) (a do gabarito de 2023), \(|Q_C| = |\hat V|^2/|X_C|\) com \(X_C=-1/\omega C\), e \(C=\Delta Q/(2\pi f V_{ef}^2)\) (a que o caderno de 2021 escreve com \(f\) em vez de \(\omega\)). São idênticas: \(\omega=2\pi f\). O que muda de uma para outra é só onde o sinal foi absorvido — e é aí que se erra.</div>
+  </section>
+
+  <section id="sinal" class="panel src-ext">
+    <span class="eyebrow">14.4</span>
+    <h2>O sinal de \(Q_C\) e a armadilha da calculadora</h2>
+
+    <p>Duas afirmações que precisam conviver:</p>
+
+    <div class="eq-block">\[ Q_C \;=\; -\omega C\,|\hat V|^{2} \;&lt;\; 0 \qquad\text{e}\qquad C \;&gt;\; 0 \]</div>
+
+    <p>\(Q_C\) é negativo <b style="color:var(--ink)">por definição</b> — capacitor fornece reativa, não consome. \(C\) é positivo porque capacitância negativa não existe. O sinal de menos mora na fórmula, entre os dois. Se você escrever \(C=Q_C/(\omega|\hat V|^2)\) sem o menos, sai negativo; se escrever \(C=|Q_C|/(\omega|\hat V|^2)\), sai positivo sempre — inclusive quando deveria ter dado erro.</p>
+
+    <p>Quando o resultado sai negativo com a fórmula correta, existem exatamente duas explicações, e vale a pena saber distinguir:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">causa 1</span>
+        <p><b style="color:var(--ink)">O alvo é pior que o original.</b> Se \(\mathrm{fp}_2&lt;\mathrm{fp}_1\), então \(\varphi_2&gt;\varphi_1\), \(\tan\varphi_2&gt;\tan\varphi_1\) e \(Q_C=P(\tan\varphi_2-\tan\varphi_1)&gt;0\). Reativa positiva não vem de capacitor: viria de um <em>indutor</em>. A resposta correta é "não há capacitor que faça isso".</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">causa 2</span>
+        <p><b style="color:var(--ink)">Troca de sinal no caminho.</b> Escrever \(\Delta Q = Q_1-Q_2\) e usar a fórmula que espera \(Q_2-Q_1\); esquecer o menos de \(Q_C=-\omega C|\hat V|^2\); ou tratar uma carga capacitiva como se fosse indutiva. O módulo da resposta fica certo e só o sinal fica errado — o que torna o erro invisível para quem só confere o número.</p>
+      </div>
+    </div>
+
+    <p>A questão 3 do caderno de 2021 é o caso 1 puro, e serve como exemplo permanente. As cargas somam \(P=159{,}58\) kW e \(Q=80{,}86\) kVAr, o que dá</p>
+
+    <div class="eq-block">\[ \mathrm{fp}_1 = \frac{159{,}58}{\sqrt{159{,}58^{2}+80{,}86^{2}}} = \frac{159{,}58}{178{,}90} = 0{,}892 \]</div>
+
+    <p>e o enunciado pede correção <em>para</em> \(0{,}86\) — abaixo dos \(0{,}892\) que a instalação já tem. O autor aplica a receita mesmo assim, chega a \(C=-0{,}758\) mF e deixa o sinal negativo na caixa de resposta, sem comentário. Não é erro de conta: é a conta avisando que o pedido não faz sentido para um capacitor. A resolução completa está no <a href="#exercicios">exercício correspondente</a>.</p>
+
+    <div class="callout"><b>Teste de sanidade de cinco segundos.</b> Antes de calcular, compute \(\mathrm{fp}_1 = P/\sqrt{P^2+Q^2}\) e compare com o alvo. Se o alvo for maior, o capacitor existe e \(Q_C\) tem de sair negativo. Se o alvo for menor, pare: o dispositivo pedido é um indutor, ou o enunciado está invertido.</div>
+  </section>
+
+  <section id="trifio" class="panel src-ext">
+    <span class="eyebrow">14.5</span>
+    <h2>Instalação monofásica a três fios: duas tensões, três níveis</h2>
+
+    <p>É a topologia residencial e de pequena indústria que a P3 usa duas vezes (2023 e 2021). Três condutores saem do secundário do transformador de distribuição:</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">fases a e b</span>
+        <p>Os dois condutores externos. Entre cada um deles e o neutro há \(100\) V eficazes (ou \(110\), ou \(127\) — depende da rede).</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">neutro n</span>
+        <p>O condutor central, derivado do ponto médio do enrolamento. É a referência das cargas de baixa tensão.</p>
+      </div>
+    </div>
+
+    <p>As duas fontes estão <b style="color:var(--ink)">em série aditiva</b>: o "−" de uma é o "+" da outra, e esse ponto de junção é o neutro. Com as setas de tensão ambas apontando para cima, como nas figuras da prova,</p>
+
+    <div class="eq-block">\[ \hat V_{an} = 100\,\underline{/0^\circ}\ \mathrm{V_{ef}}, \qquad \hat V_{nb} = 100\,\underline{/0^\circ}\ \mathrm{V_{ef}} \]</div>
+    <div class="eq-block">\[ \hat V_{ab} = \hat V_{an} + \hat V_{nb} = 200\,\underline{/0^\circ}\ \mathrm{V_{ef}} \]</div>
+
+    <p>Daí as três tensões disponíveis na mesma instalação: \(100\) V entre fase e neutro (tomadas, iluminação) e \(200\) V entre fase e fase (chuveiro, motor, ar-condicionado).</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M100 60 L600 60"/>
+          <path d="M100 170 L600 170"/>
+          <path d="M100 280 L600 280"/>
+          <path d="M100 60 L100 92"/>
+          <path d="M100 138 L100 170"/>
+          <path d="M100 170 L100 202"/>
+          <path d="M100 248 L100 280"/>
+          <path d="M300 60 L300 96"/>
+          <path d="M300 144 L300 170"/>
+          <path d="M470 60 L470 158"/>
+          <path d="M470 182 L470 280"/>
+        </g>
+
+        <circle cx="100" cy="115" r="23" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="93" y="108" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="94" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+        <circle cx="100" cy="225" r="23" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="93" y="218" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+        <text x="94" y="242" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+        <text x="8" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂ₐₙ=100</text>
+        <text x="8" y="126" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">∠0° Vef</text>
+        <text x="8" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂ₙᵦ=100</text>
+        <text x="8" y="236" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">∠0° Vef</text>
+
+        <circle cx="152" cy="60" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="146" y="46" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">a</text>
+        <circle cx="152" cy="170" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="146" y="194" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">n</text>
+        <circle cx="152" cy="280" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+        <text x="146" y="304" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">b</text>
+
+        <rect x="286" y="96" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="294" y="126" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+        <text x="222" y="90" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">carga fase–neutro</text>
+        <text x="236" y="106" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">100 Vef</text>
+        <path d="M334 64 L334 100" stroke="#f5b942" stroke-width="1.6"/>
+        <path d="M334 100 L329 90 L339 90 Z" fill="#f5b942"/>
+        <text x="340" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Îₐ</text>
+
+        <g stroke="#4ade9a" stroke-width="2.6">
+          <line x1="446" y1="158" x2="494" y2="158"/>
+          <line x1="446" y1="182" x2="494" y2="182"/>
+        </g>
+        <text x="502" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+        <text x="502" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">fase–fase · 200 Vef</text>
+        <path d="M436 64 L436 100" stroke="#f5b942" stroke-width="1.6"/>
+        <path d="M436 100 L431 90 L441 90 Z" fill="#f5b942"/>
+        <text x="404" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î_C</text>
+
+        <path d="M620 274 L620 66" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+        <path d="M620 66 L615 78 L625 78 Z" fill="#f5b942"/>
+        <text x="576" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂ₐᵦ=200</text>
+      </svg>
+      <div class="pz-legend">Instalação monofásica a três fios. As duas fontes em série aditiva dão \(\hat V_{ab}=200\) Vef entre os condutores externos. A carga A, ligada entre fase e neutro, vê \(100\) Vef; o capacitor de correção, ligado entre as duas fases, vê \(200\) Vef.</div>
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Por que o capacitor vai entre as fases</h3>
+
+    <p>Porque \(C\) é inversamente proporcional ao <em>quadrado</em> da tensão a que está submetido:</p>
+
+    <div class="eq-block">\[ C = \frac{|Q_C|}{\omega\,|\hat V|^{2}} \]</div>
+
+    <p>Ligar o mesmo \(Q_C\) sob \(200\) V em vez de \(100\) V divide a capacitância necessária por quatro. Capacitor de potência é caro por microfarad e barato por volt de isolação; a escolha é econômica. Na 1ª questão da P3 2023 isso vale \(386{,}83\ \mu\)F em vez de \(1547\ \mu\)F.</p>
+
+    <div class="callout"><b>O erro clássico nesta topologia.</b> Usar \(|\hat V|=100\) V na fórmula de \(C\) porque foi esse o número que apareceu no desenho das fontes. A tensão que entra na conta é a <b>do ramo do capacitor</b>. No gabarito de 2023 ela aparece como "\(40\ \mathrm{kV^2}\)", que é \(200^2 = 40\,000\ \mathrm{V^2}\). Quem usa \(100\) V erra por um fator 4 — e o fator 4 não chama atenção, porque a resposta continua parecendo razoável.</div>
+
+    <p>O \(Q\) da carga, por outro lado, não depende de onde o capacitor está: \(Q_A\) é o que a carga A consome, sob a tensão dela. A conservação de reativa é uma soma escalar sobre os ramos — cada ramo com a sua tensão. É por isso que se pode somar \(Q_A\) (calculada com 100 V) com \(Q_C\) (calculada com 200 V) sem nenhum fator de correção.</p>
+  </section>
+
+  <section id="trafo-fp" class="panel src-ext">
+    <span class="eyebrow">14.6</span>
+    <h2>Correção através de transformador ideal: a capacitância cai por \(r^2\)</h2>
+
+    <p>O item c da 1ª questão da P3 2023 leva a ideia da seção anterior ao limite: em vez de escolher entre \(100\) e \(200\) V, coloque um transformador ideal e escolha a tensão que quiser.</p>
+
+    <p>A mecânica é a mesma reflexão de impedâncias do <a href="modulo-10.html#trafo">módulo 10</a>. Com \(r=\hat V_1/\hat V_2\) e um elemento de impedância \(Z_2\) no secundário, o primário enxerga</p>
+
+    <div class="eq-block">\[ Z_{1} \;=\; r^{2}\,Z_{2} \]</div>
+
+    <p>Se esse elemento é um capacitor de capacitância \(C_{fis}\) ligado fisicamente no secundário, então \(Z_2 = 1/(j\omega C_{fis})\) e</p>
+
+    <div class="eq-block">\[ Z_{1} = \frac{r^{2}}{j\omega C_{fis}} \;\overset{!}{=}\; \frac{1}{j\omega C_{eq}} \qquad\Longrightarrow\qquad \boxed{\;C_{eq} = \frac{C_{fis}}{r^{2}} \quad\Longleftrightarrow\quad C_{fis} = r^{2}\,C_{eq}\;} \]</div>
+
+    <p>Ou seja: o primário vê uma capacitância \(r^2\) vezes menor que a física. Se a instalação precisa de \(C_{eq}\) vista dos seus terminais, o capacitor que se compra tem \(C_{fis}=r^2 C_{eq}\).</p>
+
+    <p>Na P3 2023, \(r=\hat V_1/\hat V_2 = 1/5\), logo \(r^2 = 1/25\) e</p>
+
+    <div class="eq-block">\[ C_{fis} = \frac{1}{25}\cdot 386{,}83\ \mu\mathrm F = \frac{386{,}83}{25}\ \mu\mathrm F = 15{,}473\ \mu\mathrm F \]</div>
+
+    <p>A leitura física é direta e dispensa a fórmula: com \(r=1/5\), a tensão do secundário é cinco vezes a do primário, \(|\hat V_2| = 5\cdot 200 = 1000\) Vef. Aplicando a receita da seção 14.3 diretamente no secundário, com o mesmo \(|Q_C|=5833{,}33\) VAr:</p>
+
+    <div class="eq-block">\[ C_{fis} = \frac{5833{,}33}{377\cdot(1000)^{2}} = \frac{5833{,}33}{3{,}77\times10^{8}} = 15{,}47\ \mu\mathrm F \quad\checkmark \]</div>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">por que se faz isso</span>
+        <p>Capacitor menor. \(25\) vezes menos capacitância para a mesma reativa significa uma peça fisicamente menor e mais barata. Bancos de correção em média tensão existem por essa razão.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">o preço</span>
+        <p>Tensão maior sobre o dielétrico — \(1000\) V em vez de \(200\) V — e um transformador a mais no circuito. Troca-se microfarad por classe de isolação, e existe um ponto ótimo de custo.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>A direção de \(r\) é onde se erra.</b> Com \(r=\hat V_1/\hat V_2=1/5\), o secundário tem tensão <em>maior</em>. Quem lê \(r=1/5\) como "abaixador" multiplica por \(25\) em vez de dividir e obtém \(9670\ \mu\)F. Escreva sempre a definição \(r=\hat V_1/\hat V_2\) antes de decidir o lado, e confira com a tensão: capacitância pequena ⇔ tensão alta.</div>
+  </section>
+
+  <section id="linha" class="panel src-ext">
+    <span class="eyebrow">14.7</span>
+    <h2>Perdas na linha de transmissão: o retorno do investimento</h2>
+
+    <p>Até aqui a linha foi tratada como fio ideal. Ela não é: tem resistência \(R_{linha}\) e reatância \(X_{linha}\) em série entre a fonte e a carga. A parcela que vira calor no caminho é a ativa da resistência:</p>
+
+    <div class="eq-block">\[ \boxed{\;P_{perda} = R_{linha}\,|\hat I_{linha}|^{2}\;} \]</div>
+
+    <p>Não há nada de novo aqui: é a forma \(P=R|\hat I|^2\) do <a href="modulo-13.html#pqs">módulo 13</a> aplicada ao ramo série. O que interessa é <em>qual</em> corrente entra. Escrevendo \(|\hat I_{linha}| = |S|/|\hat V|\) e \(|S|=P/\mathrm{fp}\):</p>
+
+    <div class="eq-block">\[ P_{perda} = R_{linha}\left(\frac{|S|}{|\hat V|}\right)^{2} = \frac{R_{linha}\,P^{2}}{|\hat V|^{2}\,\mathrm{fp}^{2}} \]</div>
+
+    <p>A perda vai com o <b style="color:var(--ink)">inverso do quadrado do fp</b>. Corrigir de \(0{,}6\) para \(0{,}9\) reduz a perda por um fator \((0{,}6/0{,}9)^2 = 0{,}444\) — menos da metade do calor dissipado no cobre, com a carga fazendo exatamente o mesmo trabalho.</p>
+
+    <div class="solve-step src-ext">
+      <span class="step-num">!</span>
+      <div class="step-body">
+        <div class="step-title">O cuidado de ordem: a corrente de linha é depois do nó do capacitor</div>
+        <p>Quando o capacitor está ligado no lado da carga, a corrente que percorre a linha é a <b style="color:var(--ink)">soma fasorial</b> da corrente da carga com a do capacitor, não a corrente da carga:</p>
+        <div class="eq-block">\[ \hat I_{linha} = \hat I_{carga} + \hat I_C, \qquad \hat I_C = j\omega C\,\hat V_{LD} \]</div>
+        <p>É exatamente a conta da Questão 11 do formulário: a carga puxa \(\hat I=32-j24\) Aef, o capacitor devolve \(+j18{,}1\) Aef e a linha fica com \(32-j5{,}9\) Aef. O módulo cai de \(40\) para \(32{,}54\) Aef, e a perda cai de \(3200\) W para \(2120\) W — <b>um terço a menos de perda pelo simples fato de a corrente reativa não subir mais a linha</b>.</p>
+      </div>
+    </div>
+
+    <p>Essa é a justificativa econômica inteira: o capacitor fica <em>junto da carga</em>, e todo o trecho de linha a montante dele deixa de transportar a componente reativa. Quanto mais perto da carga, maior o trecho aliviado.</p>
+
+    <div class="history-note">
+      <span><b>perda</b>\(P_{perda}=R_{linha}I_{ef}^2\)</span>
+      <span><b>corrente</b>\(I_{ef}=|S|/|V_{ef}|\)</span>
+      <span><b>dependência</b>\(P_{perda}\propto 1/\mathrm{fp}^2\)</span>
+      <span><b>exemplo</b>Questão 11 do formulário: 2120 W</span>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">14.8</span>
+    <h2>Exercícios de provas, formulário e testes</h2>
+    <p class="dim">Nove exercícios sobre a mesma receita, vista de todos os ângulos: capacitor entre fases, capacitor através de transformador, capacitor fixo com resistor de sobra, capacitor que não existe, e o efeito de tudo isso na corrente de linha. Todos os fasores são eficazes.</p>
+
+    <div class="q-intro">
+      <div><b>9 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>P3 2023, P2 2021, formulário P3 e testes de 2023 e 2025</div>
+      <div><b>Foco</b>correção de fp · três fios · transformador ideal · perdas na linha</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, itens a, b e c</span>Três fios, um capacitor entre as fases — e depois o mesmo capacitor atrás de um transformador</span>
+          <span class="q-prova">P3/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1ª Questão.</b> Considere a instalação monofásica a três fios mostrada na Figura 1 com operação em regime permanente senoidal de frequência angular \(\omega = 377\ \mathrm{rad/s}\). Sabe-se que a carga A consome \(P_A = 10\ \mathrm{kW}\) com fator de potência \(0{,}6\) indutivo. Pede-se:</p>
+
+        <div class="problem-list">
+          <div class="problem-item"><span class="num">a</span>Calcule a capacitância \(C\), indicada na Figura 1, que compensa o fator de potência da instalação para \(f_p = 0{,}8\) indutivo.</div>
+          <div class="problem-item"><span class="num">b</span>Calcule o fasor da corrente do capacitor de compensação do item a), ou seja, \(\hat I_C\).</div>
+          <div class="problem-item"><span class="num">c</span>Qual é o novo valor do capacitor \(C\) do item a) se o capacitor for ligado através do transformador ideal (Figura 2) com relação de transformação \(r = \dfrac{\hat V_1}{\hat V_2} = \dfrac{1}{5}\).</div>
+        </div>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M100 50 L580 50"/>
+              <path d="M100 155 L580 155"/>
+              <path d="M100 260 L580 260"/>
+              <path d="M100 50 L100 80"/>
+              <path d="M100 126 L100 155"/>
+              <path d="M100 155 L100 185"/>
+              <path d="M100 231 L100 260"/>
+              <path d="M310 50 L310 86"/>
+              <path d="M310 134 L310 155"/>
+              <path d="M470 50 L470 143"/>
+              <path d="M470 167 L470 260"/>
+            </g>
+            <circle cx="100" cy="103" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="93" y="97" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="94" y="120" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <circle cx="100" cy="208" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="93" y="202" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="94" y="225" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="4" y="100" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">100∠0°</text>
+            <text x="4" y="114" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Vef</text>
+            <text x="4" y="205" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">100∠0°</text>
+            <text x="4" y="219" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Vef</text>
+            <circle cx="150" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="144" y="38" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">a</text>
+            <circle cx="150" cy="155" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="144" y="178" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">n</text>
+            <circle cx="150" cy="260" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="144" y="284" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">b</text>
+            <rect x="296" y="86" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="304" y="116" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="200" y="110" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Pₐ=10 kW</text>
+            <text x="200" y="126" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">fp 0,6 ind.</text>
+            <path d="M344 56 L344 92" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M344 92 L339 82 L349 82 Z" fill="#f5b942"/>
+            <text x="350" y="78" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Îₐ</text>
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="446" y1="143" x2="494" y2="143"/>
+              <line x1="446" y1="167" x2="494" y2="167"/>
+            </g>
+            <text x="502" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <path d="M436 56 L436 92" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M436 92 L431 82 L441 82 Z" fill="#f5b942"/>
+            <text x="404" y="78" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î_C</text>
+            <text x="250" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1</text>
+          </svg>
+          <div class="pz-legend">Figura 1 — a carga A está entre a fase <em>a</em> e o neutro <em>n</em> (100 Vef); o capacitor \(C\) está entre as duas fases <em>a</em> e <em>b</em> (200 Vef).</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(\omega=377\) rad/s · \(P_A=10\ \mathrm{kW}\) · \(\mathrm{fp}_A=0{,}6\) indutivo · \(\hat V_{an}=\hat V_{nb}=100\,\underline{/0^\circ}\) Vef · alvo \(\mathrm{fp}=0{,}8\) indutivo · \(r=\hat V_1/\hat V_2=1/5\) no item c.
+          <br>Fasores em <b>valores eficazes</b>.
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a reativa se conserva somando ramo a ramo, cada ramo com a <em>sua</em> tensão. A carga A vive a 100 V; o capacitor, a 200 V. Trocar essas duas tensões é o erro que mata a questão.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">a) A reativa da carga A</div>
+              <p>Com \(\mathrm{fp}_A=0{,}6\), o triângulo \(3\!-\!4\!-\!5\) dá \(\operatorname{sen}\varphi_A=0{,}8\), logo \(\tan\varphi_A = 0{,}8/0{,}6\). O gabarito escreve direto:</p>
+              <div class="eq-block">\[ Q_A = P_A\cdot\frac{0{,}8}{0{,}6} \;\Longrightarrow\; Q_A = \frac{40}{3}\ \mathrm{kVAr} \]</div>
+              <p class="dim">\(40/3 = 13{,}33\) kVAr, positiva porque o fp é indutivo.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">a) A reativa que a instalação deve ter depois</div>
+              <div class="eq-block">\[ f_p = 0{,}8 = \cos\varphi \;\Longrightarrow\; \operatorname{tg}\varphi = \frac{0{,}6}{0{,}8} = \frac{3}{4} \]</div>
+              <p>A potência ativa não muda — o capacitor não dissipa —, então \(P=P_A=10\) kW:</p>
+              <div class="eq-block">\[ Q = P_A\operatorname{tg}\varphi = 10\ \mathrm{kW}\cdot\frac{3}{4} \;\Longrightarrow\; Q = \frac{15}{2}\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">a) A reativa do capacitor, por conservação</div>
+              <div class="eq-block">\[ Q = Q_A + Q_C \;\Longrightarrow\; Q_C = Q - Q_A = \frac{15}{2} - \frac{40}{3}\ (\mathrm{kVAr}) \]</div>
+              <div class="eq-block">\[ Q_C = \frac{45 - 80}{6} \;\Longrightarrow\; Q_C = -\frac{35}{6}\ \mathrm{kVAr} = -5833{,}33\ \mathrm{VAr} \]</div>
+              <p>Negativa, como tem de ser: o alvo \(0{,}8\) é melhor que o original \(0{,}6\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">a) Da reativa para a capacitância — com a tensão certa</div>
+              <p>O capacitor está entre <em>a</em> e <em>b</em>, submetido a \(\hat V_{ab}\). Pela admitância:</p>
+              <div class="eq-block">\[ P_{apC} = Y_C^{*}\,|\hat V_{ab}|^{2} = -j\omega C\,|\hat V_{ab}|^{2} \;\Longrightarrow\; Q_C = -\omega C\,|\hat V_{ab}|^{2} \]</div>
+              <p>As duas fontes estão em série aditiva, logo \(|\hat V_{ab}| = 100+100 = 200\) Vef e \(|\hat V_{ab}|^2 = 40\,000\ \mathrm{V^2} = 40\ \mathrm{kV^2}\):</p>
+              <div class="eq-block">\[ C = \frac{Q_C}{-\omega|\hat V_{ab}|^{2}} = \frac{{}^{35}\!/\!_{6}\ \mathrm{kVAr}}{377\,\frac{\mathrm{rad}}{\mathrm s}\cdot 40\ \mathrm{kV^2}} = \frac{5833{,}33}{377\cdot 40\,000} \]</div>
+              <div class="eq-block">\[ C = \frac{5833{,}33}{1{,}508\times10^{7}} = 3{,}8683\times10^{-4}\ \mathrm F \]</div>
+              <div class="final-answer">a) \( C = 386{,}83\ \mu\mathrm F \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">b) O fasor da corrente do capacitor</div>
+              <p>A potência aparente do capacitor é \(P_{apC} = \hat V_{ab}\hat I_C^{*}\), com \(P_{apC} = jQ_C = -j\,5833{,}33\) VA (parte real nula: capacitor ideal não consome ativa). O gabarito escreve:</p>
+              <div class="eq-block">\[ \hat I_C^{*} = \frac{P_{apC}}{200\,\underline{/0^\circ}} \;\Longrightarrow\; \hat I_C = \frac{P_{apC}^{*}}{200} = \frac{P_{apC}^{*}\times 5}{1000} \]</div>
+              <div class="eq-block">\[ \hat I_C = \frac{+j\,5833{,}33}{200} = j\,\frac{175}{6}\ \mathrm{A_{ef}} \]</div>
+              <div class="eq-block">\[ \frac{175}{6} = 29{,}1\overline{6} \;\Longrightarrow\; \hat I_C = 29{,}16\,\underline{/90^\circ}\ \mathrm{A_{ef}} \]</div>
+              <div class="final-answer">b) \( \hat I_C = j\,\dfrac{175}{6} = 29{,}16\,\underline{/90^\circ}\ \mathrm{A_{ef}} \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">b) Conferência pela lei de Ohm — que o gabarito não faz</div>
+              <p>O caminho direto não passa por potência nenhuma:</p>
+              <div class="eq-block">\[ \hat I_C = j\omega C\,\hat V_{ab} = j\,377\cdot 3{,}8683\times10^{-4}\cdot 200 = j\,29{,}17\ \mathrm{A_{ef}} \quad\checkmark \]</div>
+              <p>A fase \(+90^\circ\) confirma o que se espera de um capacitor: a corrente adianta \(90^\circ\) da tensão. Se sair \(-90^\circ\), o conjugado foi aplicado no lado errado.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">c) O capacitor atrás do transformador ideal</div>
+              <p>O gabarito reflete a impedância do capacitor pelo quadrado da relação de transformação:</p>
+              <div class="eq-block">\[ Z = \frac{1}{j\omega C} \;\Longrightarrow\; Z_1 = r^{2}Z = \frac{r^{2}}{j\omega C} = \frac{1}{j\omega C_1} \]</div>
+              <div class="eq-block">\[ \therefore\; C_1 = \frac{C}{r^{2}} \;\Longrightarrow\; C = \frac{386{,}83}{25}\ \mu\mathrm F \]</div>
+              <div class="eq-block">\[ \Longrightarrow\; C = 15{,}473\ \mu\mathrm F \]</div>
+              <div class="final-answer">c) \( C = \dfrac{386{,}83}{25} = 15{,}473\ \mu\mathrm F \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">c) O mesmo resultado sem usar reflexão</div>
+              <p>Com \(r = \hat V_1/\hat V_2 = 1/5\), o primário está entre as fases (200 Vef), logo o secundário está a</p>
+              <div class="eq-block">\[ |\hat V_2| = \frac{|\hat V_1|}{r} = 5\cdot 200 = 1000\ \mathrm{V_{ef}} \]</div>
+              <p>A reativa que o capacitor precisa fornecer é a mesma do item a, \(|Q_C| = 5833{,}33\) VAr. Aplicando a receita diretamente no secundário:</p>
+              <div class="eq-block">\[ C = \frac{|Q_C|}{\omega|\hat V_2|^{2}} = \frac{5833{,}33}{377\cdot(10^{3})^{2}} = \frac{5833{,}33}{3{,}77\times10^{8}} = 1{,}5473\times10^{-5}\ \mathrm F \quad\checkmark \]</div>
+              <p>Tensão cinco vezes maior, capacitância vinte e cinco vezes menor. É a mesma reflexão de impedâncias do <a href="modulo-10.html#trafo">módulo 10</a>, lida em volts.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · inconsistência de notação no manuscrito do item c</span>
+            <p>No original, a primeira linha do item c chama de \(C\) a capacitância refletida e de \(C_1\) a do secundário, escrevendo \(C_1 = C/r^{2}\). Nas duas últimas linhas os papéis <b>se invertem</b>: \(386{,}83\ \mu\)F passa a ser o valor equivalente no primário (o do item a) e o professor escreve \(C = C_1/25 = 386{,}83/25\), obtendo o valor físico no secundário. O símbolo troca de significado no meio da conta; <b>o resultado numérico está correto</b>, \(15{,}473\ \mu\)F, como confirma o passo 08.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Três armadilhas, em ordem de frequência. <b>(1)</b> Usar \(|\hat V|=100\) V no item a porque foi esse o número escrito nas fontes — o capacitor está entre as fases e vê \(200\) V; o erro é um fator \(4\). <b>(2)</b> Aplicar \(\arccos\) e esquecer que \(P\) é constante, recalculando \(P\) a partir do novo \(|S|\). <b>(3)</b> No item c, inverter a direção de \(r\): com \(r=1/5\) o secundário tem tensão <em>maior</em>, e a capacitância tem de <em>diminuir</em>. Se a sua resposta em c for maior que a do item a, você inverteu.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · questão 7</span>O estagiário só tinha um capacitor — então sobrou reativa de menos e faltou ativa</span>
+          <span class="q-prova">P2/2021</span>
+        </div>
+
+        <p><b style="color:var(--ink)">⑦</b> Considere a instalação elétrica abaixo, operando em <b>60 Hz</b>, \(\hat V = 212\ \mathrm{V_{ef}}\).</p>
+
+        <div class="problem-list">
+          <div class="problem-item"><span class="num">A</span>Carga \(A\) tem impedância \(Z_A = 3 + j6\ \Omega\).</div>
+          <div class="problem-item"><span class="num">B</span>Carga \(B\) tem potência reativa \(1757\) VAr e fator de potência \(0{,}5\) (indutivo).</div>
+        </div>
+
+        <p>Deseja-se corrigir o fator de potência para <b style="color:var(--ink)">0,99 (indutivo)</b>. Um estagiário tinha apenas um capacitor de <b>211,82 µF</b>. E associou o circuito ao lado <b>paralelamente</b> às cargas \(A\) e \(B\). Qual o valor de \(R\) para que as condições sejam atendidas?</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 260" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 50 L330 50"/>
+              <path d="M70 210 L330 210"/>
+              <path d="M70 50 L70 78"/>
+              <path d="M70 124 L70 210"/>
+              <path d="M190 50 L190 86"/>
+              <path d="M190 134 L190 210"/>
+              <path d="M290 50 L290 86"/>
+              <path d="M290 134 L290 210"/>
+            </g>
+            <circle cx="70" cy="101" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="63" y="95" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="64" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="4" y="104" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂=212</text>
+            <text x="4" y="118" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Vef</text>
+            <circle cx="190" cy="50" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <circle cx="190" cy="210" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <rect x="176" y="86" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="184" y="116" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <rect x="276" y="86" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="284" y="116" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+            <text x="120" y="236" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1 — as cargas</text>
+
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M420 50 L600 50"/>
+              <path d="M420 210 L600 210"/>
+              <path d="M470 50 L470 108"/>
+              <path d="M470 132 L470 210"/>
+              <path d="M560 50 L560 92"/>
+              <path d="M560 140 L560 210"/>
+            </g>
+            <circle cx="420" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="420" cy="210" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="448" y1="108" x2="492" y2="108"/>
+              <line x1="448" y1="132" x2="492" y2="132"/>
+            </g>
+            <text x="416" y="128" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+            <path d="M560 92 q 14 12 0 24 q 14 12 0 24" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="582" y="122" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R</text>
+            <text x="424" y="236" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 2 — o remendo do estagiário</text>
+          </svg>
+          <div class="pz-legend">O bloco \(C\!\parallel\!R\) da Figura 2 é ligado em paralelo com as cargas \(A\) e \(B\) da Figura 1, sob a mesma tensão \(\hat V = 212\) Vef.</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(f = 60\) Hz · \(\hat V = 212\ \mathrm{V_{ef}}\) · \(Z_A = 3+j6\ \Omega\) · \(Q_B = 1757\) VAr com \(\mathrm{fp}_B = 0{,}5\) indutivo · \(C = 211{,}82\ \mu\mathrm F\) (fixo) · alvo \(\mathrm{fp} = 0{,}99\) indutivo.
+          <br>Fasores em <b>valores eficazes</b>. Incógnita: \(R\).
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — com \(C\) fixo, \(Q\) final está congelado. A única variável livre é \(P\): o resistor <em>aumenta</em> a potência ativa até que a razão \(Q/P\) dê o ângulo do fp desejado. Corrige-se o fp por baixo do triângulo, não por cima.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · enunciado da P2 2021</span>
+            <p>O enunciado e as duas figuras acima são o material original da prova. A resolução que segue é a do caderno de um aluno, não gabarito oficial.</p>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Potência da carga A, pela admitância</div>
+              <p>Com a carga em paralelo, é mais confortável trabalhar em admitância:</p>
+              <div class="eq-block">\[ Y_A = \frac{1}{Z_A} = \frac{1}{3+j6} = \frac{3-j6}{3^{2}+6^{2}} = \frac{3-j6}{45} = \underbrace{\frac{1}{15}}_{G_A} + j\underbrace{\left(-\frac{2}{15}\right)}_{B_A} \]</div>
+              <p>Pela forma (b) do formulário, \(S = |\hat V|^{2}Y^{*}\), com \(212^2 = 44\,944\):</p>
+              <div class="eq-block">\[ P_{ApA} = V^{2}Y_A^{*} = 212^{2}\left[\frac{1}{15} + j\,\frac{2}{15}\right] = 44\,944\,(0{,}06\overline{6} + j\,0{,}13\overline{3}) \]</div>
+              <div class="eq-block">\[ P_{ApA} = 2996{,}3 + j\,5992{,}5\ \mathrm{VA} \]</div>
+              <p class="dim">Reativa positiva: \(Z_A\) tem \(X=+6\ \Omega\), é indutiva. Confere.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Potência ativa da carga B, a partir de \(Q_B\) e do fp</div>
+              <div class="eq-block">\[ \cos\varphi_B = 0{,}5 \;\Longrightarrow\; \varphi_B = \arccos(0{,}5) = 60^\circ \;\Longrightarrow\; \operatorname{tg}\varphi_B = \sqrt3 = 1{,}7321 \]</div>
+              <div class="eq-block">\[ \operatorname{tg}\varphi_B = \frac{Q_B}{P_B} \;\Longrightarrow\; P_B = \frac{1757}{\operatorname{tg}(\arccos 0{,}5)} = \frac{1757}{1{,}7321} = 1014{,}4\ \mathrm W \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Potência total das cargas, somando componente a componente</div>
+              <div class="eq-block">\[ P_{tot} = 2996{,}3 + 1014{,}4 = 4010{,}7\ \mathrm W \]</div>
+              <div class="eq-block">\[ Q_{tot} = 5992{,}5 + 1757 = 7749{,}5\ \mathrm{VAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">O que o capacitor fixo retira</div>
+              <p>O capacitor está sob os mesmos \(212\) Vef. Em módulo,</p>
+              <div class="eq-block">\[ |Q_C| = V_{ef}^{2}\,(2\pi f C) = 212^{2}\cdot 2\pi\cdot 60\cdot 211{,}82\times10^{-6} \]</div>
+              <div class="eq-block">\[ |Q_C| = 44\,944\cdot 376{,}99\cdot 2{,}1182\times10^{-4} = 3588{,}97\ \mathrm{VAr} \]</div>
+              <p>Sobra de reativa, depois do capacitor:</p>
+              <div class="eq-block">\[ Q_{fin} = 7749{,}5 - 3589{,}0 = 4160{,}5\ \mathrm{VAr} \]</div>
+              <p class="dim">O capacitor sozinho levaria o fp a \(4010{,}7/\sqrt{4010{,}7^2+4160{,}5^2} = 0{,}694\) — longe dos \(0{,}99\) pedidos. Ele é insuficiente, e é isso que motiva o resistor.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">A ativa que o alvo exige, com \(Q\) travado</div>
+              <p>Não há mais como mexer em \(Q\): \(C\) é fixo e o resistor não produz reativa. Então impõe-se o ângulo sobre o triângulo, resolvendo para \(P\):</p>
+              <div class="eq-block">\[ \varphi = \arccos(0{,}99) = 8{,}11^\circ \;\Longrightarrow\; \operatorname{tg}\varphi = 0{,}14248 \]</div>
+              <div class="eq-block">\[ \operatorname{tg}\varphi = \frac{Q}{P} \;\Longrightarrow\; P_{nec} = \frac{4160{,}5}{\operatorname{tg}(\arccos 0{,}99)} = \frac{4160{,}5}{0{,}14248} \cong 29\,198\ \mathrm W \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A ativa que falta e o resistor que a fornece</div>
+              <p>As cargas já consomem \(4010{,}7\) W. O resistor tem de consumir o restante:</p>
+              <div class="eq-block">\[ P_R = 29\,198 - 4010{,}7 = 25\,187{,}3\ \mathrm W \]</div>
+              <p>E um resistor sob tensão eficaz conhecida vale</p>
+              <div class="eq-block">\[ P = \frac{V^{2}}{R} \;\Longrightarrow\; R = \frac{V_{ef}^{2}}{P_R} = \frac{212^{2}}{25\,187{,}3} = \frac{44\,944}{25\,187{,}3} \]</div>
+              <div class="final-answer">\( R = 1{,}784\ \Omega \)</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">resolução de terceiro · caderno 2021</span>
+            <p>Os passos 01 a 06 reproduzem a resolução manuscrita de <b>Marcelo Lima ("Celão")</b>, um aluno — <b>não é gabarito oficial do professor</b>. As passagens intermediárias (\(\arccos 0{,}5 = 60^\circ\), \(\arccos 0{,}99 = 8{,}11^\circ\), a conferência do fp de \(0{,}694\)) foram escritas aqui; no caderno aparecem apenas os triângulos desenhados e os números finais.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · o que a resposta significa</span>
+            <p>\(R = 1{,}784\ \Omega\) sob \(212\) V dissipa \(25{,}2\) kW — seis vezes o consumo útil da instalação. É uma solução <b>fisicamente válida e economicamente absurda</b>: "corrige-se" o fator de potência queimando energia num forno. O exercício é um teste de compreensão do triângulo, não uma receita de projeto. Na prática, escolhe-se outro capacitor.</p>
+            <p><b>Onde se erra:</b> tentar usar a receita padrão \(C = P(\tan\varphi_1-\tan\varphi_2)/(\omega V^2)\) — ela resolve para \(C\) com \(P\) dado, e aqui é o contrário: \(C\) é dado e \(P\) é a incógnita. Quem não percebe a inversão fica sem equação.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · questão 3</span>A capacitância que deu negativa — e por que isso era inevitável</span>
+          <span class="q-prova">P2/2021</span>
+        </div>
+
+        <p><b style="color:var(--ink)">③</b> Indique o valor em mF da capacitância \(C\) <b>mínima</b> do banco de capacitores representado na instalação abaixo, necessária para aumentar o valor do fator de potência para <b>0,86 indutivo</b>. Sabe-se que a Potência Aparente da carga \(A\) é \(157\exp(j31^\circ)\) kVA e a potência Ativa da carga \(B\) é \(25\) kW com fator de potência unitário.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M100 50 L560 50"/>
+              <path d="M100 155 L560 155"/>
+              <path d="M100 260 L560 260"/>
+              <path d="M100 50 L100 80"/>
+              <path d="M100 126 L100 155"/>
+              <path d="M100 155 L100 185"/>
+              <path d="M100 231 L100 260"/>
+              <path d="M300 50 L300 86"/>
+              <path d="M300 134 L300 155"/>
+              <path d="M400 155 L400 191"/>
+              <path d="M400 239 L400 260"/>
+              <path d="M500 50 L500 143"/>
+              <path d="M500 167 L500 260"/>
+            </g>
+            <circle cx="100" cy="103" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="93" y="97" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="94" y="120" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <circle cx="100" cy="208" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="93" y="202" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="94" y="225" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="6" y="100" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂ₐ=110</text>
+            <text x="6" y="114" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">∠0° V</text>
+            <text x="6" y="205" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂ᵦ=110</text>
+            <text x="6" y="219" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">∠0° V</text>
+            <circle cx="150" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="144" y="38" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">a</text>
+            <circle cx="150" cy="155" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="156" y="148" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">n</text>
+            <circle cx="150" cy="260" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="144" y="284" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">b</text>
+            <rect x="286" y="86" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="294" y="116" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">A</text>
+            <text x="196" y="112" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">157∠31° kVA</text>
+            <rect x="386" y="191" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="394" y="221" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">B</text>
+            <text x="268" y="218" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">25 kW · fp = 1</text>
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="476" y1="143" x2="524" y2="143"/>
+              <line x1="476" y1="167" x2="524" y2="167"/>
+            </g>
+            <text x="532" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <text x="250" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω = 377 rad/s → f = 60 Hz</text>
+          </svg>
+          <div class="pz-legend">Rede a três fios: carga \(A\) entre \(a\) e \(n\), carga \(B\) entre \(n\) e \(b\), banco \(C\) entre \(a\) e \(b\). Como \(A\) e \(B\) estão em série entre as fases, o capacitor está em paralelo com a associação \(A+B\), sob \(220\) V.</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(\hat V_a = \hat V_b = 110\exp(j0^\circ)\) V · \(\omega = 377\) rad/s \(\Rightarrow f = 60\) Hz · \(|S_A| = 157\) kVA com \(\varphi_A = 31^\circ\) · \(P_B = 25\) kW com \(\mathrm{fp}_B = 1\) · alvo \(\mathrm{fp} = 0{,}86\) indutivo.
+          <br>Tensão sobre o banco: \(110+110 = 220\) V eficazes.
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a receita se aplica sem tropeço e devolve um número negativo. O número negativo é a resposta certa para a pergunta errada: a instalação já tem fp \(0{,}892\), melhor que o alvo \(0{,}86\).</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · enunciado da P2 2021</span>
+            <p>O enunciado acima e a figura da instalação a três fios são o material original da prova, incluindo os dados \(\hat V_a=\hat V_b=110\angle 0^\circ\) V e \(\omega=377\) rad/s.</p>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Decompor a potência da carga A</div>
+              <p>A carga A vem em forma polar: módulo e ângulo. Projetando nos dois eixos:</p>
+              <div class="eq-block">\[ P_A = |S_A|\cos\varphi_A = 157\cdot\cos 31^\circ = 157\cdot 0{,}857 = 134{,}58\ \mathrm{kW} \]</div>
+              <div class="eq-block">\[ Q_A = |S_A|\operatorname{sen}\varphi_A = 157\cdot\operatorname{sen} 31^\circ = 157\cdot 0{,}515 = 80{,}86\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A carga B e a soma</div>
+              <p>Fator de potência unitário significa \(\varphi_B = 0\), logo \(Q_B = 0\):</p>
+              <div class="eq-block">\[ P_B = 25\ \mathrm{kW}, \qquad Q_B = 0 \]</div>
+              <div class="eq-block">\[ S_{tot} = (134{,}6 + 25) + j\,80{,}9 = 159{,}58 + j\,80{,}86\ \mathrm{kVA} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A reativa desejada para \(\mathrm{fp} = 0{,}86\)</div>
+              <p>A potência ativa não muda com o capacitor, então o alvo fixa só o cateto vertical:</p>
+              <div class="eq-block">\[ \varphi = \arccos(0{,}86) = 30{,}68^\circ \;\Longrightarrow\; \operatorname{tg}\varphi = 0{,}5934 \]</div>
+              <div class="eq-block">\[ Q_{desejado} = 159{,}6\cdot\operatorname{tg}\big(\arccos(0{,}86)\big) = 159{,}6\cdot 0{,}5934 \]</div>
+              <div class="eq-block">\[ Q_{desejado} = 94{,}686\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A capacitância, pela fórmula com \(f\)</div>
+              <p>O autor escreve a fórmula com \(\Delta Q = Q_{atual} - Q_{desejado}\) e a frequência em hertz:</p>
+              <div class="eq-block">\[ C = \frac{\Delta Q}{2\pi f\,V_{ef}^{2}} = \frac{80{,}86 - 94{,}69}{2\pi\cdot 60\cdot 220^{2}}\ \mathrm{(kVAr,\ V)} \]</div>
+              <div class="eq-block">\[ C = \frac{-13{,}83\times10^{3}}{376{,}99\cdot 48\,400} = \frac{-13\,830}{1{,}8246\times10^{7}} \]</div>
+              <div class="final-answer">\( C = -0{,}758\ \mathrm{mF} \) — <b>o autor para aqui, com o sinal negativo</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">O que o sinal negativo está dizendo</div>
+              <p>Calcule o fator de potência que a instalação <em>já tem</em>, antes de qualquer capacitor:</p>
+              <div class="eq-block">\[ |S_{tot}| = \sqrt{159{,}58^{2} + 80{,}86^{2}} = \sqrt{25\,466 + 6538} = \sqrt{32\,004} = 178{,}90\ \mathrm{kVA} \]</div>
+              <div class="eq-block">\[ \mathrm{fp}_1 = \frac{P}{|S|} = \frac{159{,}58}{178{,}90} = 0{,}892 \quad\text{(indutivo)} \]</div>
+              <p>O enunciado pede para "aumentar o fator de potência para \(0{,}86\)" — mas \(0{,}86 &lt; 0{,}892\). O alvo é <b style="color:var(--ink)">pior</b> que o estado atual. Pela seção <a href="#sinal">14.4</a>, esse é o caso 1: \(\varphi_2 &gt; \varphi_1\), logo \(Q_C = Q_2-Q_1 &gt; 0\), e reativa positiva não vem de capacitor nenhum.</p>
+              <div class="eq-block">\[ Q_C = +13{,}83\ \mathrm{kVAr} \;\Longrightarrow\; \text{o elemento pedido é um indutor, não um capacitor} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">O que a resposta seria, lida como indutor</div>
+              <p>Se a intenção fosse de fato levar o fp a \(0{,}86\) (piorando-o), o elemento em paralelo teria de fornecer \(Q_L = +13{,}83\) kVAr sob \(220\) V:</p>
+              <div class="eq-block">\[ Q_L = \frac{V_{ef}^{2}}{\omega L} \;\Longrightarrow\; L = \frac{V_{ef}^{2}}{\omega\,Q_L} = \frac{48\,400}{377\cdot 13\,830} = 9{,}28\ \mathrm{mH} \]</div>
+              <p class="dim">Este passo não está no caderno; serve só para mostrar que o \(-0{,}758\) mF não é lixo numérico — é a mesma informação com o sinal invertido, \(|C|\) e \(L\) descrevendo o mesmo \(|Q|\).</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">resolução de terceiro · caderno 2021</span>
+            <p>Os passos 01 a 04 reproduzem a resolução manuscrita de <b>Marcelo Lima ("Celão")</b> — <b>não é gabarito oficial</b>. Ele chega a \(C=-0{,}758\) mF e encaixota o resultado sem comentar o sinal. Os passos 05 e 06 são análise acrescentada aqui. Na margem direita da página original há dois blocos totalmente rabiscados a caneta, ilegíveis.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>O erro típico é o oposto do que aconteceu aqui: <b>tomar o módulo do resultado</b> e responder "\(0{,}758\) mF" sem olhar o sinal, entregando um capacitor que pioraria mais ainda o fp. O reflexo certo é o teste de sanidade: calcular \(\mathrm{fp}_1 = P/\sqrt{P^2+Q^2}\) <em>antes</em> e comparar com o alvo. Vale também desconfiar da palavra "mínima" no enunciado — banco mínimo pressupõe que exista algum banco que sirva.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Questões do formulário</h3>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questões 01, 02, 03 e 04</span>Uma linha, duas cargas em paralelo, quatro perguntas encadeadas</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Para as questões de 01 a 4</b> considere uma linha monofásica com tensão eficaz \(V_l=100\) V com frequência de 377 rad/s ligada a duas cargas em paralelo. A carga 1 é indutiva e consome potência ativa de 60 kW com corrente eficaz de 1 kA e a carga 2 tem impedância \(30+j40\) (mΩ).</p>
+
+        <p class="dim">Convenção declarada na própria folha: o módulo do fasor \(\hat W\) será designado ou por \(|\hat W|\) ou por \(W\). A grafia "de 01 a 4" é do original.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M90 50 L520 50"/>
+              <path d="M90 200 L520 200"/>
+              <path d="M90 50 L90 200"/>
+              <path d="M300 50 L300 76"/>
+              <path d="M300 124 L300 200"/>
+              <path d="M440 50 L440 76"/>
+              <path d="M440 124 L440 200"/>
+            </g>
+            <circle cx="90" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="90" cy="200" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <path d="M126 194 L126 60" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M126 60 L121 72 L131 72 Z" fill="#f5b942"/>
+            <text x="30" y="128" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂ₗ = 100 Vef</text>
+            <path d="M190 38 L242 38" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M242 38 L233 33 L233 43 Z" fill="#f5b942"/>
+            <text x="204" y="28" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Îₗ</text>
+            <rect x="286" y="76" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="292" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z₁</text>
+            <text x="248" y="146" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">60 kW · 1 kAef</text>
+            <rect x="426" y="76" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="432" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z₂</text>
+            <text x="392" y="146" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">30 + j40 mΩ</text>
+            <circle cx="300" cy="50" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <circle cx="300" cy="200" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <text x="536" y="128" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">ω = 377 rad/s</text>
+          </svg>
+          <div class="pz-legend">As duas cargas estão em paralelo sob a mesma tensão de linha \(\hat V_l = 100\) Vef. A corrente \(\hat I_l\) é a soma das duas correntes de ramo.</div>
+        </div>
+
+        <div class="problem-list">
+          <div class="problem-item"><span class="num">01</span>A impedância da carga 1 em (mΩ) é:</div>
+          <div class="problem-item"><span class="num">02</span>A potência aparente em kVA da <b>instalação</b> é:</div>
+          <div class="problem-item"><span class="num">03</span>A corrente eficaz da linha, em kA, é:</div>
+          <div class="problem-item"><span class="num">04</span>O valor aproximado em (mF) do capacitor que, ligado em paralelo com a linha, corrige o fator de potência para 1 (puramente resistivo) é:</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(V_l = 100\ \mathrm{V_{ef}}\) · \(\omega = 377\) rad/s · carga 1 indutiva com \(P_1 = 60\) kW e \(I_1 = 1\ \mathrm{kA_{ef}}\) · carga 2 com \(Z_2 = 30+j40\) mΩ.
+          <br>Todos os fasores em <b>valores eficazes</b>. Repare na ordem de grandeza: quilo-ampères e mili-ohms.
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a carga 1 é dada por potência e corrente, a carga 2 por impedância. Traduzir a primeira em impedância revela que \(Z_1 = 2Z_2\), e a partir daí tudo é proporcional.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Questão 01 — a resistência da carga 1</div>
+              <p>A potência ativa num ramo é \(P = R|\hat I|^2\). Com \(I_1 = 1\ \mathrm{kA} = 10^3\) A:</p>
+              <div class="eq-block">\[ 60\mathrm k = \mathrm{Re}(Z_1)\,I_1^{2} \;\Longrightarrow\; \mathrm{Re}(Z_1) = \frac{60\cdot 10^{3}}{10^{6}} = 60\ \mathrm{m\Omega} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Questão 01 — a reatância, pelo módulo da potência aparente</div>
+              <p>O módulo da aparente pode ser escrito de duas formas, e igualá-las dá a equação que falta:</p>
+              <div class="eq-block">\[ \hat P_{ap} = RI^{2} + jXI^{2} \;\Longrightarrow\; |\hat P_{ap}| = V_l\cdot I_1 = I_1^{2}\sqrt{R^{2}+X^{2}} \]</div>
+              <p>Isolando \(X\):</p>
+              <div class="eq-block">\[ X = \sqrt{\left(\frac{V_l}{I_1}\right)^{2} - R^{2}} = \sqrt{\left(\frac{100}{1000}\right)^{2} - (60\times10^{-3})^{2}} \]</div>
+              <div class="eq-block">\[ X = \sqrt{10^{-2} - 36\cdot 10^{-4}} = \sqrt{10^{-4}(100-36)} = 10^{-2}\cdot 8 = 80\ \mathrm{m\Omega} \]</div>
+              <p>Indutiva, logo \(X&gt;0\):</p>
+              <div class="final-answer">01) \( Z_1 = 60 + j80\ (\mathrm{m\Omega}) \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Questão 02 — a proporção entre os dois ramos</div>
+              <p>Comparando com \(Z_2 = 30+j40\) mΩ:</p>
+              <div class="eq-block">\[ Z_1 = 60+j80 = 2\,(30+j40) = 2Z_2 \]</div>
+              <p>Sob a mesma tensão, corrente é inversamente proporcional à impedância:</p>
+              <div class="eq-block">\[ Z_1 = 2Z_2 \;\Longrightarrow\; \hat I_2 = 2\hat I_1 \;\Longrightarrow\; \hat I_l = \hat I_1 + \hat I_2 = 3\hat I_1 \]</div>
+              <div class="eq-block">\[ I_l = 3I_1 = 3\ \mathrm{kA} \]</div>
+              <p class="dim">A soma é fasorial, mas aqui os dois fasores têm a mesma fase (as impedâncias são proporcionais), então a soma dos módulos vale.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Questão 02 — a impedância equivalente e a potência da instalação</div>
+              <div class="eq-block">\[ Z_l = \frac{Z_1 Z_2}{Z_1+Z_2} = \frac{2Z_2\cdot Z_2}{2Z_2+Z_2} = \frac{2Z_2^{2}}{3Z_2} = \frac{2}{3}Z_2 = \frac{2}{3}\cdot 10\,(3+j4)\ \mathrm{m\Omega} \]</div>
+              <div class="eq-block">\[ \hat P_{ap} = \hat V_l\hat I_l^{*} = Z_l\,I_l^{2} = \frac{20}{3}(3+j4)\times10^{-3}\cdot 9\times10^{6} \]</div>
+              <div class="eq-block">\[ = 60\,(3+j4)\times 10^{3} = 180 + j240\ \mathrm{kVA} \]</div>
+              <p>Em polar, com o triângulo \(3\!-\!4\!-\!5\):</p>
+              <div class="eq-block">\[ \hat P_{ap} = 60\cdot 5\,\underline{/53^\circ}\ \mathrm{kVA} \]</div>
+              <div class="final-answer">02) \( \hat P_{ap} = 300\,\underline{/53^\circ}\ \mathrm{kVA} \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Questão 03 — a corrente eficaz da linha</div>
+              <p>Já obtida no passo 03, e confirmada pela aparente: \(I_l = |\hat P_{ap}|/V_l = 300\times10^{3}/100 = 3\times10^{3}\) A.</p>
+              <div class="final-answer">03) \( I_l = 3\ \mathrm{kA} \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Questão 04 — o capacitor que zera a reativa</div>
+              <p>Corrigir para \(\mathrm{fp}=1\) é o caso particular \(\varphi_2 = 0\), ou seja, \(Q_2 = 0\):</p>
+              <div class="eq-block">\[ 0 = Q_{desejado} = Q + Q_C \;\Longrightarrow\; Q_C = -Q = -\mathrm{Im}(\hat P_{ap}) = -300\cdot\frac{4}{5} = -240\times10^{3}\ \mathrm{VAr} \]</div>
+              <p>Isolando \(C\) na relação do capacitor, com \(V_l = 100\) Vef (o capacitor está em paralelo com a linha, sob a tensão da linha):</p>
+              <div class="eq-block">\[ Q_C = -\omega C V_l^{2} = -240\times10^{3} \;\Longleftrightarrow\; C = \frac{240\times10^{3}}{377\cdot 100^{2}} = \frac{240}{377\cdot 10^{4}}\times10^{3} \]</div>
+              <div class="eq-block">\[ C = \frac{240\,000}{3{,}77\times10^{6}} = 63{,}66\times10^{-3}\ \mathrm F = 63{,}66\ \mathrm{mF} \]</div>
+              <div class="final-answer">04) \( C \approx 64\ \mathrm{mF} \)</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Duas armadilhas. <b>(1)</b> Na questão 01, pular a etapa do módulo e tentar achar \(X\) pelo fp — que não foi dado. O dado escondido é \(|\hat P_{ap}| = V_l I_1\), que só existe porque a corrente eficaz foi fornecida. <b>(2)</b> Na questão 04, usar \(|S|\) em vez de \(Q\): o capacitor cancela a <em>reativa</em>, \(240\) kVAr, não a aparente, \(300\) kVA. Trocar um pelo outro dá \(79{,}6\) mF, que parece igualmente plausível.</p>
+            <p>Repare ainda na escala: \(63{,}66\) mF é um capacitor gigantesco — consequência direta da tensão baixíssima (\(100\) V) com potência altíssima (\(300\) kVA). É o argumento da seção <a href="#trifio">14.5</a> em números.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 10</span>O fp da associação carga + capacitor, pela admitância</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Questão 10.</b> Ainda nas mesmas condições da questão 09, o fator de potência da associação da carga A com o capacitor é:</p>
+
+        <div class="given-box">
+          <b>Dados (herdados da Questão 09).</b> \(\hat V_{LD} = 4800\,\underline{/0^\circ}\ \mathrm{V_{ef}}\) · \(f = 60\) Hz \(\Rightarrow \omega = 377\) rad/s · Carga A com \(|\hat P_{ap,A}| = 240\) kVA e \(\mathrm{fp}_A = 0{,}8\) atrasado · linha com \(R_l = 2\ \Omega\) e \(X_l = 10\ \Omega\) · capacitor \(C = 10\ \mu\mathrm F\) em paralelo com a carga.
+          <br>Da Questão 09: \(\hat I = 40 - j30\ \mathrm{A_{ef}}\).
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — em associação paralela, somam-se admitâncias. O fp é o cosseno da fase da impedância equivalente, que é o simétrico da fase da admitância.</div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · estratégia declarada na folha</span>
+            <p>"Basta encontrarmos a fase da impedância associada a associação entre o capacitor e a carga A. Porém, é mais fácil trabalhar com admitância em associações em paralelo, de modo que vamos calcular a admitância equivalente entre a carga e o capacitor."</p>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A admitância da carga A</div>
+              <div class="eq-block">\[ Y_A = \frac{\hat I}{\hat V_{LD}} = \frac{40-j30}{4800\,\underline{/0^\circ}} = 8{,}33\times10^{-3} - j\,6{,}25\times10^{-3}\ \mathrm S \]</div>
+              <p class="dim">Suscetância negativa: carga indutiva, como o "0,8 atrasado" prometia.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Somar a admitância do capacitor</div>
+              <div class="eq-block">\[ Y_C = j\omega C = j\,377\cdot 10\times10^{-6} = j\,377\times10^{-5} = j\,3{,}77\times10^{-3}\ \mathrm S \]</div>
+              <div class="eq-block">\[ Y_{eq} = Y_A + Y_C = \left[8{,}33 + j\,(3{,}77-6{,}25)\right]\times10^{-3} = (8{,}33 - j\,2{,}48)\times10^{-3} \]</div>
+              <div class="eq-block">\[ |Y_{eq}| = \sqrt{8{,}33^{2}+2{,}48^{2}}\times10^{-3} = 8{,}69\times10^{-3}\ \mathrm S, \qquad \angle Y_{eq} = -16{,}58^\circ \]</div>
+              <div class="eq-block">\[ Y_{eq} = 8{,}69\times10^{-3}\,\underline{/-16{,}58^\circ}\ \mathrm S \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">De volta à impedância e ao fp</div>
+              <p>Invertendo, a fase troca de sinal:</p>
+              <div class="eq-block">\[ Z_{eq} = \frac{1}{Y_{eq}} = \frac{10^{3}}{8{,}69}\,\underline{/16{,}58^\circ}\ \Omega = 115{,}1\,\underline{/16{,}58^\circ}\ \Omega \]</div>
+              <div class="eq-block">\[ \mathrm{fp} = \cos(16{,}58^\circ) = 0{,}96 \]</div>
+              <div class="final-answer">\( \mathrm{fp} = 0{,}96 \) (atrasado)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Por que "atrasado", e não "adiantado"</div>
+              <p>A folha justifica assim: "a impedância equivalente tem fase \(16{,}58^\circ\) e um fator de potência atrasado, pois o seno da fase é positivo". Em outras palavras, \(\varphi = +16{,}58^\circ &gt; 0\), logo \(Q = |\hat V||\hat I|\operatorname{sen}\varphi &gt; 0\): a associação continua indutiva. O capacitor de \(10\ \mu\)F melhorou o fp de \(0{,}8\) para \(0{,}96\) mas não chegou a inverter o caráter da carga.</p>
+              <p class="dim">As duas primeiras letras de "Logo" e de "fase" estão cortadas na margem do recorte colado no formulário; o sentido é inequívoco.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Esquecer que \(Z = 1/Y\) <b>inverte o sinal da fase</b>. Quem lê \(-16{,}58^\circ\) na admitância e conclui "fp adiantado" erra o adjetivo — e num problema de correção o adjetivo é metade da resposta. Atalho seguro: o sinal de \(Q\) é o sinal de \(-\mathrm{Im}(Y)\), e aqui \(\mathrm{Im}(Y_{eq})&lt;0\) dá \(Q&gt;0\), indutivo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 11</span>A perda na linha depois que o capacitor entrou</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">[Qu]estão 11.</b> Alterando-se a carga mas mantendo-se \(\hat V_{LD}\), obteve-se \(\hat I = 32-j24\) Aef. Nessas [co]ndições, a potência dissipada de transmissão (em W) é aproximadamente.</p>
+
+        <div class="given-box">
+          <b>Dados.</b> \(\hat V_{LD} = 4800\,\underline{/0^\circ}\ \mathrm{V_{ef}}\) · \(\omega = 377\) rad/s · \(C = 10\ \mu\mathrm F\) em paralelo com a carga · linha com \(R_l = 2\ \Omega\) e \(X_l = 10\ \Omega\) · nova corrente de carga \(\hat I = 32-j24\ \mathrm{A_{ef}}\).
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a corrente que aquece a linha é a que passa <em>pela linha</em>, não a que entra na carga. Entre as duas está o nó do capacitor.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A corrente de linha pela 1ª LK no nó do capacitor</div>
+              <div class="eq-block">\[ \hat I_l = \hat I + \hat I_C = \hat I + j\omega C\,\hat V_{LD} \]</div>
+              <div class="eq-block">\[ \hat I_l = 32 - j24 + j\cdot 377\cdot 10^{-5}\cdot 4800\,\underline{/0^\circ} \]</div>
+              <div class="eq-block">\[ j\,377\times10^{-5}\cdot 4800 = j\,18{,}1\ \mathrm{A_{ef}} \]</div>
+              <div class="eq-block">\[ \hat I_l = 32 + j\,(-24+18{,}1) = 32 - j\,5{,}9\ \mathrm{A_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A perda na resistência da linha</div>
+              <div class="eq-block">\[ I_l^{2} = 32^{2} + 5{,}9^{2} = 1024 + 34{,}81 = 1058{,}81\ \mathrm{A^2} \]</div>
+              <div class="eq-block">\[ P_{diss} = R_l I_l^{2} = 2\cdot 1058{,}81 = 2117{,}6\ \mathrm W \]</div>
+              <div class="final-answer">\( P_{diss} \approx 2120\ \mathrm W \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Quanto o capacitor economizou</div>
+              <p>Sem o capacitor, a linha carregaria a corrente inteira da carga:</p>
+              <div class="eq-block">\[ |\hat I| = \sqrt{32^{2}+24^{2}} = 40\ \mathrm{A_{ef}} \;\Longrightarrow\; P_{diss}^{(0)} = 2\cdot 40^{2} = 3200\ \mathrm W \]</div>
+              <p>Com o capacitor, \(|\hat I_l| = \sqrt{1058{,}81} = 32{,}54\) Aef e a perda cai para \(2118\) W — <b style="color:var(--ink)">uma economia de \(1082\) W, 34 % da perda original</b>, sem alterar em nada o que a carga recebe. É a seção <a href="#linha">14.7</a> em números.</p>
+              <p class="dim">Note também que \(X_l = 10\ \Omega\) não entra em lugar nenhum: reatância não dissipa potência ativa. O dado está lá para quem não souber disso.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · sobre o recorte e sobre o método</span>
+            <p>Este bloco foi colado <b>cortado na margem esquerda</b> no PDF do formulário: lê-se "[Qu]estão 11" e "[co]ndições", com as primeiras letras ausentes. A frase "a potência dissipada de transmissão" também está truncada no original — a leitura pretendida é "a potência dissipada <b>na linha</b> de transmissão". O enunciado acima reproduz o corte tal como aparece.</p>
+            <p><b>Onde se erra:</b> usar \(|\hat I| = 40\) Aef (a corrente da carga) e responder \(3200\) W, ou somar os módulos em vez dos fasores — \(40 + 18{,}1 = 58{,}1\) é sem sentido, porque \(\hat I_C\) está a \(90^\circ\). A soma é vetorial e só a parte imaginária se altera. Erro secundário: incluir \(X_l\) e calcular \(|Z_l|I^2\), o que devolve aparente, não ativa.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 8 · Questão única</span>Conservação de potência num quadripolo, e o capacitor que sai dela</span>
+          <span class="q-prova">Teste 8 · P3/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">8 –</b> O quadripolo da Figura 11 é formado por uma associação de cargas em paralelo operando em regime permanente senoidal (RPS) a 60 Hz. Sabe-se que</p>
+
+        <div class="eq-block">\[ \hat E_s = 220\,\underline{/0^\circ}\ \mathrm{V_{ef}}, \qquad \hat I_1 = 10 - j10\ \mathrm{A_{ef}} \]</div>
+
+        <p>O capacitor que deve ser inserido nos terminais A e B para corrigir o fator de potência do quadripolo para \(0{,}98\) atrasado vale aproximadamente (em \(\mu\mathrm F\)):</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 240" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M80 50 L260 50"/>
+              <path d="M80 190 L260 190"/>
+              <path d="M80 50 L80 78"/>
+              <path d="M80 124 L80 190"/>
+              <path d="M360 50 L540 50"/>
+              <path d="M360 190 L540 190"/>
+            </g>
+            <circle cx="80" cy="101" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="73" y="95" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="74" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="12" y="106" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Ês</text>
+            <circle cx="260" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="260" cy="190" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <rect x="262" y="70" width="96" height="100" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="300" y="126" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="18">Q</text>
+            <path d="M176 38 L228 38" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M228 38 L219 33 L219 43 Z" fill="#f5b942"/>
+            <text x="190" y="28" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₁</text>
+            <path d="M208 180 L208 60" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <path d="M208 60 L203 72 L213 72 Z" fill="#f5b942"/>
+            <text x="172" y="126" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁</text>
+            <path d="M444 38 L392 38" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M392 38 L401 33 L401 43 Z" fill="#f5b942"/>
+            <text x="416" y="28" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₂</text>
+            <path d="M412 180 L412 60" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <path d="M412 60 L407 72 L417 72 Z" fill="#f5b942"/>
+            <text x="420" y="126" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₂</text>
+            <circle cx="540" cy="50" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="552" y="54" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">A</text>
+            <circle cx="540" cy="190" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="552" y="194" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="13">B</text>
+            <text x="230" y="224" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 11 — A e B em aberto</text>
+          </svg>
+          <div class="pz-legend">O quadripolo \(Q\) é uma associação de cargas em paralelo, sem geradores independentes. O capacitor entra nos terminais A–B.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">384</li>
+          <li data-alt="b">423</li>
+          <li data-alt="c">1200</li>
+          <li data-alt="d">54</li>
+          <li data-alt="e">96</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — sem geradores internos, a potência que entra pelo acesso 1 é a mesma que a associação consome. Isso transporta \(P\) e \(Q\) de um lado do quadripolo para o outro de graça.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A potência aparente, por conservação</div>
+              <p>Pela conservação de potência ativa e reativa, e lembrando que o quadripolo não pode conter geradores independentes, a potência aparente recebida pelo quadripolo é igual à gerada por \(\hat E_s\). Com \(\hat V_1 = \hat E_s = 220\) Vef:</p>
+              <div class="eq-block">\[ P_{ap} = \hat V_1\hat I_1^{*} = 220\,(10 - j10)^{*} = 220\,(10+j10) \]</div>
+              <div class="eq-block">\[ P_{ap} = 2200 + j\,2200\ \mathrm{VA} \]</div>
+              <p class="dim">\(P = 2200\) W e \(Q = 2200\) VAr: \(\varphi = 45^\circ\), fp atual \(=\cos 45^\circ = 0{,}707\) atrasado.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A reativa desejada</div>
+              <div class="eq-block">\[ Q' = P\tan(\varphi') = 2200\tan\big(\arccos(0{,}98)\big) \]</div>
+              <div class="eq-block">\[ \arccos(0{,}98) = 11{,}478^\circ, \qquad \tan(11{,}478^\circ) = 0{,}20305 \]</div>
+              <div class="eq-block">\[ Q' \approx 2200\cdot 0{,}20305 \approx 446{,}73\ \mathrm{VAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A reativa do capacitor e a capacitância</div>
+              <div class="eq-block">\[ Q_C \approx 446{,}73 - 2200 = -1753{,}27\ \mathrm{VAr} \]</div>
+              <p>O capacitor está em A–B, em paralelo com a associação, logo sob \(|\hat V_2| = 220\) Vef; e \(\omega = 2\pi\cdot 60 \approx 377\) rad/s:</p>
+              <div class="eq-block">\[ C = \frac{-Q_C}{\omega\,|\hat V_2|^{2}} \approx \frac{1753{,}27}{377\,(220^{2})} = \frac{1753{,}27}{377\cdot 48\,400} \]</div>
+              <div class="eq-block">\[ C \approx \frac{1753{,}27}{1{,}8247\times10^{7}} = 9{,}609\times10^{-5}\ \mathrm F \]</div>
+              <div class="final-answer">Alternativa <b>e)</b> — \( C \approx 96\ \mu\mathrm F \)</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>O ponto delicado é o <b>conjugado</b> do passo 01. Com \(\hat I_1 = 10-j10\), quem escreve \(S=\hat V\hat I\) sem conjugar obtém \(2200-j2200\), conclui que a carga é capacitiva e chega a um \(Q_C\) positivo — capacitor impossível. A corrente <em>atrasa</em> (parte imaginária negativa), logo \(Q&gt;0\).</p>
+            <p>Os distratores exploram a tensão e a frequência: usar \(110\) V em vez de \(220\), ou \(f=60\) no lugar de \(\omega=377\), produz números da mesma família dos oferecidos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 6 · Questão 2</span>Motor de 10 kW: a receita nua, sem circuito nenhum</span>
+          <span class="q-prova">Teste 6 · P3/2025 — Q2</span>
+        </div>
+
+        <p><b style="color:var(--ink)">2 –</b> Um motor 220V, 60 Hz, consome \(P = 10\,\mathrm{kW}\) a \(fp = 0{,}8\) indutivo. Corrigiu-se este fator de potência a 0,92 indutivo. Assinale a opção correta quanto ao Capacitor C, usado na correção e à potência reativa final \(Q_f\) da associação motor/capacitor.</p>
+
+        <p class="dim">Sem figura no original.</p>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(Q_f = -3{,}3\ \mathrm{kVAr}\)</li>
+          <li data-alt="b">\(Q_f = 3{,}2\ \mathrm{kVAr}\)</li>
+          <li data-alt="c">\(C = 181\ \mathrm{mF}\)</li>
+          <li data-alt="d">\(C = 241\ \mu\mathrm F\)</li>
+          <li data-alt="e">\(C = 178\ \mu\mathrm F\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — as cinco alternativas testam a mesma conta em pontos diferentes: duas atacam o \(Q\) (e o rótulo dele), três atacam o \(C\) (e o prefixo dele). Fazer a conta inteira resolve as cinco.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A reativa inicial do motor</div>
+              <p>Com \(\mathrm{fp}=0{,}8\), o triângulo dá \(\operatorname{sen}\varphi = 0{,}6\):</p>
+              <div class="eq-block">\[ Q_i = 10\mathrm k\cdot\frac{0{,}6}{0{,}8} = 7{,}5\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A reativa final imposta pelo alvo</div>
+              <div class="eq-block">\[ \cos^{-1}0{,}92 = 23^\circ \;\longrightarrow\; \operatorname{tg} 23^\circ \cong 0{,}426 \]</div>
+              <p>Como \(P\) não muda — o capacitor não dissipa —, o mesmo \(10\) kW vale nos dois triângulos:</p>
+              <div class="eq-block">\[ 0{,}426 = \frac{Q_f}{10} \;\longrightarrow\; Q_f \cong 4{,}2\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A reativa do capacitor e a capacitância</div>
+              <div class="eq-block">\[ Q_C = Q_f - Q_i \cong 4{,}2 - 7{,}5 = -3{,}3\ \mathrm{kVAr} \]</div>
+              <div class="eq-block">\[ -3{,}3\mathrm k = -377\cdot C\cdot(220)^{2} \;\longrightarrow\; C = \frac{3300}{377\cdot 48\,400} \]</div>
+              <div class="eq-block">\[ C = \frac{3300}{1{,}8247\times10^{7}} \cong 1{,}78\times10^{-4}\ \mathrm F \]</div>
+              <div class="final-answer">Alternativa <b>e)</b> — \( C \cong 178\ \mu\mathrm F \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Por que as outras quatro caem</div>
+              <p><b>a)</b> \(-3{,}3\) kVAr é o valor certo com o <em>rótulo errado</em>: esse é \(Q_C\), não \(Q_f\). A reativa final é \(+4{,}2\) kVAr, positiva, porque o alvo continua indutivo. <b>b)</b> \(3{,}2\) kVAr não sai de nenhuma etapa da conta. <b>c)</b> \(181\) tem a ordem de grandeza certa com prefixo <em>mili</em> em vez de <em>micro</em> — mil vezes maior. <b>d)</b> \(241\ \mu\)F é a família de valores que aparece quando o alvo é mal aplicado (corrigir para fp 1 daria \(7500/(377\cdot 48\,400) = 411\ \mu\)F).</p>
+              <p class="dim">Conferência sem arredondar: \(\arccos 0{,}92 = 23{,}07^\circ\), \(\tan = 0{,}4260\), \(Q_f = 4{,}245\) kVAr, \(Q_C = -3{,}255\) kVAr, \(C = 3255/(377\cdot 48\,400) = 178{,}4\ \mu\)F. O arredondamento do gabarito não desloca a resposta.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Confundir \(Q_f\) com \(Q_C\) — a alternativa a) existe exatamente para capturar quem calculou tudo certo e não leu o índice. E conferir o prefixo: \(178\ \mu\)F e \(178\) mF diferem por \(10^{3}\); o distrator com prefixo trocado é padrão da casa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 6 · Questão 3</span>Duas cargas, dois formatos de dado, uma soma de potências complexas</span>
+          <span class="q-prova">Teste 6 · P3/2025 — Q3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">3 –</b> Uma instalação elétrica é composta pela associação em paralelo de uma carga que consome a potência ativa \(P_1 = 6\,\mathrm{kW}\) com fator de potência \(fp_1 = 0{,}6\) indutivo com outra carga com resistência \(R_2 = 2\,\Omega\). Essa instalação, mostrada na Figura 2, é alimentada por uma linha de tensão eficaz \(\hat V_L = 100\mathrm V\). Indique a opção que mais se aproxima do fator de potência da <b>instação</b>.</p>
+
+        <p class="dim">A grafia "instação" é do original — está assim no enunciado impresso do teste, em vez de "instalação".</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 560 240" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M90 50 L470 50"/>
+              <path d="M90 200 L470 200"/>
+              <path d="M280 50 L280 76"/>
+              <path d="M280 124 L280 200"/>
+              <path d="M400 50 L400 88"/>
+              <path d="M400 136 L400 200"/>
+            </g>
+            <circle cx="90" cy="50" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="90" cy="200" r="4" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <path d="M126 194 L126 60" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M126 60 L121 72 L131 72 Z" fill="#f5b942"/>
+            <text x="30" y="128" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂ₗ=100V</text>
+            <rect x="266" y="76" width="28" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="272" y="106" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">P₁</text>
+            <text x="192" y="150" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">6 kW · fp 0,6 ind.</text>
+            <path d="M400 88 q 14 12 0 24 q 14 12 0 24" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="420" y="118" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂=2Ω</text>
+            <circle cx="280" cy="50" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <circle cx="280" cy="200" r="3.5" fill="rgba(231,237,233,0.75)"/>
+            <text x="230" y="228" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 2</text>
+          </svg>
+          <div class="pz-legend">Figura 2 — as duas cargas em paralelo, sob a mesma tensão de linha \(\hat V_L = 100\) Vef.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">0,21</li>
+          <li data-alt="b">0,37</li>
+          <li data-alt="c">0,56</li>
+          <li data-alt="d">0,81</li>
+          <li data-alt="e">0,72</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — potências complexas se somam; fatores de potência não. Converta cada carga para \(P+jQ\), some componente a componente, e só então tire o cosseno.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A potência complexa da carga 1</div>
+              <div class="eq-block">\[ Q_1 = P_1\cdot\frac{0{,}8}{0{,}6} = 6\cdot\frac{0{,}8}{0{,}6}\ \mathrm{kVAr} \;\longrightarrow\; Q_1 = 8\ \mathrm{kVAr} \]</div>
+              <div class="eq-block">\[ P_{ap_1} = 6\ \mathrm{kW} + j\,8\ \mathrm{kVAr} \;\longrightarrow\; P_{ap_1} = 6+j8\ (\mathrm{kVA}) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A potência complexa da carga 2</div>
+              <p>Resistor sob tensão eficaz conhecida, e reativa nula porque não há reatância:</p>
+              <div class="eq-block">\[ P_2 = \frac{V_L^{\,2}}{R_2} = \frac{100^{2}\ \mathrm V^{2}}{2\,\Omega} \;\Longrightarrow\; P_2 = 5\ \mathrm{kW} \]</div>
+              <div class="eq-block">\[ P_{ap_2} = 5\,\underline{/0^\circ}\ \mathrm{kVA} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Somar e extrair o fator de potência</div>
+              <div class="eq-block">\[ P_{ap} = P_{ap_1} + P_{ap_2} \;\Longrightarrow\; P_{ap} = 11 + j8\ (\mathrm{kVA}) \]</div>
+              <div class="eq-block">\[ f_p = \frac{P}{|S|} = \frac{11}{\sqrt{11^{2}+8^{2}}} = \frac{11}{\sqrt{121+64}} = \frac{11}{\sqrt{185}} \]</div>
+              <div class="eq-block">\[ \sqrt{185} = 13{,}601 \;\Longrightarrow\; f_p = 0{,}8087 \]</div>
+              <div class="final-answer">Alternativa <b>d)</b> — \( \mathrm{fp} = 0{,}8087 \approx 0{,}81 \) (indutivo)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Verificação de plausibilidade</div>
+              <p>A resposta tem de cair entre \(0{,}6\) (a carga indutiva sozinha) e \(1\) (a carga resistiva sozinha), mais perto do lado de maior potência ativa. Com \(P_1=6\) kW e \(P_2=5\) kW as duas pesam quase igual, e \(0{,}81\) é praticamente o meio do intervalo — coerente.</p>
+              <p class="dim">Os distratores \(0{,}72\) e \(0{,}56\) saem de somar <em>módulos</em> de potência aparente (\(|S_1|=10\), \(|S_2|=5\)) em vez de componentes: \(11/15 = 0{,}733\). Os valores \(0{,}21\) e \(0{,}37\) aparecem quando se atribui reativa à carga resistiva.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Somar fatores de potência, somar módulos de \(|S|\) ou fazer média de ângulos. Nada disso é linear. O <b>único</b> objeto que se soma numa associação é a potência complexa, componente a componente — é a conservação do <a href="modulo-13.html#conservacao">módulo 13</a>. Segundo tropeço: com \(R_2\) em ohms e \(P_1\) em watts, é preciso converter um dos dois; quem esquece \(P_2 = V^{2}/R\) fica sem a carga 2 e responde \(0{,}6\).</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-15.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">15 · Transformador ideal</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+
+
+
+
+
+
+</main>
+
+    <footer>
+      <div class="agenda">
+        <div><b>P1</b>26/10 · 14:20</div>
+        <div><b>P2</b>02/12</div>
+        <div><b>T1</b>02/09</div>
+        <div><b>T2</b>14/10</div>
+        <div><b>T3</b>18/11</div>
+        <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+      </div>
+      <p class="foot-note">Módulo 14 — Fator de potência, correção e instalações. Exercícios da P3 2023 (1ª questão, itens a, b e c), da P2 2021 (questões 3 e 7, em resolução manuscrita de terceiro), do formulário P3 (Questões 01 a 04, 10 e 11) e dos Testes 8 de 2023 e 6 de 2025. Todos os fasores em valores eficazes.</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

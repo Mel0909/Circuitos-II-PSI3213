@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P3</div>
+      <a class="side-item active" href="#top">
+        <span class="side-num">13</span>
+        <span class="side-title">Potência em regime senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-14.html">
+        <span class="side-num">14</span>
+        <span class="side-title">Fator de potência e instalações</span>
+      </a>
+      <a class="side-item" href="modulo-15.html">
+        <span class="side-num">15</span>
+        <span class="side-title">Transformador ideal</span>
+      </a>
+      <a class="side-item" href="modulo-16.html">
+        <span class="side-num">16</span>
+        <span class="side-title">Bipórticos: z, y, h e ABCD</span>
+      </a>
+      <a class="side-item" href="modulo-17.html">
+        <span class="side-num">17</span>
+        <span class="side-title">Bode assintótico: critérios e erros</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P3 · Potência em regime senoidal</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">O que oscila</a>
+        <a href="#eficaz">Valor eficaz</a>
+        <a href="#instantanea">Potência instantânea</a>
+        <a href="#pqs">P, Q e |S|</a>
+        <a href="#complexa">Potência complexa</a>
+        <a href="#triangulo">Triângulo</a>
+        <a href="#conservacao">Conservação</a>
+        <a href="#maxima">Máxima transferência</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P3 · Módulo 13 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">A potência não para quieta.</span> <span class="tone-b">Parte vira trabalho, parte só vai e volta.</span></h1>
+        <p class="hero-sub">Em corrente contínua, potência é um número: \(VI\). Em regime permanente senoidal é uma função do tempo que pulsa ao <em>dobro</em> da frequência da rede e, em boa parte do ciclo, pode até ficar negativa — a carga devolvendo energia à fonte. Toda a contabilidade de potência da engenharia elétrica — ativa, reativa, aparente, fator de potência, triângulo — existe para separar o que fica do que volta. Uma vez separadas, as duas parcelas se somam de forma independente e resolvem problemas de instalação inteiros em quatro linhas.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>13 · Potência em regime permanente senoidal</span>
+          <span><b>Pré-requisito</b>Módulo 11 — Regime permanente senoidal</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>POTÊNCIA INSTANTÂNEA</span>
+            <span>p(t) oscila em 2ω</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <path d="M40 250 L530 250" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+              <path d="M40 40 L40 290" stroke="rgba(231,237,233,0.4)" stroke-width="1.4"/>
+              <text x="534" y="246" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">t</text>
+              <text x="46" y="48" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">p(t)</text>
+
+              <path d="M40 190 L520 190" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="6 5"/>
+              <text x="330" y="182" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">P = Vef·Ief·cos φ  (média)</text>
+
+              <path d="M40 190 q 60 -180 120 0 q 60 180 120 0 q 60 -180 120 0 q 60 180 120 0"
+                    fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+
+              <rect x="40" y="250" width="480" height="44" fill="rgba(245,90,90,0.10)"/>
+              <text x="52" y="286" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">p(t) &lt; 0 — a carga DEVOLVE energia à fonte</text>
+
+              <path d="M200 100 L200 190" stroke="rgba(231,237,233,0.35)" stroke-width="1.2" stroke-dasharray="4 4"/>
+              <text x="206" y="112" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="11">amplitude = Vef·Ief</text>
+              <text x="52" y="62" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">um período de p(t) = meio período de v(t)</text>
+            </svg>
+          </div>
+          <div class="splane-readout">A curva verde é \(p(t)=v(t)i(t)\). Ela sobe e desce em torno de uma média — essa média é a potência ativa \(P\). A amplitude da oscilação é \(V_{ef}I_{ef}\), o módulo da potência aparente. Quando a curva mergulha na faixa vermelha, a energia está voltando para a fonte: é a potência reativa em ação.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">13.1</span>
+    <h2>Em RPS, potência é uma função do tempo — e é por isso que ela precisa de três nomes</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>O <a href="modulo-11.html">módulo 11</a> terminou com a rede em regime: tensões e correntes são cossenos de mesma frequência, cada um com sua amplitude e sua fase. O passo seguinte é natural e desagradável. Se \(v(t)\) é um cosseno e \(i(t)\) é outro cosseno, o produto \(p(t)=v(t)i(t)\) <b style="color:var(--ink)">não é constante</b>. É um cosseno de frequência \(2\omega\) somado a um termo constante.</p>
+
+    <p>Isso tem uma consequência física direta. Numa parte do ciclo a fonte entrega energia à carga; em outra parte, a carga devolve energia à fonte. O medidor da concessionária registra apenas o saldo — a média. Mas o condutor, o transformador e o disjuntor sentem a corrente inteira, indo e voltando. Cobrar por uma coisa e dimensionar por outra é exatamente a razão de existirem três grandezas onde em corrente contínua havia uma.</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">o que fica</span>
+        <p>A média de \(p(t)\). É a <b style="color:var(--ink)">potência ativa</b> \(P\), em watts. É energia que virou calor, luz, trabalho mecânico. É o que a conta de luz mede.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">o que vai e volta</span>
+        <p>A parcela cuja média é zero, trocada com os campos do indutor e do capacitor. É a <b style="color:var(--ink)">potência reativa</b> \(Q\), em VAr. Não vira trabalho, mas ocupa a instalação.</p>
+      </div>
+    </div>
+
+    <p>Este módulo monta a contabilidade completa: valor eficaz, potência instantânea, o trio \(P\)-\(Q\)-\(|S|\), a potência aparente complexa \(S=\hat V\hat I^{*}\), o triângulo de potências, a conservação e, no fim, a máxima transferência de potência em RPS. O <a href="modulo-14.html">módulo 14</a> pega essa contabilidade e a aplica a instalações reais — correção de fator de potência.</p>
+
+    <div class="callout"><b>Uma advertência que vale o módulo inteiro.</b> Neste tópico, metade dos erros de prova não é de conceito: é de <em>convenção</em>. Fasor de pico ou fasor eficaz? Um fator \(\tfrac12\) entra ou não entra? A P3 deste curso usa <b>fasores em valor eficaz</b> — está escrito no enunciado da 2ª questão de 2024, nos testes de 2023 e 2025 ("\(\mathrm{A_{ef}}\)", "\(\mathrm{V_{ef}}\)"). Toda fórmula deste módulo está escrita nessa convenção. Sempre que você ler um problema de outra fonte, a primeira pergunta é qual fasor está em jogo.</div>
+  </section>
+
+  <section id="eficaz" class="panel src-ext">
+    <span class="eyebrow">13.2</span>
+    <h2>Valor eficaz: o número que faz a senoide se comportar como corrente contínua</h2>
+
+    <p>A definição não vem de estética matemática, vem de uma pergunta de engenharia: <em>qual tensão contínua dissiparia, num mesmo resistor, a mesma potência média que esta tensão alternada?</em> Escreva a potência média num resistor \(R\) submetido a \(v(t)\) periódica de período \(T\):</p>
+
+    <div class="eq-block">\[ P_{\text{méd}} \;=\; \frac{1}{T}\int_0^T \frac{v^2(t)}{R}\,dt \;=\; \frac{1}{R}\cdot\frac{1}{T}\int_0^T v^2(t)\,dt \]</div>
+
+    <p>Compare com a potência de uma contínua \(V_{cc}\), que é \(V_{cc}^2/R\). Igualando as duas:</p>
+
+    <div class="eq-block">\[ \frac{V_{cc}^2}{R} \;=\; \frac{1}{R}\cdot\frac{1}{T}\int_0^T v^2(t)\,dt \quad\Longrightarrow\quad V_{cc} \;=\; \sqrt{\frac{1}{T}\int_0^T v^2(t)\,dt} \]</div>
+
+    <p>Esse é o <b style="color:var(--ink)">valor eficaz</b>, ou RMS (<em>root mean square</em>): raiz da média do quadrado, exatamente na ordem em que se lê o nome de trás para frente.</p>
+
+    <div class="eq-block">\[ V_{ef} \;=\; \sqrt{\frac{1}{T}\int_0^T v^2(t)\,dt}, \qquad I_{ef} \;=\; \sqrt{\frac{1}{T}\int_0^T i^2(t)\,dt} \]</div>
+
+    <p>Para a senoide, a integral sai em uma linha. Com \(v(t)=V_{max}\cos(\omega t+\theta)\) e \(T=2\pi/\omega\), use \(\cos^2 x = \tfrac12(1+\cos 2x)\):</p>
+
+    <div class="eq-block">\[ \frac{1}{T}\int_0^T V_{max}^2\cos^2(\omega t+\theta)\,dt \;=\; \frac{V_{max}^2}{T}\int_0^T \frac{1+\cos(2\omega t+2\theta)}{2}\,dt \]</div>
+
+    <p>O termo \(\cos(2\omega t+2\theta)\) completa dois ciclos inteiros em \(T\), logo sua integral é nula. Sobra apenas a metade constante:</p>
+
+    <div class="eq-block">\[ \frac{1}{T}\int_0^T v^2\,dt \;=\; \frac{V_{max}^2}{2} \quad\Longrightarrow\quad \boxed{\;V_{ef} \;=\; \frac{V_{max}}{\sqrt 2}\;} \]</div>
+
+    <p>Repare que o \(\sqrt2\) é <b style="color:var(--ink)">exclusivo da senoide</b>. Para onda quadrada de amplitude \(A\) o valor eficaz é \(A\); para dente de serra é \(A/\sqrt3\). A definição integral é geral; a divisão por \(\sqrt2\) não é.</p>
+
+    <div class="callout"><b>Convenção do curso: os fasores da P3 são eficazes.</b> Onde o módulo 11 escrevia \(\hat E = 10\,\underline{/30^\circ}\) para \(e(t)=10\cos(2t+30^\circ)\) — fasor de <em>pico</em> —, a P3 escreve \(\hat I_s = 0{,}625\,\underline{/-40^\circ}\ \mathrm{A_{ef}}\), \(\hat E_s = 220\,\underline{/0^\circ}\ \mathrm{V_{ef}}\), \(\hat V_C = 10\,\underline{/60^\circ}\ \mathrm{V_{ef}}\). O enunciado da 2ª questão da P3 2024 é explícito: <b>"Indique os fasores de tensão e de corrente em valores eficazes"</b>. Consequência prática: \(P = V_{ef}I_{ef}\cos\varphi\) <em>sem</em> fator \(\tfrac12\), e \(S=\hat V\hat I^{*}\) já sai em VA diretamente.</div>
+
+    <table class="ltable">
+      <tr><th>Convenção</th><th>Fasor de \(v(t)=V_{max}\cos(\omega t+\theta)\)</th><th>Potência ativa</th><th>Potência complexa</th></tr>
+      <tr><td><b>eficaz</b> — usada na P3</td><td>\(\hat V = \dfrac{V_{max}}{\sqrt2}\,\underline{/\theta}\)</td><td>\(P=V_{ef}I_{ef}\cos\varphi\)</td><td>\(S=\hat V\hat I^{*}\)</td></tr>
+      <tr><td>pico — usada no módulo 11</td><td>\(\hat V = V_{max}\,\underline{/\theta}\)</td><td>\(P=\tfrac12 V_{max}I_{max}\cos\varphi\)</td><td>\(S=\tfrac12\hat V\hat I^{*}\)</td></tr>
+    </table>
+
+    <p class="dim">As duas convenções dão a mesma física. O que muda é onde mora o fator 2. Misturar as duas no meio de uma conta é o jeito mais rápido de errar por um fator 2 e não achar o erro.</p>
+
+    <div class="history-note">
+      <span><b>definição</b>\(V_{ef}=\sqrt{\overline{v^2}}\)</span>
+      <span><b>senoide</b>\(V_{max}/\sqrt2\)</span>
+      <span><b>rede 127 V</b>eficaz; o pico é 180 V</span>
+      <span><b>na P3</b>todo fasor é eficaz</span>
+    </div>
+  </section>
+
+  <section id="instantanea" class="panel src-ext">
+    <span class="eyebrow">13.3</span>
+    <h2>Potência instantânea: de onde saem, literalmente, o \(\cos\varphi\) e o termo de \(2\omega\)</h2>
+
+    <p>Tome um bipolo em RPS, com as setas de tensão e corrente na <b style="color:var(--ink)">convenção do receptor</b> (a corrente entra pelo terminal \(+\)), que é a convenção adotada em toda a folha de fórmulas do curso. Sejam</p>
+
+    <div class="eq-block">\[ v(t)=V_{max}\cos(\omega t+\theta_v), \qquad i(t)=I_{max}\cos(\omega t+\theta_i) \]</div>
+
+    <p>A potência instantânea recebida pelo bipolo é o produto, sem mistério:</p>
+
+    <div class="eq-block">\[ p(t) \;=\; v(t)\,i(t) \;=\; V_{max}I_{max}\,\cos(\omega t+\theta_v)\cos(\omega t+\theta_i) \]</div>
+
+    <p>Use a identidade do produto de cossenos, \(\cos A\cos B=\tfrac12[\cos(A-B)+\cos(A+B)]\), com \(A=\omega t+\theta_v\) e \(B=\omega t+\theta_i\). A diferença \(A-B=\theta_v-\theta_i\) não depende do tempo; a soma \(A+B=2\omega t+\theta_v+\theta_i\) depende:</p>
+
+    <div class="eq-block">\[ p(t) \;=\; \frac{V_{max}I_{max}}{2}\Big[\cos(\theta_v-\theta_i) \;+\; \cos(2\omega t+\theta_v+\theta_i)\Big] \]</div>
+
+    <p>Defina a <b style="color:var(--ink)">defasagem</b> \(\varphi=\theta_v-\theta_i\) e troque as amplitudes por valores eficazes, \(V_{max}=\sqrt2\,V_{ef}\) e \(I_{max}=\sqrt2\,I_{ef}\), de modo que \(V_{max}I_{max}/2 = V_{ef}I_{ef}\):</p>
+
+    <div class="eq-block">\[ \boxed{\;p(t) \;=\; \underbrace{V_{ef}I_{ef}\cos\varphi}_{\text{constante}} \;+\; \underbrace{V_{ef}I_{ef}\cos(2\omega t+\theta_v+\theta_i)}_{\text{média nula, frequência }2\omega}\;} \]</div>
+
+    <p>Está tudo aí, e vale ler a expressão devagar, porque ela justifica os três nomes do tópico:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">o termo constante</span>
+        <p>Vale \(V_{ef}I_{ef}\cos\varphi\) e não depende de \(t\). É a média de \(p(t)\) ao longo de um período, porque o segundo termo integra a zero. Chama-se <b style="color:var(--ink)">potência ativa</b> \(P\).</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">o termo oscilante</span>
+        <p>Frequência \(2\omega\), amplitude \(V_{ef}I_{ef}\). Média zero — não transporta energia líquida. É o vai-e-volta entre fonte e campos.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">por que \(2\omega\) e não \(\omega\)</span>
+        <p>Porque \(p\) é um <em>produto</em> de dois sinais de frequência \(\omega\). Quando \(v\) e \(i\) trocam de sinal juntos, o produto volta a ser positivo: dois picos de potência por ciclo de tensão.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">quando \(p(t)\) fica negativa</span>
+        <p>Se \(|\cos\varphi| &lt; 1\), a amplitude da oscilação \(V_{ef}I_{ef}\) supera a média \(V_{ef}I_{ef}\cos\varphi\) e a curva cruza o zero. Nesses instantes o bipolo <em>devolve</em> potência.</p>
+      </div>
+    </div>
+
+    <p>O caso extremo é instrutivo. Num resistor puro, \(\varphi=0\): a média vale \(V_{ef}I_{ef}\), igual à amplitude, e \(p(t)\) apenas encosta no zero sem nunca ficar negativa — o resistor nunca devolve nada. Num indutor ou capacitor puro, \(\varphi=\pm90^\circ\): a média é <b style="color:var(--ink)">zero</b> e \(p(t)\) é uma senoide pura de \(2\omega\), metade do tempo positiva, metade negativa. Energia entra, energia sai, saldo nulo.</p>
+
+    <div class="eq-block">\[ P \;\overset{\triangle}{=}\; \frac{1}{T}\int_0^T p(t)\,dt \;=\; V_{ef}I_{ef}\cos\varphi \qquad [\mathrm W] \]</div>
+
+    <p class="dim">Note que \(\varphi=\theta_v-\theta_i\) é também o ângulo da impedância do bipolo: se \(\hat V = Z\hat I\), então \(\angle\hat V - \angle\hat I = \angle Z\). Defasagem e ângulo da impedância são a mesma coisa vista de dois lugares.</p>
+  </section>
+
+  <section id="pqs" class="panel src-ext">
+    <span class="eyebrow">13.4</span>
+    <h2>Ativa, reativa, aparente: três grandezas, três unidades, um só par de fasores</h2>
+
+    <p>Da potência instantânea saem, diretamente, as três definições. Todas em fasores <b style="color:var(--ink)">eficazes</b>, com \(\varphi=\theta_v-\theta_i\):</p>
+
+    <div class="eq-block">\[ P = V_{ef}I_{ef}\cos\varphi \;\;[\mathrm{W}] \qquad Q = V_{ef}I_{ef}\sin\varphi \;\;[\mathrm{VAr}] \qquad |S| = V_{ef}I_{ef} \;\;[\mathrm{VA}] \]</div>
+
+    <p>As três unidades têm a mesma dimensão física — todas são volt-ampère. Os nomes diferentes são um recado ao leitor sobre <em>qual</em> das três se está falando, porque somar watt com VAr é erro conceitual, não erro de unidade.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">\(P\) — ativa [W]</span>
+        <p>A média de \(p(t)\). É energia que sai do circuito elétrico e vira outra coisa: calor no resistor, torque no eixo do motor, luz. Só elementos resistivos consomem \(P\). É o que a concessionária fatura.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">\(Q\) — reativa [VAr]</span>
+        <p>A amplitude do fluxo de energia que <em>volta</em>. Mede o quanto de energia fica indo e vindo entre a fonte e os campos magnético e elétrico. Média nula, mas exige corrente real nos condutores.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">\(|S|\) — aparente [VA]</span>
+        <p>O produto dos valores eficazes, sem olhar fase. É por ela que se dimensiona transformador, cabo e disjuntor: eles limitam <em>corrente</em>, não potência útil. Daí "aparente" — é o que a instalação aparenta consumir.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">\(\cos\varphi\) — fator de potência</span>
+        <p>A razão \(P/|S|\). Diz que fração da capacidade instalada virou trabalho. Fator baixo significa corrente grande para pouca potência útil — é o assunto do <a href="modulo-14.html">módulo 14</a>.</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.05rem">O sinal de \(Q\) e a regra dos elementos</h3>
+
+    <p>O sinal de \(Q\) carrega a informação de <em>quem</em> está atrasado em relação a quem. Como \(\varphi = \theta_v-\theta_i\):</p>
+
+    <div class="eq-block">\[ \text{carga indutiva: } \; \theta_v > \theta_i \;\Rightarrow\; \varphi>0 \;\Rightarrow\; \boxed{Q>0} \qquad\qquad \text{carga capacitiva: } \; \varphi&lt;0 \;\Rightarrow\; \boxed{Q&lt;0} \]</div>
+
+    <p>Em linguagem de oficina: <em>no indutor a corrente atrasa da tensão</em> (a tensão vem primeiro), e o indutor é dito consumidor de reativo. No capacitor a corrente adianta, e o capacitor é dito <em>fornecedor</em> de reativo — ou consumidor de reativo negativo, que dá no mesmo. É essa oposição de sinais que permite corrigir fator de potência colocando capacitor em paralelo com carga indutiva.</p>
+
+    <table class="ltable">
+      <tr><th>Elemento</th><th>Impedância \(Z(j\omega)\)</th><th>\(\varphi=\angle Z\)</th><th>\(P\) consumida</th><th>\(Q\) consumida</th></tr>
+      <tr><td>Resistor \(R\)</td><td>\(R\) (real)</td><td>\(0^\circ\)</td><td>\(R\,|\hat I|^2 = |\hat V|^2/R\)</td><td>\(0\)</td></tr>
+      <tr><td>Indutor \(L\)</td><td>\(j\omega L\)</td><td>\(+90^\circ\)</td><td>\(0\)</td><td>\(+\omega L\,|\hat I|^2 \;>0\)</td></tr>
+      <tr><td>Capacitor \(C\)</td><td>\(-j\,\dfrac{1}{\omega C}\)</td><td>\(-90^\circ\)</td><td>\(0\)</td><td>\(-\dfrac{|\hat I|^2}{\omega C} \;&lt;0\)</td></tr>
+    </table>
+
+    <p>Leia a tabela como uma lista de atribuições: <b style="color:var(--ink)">resistor só consome \(P\); reatância só consome \(Q\)</b>. Nenhum elemento passivo consome as duas coisas — o que consome as duas é um <em>arranjo</em> deles. Essa separação é o que faz a potência complexa da próxima seção ser tão econômica.</p>
+
+    <div class="callout"><b>O sinal de \(Q\) não é convenção arbitrária.</b> Ele vem do sinal da reatância \(X\), que por sua vez vem da física do elemento. Se num problema você obtiver \(Q&lt;0\) para um indutor, a conta está errada — quase sempre por ter esquecido o conjugado em \(\hat I^{*}\). É exatamente essa a verificação mais rápida de sanidade neste tópico.</div>
+  </section>
+
+  <section id="complexa" class="panel src-prof">
+    <span class="eyebrow">13.5</span>
+    <h2>Potência aparente complexa: as três grandezas empacotadas em um número</h2>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P3, bloco "Potência aparente complexa"</span>
+      <p>Define-se potência aparente complexa:</p>
+      <div class="eq-block">\[ P_{ap} \;\overset{\triangle}{=}\; \hat V\hat I^{*} \;=\; V e^{j\theta}\cdot I e^{-j\Psi} \;=\; VI\,e^{j(\theta-\Psi)} \;=\; VI\,e^{j\varphi} \]</div>
+      <div class="eq-block">\[ =\; \underbrace{VI\cos\varphi}_{P} \;+\; j\underbrace{VI\sin\varphi}_{Q} \qquad [\mathrm{VA}] \]</div>
+      <p>E, com a impedância e a admitância escritas em partes real e imaginária,</p>
+      <div class="eq-block">\[ Z(j\omega)=\overbrace{R(\omega)}^{\text{resistência}}+j\,\overbrace{X(\omega)}^{\text{reatância}} \qquad\qquad Y(j\omega)=\frac{1}{Z(j\omega)}=\overbrace{G(\omega)}^{\text{condutância}}+j\,\overbrace{B(\omega)}^{\text{suscetância}} \]</div>
+      <p><b>a)</b> \(\hat V = Z\hat I\) (caso impedância).</p>
+      <div class="eq-block">\[ P_{ap}=\hat V\hat I^{*}=Z\hat I\hat I^{*}=Z\,I^{2}=(R+jX)I^{2}=\underbrace{R I^{2}}_{P}+j\underbrace{X I^{2}}_{Q} \]</div>
+      <p><b>b)</b> \(\hat I = Y\hat V\) (caso admitância).</p>
+      <div class="eq-block">\[ P_{ap}=\hat V\hat I^{*}=\hat V(Y\hat V)^{*}=V^{2}Y^{*}=(G-jB)V^{2}=\underbrace{G V^{2}}_{P}-j\underbrace{B V^{2}}_{Q} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · notação e erros de digitação do formulário original</span>
+      <p>Três observações sobre a folha impressa, para você não tropeçar nela na hora da prova. (i) O original traz \(Ie^{j-\Psi}\) — leia \(Ie^{-j\Psi}\). (ii) Traz \(VIe^{\varphi}\) sem o \(j\) no expoente — leia \(VIe^{j\varphi}\). (iii) A chave de \(Q\) está deslocada e abrange "\(VI\sin\)" deixando o \(\varphi\) do lado de fora; o certo é \(Q=VI\sin\varphi\). São erros de tipografia, não de conteúdo.</p>
+      <p>Sobre a notação: o professor usa a letra \(P\) para <em>tudo</em> — \(P_{ap}\), \(P_1\), \(P_2\), \(P_{TOTAL}\) são potências <b>complexas</b>, enquanto \(P\) sozinho é a ativa. Neste módulo eu uso \(S\) para a complexa e \(P\) só para a ativa, mas você vai encontrar a notação do professor nos gabaritos, e ela é a que aparecerá na sua prova.</p>
+    </div>
+
+    <p>O que torna \(S=\hat V\hat I^{*}\) valiosa não é ser mais uma definição, é o fato de ela <b style="color:var(--ink)">carregar \(P\) e \(Q\) simultaneamente, com sinais corretos, numa única multiplicação de complexos</b>. Uma conta, dois resultados:</p>
+
+    <div class="eq-block">\[ S \;=\; \hat V\hat I^{*} \;=\; P + jQ, \qquad |S| = |\hat V|\,|\hat I|, \qquad \angle S = \varphi \]</div>
+
+    <p>E as duas formas derivadas do formulário são, na prática, as que resolvem prova. Quando você conhece a <b>corrente</b> que atravessa um bipolo de impedância \(Z\):</p>
+
+    <div class="eq-block">\[ S \;=\; |\hat I|^2\,Z \;=\; R\,|\hat I|^2 \;+\; j\,X\,|\hat I|^2 \]</div>
+
+    <p>Quando você conhece a <b>tensão</b> sobre um bipolo de admitância \(Y\):</p>
+
+    <div class="eq-block">\[ S \;=\; |\hat V|^2\,Y^{*} \;=\; G\,|\hat V|^2 \;-\; j\,B\,|\hat V|^2 \]</div>
+
+    <p>Repare na assimetria que quase todo mundo erra: no caso da impedância, \(Z\) entra <em>sem</em> conjugado; no caso da admitância, \(Y\) entra <em>com</em> conjugado. Não é capricho — é o que a álgebra devolve. \(\hat I\hat I^{*}=|\hat I|^2\) é real e deixa \(Z\) intacto; já \((Y\hat V)^{*}=Y^{*}\hat V^{*}\) arrasta o conjugado para o \(Y\).</p>
+
+    <div class="callout"><b>O conjugado está na CORRENTE.</b> \(S=\hat V\hat I^{*}\), nunca \(\hat V\hat I\) e nunca \(\hat V^{*}\hat I\). Sem o conjugado, \(\angle S\) sai igual a \(\theta_v+\theta_i\) em vez de \(\theta_v-\theta_i\), e o sinal de \(Q\) fica trocado — uma carga indutiva aparece como capacitiva. Este é o erro de notação que aparece, escrito, no próprio gabarito da 2ª questão da P3 2024: lê-se lá "\(\hat V_s\cdot\hat I = 1376 - j80\)". O resultado numérico do professor está certo, mas a expressão escrita não; veja o <a href="#exercicios">exercício da P3 2024</a> para o detalhe completo.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que o conjugado aparece</span>
+      <p>A razão é que queremos que \(\angle S\) seja a <em>defasagem</em> \(\varphi=\theta_v-\theta_i\), e o produto de complexos soma ângulos. Escrevendo \(\hat V = V\underline{/\theta_v}\) e \(\hat I = I\underline{/\theta_i}\):</p>
+      <div class="eq-block">\[ \hat V\hat I \;=\; VI\,\underline{/(\theta_v+\theta_i)} \qquad\text{(ângulo errado, depende da origem dos tempos)} \]</div>
+      <div class="eq-block">\[ \hat V\hat I^{*} \;=\; VI\,\underline{/(\theta_v-\theta_i)} \;=\; VI\,\underline{/\varphi} \qquad\text{(ângulo certo, invariante)} \]</div>
+      <p>O teste decisivo: gire a origem dos tempos, somando \(\alpha\) às duas fases. \(\hat V\hat I\) muda de ângulo — logo não pode representar grandeza física alguma. \(\hat V\hat I^{*}\) não muda. A potência não depende de quando você apertou o cronômetro; a fórmula com conjugado é a única que respeita isso.</p>
+    </div>
+  </section>
+
+  <section id="triangulo" class="panel src-ext">
+    <span class="eyebrow">13.6</span>
+    <h2>O triângulo de potências: a mesma informação, agora visível</h2>
+
+    <p>Como \(S=P+jQ\) é um número complexo, ele é um ponto no plano — e, desenhado como vetor a partir da origem, forma um triângulo retângulo cujos catetos são \(P\) (horizontal, eixo real) e \(Q\) (vertical, eixo imaginário), com hipotenusa \(|S|\) e ângulo \(\varphi\) na origem. O formulário do professor traz exatamente esse desenho ao lado da definição.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- eixos esquerda -->
+        <path d="M40 200 L300 200" stroke="rgba(231,237,233,0.3)" stroke-width="1.2"/>
+        <path d="M60 60 L60 290" stroke="rgba(231,237,233,0.3)" stroke-width="1.2"/>
+        <text x="304" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Re</text>
+        <text x="66" y="68" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Im</text>
+
+        <!-- triangulo indutivo -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M60 200 L260 200"/>
+          <path d="M260 200 L260 110"/>
+        </g>
+        <path d="M60 200 L260 110" stroke="#4ade9a" stroke-width="2.6" fill="none"/>
+        <path d="M252 106 L262 108 L256 117" fill="#4ade9a"/>
+        <path d="M110 200 a 50 50 0 0 0 -3 -12" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+        <text x="112" y="192" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">φ &gt; 0</text>
+        <text x="146" y="218" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">P  [W]</text>
+        <text x="268" y="158" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Q &gt; 0  [VAr]</text>
+        <text x="120" y="140" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">|S|  [VA]</text>
+        <text x="60" y="264" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">CARGA INDUTIVA</text>
+        <text x="60" y="282" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">corrente atrasada · Q acima do eixo</text>
+
+        <!-- eixos direita -->
+        <path d="M370 130 L630 130" stroke="rgba(231,237,233,0.3)" stroke-width="1.2"/>
+        <path d="M390 60 L390 290" stroke="rgba(231,237,233,0.3)" stroke-width="1.2"/>
+        <text x="634" y="126" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Re</text>
+        <text x="396" y="68" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">Im</text>
+
+        <!-- triangulo capacitivo -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M390 130 L590 130"/>
+          <path d="M590 130 L590 220"/>
+        </g>
+        <path d="M390 130 L590 220" stroke="#4ade9a" stroke-width="2.6" fill="none"/>
+        <path d="M580 214 L592 218 L584 226" fill="#4ade9a"/>
+        <path d="M440 130 a 50 50 0 0 1 -3 12" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+        <text x="442" y="156" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">φ &lt; 0</text>
+        <text x="476" y="122" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">P  [W]</text>
+        <text x="598" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Q &lt; 0  [VAr]</text>
+        <text x="420" y="210" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">|S|  [VA]</text>
+        <text x="390" y="264" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">CARGA CAPACITIVA</text>
+        <text x="390" y="282" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">corrente adiantada · Q abaixo do eixo</text>
+      </svg>
+      <div class="pz-legend">O vetor verde é \(S = P + jQ\). À esquerda, carga indutiva: \(Q>0\), o triângulo aponta para cima. À direita, carga capacitiva: \(Q&lt;0\), aponta para baixo. \(P\) nunca é negativo em carga passiva.</div>
+    </div>
+
+    <p>As relações do triângulo são trigonometria de oitavo ano, e é por isso que elas são tão rentáveis numa prova com 20 minutos de duração:</p>
+
+    <div class="eq-block">\[ |S| = \sqrt{P^2+Q^2}, \qquad P = |S|\cos\varphi, \qquad Q = |S|\sin\varphi, \qquad \tan\varphi = \frac{Q}{P} \]</div>
+
+    <p>Dois dos quatro números determinam os outros dois. O <a href="#exercicios">Teste 5 de 2025, Q3</a> é literalmente isso: dados \(P=3\) kW e \(\cos\varphi=0{,}6\) indutivo, o triângulo \(3\)-\(4\)-\(5\) cai pronto na sua mão.</p>
+
+    <div class="callout"><b>O triângulo de potências é semelhante ao triângulo de impedâncias.</b> Como \(S=|\hat I|^2 Z\) e \(|\hat I|^2\) é um real positivo, o vetor \(S\) é o vetor \(Z=R+jX\) <em>escalado</em> por \(|\hat I|^2\). Mesmo ângulo, mesma forma. Consequência prática: \(\varphi = \angle Z = \operatorname{arctg}(X/R)\), e você pode ler o fator de potência direto da impedância, sem calcular corrente nenhuma.</div>
+
+    <div class="eq-block">\[ \frac{P}{Q} = \frac{R|\hat I|^2}{X|\hat I|^2} = \frac{R}{X} \qquad\Longrightarrow\qquad \varphi_{\text{potência}} \;=\; \varphi_{\text{impedância}} \]</div>
+
+    <p class="dim">Cuidado com a admitância: o triângulo de \(Y=G+jB\) tem ângulo \(-\varphi\), porque \(S=|\hat V|^2 Y^{*}\). Carga indutiva tem \(B&lt;0\) e \(Q>0\). Se você trabalhar em admitância, o triângulo de potências é o espelho do triângulo de \(Y\).</p>
+  </section>
+
+  <section id="conservacao" class="panel src-ext">
+    <span class="eyebrow">13.7</span>
+    <h2>Conservação: \(P\) e \(Q\) se somam. \(|S|\) não.</h2>
+
+    <p>O teorema de Boucherot, que no curso aparece sem nome e apenas como prática dos gabaritos, diz o seguinte: numa rede em RPS, a potência complexa entregue pelas fontes é igual à <b style="color:var(--ink)">soma</b> das potências complexas absorvidas por todos os elementos. Como a soma de complexos é feita componente a componente, isso significa duas conservações independentes:</p>
+
+    <div class="eq-block">\[ \sum_k S_k = 0 \qquad\Longleftrightarrow\qquad \sum_k P_k = 0 \;\;\text{ e }\;\; \sum_k Q_k = 0 \]</div>
+
+    <p>A potência ativa se conserva — o que não surpreende, é conservação de energia. Mas a potência <em>reativa</em> também se conserva, e isso não é óbvio: o reativo que o indutor "consome" é o mesmo que o capacitor "fornece", e a fonte só precisa suprir a diferença. É essa contabilidade que torna possível corrigir fator de potência.</p>
+
+    <div class="callout"><b>O que NÃO se conserva: \(|S|\).</b> Se uma carga tem \(|S_1|=1000\) VA e outra \(|S_2|=1000\) VA, o total quase nunca é 2000 VA. Só seria se as duas tivessem exatamente o mesmo \(\varphi\). Somar módulos de potência aparente é o erro mais caro deste tópico, porque ele não produz absurdo visível — produz um número plausível e errado.</div>
+
+    <p>O procedimento correto é sempre o mesmo, e cabe em três passos:</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box">
+        <span class="big">1</span>
+        <span class="small">Para cada carga, obtenha \(S_k=P_k+jQ_k\)</span>
+      </div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box">
+        <span class="big">2</span>
+        <span class="small">Some as componentes: \(P_T=\sum P_k\), \(Q_T=\sum Q_k\)</span>
+      </div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box">
+        <span class="big">3</span>
+        <span class="small">Só então \(|S_T|=\sqrt{P_T^2+Q_T^2}\)</span>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.05rem">Um exemplo curto que mostra o tamanho do estrago</h3>
+
+    <p>Duas cargas em paralelo na mesma tensão. A carga 1 é um motor: \(P_1=800\) W com \(\cos\varphi_1=0{,}8\) indutivo. A carga 2 é um banco capacitivo puro: \(P_2=0\), \(Q_2=-600\) VAr.</p>
+
+    <p>Para a carga 1, \(\cos\varphi_1=0{,}8\) dá \(\sin\varphi_1=0{,}6\) (indutivo, positivo), logo:</p>
+
+    <div class="eq-block">\[ |S_1| = \frac{P_1}{\cos\varphi_1} = \frac{800}{0{,}8} = 1000\ \mathrm{VA}, \qquad Q_1 = |S_1|\sin\varphi_1 = 1000\cdot 0{,}6 = 600\ \mathrm{VAr} \]</div>
+
+    <div class="eq-block">\[ S_1 = 800 + j600\ \mathrm{VA}, \qquad S_2 = 0 - j600\ \mathrm{VA} \]</div>
+
+    <p>Somando as potências complexas:</p>
+
+    <div class="eq-block">\[ S_T = S_1 + S_2 = (800+0) + j(600-600) = 800 + j0\ \mathrm{VA} \]</div>
+
+    <div class="eq-block">\[ |S_T| = 800\ \mathrm{VA}, \qquad \cos\varphi_T = \frac{800}{800} = 1 \]</div>
+
+    <p>Agora some os módulos, do jeito errado: \(|S_1|+|S_2| = 1000 + 600 = 1600\) VA. <b style="color:var(--ink)">O dobro do valor correto.</b> Não é um arredondamento ruim, é uma resposta sem sentido: ela sugere que acrescentar um capacitor <em>aumentou</em> a carga da instalação, quando na verdade o capacitor cancelou todo o reativo do motor e reduziu a corrente da linha de 1000/V para 800/V.</p>
+
+    <div class="eq-block">\[ \underbrace{|S_1| + |S_2| = 1600\ \mathrm{VA}}_{\text{ERRADO}} \qquad\text{vs}\qquad \underbrace{|S_1+S_2| = 800\ \mathrm{VA}}_{\text{CORRETO}} \]</div>
+
+    <p>Esse é, em miniatura, o mecanismo inteiro da correção de fator de potência do <a href="modulo-14.html">módulo 14</a>. E é também a chave da 2ª questão da P3 2024: lá o gabarito soma \(656 + 480 + 240\) para a ativa e \(j(80-160)\) para a reativa — <em>componente a componente</em>, sobre três elementos diferentes — e só ao final tira o módulo.</p>
+
+    <div class="history-note">
+      <span><b>conserva</b>\(P\) e \(Q\), separadamente</span>
+      <span><b>não conserva</b>\(|S|\) e \(\cos\varphi\)</span>
+      <span><b>receita</b>somar complexos, tirar módulo por último</span>
+    </div>
+  </section>
+
+  <section id="maxima" class="panel src-ext">
+    <span class="eyebrow">13.8</span>
+    <h2>Máxima transferência de potência: o casamento é conjugado</h2>
+
+    <p>O problema é o de sempre: uma rede qualquer alimenta uma carga por dois terminais. Reduza a rede ao seu <a href="modulo-09.html">equivalente de Thévenin</a> — fasor \(\hat V_{Th}\) em série com \(Z_o = R_o + jX_o\) — e pergunte qual \(Z_L = R_L + jX_L\) maximiza a potência <b style="color:var(--ink)">ativa</b> recebida pela carga. Ativa, não aparente: o que interessa é o trabalho, não a corrente.</p>
+
+    <p>A corrente do laço, em fasores eficazes, é</p>
+
+    <div class="eq-block">\[ \hat I = \frac{\hat V_{Th}}{Z_o+Z_L} = \frac{\hat V_{Th}}{(R_o+R_L) + j(X_o+X_L)} \]</div>
+
+    <div class="eq-block">\[ |\hat I|^2 = \frac{|\hat V_{Th}|^2}{(R_o+R_L)^2 + (X_o+X_L)^2} \]</div>
+
+    <p>A potência ativa na carga é a dissipada em \(R_L\) — a reatância \(X_L\) não consome ativa:</p>
+
+    <div class="eq-block">\[ P_L = R_L\,|\hat I|^2 = \frac{R_L\,|\hat V_{Th}|^2}{(R_o+R_L)^2 + (X_o+X_L)^2} \]</div>
+
+    <p>Agora a otimização, em duas etapas independentes. A variável \(X_L\) aparece <em>só</em> no denominador, dentro de um quadrado somado. Para maximizar \(P_L\), zere esse quadrado:</p>
+
+    <div class="eq-block">\[ (X_o+X_L)^2 \geq 0 \quad\Longrightarrow\quad \text{máximo em } \; \boxed{X_L = -X_o} \]</div>
+
+    <p>Com \(X_L=-X_o\) fixado, sobra uma função de uma variável só:</p>
+
+    <div class="eq-block">\[ P_L(R_L) = \frac{R_L\,|\hat V_{Th}|^2}{(R_o+R_L)^2} \]</div>
+
+    <div class="eq-block">\[ \frac{dP_L}{dR_L} = |\hat V_{Th}|^2\,\frac{(R_o+R_L)^2 - R_L\cdot 2(R_o+R_L)}{(R_o+R_L)^4} = |\hat V_{Th}|^2\,\frac{(R_o+R_L) - 2R_L}{(R_o+R_L)^3} \]</div>
+
+    <div class="eq-block">\[ \frac{dP_L}{dR_L}=0 \;\Longrightarrow\; R_o + R_L - 2R_L = 0 \;\Longrightarrow\; \boxed{R_L = R_o} \]</div>
+
+    <p>Juntando as duas condições, \(R_L=R_o\) e \(X_L=-X_o\), obtém-se a regra que a prova cobra em uma linha:</p>
+
+    <div class="eq-block">\[ \boxed{\;Z_L \;=\; Z_o^{*}\;} \qquad\text{(casamento conjugado)} \]</div>
+
+    <p>E, substituindo de volta com \(R_L=R_o\) e \(X_o+X_L=0\), a potência máxima transferida:</p>
+
+    <div class="eq-block">\[ P_{max} = \frac{R_o\,|\hat V_{Th}|^2}{(R_o+R_o)^2} = \frac{R_o\,|\hat V_{Th}|^2}{4R_o^2} \;=\; \boxed{\;\frac{|\hat V_{Th}|^2}{4R_o}\;} \qquad\text{(com } \hat V_{Th} \text{ eficaz)} \]</div>
+
+    <div class="callout"><b>Fasor eficaz, de novo.</b> A fórmula \(P_{max}=|\hat V_{Th}|^2/(4R_o)\) vale com \(\hat V_{Th}\) <em>eficaz</em>. Se o seu fasor for de pico, o correto é \(P_{max}=|\hat V_{Th}|^2/(8R_o)\). Como a P3 trabalha em eficazes, use \(4R_o\) — mas escreva no papel qual convenção está usando, porque um fator 2 nesta fórmula é a diferença entre a alternativa a) e a alternativa b).</div>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">interpretação de \(X_L=-X_o\)</span>
+        <p>A reatância da carga <em>cancela</em> a da fonte. O laço fica puramente resistivo, a corrente entra em fase com \(\hat V_{Th}\), e nenhuma parcela da corrente está sendo gasta em vai-e-volta reativo.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">interpretação de \(R_L=R_o\)</span>
+        <p>É o mesmo compromisso do caso resistivo puro. \(R_L\) pequeno dá muita corrente e pouca tensão; \(R_L\) grande dá o contrário. O ótimo é o meio-termo, e o rendimento nesse ponto é de apenas 50%.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">na prática, dois caminhos</span>
+        <p>Ou você calcula \(Z_o\) inativando as fontes independentes (mais rápido, quando não há vinculadas), ou por \(Z_o=\hat V_{20}/\hat I_{20}\) — tensão em aberto sobre corrente em curto. O <a href="modulo-09.html">módulo 09</a> tem o procedimento completo.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">cuidado com o enunciado</span>
+        <p>Alguns problemas dão \(Z_L\) já casada e pedem <em>outra</em> coisa — o valor de \(C\), a corrente, a potência. Aí a relação \(Z_L=Z_o^{*}\) é usada ao contrário, como equação para achar o componente. É o caso do Teste 6 de 2025.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde mais isso cai</span>
+      <p>Máxima transferência em RPS é um dos temas mais recorrentes da P3, e aparece em duas roupagens. Na primeira, o circuito é dado com elementos concretos e você calcula \(Z_o\) direto — é o <a href="#exercicios">Teste 5 de 2023</a> e o <a href="#exercicios">Teste 6 de 2025, Q1</a>. Na segunda, o circuito é dado como um <b>bipórtico</b>, por uma matriz \(\mathbf{H}\), \(\mathbf{Z}\) ou \(\mathbf{Y}\), e você precisa extrair o Thévenin das equações do quadripolo antes de conjugar — é o Teste 7 de 2023, cuja parte de bipórticos fica no <a href="modulo-16.html">módulo 16</a>. A condição final, porém, é sempre a mesma: \(Z_L=Z_o^{*}\).</p>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">13.9</span>
+    <h2>Exercícios de provas e testes</h2>
+    <p class="dim">Seis exercícios que cobrem o módulo inteiro: montar a potência complexa a partir da corrente, somar potências sobre ramos, ler o triângulo e casar impedâncias. Em todos eles, os fasores são eficazes.</p>
+
+    <div class="q-intro">
+      <div><b>6 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>prova P3 2024, formulário P3 e testes de 2023 e 2025</div>
+      <div><b>Foco</b>potência complexa · conservação · triângulo · máxima transferência</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 2ª questão, itens a e b</span>Três ramos, uma tabela — e o gabarito com dois deslizes</span>
+          <span class="q-prova">P3/2024 — 3,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">2ª Questão (3,0 pontos).</b> Considere o circuito da Figura 2 e seja \(P\) a potência (ativa) recebida pelo resistor \(R_2\).</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 118"/>
+              <path d="M70 162 L70 262"/>
+              <path d="M70 70 L170 70"/>
+              <path d="M230 70 L560 70"/>
+              <path d="M70 262 L560 262"/>
+              <path d="M360 70 L360 104"/>
+              <path d="M360 152 L360 184"/>
+              <path d="M360 206 L360 262"/>
+              <path d="M560 70 L560 104"/>
+              <path d="M560 152 L560 190"/>
+              <path d="M560 232 L560 262"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="63" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="64" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="6" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂s</text>
+
+            <rect x="170" y="58" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="180" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R = 20Ω</text>
+            <path d="M252 46 L292 46" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M292 46 L284 41 L284 51 Z" fill="#f5b942"/>
+            <text x="262" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î</text>
+
+            <!-- ramo 1 -->
+            <rect x="348" y="104" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="286" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁=30Ω</text>
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="340" y1="184" x2="380" y2="184"/>
+              <line x1="340" y1="196" x2="380" y2="196"/>
+            </g>
+            <text x="276" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">X₁=−10Ω</text>
+            <path d="M392 82 L392 118" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M392 118 L387 110 L397 110 Z" fill="#f5b942"/>
+            <text x="398" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₁</text>
+            <text x="322" y="284" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ramo 1</text>
+
+            <!-- ramo 2 -->
+            <rect x="548" y="104" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="588" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂=60Ω</text>
+            <path d="M560 190 q 13 10 0 21 q 13 10 0 21" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="588" y="216" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">X₂=+20Ω</text>
+            <path d="M516 82 L516 118" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M516 118 L511 110 L521 110 Z" fill="#f5b942"/>
+            <text x="490" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₂</text>
+            <text x="522" y="284" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ramo 2</text>
+
+            <!-- V1 -->
+            <path d="M470 250 L470 92" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <path d="M470 92 L465 102 L475 102 Z" fill="#f5b942"/>
+            <text x="440" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁</text>
+
+            <text x="250" y="304" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 2</text>
+          </svg>
+          <div class="pz-legend">Fonte \(\hat V_s\) com resistor série \(R\); dois ramos em paralelo. Ramo 1: \(R_1\) em série com capacitor \(X_1=-10\,\Omega\). Ramo 2: \(R_2\) em série com indutor \(X_2=+20\,\Omega\). \(\hat V_1\) é a tensão sobre o paralelo.</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(R=20\ \Omega\) · \(R_1=30\ \Omega\) · \(R_2=60\ \Omega\) · \(X_1=-10\ \Omega\) · \(X_2=20\ \Omega\) · \(P=240\ \mathrm W\).
+          <br><b>OBS. do enunciado:</b> indique os fasores de tensão e de corrente em <b>valores eficazes</b>.
+        </div>
+
+        <p><b style="color:var(--ink)">a) (2,0)</b> Preencha a tabela abaixo de acordo com a notação da Figura 2. Nesse item, considere a corrente em \(R_2\) como referência de fase, isto é, adote <b>fase 0</b> em \(\hat I_2\) (você sempre pode escolher a origem dos tempos em uma única forma de onda do circuito).</p>
+
+        <table class="ltable">
+          <tr><th>Grandeza</th><th>Valor</th><th>Unidade</th></tr>
+          <tr><td>\(\hat I_2\)</td><td>?</td><td>A</td></tr>
+          <tr><td>\(\hat V_1\)</td><td>?</td><td>V</td></tr>
+          <tr><td>Potência aparente (ramo 2)</td><td>?</td><td>VA</td></tr>
+          <tr><td>\(\hat I_1\)</td><td>?</td><td>A</td></tr>
+          <tr><td>Potência aparente (ramo 1)</td><td>?</td><td>VA</td></tr>
+          <tr><td>\(\hat I\)</td><td>?</td><td>A</td></tr>
+          <tr><td>Potência aparente (total)</td><td>?</td><td>VA</td></tr>
+          <tr><td>\(\hat V_s\)</td><td>?</td><td>V</td></tr>
+        </table>
+
+        <p><b style="color:var(--ink)">b) (1,0)</b> Suponha que, ao invés de adotar a referência de fase em \(\hat I_2\) no item a), você tivesse adotado a referência de fase no gerador \(\hat V_s\), isto é, \(\hat V_s = |\hat V_s|\,\underline{/0^\circ}\). Neste caso, qual seria a fase de \(\hat I_2\)?</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a potência ativa no resistor dá o <em>módulo</em> da corrente; a escolha de referência dá a <em>fase</em>. A partir daí é só percorrer o circuito somando potências complexas, nunca módulos.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">De \(P\) em \(R_2\) para o módulo de \(\hat I_2\)</div>
+              <p>No ramo 2, só \(R_2\) consome ativa. Pela forma \(S=|\hat I|^2 Z\), a parte real é \(R_2|\hat I_2|^2\):</p>
+              <div class="eq-block">\[ P = R_2\,|\hat I_2|^2 \;\Longrightarrow\; |\hat I_2|^2 = \frac{240}{60} = 4 \;\Longrightarrow\; |\hat I_2| = 2\ \mathrm{A_{ef}} \]</div>
+              <p>Adotando \(\hat I_2\) como referência de fase, conforme o item pede:</p>
+              <div class="eq-block">\[ \hat I_2 = 2\,\underline{/0^\circ} = 2\ \mathrm{A_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Potência complexa do ramo 2</div>
+              <p>A reativa do ramo 2 vem inteira do indutor \(X_2\):</p>
+              <div class="eq-block">\[ Q_{L2} = X_2\,|\hat I_2|^2 = 20\cdot 4 = 80\ \mathrm{VAr} \]</div>
+              <div class="eq-block">\[ S_2 = P + jQ_{L2} = 240 + j80\ \mathrm{VA} \]</div>
+              <p class="dim">Equivalentemente, \(S_2 = |\hat I_2|^2 Z_2 = 4\,(60+j20) = 240+j80\). É a mesma conta escrita de duas maneiras.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A tensão \(\hat V_1\) sobre o paralelo</div>
+              <p>Do ramo 2, \(S_2 = \hat V_1\hat I_2^{*}\). Como \(\hat I_2 = 2\underline{/0^\circ}\) é real, \(\hat I_2^{*}=2\):</p>
+              <div class="eq-block">\[ \hat V_1 = \frac{S_2}{\hat I_2^{*}} = \frac{240+j80}{2\,\underline{/0^\circ}} = 120 + j40\ \mathrm{V_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Verificação independente de \(\hat V_1\) — que o gabarito não faz</div>
+              <p>O caminho direto é a lei de Ohm no ramo 2, e ele confirma o resultado sem passar por potência:</p>
+              <div class="eq-block">\[ \hat V_1 = Z_2\,\hat I_2 = (60+j20)\cdot 2 = 120 + j40\ \mathrm{V_{ef}} \quad\checkmark \]</div>
+              <p>Vale como conferência de 5 segundos. Se os dois caminhos divergirem, o erro está no conjugado.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">A corrente do ramo 1</div>
+              <p>O ramo 1 está sob a mesma tensão \(\hat V_1\), com \(Z_1 = R_1 + jX_1 = 30 - j10\):</p>
+              <div class="eq-block">\[ \hat I_1 = \frac{\hat V_1}{Z_1} = \frac{120+j40}{30-j10} \]</div>
+              <p>Multiplicando numerador e denominador pelo conjugado do denominador:</p>
+              <div class="eq-block">\[ \hat I_1 = \frac{(120+j40)(30+j10)}{30^2+10^2} = \frac{3600 + j1200 + j1200 + j^2\,400}{1000} \]</div>
+              <div class="eq-block">\[ \hat I_1 = \frac{3600 - 400 + j2400}{1000} = \frac{3200 + j2400}{1000} = 3{,}2 + j2{,}4\ \mathrm{A_{ef}} \]</div>
+              <p class="dim">Parte imaginária positiva: a corrente do ramo capacitivo está adiantada em relação a \(\hat V_1\), como deveria.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Potência complexa do ramo 1 — agora com o conjugado</div>
+              <div class="eq-block">\[ S_1 = \hat V_1\,\hat I_1^{*} = (120+j40)(3{,}2 - j2{,}4) \]</div>
+              <div class="eq-block">\[ = 384 - j288 + j128 - j^2\,96 = (384+96) + j(-288+128) \]</div>
+              <div class="eq-block">\[ S_1 = 480 - j160\ \mathrm{VA} \]</div>
+              <p>\(Q_1&lt;0\), como tem de ser: o ramo 1 é capacitivo.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">A corrente de linha, pela 1ª LK</div>
+              <div class="eq-block">\[ \hat I = \hat I_1 + \hat I_2 = (3{,}2 + j2{,}4) + (2 + j0) = 5{,}2 + j2{,}4\ \mathrm{A_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Potência no resistor série e soma total</div>
+              <div class="eq-block">\[ |\hat I|^2 = 5{,}2^2 + 2{,}4^2 = 27{,}04 + 5{,}76 = 32{,}8 \]</div>
+              <div class="eq-block">\[ P_R = R\,|\hat I|^2 = 20\cdot 32{,}8 = 656\ \mathrm W \]</div>
+              <p>Somando as potências complexas dos três elementos — componente a componente:</p>
+              <div class="eq-block">\[ S_{TOTAL} = \underbrace{656}_{R} + \underbrace{480}_{R_1} + \underbrace{240}_{R_2} + j\big(\underbrace{80}_{X_2} \underbrace{-\,160}_{X_1}\big) = 1376 - j80\ \mathrm{VA} \]</div>
+              <p class="dim">Este é o passo em que a conservação da <a href="#conservacao">seção 13.7</a> entra: ativas somam com ativas, reativas com reativas, e só.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">A tensão da fonte — aqui o gabarito escorrega duas vezes</div>
+              <p>Toda a potência complexa é entregue pela fonte, logo \(S_{TOTAL} = \hat V_s\,\hat I^{*}\). Isolando com o <b>conjugado no lugar certo</b>:</p>
+              <div class="eq-block">\[ \hat V_s = \frac{S_{TOTAL}}{\hat I^{*}} = \frac{1376 - j80}{5{,}2 - j2{,}4} \]</div>
+              <p>Multiplicando numerador e denominador por \(5{,}2 + j2{,}4\), cujo produto com o denominador é \(|\hat I|^2 = 32{,}8\):</p>
+              <div class="eq-block">\[ (1376 - j80)(5{,}2+j2{,}4) = 7155{,}2 + j3302{,}4 - j416 - j^2\,192 = 7347{,}2 + j2886{,}4 \]</div>
+              <div class="eq-block">\[ \hat V_s = \frac{7347{,}2 + j2886{,}4}{32{,}8} = 224 + j88\ \mathrm{V_{ef}} \]</div>
+              <div class="eq-block">\[ |\hat V_s| = \sqrt{224^2+88^2} = \sqrt{50176 + 7744} = \sqrt{57920} = 240{,}67\ \mathrm{V_{ef}} \]</div>
+              <div class="eq-block">\[ \angle\hat V_s = \operatorname{arctg}\!\left(\frac{88}{224}\right) = \operatorname{arctg}(0{,}3929) = 21{,}44^\circ \]</div>
+              <div class="eq-block">\[ \hat V_s = 240{,}67\ \underline{/21{,}44^\circ}\ \mathrm{V_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">10</span>
+            <div class="step-body">
+              <div class="step-title">Terceira verificação: 2ª LK na malha de entrada</div>
+              <p>Não é preciso acreditar em potência nenhuma. A malha de entrada dá \(\hat V_s = \hat V_1 + R\hat I\):</p>
+              <div class="eq-block">\[ \hat V_s = (120+j40) + 20\,(5{,}2+j2{,}4) = (120+j40) + (104 + j48) \]</div>
+              <div class="eq-block">\[ \hat V_s = 224 + j88 \;=\; 240{,}67\ \underline{/21{,}44^\circ}\ \mathrm{V_{ef}} \quad\checkmark \]</div>
+              <p>Dois métodos independentes, o mesmo número. O valor correto é <b style="color:var(--ink)">240,67 V</b>.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">11</span>
+            <div class="step-body">
+              <div class="step-title">Item b — mudar a referência de fase</div>
+              <p>Trocar a referência de fase é girar <em>todos</em> os fasores do mesmo ângulo; as defasagens relativas não mudam. No item a), com \(\hat I_2\) na origem, o gerador ficou em \(+21{,}44^\circ\) — ou seja, o gerador está adiantado de \(21{,}44^\circ\) em relação a \(\hat I_2\).</p>
+              <p>Pondo agora \(\hat V_s\) na origem, subtraia \(21{,}44^\circ\) de todo mundo:</p>
+              <div class="eq-block">\[ \angle\hat I_2 = 0^\circ - 21{,}44^\circ = -21{,}44^\circ \]</div>
+              <p>O módulo não muda: \(\hat I_2 = 2\,\underline{/-21{,}44^\circ}\ \mathrm{A_{ef}}\).</p>
+            </div>
+          </div>
+
+          <div class="final-answer">
+            \( \hat I_2 = 2\underline{/0^\circ}\,\mathrm{A} \) · \( \hat V_1 = 120+j40\,\mathrm{V} \) · \( S_2 = 240+j80\,\mathrm{VA} \) · \( \hat I_1 = 3{,}2+j2{,}4\,\mathrm{A} \) · \( S_1 = 480-j160\,\mathrm{VA} \) · \( \hat I = 5{,}2+j2{,}4\,\mathrm{A} \) · \( S_{TOT} = 1376-j80\,\mathrm{VA} \) · \( \hat V_s = 240{,}67\underline{/21{,}44^\circ}\,\mathrm{V} \) &nbsp;|&nbsp; <b>b)</b> \( \angle\hat I_2 = -21{,}44^\circ \)
+          </div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito manuscrito, página 5</span>
+            <p>O gabarito segue exatamente esta sequência: \(P=R_2|\hat I_2|^2 \Rightarrow \hat I_2 = 2\) A; \(Q_{L2}=X_2|\hat I_2|^2 = 80\) VAr; \(P_2 = 240+j80\); \(\hat V_1 = 120+j40\); \(\hat I_1 = 3{,}2+j2{,}4\); \(P_1 = 480-j160\); \(\hat I = 5{,}2+j2{,}4\); \(P_R = 656\) W; \(P_{TOTAL}=1376-j80\). Na tabela de respostas consta \(\hat V_s = 240{,}54\,\underline{/21{,}44^\circ}\) V. No item b): "O gerador está adiantado em relação a \(\hat I_2\) de 21,44°, logo \(\hat I_2\) está atrasado em relação ao gerador — a fase seria \(-21{,}44^\circ\)."</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · duas imprecisões do gabarito oficial</span>
+            <p><b>(i) O conjugado ausente e o denominador trocado.</b> O manuscrito escreve, nas duas últimas linhas,</p>
+            <div class="eq-block">\[ \hat V_s\cdot\hat I = 1376 - j80 \qquad\text{e depois}\qquad \hat V_s = \frac{1376 - j80}{3{,}2 - j2{,}4} \]</div>
+            <p>Há dois problemas empilhados. O primeiro é de notação: o rigor exige \(\hat V_s\,\hat I^{*} = S_{TOTAL}\), com <b>conjugado na corrente</b> — sem ele o ângulo de \(S\) seria \(\theta_v+\theta_i\) e o sinal de \(Q\) sairia trocado. O segundo é de identificação: o denominador escrito, \(3{,}2 - j2{,}4\), é \(\hat I_1^{*}\), a corrente do <em>ramo 1</em>, e não \(\hat I^{*} = 5{,}2 - j2{,}4\). Note, porém, que o <em>resultado</em> registrado não corresponde a essa divisão — \((1376-j80)/(3{,}2-j2{,}4) = 287{,}2 + j190{,}4 = 344{,}6\,\underline{/33{,}54^\circ}\), muito longe de \(240\,\underline{/21{,}44^\circ}\). Ou seja: o professor <b>usou</b> \(\hat I^{*}\) na conta e escreveu \(\hat I_1^{*}\) no papel. É lapso de transcrição, não de método — mas quem copiar a linha literalmente na prova erra.</p>
+            <p><b>(ii) O módulo registrado não fecha com os próprios números do gabarito.</b> A tabela traz \(|\hat V_s| = 240{,}54\) V. Partindo de \(S_{TOTAL}=1376-j80\) e \(\hat I = 5{,}2+j2{,}4\) — ambos do próprio gabarito — o resultado exato é \(\hat V_s = 224+j88\), cujo módulo é \(\sqrt{57920} = 240{,}666\ldots \approx 240{,}67\) V. A <b>discrepância é de 0,13 V</b>, ou 0,05% — pequena em valor, mas não é arredondamento: \(240{,}67\) já é o valor arredondado a duas casas. A fase, \(21{,}44^\circ\), confere exatamente.</p>
+            <p><b>Quem desempata:</b> o próprio <a href="#exercicios">formulário do professor</a>. A Questão 04 da página 2 resolve <em>este mesmo circuito</em>, por análise nodal em vez de potência, e imprime \(\boxed{V_s = 240{,}67\ \mathrm V}\). O formulário e a verificação pela 2ª LK concordam entre si; o 240,54 da tabela da prova é que está fora.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Ache o módulo de uma corrente por \(P=R|\hat I|^2\); adote a referência de fase que o enunciado manda; caminhe ramo a ramo com \(S=|\hat I|^2 Z\) ou \(S=\hat V\hat I^{*}\); some componente a componente; tire módulo só no fim.</p>
+            <p><b>Erro típico 1.</b> Esquecer o conjugado. Faça a verificação de sinal: ramo indutivo tem de dar \(Q>0\); ramo capacitivo, \(Q&lt;0\). Se o sinal saiu invertido, é o conjugado.</p>
+            <p><b>Erro típico 2.</b> Somar \(|S_1|+|S_2|+|S_R|\) para obter \(|S_{TOTAL}|\). Aqui isso daria \(506{,}0+505{,}9+656 = 1667{,}9\) VA, contra os corretos \(|1376-j80| = 1378{,}3\) VA.</p>
+            <p><b>Erro típico 3.</b> Tratar \(P=240\) W como potência do <em>ramo</em> 2 em vez de potência de \(R_2\). São iguais aqui só porque \(X_2\) não consome ativa — mas o hábito de conferir de onde vem cada watt evita o erro quando o ramo tiver dois resistores.</p>
+            <p><b>Erro típico 4 (item b).</b> Responder \(+21{,}44^\circ\). A pergunta é a fase de \(\hat I_2\) quando \(\hat V_s\) é a referência; como \(\hat V_s\) estava adiantado, \(\hat I_2\) fica atrasado — sinal negativo.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Questões do formulário</h3>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · p. 2, coluna direita, Questão 04</span>O mesmo circuito da P3 2024, resolvido por análise nodal</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Questão 04.</b> No circuito da figura abaixo, o resistor de 60 Ω recebe uma potência ativa de 240 W. O valor eficaz da tensão \(V_s\) é (em V):</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 660 330" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 118"/>
+              <path d="M70 162 L70 262"/>
+              <path d="M70 70 L170 70"/>
+              <path d="M230 70 L560 70"/>
+              <path d="M70 262 L560 262"/>
+              <path d="M360 70 L360 104"/>
+              <path d="M360 152 L360 184"/>
+              <path d="M360 206 L360 262"/>
+              <path d="M560 70 L560 104"/>
+              <path d="M560 146 L560 190"/>
+              <path d="M560 238 L560 262"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="63" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="64" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="12" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Vs</text>
+
+            <rect x="170" y="58" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="182" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">20 Ω</text>
+            <path d="M166 100 q 34 14 68 0" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M164 92 L166 104 L174 96 Z" fill="#f5b942"/>
+            <text x="188" y="118" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V_R</text>
+            <path d="M252 46 L292 46" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M292 46 L284 41 L284 51 Z" fill="#f5b942"/>
+            <text x="264" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I</text>
+
+            <!-- ramo do meio -->
+            <rect x="348" y="104" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="296" y="134" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">30 Ω</text>
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="340" y1="184" x2="380" y2="184"/>
+              <line x1="340" y1="196" x2="380" y2="196"/>
+            </g>
+            <text x="276" y="196" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">−j10 Ω</text>
+            <path d="M392 82 L392 118" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M392 118 L387 110 L397 110 Z" fill="#f5b942"/>
+            <text x="398" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I₂</text>
+
+            <!-- ramo da direita -->
+            <path d="M560 104 q 13 10 0 21 q 13 10 0 21" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="588" y="130" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">j20 Ω</text>
+            <rect x="548" y="190" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="588" y="220" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">60 Ω</text>
+            <path d="M516 82 L516 118" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M516 118 L511 110 L521 110 Z" fill="#f5b942"/>
+            <text x="492" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I₁</text>
+
+            <path d="M462 250 L462 92" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <path d="M462 92 L457 102 L467 102 Z" fill="#f5b942"/>
+            <text x="432" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V₁</text>
+
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2">
+              <path d="M300 262 L300 286"/>
+              <path d="M282 286 L318 286"/>
+              <path d="M289 294 L311 294"/>
+              <path d="M296 302 L304 302"/>
+            </g>
+            <text x="252" y="322" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura da Questão 04</text>
+          </svg>
+          <div class="pz-legend">Note que é topologicamente o mesmo circuito da Figura 2 da P3 2024: \(20\,\Omega\) em série, ramo \(30-j10\) e ramo \(60+j20\) em paralelo, com o nó inferior aterrado.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a potência dá o módulo de \(I_1\); o módulo de \(I_1\) dá \(V_1\); e uma única equação nodal em \(V_1\) dá \(V_s\). Nenhuma fase precisa ser arbitrada, porque só se pede o valor eficaz.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Corrente no ramo do resistor de 60 Ω</div>
+              <div class="eq-block">\[ 240 = 60\cdot I_1^{2} \;\Longrightarrow\; I_1^2 = 4 \;\Longrightarrow\; I_1 = 2\ \mathrm{A_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Tensão nodal \(V_1\) pelo módulo da impedância do ramo</div>
+              <p>O ramo direito tem \(Z = 60 + j20\), cujo módulo é</p>
+              <div class="eq-block">\[ |Z| = \sqrt{60^2+20^2} = \sqrt{4000} = 20\sqrt{10} \]</div>
+              <div class="eq-block">\[ V_1 = |Z|\cdot I_1 = 20\sqrt{1+9}\cdot 2 = 40\sqrt{10}\ \mathrm{V_{ef}} \]</div>
+              <p class="dim">A forma \(20\sqrt{1+9}\) é a do gabarito: fatorou-se \(60+j20 = 20(3+j1)\), cujo módulo é \(20\sqrt{9+1}\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Análise nodal no nó \(V_1\)</div>
+              <p>Somando as correntes que saem do nó — para a fonte pelo 20 Ω, para o ramo \(30-j10\) e para o ramo \(60+j20\):</p>
+              <div class="eq-block">\[ (\hat V_1 - \hat V_s)\cdot\frac{1}{20} \;+\; \hat V_1\cdot\frac{1}{30-j10} \;+\; \hat V_1\cdot\frac{1}{60+j20} \;=\; 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Racionalizar as admitâncias — passagem que o gabarito omite</div>
+              <p>O gabarito salta desta equação direto para \(\hat V_s = \frac{\hat V_1}{10}(19+j)\). As contas intermediárias são:</p>
+              <div class="eq-block">\[ \frac{1}{30-j10} = \frac{30+j10}{30^2+10^2} = \frac{30+j10}{1000} = 0{,}03 + j0{,}01 \]</div>
+              <div class="eq-block">\[ \frac{1}{60+j20} = \frac{60-j20}{60^2+20^2} = \frac{60-j20}{4000} = 0{,}015 - j0{,}005 \]</div>
+              <p>Agrupando os termos em \(\hat V_1\):</p>
+              <div class="eq-block">\[ \hat V_1\left(\frac{1}{20} + 0{,}03 + j0{,}01 + 0{,}015 - j0{,}005\right) = \frac{\hat V_s}{20} \]</div>
+              <div class="eq-block">\[ \hat V_1\,(0{,}05 + 0{,}03 + 0{,}015 + j\,0{,}005) = \hat V_1\,(0{,}095 + j\,0{,}005) = \frac{\hat V_s}{20} \]</div>
+              <div class="eq-block">\[ \hat V_s = 20\,\hat V_1\,(0{,}095+j0{,}005) = \hat V_1\,(1{,}9 + j0{,}1) = \frac{\hat V_1}{10}\,(19 + j) \quad\checkmark \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Tomar módulos</div>
+              <div class="eq-block">\[ |19+j| = \sqrt{19^2+1^2} = \sqrt{362} \]</div>
+              <div class="eq-block">\[ V_s = \frac{V_1}{10}\cdot\sqrt{362} = \frac{40\sqrt{10}}{10}\cdot\sqrt{362} = 4\sqrt{10}\cdot\sqrt{362} = 4\sqrt{3620} \]</div>
+              <div class="eq-block">\[ V_s = 4\cdot 60{,}166 = 240{,}67\ \mathrm{V_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\( V_s = \dfrac{40\sqrt{10}}{10}\cdot\sqrt{362} = 240{,}67\ \mathrm{V_{ef}} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Quando só se pede <em>valor eficaz</em>, trabalhe com módulos e uma única equação nodal. Não perca tempo arbitrando referência de fase — ela sumiria no módulo final de qualquer jeito.</p>
+            <p><b>Por que este exercício importa duas vezes.</b> É o mesmo circuito da 2ª questão da P3 2024, resolvido por um caminho completamente diferente (nodal, sem potência complexa), e chega a \(240{,}67\) V. É a confirmação, pela mão do próprio professor, de que o \(240{,}54\) da tabela daquela prova é um deslize numérico.</p>
+            <p><b>Erro típico 1.</b> Escrever \(V_1 = 60\cdot I_1\), usando só o resistor. A tensão do nó cai sobre o ramo <em>inteiro</em>, \(60+j20\).</p>
+            <p><b>Erro típico 2.</b> Somar as impedâncias dos dois ramos paralelos em vez das admitâncias. Em paralelo somam-se \(Y\), e é por isso que a análise nodal é o caminho curto aqui.</p>
+            <p><b>Erro típico 3.</b> Confundir \(P = R I^2\) com \(P = R I_{max}^2\). Como o enunciado fala em valor eficaz, \(I_1 = 2\) é eficaz — o pico seria \(2\sqrt2\).</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 3 · Questão única</span>Potência complexa num capacitor, via divisor de corrente</span>
+          <span class="q-prova">Teste 3 · P3/2023</span>
+        </div>
+
+        <p>3 – Considere o circuito da Figura 7 com \(\hat I_s = 0{,}625\,\underline{/-40^\circ}\ (\mathrm{A_{ef}})\) e \(\omega = 1\ \mathrm{rad/s}\). A potência aparente complexa no capacitor, em VA, é igual a:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 118"/>
+              <path d="M70 162 L70 250"/>
+              <path d="M70 70 L200 70"/>
+              <path d="M260 70 L520 70"/>
+              <path d="M70 250 L520 250"/>
+              <path d="M360 70 L360 128"/>
+              <path d="M360 148 L360 250"/>
+              <path d="M520 70 L520 120"/>
+              <path d="M520 186 L520 250"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 154 L70 126" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 124 L65 134 L75 134 Z" fill="#4ade9a"/>
+            <text x="14" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Îs</text>
+
+            <rect x="200" y="58" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="212" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">25 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="338" y1="128" x2="382" y2="128"/>
+              <line x1="338" y1="148" x2="382" y2="148"/>
+            </g>
+            <text x="288" y="144" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">0,2 F</text>
+            <path d="M392 92 L392 128" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M392 128 L387 120 L397 120 Z" fill="#f5b942"/>
+            <text x="398" y="108" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î_C</text>
+
+            <path d="M520 120 q 14 11 0 22 q 14 11 0 22 q 14 11 0 22" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="548" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">4 H</text>
+
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2">
+              <path d="M360 250 L360 272"/>
+              <path d="M342 272 L378 272"/>
+              <path d="M349 280 L371 280"/>
+              <path d="M356 288 L364 288"/>
+            </g>
+            <text x="250" y="296" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 7</text>
+          </svg>
+          <div class="pz-legend">Fonte de corrente \(\hat I_s\), resistor de 25 Ω em série no ramo superior, e o paralelo capacitor–indutor à direita.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(-j\,51{,}60\)</li>
+          <li data-alt="b">\(-j\,31{,}25\)</li>
+          <li data-alt="c">\(12 - j\,25{,}10\)</li>
+          <li data-alt="d">\(j\,51{,}60\)</li>
+          <li data-alt="e">\(-j\,25{,}10\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — toda a corrente da fonte chega ao paralelo LC (o resistor está em série com uma fonte de corrente e não altera nada). Achada \(\hat I_C\), a potência sai por \(S=|\hat I|^2 Z\), que num capacitor puro é imaginária pura e negativa.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Impedâncias em \(\omega = 1\) rad/s</div>
+              <div class="eq-block">\[ Z_C = \frac{1}{j\omega C} = \frac{1}{j\cdot 1\cdot 0{,}2} = \frac{1}{j0{,}2} = -j5\ \Omega \]</div>
+              <div class="eq-block">\[ Z_L = j\omega L = j\cdot 1\cdot 4 = j4\ \Omega \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Por que o resistor de 25 Ω é irrelevante</div>
+              <p>O gabarito simplesmente ignora o resistor, sem comentar. A razão: ele está <b>em série com uma fonte de corrente ideal</b>. A fonte impõe \(\hat I_s\) independentemente da tensão que apareça sobre ela, de modo que a corrente que chega ao nó do paralelo é \(\hat I_s\) inteira. O resistor só altera a tensão de saída da fonte — grandeza que a questão não pede.</p>
+              <p class="dim">É uma armadilha de leitura: o 25 Ω está ali para você perder tempo montando uma nodal desnecessária.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Divisor de corrente entre \(Z_C\) e \(Z_L\)</div>
+              <p>Num divisor de corrente entre dois ramos, a corrente de um ramo é a corrente total vezes a impedância <em>do outro</em> sobre a soma:</p>
+              <div class="eq-block">\[ \hat I_C = \frac{Z_L}{Z_L+Z_C}\,\hat I_s = \frac{j4}{j4 - j5}\,\hat I_s \]</div>
+              <div class="eq-block">\[ \hat I_C = \frac{j4}{-j1}\cdot 0{,}625\,\underline{/-40^\circ} = -4\cdot 0{,}625\,\underline{/-40^\circ} \]</div>
+              <div class="eq-block">\[ \hat I_C = -2{,}5\,\underline{/-40^\circ} = 2{,}5\,\underline{/140^\circ}\ \mathrm{A_{ef}} \]</div>
+              <p class="dim">O sinal negativo virou \(+180^\circ\) na fase: \(-40^\circ+180^\circ = 140^\circ\). Como só o módulo importa adiante, a fase não afeta o resultado — mas convém não deixá-la solta.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Sanidade: por que \(|\hat I_C| > |\hat I_s|\)</div>
+              <p>A corrente no capacitor (2,5 A) é <em>quatro vezes</em> a da fonte (0,625 A), o que parece violar a 1ª LK até você lembrar que \(\hat I_C\) e \(\hat I_L\) estão em oposição de fase e quase se cancelam. O denominador \(j4-j5=-j1\) é pequeno porque o paralelo LC está perto da ressonância — em \(\omega=1/\sqrt{LC}=1{,}118\) rad/s ele seria infinito. Circulação interna grande, corrente externa pequena: comportamento normal de LC paralelo.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Potência aparente complexa pela forma \(S=|\hat I|^2 Z\)</div>
+              <p>No capacitor, \(R=0\) e \(X=-5\):</p>
+              <div class="eq-block">\[ S_C = R\,|\hat I_C|^2 + jX\,|\hat I_C|^2 = 0\cdot|\hat I_C|^2 - j\,5\,|\hat I_C|^2 \]</div>
+              <div class="eq-block">\[ S_C = -j\,5\cdot(2{,}5)^2 = -j\,5\cdot 6{,}25 \]</div>
+              <div class="eq-block">\[ S_C = -j\,31{,}25\ \mathrm{VA} \]</div>
+              <p>Parte real nula — capacitor ideal não consome ativa. Parte imaginária negativa — capacitor fornece reativo. Ambos os sinais conferem com a tabela da <a href="#pqs">seção 13.4</a>.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( S_C = -j\,31{,}25\ \mathrm{VA} \) — alternativa <b>b)</b></div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Impedâncias em \(j\omega\) → divisor de corrente → \(S=|\hat I|^2 Z\). Três linhas, sem nenhuma nodal.</p>
+            <p><b>Erro típico 1.</b> Escolher a alternativa d), \(+j\,51{,}60\). O sinal positivo denuncia o conjugado esquecido ou a confusão indutor/capacitor. Capacitor <em>sempre</em> tem \(Q&lt;0\).</p>
+            <p><b>Erro típico 2.</b> Inverter o divisor de corrente e usar \(Z_C/(Z_L+Z_C)\). Isso daria \(\hat I_L\), não \(\hat I_C\), e levaria a \(-j\,5\cdot(3{,}125)^2\).</p>
+            <p><b>Erro típico 3.</b> Usar o fasor de pico. Como \(\hat I_s\) é dado em \(\mathrm{A_{ef}}\), \(S_C=|\hat I|^2 Z\) sai direto em VA. Se o fasor fosse de pico, seria \(\tfrac12|\hat I|^2 Z\) — e a resposta viraria \(-j\,15{,}6\), que nem consta nas alternativas.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão única</span>Casamento conjugado: achar \(R\) e \(L\) da carga</span>
+          <span class="q-prova">Teste 5 · P3/2023</span>
+        </div>
+
+        <p>5 – Considere o circuito da Figura 9 que opera em regime permanente senoidal. Para termos a máxima transferência de potência à carga \(Z\), esta deverá ser a combinação série de:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 70 L60 118"/>
+              <path d="M60 162 L60 250"/>
+              <path d="M60 70 L170 70"/>
+              <path d="M230 70 L470 70"/>
+              <path d="M60 250 L520 250"/>
+              <path d="M300 70 L300 110"/>
+              <path d="M300 158 L300 250"/>
+              <path d="M400 70 L400 128"/>
+              <path d="M400 148 L400 250"/>
+              <path d="M490 70 L520 70"/>
+              <path d="M520 70 L520 116"/>
+              <path d="M520 184 L520 250"/>
+            </g>
+
+            <circle cx="60" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="2" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">cos 10t</text>
+
+            <rect x="170" y="58" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="184" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 Ω</text>
+
+            <rect x="288" y="110" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="248" y="140" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">2 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="378" y1="128" x2="422" y2="128"/>
+              <line x1="378" y1="148" x2="422" y2="148"/>
+            </g>
+            <text x="416" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">0,1 F</text>
+
+            <circle cx="478" cy="70" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="478" cy="250" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <path d="M470 250 L472 250" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <path d="M484 250 L520 250" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+
+            <rect x="504" y="116" width="32" height="68" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="548" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">Z</text>
+
+            <text x="250" y="290" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 9</text>
+          </svg>
+          <div class="pz-legend">Fonte \(\cos 10t\) com 2 Ω em série; 2 Ω e 0,1 F em derivação; a carga \(Z\) nos terminais à direita.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(R = 0{,}5\,\Omega\) ; \(L = 0{,}5\) H</li>
+          <li data-alt="b">\(R = 1\,\Omega\) ; \(L = 1\) H</li>
+          <li data-alt="c">\(R = 0{,}5\,\Omega\) ; \(L = 0{,}05\) H</li>
+          <li data-alt="d">\(R = 1\,\Omega\) ; \(L = 0{,}05\) H</li>
+          <li data-alt="e">\(R = 2\,\Omega\) ; \(L = 0{,}1\) H</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — como só há fonte independente, \(Z_o\) sai inativando-a. Com os três elementos ficando em paralelo, é mais rápido somar <em>admitâncias</em> e inverter no fim. Depois, conjugue.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Ler \(\omega\) do enunciado</div>
+              <p>A fonte é \(\cos 10t\), logo \(\omega = 10\) rad/s. Esse número é o que converte a resposta de reatância para henry no fim.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Inativar a fonte e ver o que fica em paralelo</div>
+              <p>O gabarito começa direto em \(Y_0 = 0{,}5+0{,}5+j1\), sem justificar a topologia. A justificativa: inativando a fonte de tensão (curto), o resistor de 2 Ω que estava em série com ela passa a ligar o nó superior ao nó inferior. Ou seja, <b>os três elementos — 2 Ω série, 2 Ω derivação e 0,1 F — ficam todos em paralelo</b> entre os terminais da carga.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Somar as admitâncias</div>
+              <div class="eq-block">\[ Y_0 = \frac{1}{2} + \frac{1}{2} + j\omega C = 0{,}5 + 0{,}5 + j\cdot 10\cdot 0{,}1 = 1 + j1\ \mathrm S \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Inverter para obter \(Z_o\)</div>
+              <div class="eq-block">\[ Z_o = \frac{1}{Y_0} = \frac{1}{1+j1} = \frac{1-j1}{(1+j1)(1-j1)} = \frac{1-j1}{2} = 0{,}5 - j0{,}5\ \Omega \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conjugar — a condição de máxima transferência</div>
+              <div class="eq-block">\[ Z = Z_o^{*} = \frac{1}{2} + j\,\frac{1}{2} \;=\; 0{,}5 + j0{,}5\ \Omega \]</div>
+              <p>A parte real é a resistência pedida; a parte imaginária, positiva, é indutiva — coerente com o enunciado, que pergunta por \(R\) e \(L\) em série.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Converter reatância em indutância</div>
+              <div class="eq-block">\[ Z_o^{*} = \underbrace{\frac{1}{2}}_{R} + j\,\omega L = \underbrace{\frac{1}{2}}_{R} + j\,10\cdot\underbrace{\frac{1}{20}}_{L} \]</div>
+              <div class="eq-block">\[ \omega L = 0{,}5 \;\Longrightarrow\; L = \frac{0{,}5}{10} = \frac{1}{20} = 0{,}05\ \mathrm H \]</div>
+            </div>
+          </div>
+
+          <div class="final-answer">\( R = 0{,}5\ \Omega \) e \( L = 0{,}05\ \mathrm H \) — alternativa <b>c)</b></div>
+
+          <div class="src-block src-prof">
+            <span class="src-kicker">do professor · gabarito manuscrito, p. 13</span>
+            <p>"Basta determinar \(Z_0\) de Thévenin e tomar o conjugado." Segue-se \(Y_0 = 0{,}5+0{,}5+j\,10\cdot 0{,}1 = 1+j1 \longrightarrow Z_0 = 1/(1+j1) = (1-j1)/2\), e então \(Z_0^{*} = \tfrac12 + j\,10\cdot\tfrac{1}{20}\), com as chaves \(R\) e \(L\) escritas sob as parcelas.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Inative as fontes independentes → some admitâncias se tudo estiver em paralelo (ou impedâncias se estiver em série) → inverta → conjugue → converta reatância em H ou F usando o \(\omega\) do enunciado.</p>
+            <p><b>Erro típico 1.</b> Parar em \(Z_o^{*} = 0{,}5+j0{,}5\) e marcar a alternativa a), \(L=0{,}5\) H. Confundiu-se <em>reatância</em> \(\omega L = 0{,}5\ \Omega\) com <em>indutância</em> \(L=0{,}05\) H. A distinção entre a) e c) é exatamente essa, e a alternativa a) está ali para pegar quem esquece de dividir por \(\omega\).</p>
+            <p><b>Erro típico 2.</b> Esquecer que o 2 Ω série entra no paralelo depois de inativar a fonte. Só com o 2 Ω de derivação e o capacitor, \(Y_0 = 0{,}5+j1\) e \(Z_o = 0{,}4-j0{,}8\) — resposta que não consta.</p>
+            <p><b>Erro típico 3.</b> Tomar \(Z=Z_o\) em vez de \(Z_o^{*}\). Daria uma carga capacitiva, e o enunciado nem sequer ofereceria capacitor entre as alternativas — o que, aliás, é uma dica de que o conjugado é indutivo.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão 3</span>Motor com \(fp = 0{,}6\): o triângulo 3-4-5 pronto</span>
+          <span class="q-prova">Teste 5 · P3/2025 — Q3</span>
+        </div>
+
+        <p>3 – Um motor, alimentado por uma linha de 200 Vef, consome \(P = 3\,\mathrm{kW}\) a \(fp = 0{,}6\) indutivo. Denotando por \(I\) a corrente eficaz absorvida, \(Q\) a potência reativa e \(|P_{ap}|\) a potência aparente consumidas, pede-se assinalar a opção mais abrangente.</p>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(Q = 4\ \mathrm{kVAr}\)</li>
+          <li data-alt="b">\(I = 25\ \mathrm{A_{ef}}\)</li>
+          <li data-alt="c">\(Q\) e \(I\) estão corretas.</li>
+          <li data-alt="d">\(|P_{ap}| = 5\ \mathrm{kVA}\)</li>
+          <li data-alt="e">\(Q\), \(I\) e \(|P_{ap}|\) estão corretas.</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — não há circuito. Há um triângulo de potências com dois dados (\(P\) e \(\cos\varphi\)), o que determina todo o resto. "Opção mais abrangente" é o aviso de que provavelmente tudo está certo.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Do fator de potência para o seno</div>
+              <div class="eq-block">\[ \cos\varphi = 0{,}6 \;\Longrightarrow\; \sin\varphi = \sqrt{1-0{,}6^2} = \sqrt{1-0{,}36} = \sqrt{0{,}64} = 0{,}8 \]</div>
+              <p>O sinal é <b>positivo</b> porque a carga é indutiva — anotação do próprio gabarito, "positiva pois indutiva". Motor é carga indutiva por construção.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Reativa pela tangente</div>
+              <div class="eq-block">\[ \operatorname{tg}\varphi = \frac{Q}{P} \;\Longrightarrow\; \frac{0{,}8}{0{,}6} = \frac{4}{3} = \frac{Q}{3\,\mathrm{kW}} \]</div>
+              <div class="eq-block">\[ Q = 3\cdot\frac{4}{3} = 4\ \mathrm{kVAr} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Corrente eficaz pela definição de potência ativa</div>
+              <div class="eq-block">\[ P = V_{ef}\,I_{ef}\cos\varphi \;\Longrightarrow\; I = \frac{P}{V\cos\varphi} \]</div>
+              <div class="eq-block">\[ I = \frac{3000}{200\cdot 0{,}6} = \frac{3000}{120} = 25\ \mathrm{A_{ef}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Aparente pela hipotenusa</div>
+              <div class="eq-block">\[ |P_{ap}| = \sqrt{P^2+Q^2} = \sqrt{3^2+4^2} = \sqrt{9+16} = \sqrt{25} = 5\ \mathrm{kVA} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conferência cruzada — as três respostas têm de fechar entre si</div>
+              <p>O gabarito calcula os três valores por caminhos diferentes e não verifica a consistência. Ela existe e é imediata, porque \(|P_{ap}| = V_{ef}I_{ef}\):</p>
+              <div class="eq-block">\[ |P_{ap}| = 200\cdot 25 = 5000\ \mathrm{VA} = 5\ \mathrm{kVA} \quad\checkmark \]</div>
+              <p>E também \(|P_{ap}| = P/\cos\varphi = 3/0{,}6 = 5\) kVA. Três caminhos, um número — o que confirma \(Q\), \(I\) e \(|P_{ap}|\) de uma vez. Como as três afirmações são verdadeiras, a opção "mais abrangente" é a que reúne todas.</p>
+              <p class="dim">Vale notar que se trata do triângulo 3-4-5 escalado por 1 kVA, o mesmo do \(\cos\varphi = 0{,}6\) que aparece em metade dos exercícios de fator de potência do curso. Reconhecê-lo poupa meio minuto.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( Q = 4\ \mathrm{kVAr} \) · \( I = 25\ \mathrm{A_{ef}} \) · \( |P_{ap}| = 5\ \mathrm{kVA} \) — alternativa <b>e)</b></div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Com \(P\) e \(\cos\varphi\), desenhe o triângulo antes de escrever qualquer coisa. \(|S| = P/\cos\varphi\), \(Q = |S|\sin\varphi\), \(I = |S|/V\). Não há circuito para analisar.</p>
+            <p><b>Erro típico 1.</b> Marcar c) por hábito, sem testar a alternativa d). Em questão do tipo "opção mais abrangente", cada afirmação precisa ser verificada individualmente.</p>
+            <p><b>Erro típico 2.</b> Calcular \(I = P/V = 3000/200 = 15\) A, esquecendo o \(\cos\varphi\). Essa é a corrente que <em>circularia</em> com fator unitário — e a diferença entre 15 A e 25 A é exatamente o custo do fator de potência baixo, tema do <a href="modulo-14.html">módulo 14</a>.</p>
+            <p><b>Erro típico 3.</b> Dar \(Q\) negativo. "Indutivo" significa \(\varphi>0\) e \(Q>0\); só carga capacitiva dá reativa negativa.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 6 · Questão 1</span>Casamento usado ao contrário: de \(Z_L\) para \(C\), e daí para \(P\)</span>
+          <span class="q-prova">Teste 6 · P3/2025 — Q1</span>
+        </div>
+
+        <p>1 – O circuito da Figura 1 opera em regime permanente senoidal (RPS), com \(\omega = 1000\ \mathrm{rad/s}\). A impedância \(Z_{load}\) foi ajustada para receber a máxima potência ativa fornecida pela fonte. Nessa condição, são dados \(Z_{load} = 10 + j10\ (\Omega)\) e \(\hat V_C = 10\,\underline{/60^\circ}\ (\mathrm{V_{ef}})\). A potência ativa absorvida por \(Z_{load}\) (em W) será igual a:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 70 L70 118"/>
+              <path d="M70 162 L70 240"/>
+              <path d="M70 70 L180 70"/>
+              <path d="M240 70 L330 70"/>
+              <path d="M354 70 L500 70"/>
+              <path d="M500 70 L500 106"/>
+              <path d="M500 186 L500 240"/>
+              <path d="M70 240 L500 240"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="63" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="64" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="6" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <rect x="180" y="58" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="192" y="48" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">10 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.6">
+              <line x1="330" y1="50" x2="330" y2="90"/>
+              <line x1="354" y1="50" x2="354" y2="90"/>
+            </g>
+            <text x="334" y="110" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">C</text>
+            <path d="M370 28 L308 28" stroke="#f5b942" stroke-width="1.6"/>
+            <path d="M308 28 L316 23 L316 33 Z" fill="#f5b942"/>
+            <text x="376" y="32" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂_C</text>
+
+            <rect x="482" y="106" width="36" height="80" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="530" y="152" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">Z_load</text>
+
+            <text x="250" y="272" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1</text>
+          </svg>
+          <div class="pz-legend">Malha série única: fonte, resistor de 10 Ω, capacitor \(C\) e a carga \(Z_{load}\). A seta de \(\hat V_C\) aponta para a esquerda, sobre o capacitor.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">10</li>
+          <li data-alt="b">5</li>
+          <li data-alt="c">2,5</li>
+          <li data-alt="d">1</li>
+          <li data-alt="e">0,5</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a condição de casamento é dada como <em>fato</em>, não como pergunta. Use-a de trás para frente: \(Z_L\) conhecida entrega \(Z_o\), \(Z_o\) entrega \(C\), \(C\) com \(\hat V_C\) entrega a corrente, e a corrente entrega \(P\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Thévenin visto pela carga</div>
+              <p>Inativando a fonte de tensão, o resistor e o capacitor ficam em série entre os terminais de \(Z_{load}\):</p>
+              <div class="eq-block">\[ Z_o = 10 + \frac{1}{j\omega C} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Impor o casamento conjugado e extrair \(C\)</div>
+              <div class="eq-block">\[ Z_{load} = Z_o^{*} \;\Longrightarrow\; Z_o = Z_{load}^{*} = (10+j10)^{*} = 10 - j10\ \Omega \]</div>
+              <p>Comparando com \(Z_o = 10 + jX_C\), a reatância capacitiva tem de valer \(-10\ \Omega\):</p>
+              <div class="eq-block">\[ X_C = -\frac{1}{\omega C} = -\frac{1}{10^3\,C} = -10\ \Omega \]</div>
+              <div class="eq-block">\[ C = \frac{1}{10^3\cdot 10} = 10^{-4}\ \mathrm F = 100\ \mu\mathrm F \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A corrente do capacitor é a corrente da malha</div>
+              <p>O circuito é uma malha série única, logo a mesma corrente atravessa resistor, capacitor e carga. Pela relação do capacitor no domínio fasorial, \(\hat I = j\omega C\,\hat V\):</p>
+              <div class="eq-block">\[ \hat I_C = j\,\omega\,C\,\hat V_C = j\cdot 10^3\cdot 10^{-4}\cdot 10\,\underline{/60^\circ} \]</div>
+              <div class="eq-block">\[ \hat I_C = j\,0{,}1\cdot 10\,\underline{/60^\circ} = j\,1\,\underline{/60^\circ} = 1\,\underline{/150^\circ}\ \mathrm{A_{ef}} \]</div>
+              <p class="dim">Multiplicar por \(j\) é somar \(90^\circ\): \(60^\circ + 90^\circ = 150^\circ\). Corrente adiantada da tensão — comportamento capacitivo, como esperado.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Potência ativa na carga</div>
+              <p>Só a parte resistiva de \(Z_{load}\), isto é \(R_L = 10\ \Omega\), consome ativa:</p>
+              <div class="eq-block">\[ P = R_L\,|\hat I_{ef}|^2 = 10\cdot|1|^2 = 10\ \mathrm W \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Verificação pela fórmula \(P_{max}=|\hat V_{Th}|^2/(4R_o)\)</div>
+              <p>O gabarito não fecha o círculo, mas dá para conferir. Com o casamento, a impedância total da malha é</p>
+              <div class="eq-block">\[ Z_o + Z_L = (10-j10)+(10+j10) = 20\ \Omega \quad\text{(puramente resistiva)} \]</div>
+              <div class="eq-block">\[ \hat V_{Th} = \hat I\,(Z_o+Z_L) = 1\,\underline{/150^\circ}\cdot 20 = 20\,\underline{/150^\circ}\ \mathrm{V_{ef}} \]</div>
+              <div class="eq-block">\[ P_{max} = \frac{|\hat V_{Th}|^2}{4R_o} = \frac{20^2}{4\cdot 10} = \frac{400}{40} = 10\ \mathrm W \quad\checkmark \]</div>
+              <p>Os dois caminhos batem — o que também confirma que a convenção é eficaz. Se o fasor fosse de pico, a fórmula correta seria \(|\hat V_{Th}|^2/(8R_o) = 5\) W, que é justamente a alternativa b). O distrator está lá para quem erra a convenção.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( P = R_L|\hat I|^2 = 10\ \mathrm W \) — alternativa <b>a)</b> &nbsp;·&nbsp; intermediários: \( C = 100\ \mu\mathrm F \), \( \hat I_C = 1\,\underline{/150^\circ}\ \mathrm{A_{ef}} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Quando o enunciado <em>afirma</em> que há casamento, a igualdade \(Z_L=Z_o^{*}\) é uma equação para o componente desconhecido. Resolva-a primeiro, depois siga o circuito normalmente.</p>
+            <p><b>Erro típico 1.</b> Usar \(P = |Z_L||\hat I|^2 = |10+j10|\cdot 1 = 14{,}14\) W. Só a <em>parte real</em> da impedância consome ativa.</p>
+            <p><b>Erro típico 2.</b> Ler \(\hat V_C\) como fasor de pico e dividir a resposta por 2, caindo em b) 5 W. O enunciado diz \(\mathrm{V_{ef}}\).</p>
+            <p><b>Erro típico 3.</b> Trocar o sinal da reatância e obter \(Z_o = 10+j10\), o que exigiria um indutor onde o desenho mostra um capacitor. A verificação é topológica: capacitor tem \(X&lt;0\), sempre.</p>
+            <p><b>Erro típico 4.</b> Usar \(\hat I = \hat V_C/(1/j\omega C)\) mas esquecer de inverter, escrevendo \(\hat I = \hat V_C/(j\omega C)\). Isso daria \(100\,\underline{/-30^\circ}\) A e uma potência absurda de \(10^5\) W.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-14.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">14 · Fator de potência e instalações</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+    <footer>
+      <div class="agenda">
+        <div><b>P1</b>26/10 · 14:20</div>
+        <div><b>P2</b>02/12</div>
+        <div><b>T1</b>02/09</div>
+        <div><b>T2</b>14/10</div>
+        <div><b>T3</b>18/11</div>
+        <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+      </div>
+      <p class="foot-note">Módulo 13 — Potência em regime permanente senoidal. Exercícios da P3 2024 (2ª questão, itens a e b), do formulário P3 (p. 2, Questão 04) e dos Testes 3 e 5 de 2023 e Testes 5 e 6 de 2025. Todos os fasores em valores eficazes.</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

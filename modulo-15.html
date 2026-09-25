@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P3</div>
+      <a class="side-item" href="modulo-13.html">
+        <span class="side-num">13</span>
+        <span class="side-title">Potência em regime senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-14.html">
+        <span class="side-num">14</span>
+        <span class="side-title">Fator de potência e instalações</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">15</span>
+        <span class="side-title">Transformador ideal</span>
+      </a>
+      <a class="side-item" href="modulo-16.html">
+        <span class="side-num">16</span>
+        <span class="side-title">Bipórticos: z, y, h e ABCD</span>
+      </a>
+      <a class="side-item" href="modulo-17.html">
+        <span class="side-num">17</span>
+        <span class="side-title">Bode assintótico: critérios e erros</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P3 · Transformador ideal</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">O limite</a>
+        <a href="#relacoes">As duas relações</a>
+        <a href="#pontos-sinais">Pontos e sinais</a>
+        <a href="#reflexao">Reflexão de Z</a>
+        <a href="#limite">Do par acoplado ao TI</a>
+        <a href="#circuitos">TI no circuito</a>
+        <a href="#entrada">Impedância de entrada</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P3 · Módulo 15 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">Um elemento sem indutância nenhuma.</span> <span class="tone-b">Só duas razões e um sinal.</span></h1>
+        <p class="hero-sub">O transformador ideal é o par acoplado levado ao limite: \(k=1\) e \(L_1,L_2\to\infty\) com \(L_1/L_2\) fixo. Nesse limite as derivadas somem das relações constitutivas e o que sobra é puramente algébrico — a tensão é multiplicada por \(r\), a corrente é dividida por \(r\), e o produto das duas, que é potência, atravessa intacto. A conta é de uma linha. O que derruba a questão nunca é a conta: é o sinal, que depende de onde estão os pontos (•) e de como as setas foram arbitradas.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>15 · Transformador ideal</span>
+          <span><b>Pré-requisito</b>Módulo 10 — Acoplamento magnético</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>TRANSFORMADOR IDEAL</span>
+            <span>r = n₁/n₂</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M60 80 L230 80"/>
+                <path d="M60 220 L230 220"/>
+                <path d="M330 80 L500 80"/>
+                <path d="M330 220 L500 220"/>
+                <path d="M60 80 L60 220"/>
+                <path d="M500 80 L500 220"/>
+              </g>
+
+              <!-- bobina primária -->
+              <path d="M230 80 q 16 14 0 28 q 16 14 0 28 q 16 14 0 28 q 16 14 0 28 q 16 14 0 28"
+                    fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+              <!-- bobina secundária -->
+              <path d="M330 80 q -16 14 0 28 q -16 14 0 28 q -16 14 0 28 q -16 14 0 28 q -16 14 0 28"
+                    fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+              <!-- núcleo -->
+              <path d="M272 68 L272 232" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M288 68 L288 232" stroke="#4ade9a" stroke-width="2"/>
+
+              <circle cx="242" cy="92" r="4" fill="#f5b942"/>
+              <circle cx="318" cy="92" r="4" fill="#f5b942"/>
+
+              <text x="238" y="56" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">n₁ : n₂</text>
+
+              <path d="M120 66 L170 66" stroke="#f5b942" stroke-width="1.8"/>
+              <path d="M170 66 L161 61 L161 71 Z" fill="#f5b942"/>
+              <text x="136" y="54" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">Î₁</text>
+
+              <path d="M440 66 L390 66" stroke="#f5b942" stroke-width="1.8"/>
+              <path d="M390 66 L399 61 L399 71 Z" fill="#f5b942"/>
+              <text x="406" y="54" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">Î₂</text>
+
+              <path d="M100 206 L100 96" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+              <path d="M100 96 L95 106 L105 106 Z" fill="#f5b942"/>
+              <text x="70" y="156" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">V̂₁</text>
+
+              <path d="M460 206 L460 96" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/>
+              <path d="M460 96 L455 106 L465 106 Z" fill="#f5b942"/>
+              <text x="468" y="156" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">V̂₂</text>
+
+              <text x="150" y="264" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁ = r·V̂₂</text>
+              <text x="150" y="284" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">Î₂ = r·Î₁</text>
+              <text x="330" y="274" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁Î₁ = V̂₂Î₂</text>
+            </svg>
+          </div>
+          <div class="splane-readout">Duas razões e nada mais. Não há \(L\), não há \(M\), não há \(s\): a relação vale instantaneamente, em qualquer regime. Os dois pontos (•) marcam os terminais que se correspondem — mude um deles de lugar e os dois sinais mudam junto.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">15.1</span>
+    <h2>O que sobra quando o acoplamento vira perfeito e as indutâncias vão ao infinito</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>O <a href="modulo-10.html#trafo">módulo 10, seção 10.7</a> já apresentou o transformador ideal e a reflexão de impedâncias. Este módulo não repete aquilo: ele aprofunda. Aqui interessa <em>de onde</em> vêm as duas relações, <em>por que</em> o sinal muda com os pontos, <em>como</em> o TI aparece dentro de um sistema de malhas e <em>o que</em> ele faz com a impedância de entrada e com o fator de potência visto da fonte. Se a ideia básica ainda não estiver firme, leia a 10.7 antes.</p>
+
+    <p>O ponto de partida é o par acoplado. As relações constitutivas dele, em Laplace e com c.i.n., são</p>
+
+    <div class="eq-block">\[ \begin{bmatrix} V_1(s) \\ V_2(s) \end{bmatrix} = \begin{bmatrix} sL_1 & \pm s|M| \\ \pm s|M| & sL_2 \end{bmatrix} \begin{bmatrix} J_1(s) \\ J_2(s) \end{bmatrix} \]</div>
+
+    <p>e trazem \(s\) em todos os elementos: o par acoplado é um elemento dinâmico, com memória, que responde a derivada de corrente. Agora faça duas coisas ao mesmo tempo:</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">primeiro · \(k \to 1\)</span>
+        <p>Todo o fluxo produzido por uma bobina enlaça a outra. \(|M|=\sqrt{L_1L_2}\), e a matriz \(\mathbf L\) passa a ter determinante nulo — <b style="color:var(--ink)">singular</b>. As duas equações deixam de ser independentes.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">segundo · \(L_1,L_2 \to \infty\)</span>
+        <p>Com a razão \(L_1/L_2\) mantida fixa. A corrente de magnetização, que vale \(V_1/(sL_1)\), vai a zero. Some a única corrente que o TI "consome" por conta própria.</p>
+      </div>
+    </div>
+
+    <p>O que resta não tem indutância nenhuma. O elemento não armazena energia, não dissipa energia, não tem constante de tempo, não contribui com FCP alguma. Ele é <b style="color:var(--ink)">puramente algébrico</b>: multiplica a tensão por \(r\), divide a corrente por \(r\), e entrega do outro lado exatamente a potência que recebeu deste.</p>
+
+    <div class="callout"><b>Por que isso é bom para a prova.</b> Um elemento algébrico não muda a ordem do circuito. Ao substituir um par acoplado por um TI — como faz a Questão 01 do formulário — você não altera o grau do denominador de nenhuma função de rede. Ao refletir uma carga através dele, você fica com um circuito <em>sem</em> o elemento de dois enrolamentos e resolve por malhas comum. É o único elemento de dois acessos do curso que pode simplesmente desaparecer do desenho.</div>
+
+    <p>O preço é que toda a informação física do elemento ficou concentrada em um número, \(r\), e em um <em>sinal</em> — e o sinal não está em \(r\), está na figura. Por isso a seção <a href="#pontos-sinais">15.3</a> é a mais longa deste módulo.</p>
+  </section>
+
+  <section id="relacoes" class="panel src-prof">
+    <span class="eyebrow">15.2</span>
+    <h2>As duas relações, e por que a potência atravessa sem perder nada</h2>
+
+    <p>O curso define a <b style="color:var(--ink)">relação de transformação</b> \(r\) pela razão das tensões, que é igual à razão das espiras:</p>
+
+    <div class="eq-block">\[ \boxed{\; r \;=\; \frac{\hat V_1}{\hat V_2} \;=\; \frac{n_1}{n_2} \;=\; \frac{\hat I_2}{\hat I_1} \;} \]</div>
+
+    <p>Leia a corrente com cuidado: \(r\) aparece <em>invertido</em> nela. A tensão do lado 1 é \(r\) vezes a do lado 2; a corrente do lado 1 é a do lado 2 <em>dividida</em> por \(r\). Um transformador que eleva tensão abaixa corrente, na mesma proporção.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · gabarito Teste 5 P3 2025, Q4</span>
+      <p>Com o TI de relação \(1{:}10\) e os dois pontos no topo, o gabarito escreve as duas relações exatamente nesta forma antes de qualquer conta:</p>
+      <div class="eq-block">\[ \frac{\hat V_1}{\hat V_2} = \frac{n_1}{n_2} = \frac{1}{10}, \qquad \frac{\hat I_1}{\hat I_2} = +\frac{n_2}{n_1} = 10 \]</div>
+    </div>
+
+    <p>A consequência imediata é a que dá nome ao elemento. Multiplique as duas relações uma pela outra:</p>
+
+    <div class="eq-block">\[ \frac{\hat V_1}{\hat V_2}\cdot\frac{\hat I_1}{\hat I_2} \;=\; r \cdot \frac{1}{r} \;=\; 1 \quad\Longrightarrow\quad \boxed{\;\hat V_1 \hat I_1 \;=\; \hat V_2 \hat I_2\;} \]</div>
+
+    <p>A potência que entra pelo acesso 1 sai inteira pelo acesso 2. O transformador ideal <b style="color:var(--ink)">não consome e não armazena potência</b> — nem ativa, nem reativa. Ele só a transforma, trocando a proporção entre tensão e corrente.</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a mesma frase com o sinal explícito</span>
+      <p>Escrito na convenção do receptor <em>nos dois acessos</em> (setas de tensão e de corrente coerentes, corrente entrando pelo terminal \(+\) em cada lado), a frase "não consome potência" vira</p>
+      <div class="eq-block">\[ v_1 i_1 + v_2 i_2 \;=\; 0 \]</div>
+      <p>e é <em>daí</em> que sai a razão inversa das correntes. Não é uma convenção arbitrária: dado \(v_1 = r\,v_2\), a única forma de a soma acima ser nula é \(i_2 = -r\,i_1\). Quando o desenho põe as setas de outro jeito, a soma continua sendo zero — o que muda é qual das grandezas trocou de sinal, e o \(r\) herda esse sinal.</p>
+      <p>Repare também que \(v_1 i_1 + v_2 i_2 = 0\) vale <b style="color:var(--ink)">instante a instante</b>, não só em média. Um resistor tem média positiva; um indutor tem média nula mas oscila; o TI tem potência instantânea nula. É outra coisa.</p>
+    </div>
+
+    <table class="ltable">
+      <tr><th>Grandeza</th><th>Vai do lado 1 para o lado 2 multiplicada por</th><th>Do lado 2 para o lado 1</th></tr>
+      <tr><td>Tensão \(\hat V\)</td><td>\(1/r\)</td><td>\(r\)</td></tr>
+      <tr><td>Corrente \(\hat I\)</td><td>\(r\)</td><td>\(1/r\)</td></tr>
+      <tr><td>Impedância \(Z\)</td><td>\(1/r^2\)</td><td>\(r^2\)</td></tr>
+      <tr><td>Potência complexa \(S\)</td><td>\(1\) — atravessa intacta</td><td>\(1\)</td></tr>
+      <tr><td>Fator de potência</td><td>\(1\) — não muda</td><td>\(1\)</td></tr>
+    </table>
+
+    <p class="dim">As duas últimas linhas resolvem o Teste 4 de 2024 sozinhas: se a potência e o fator de potência atravessam o TI sem alteração, a relação \(10{:}1\) do enunciado é <em>irrelevante</em> para o valor de \(|S|\). Ver <a href="#exercicios">15.8</a>.</p>
+  </section>
+
+  <section id="pontos-sinais" class="panel src-prof">
+    <span class="eyebrow">15.3</span>
+    <h2>Pontos e setas: onde a questão se ganha ou se perde</h2>
+
+    <p>O formulário da P3 traz um bloco inteiro dedicado a isto, sob o título literal <b style="color:var(--ink)">"Setas de tensão são marcadas em CR."</b> — CR de <em>convenção do receptor</em>. A figura mostra um TI numa caixa tracejada, com \(n_1\) à esquerda e ponto no topo, \(n_2\) à direita e ponto embaixo, e <em>duas</em> arbitragens de setas sobrepostas, uma em azul e outra em vermelho. Cada arbitragem produz um par de relações, e as quatro caixas de resposta são estas:</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">arbitragem azul · tensões</span>
+        <div class="eq-block">\[ \frac{v_1}{v_2} = \frac{n_1}{n_2} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">arbitragem vermelha · tensões</span>
+        <div class="eq-block">\[ \frac{v_1}{v_2} = -\frac{n_1}{n_2} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">arbitragem azul · correntes</span>
+        <div class="eq-block">\[ \frac{j_1}{j_2} = -\frac{n_2}{n_1} \]</div>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">arbitragem vermelha · correntes</span>
+        <div class="eq-block">\[ \frac{j_1}{j_2} = \frac{n_2}{n_1} \]</div>
+      </div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P3, p. 1 col. direita</span>
+      <p>"O sinal das relações depende de como as setas de tensão e corrente foram arbitradas em relação aos pontos; as cores azul e vermelho correspondem às duas escolhas de sentido mostradas na figura."</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · lendo as quatro caixas</span>
+      <p>O formulário lista o resultado sem dizer como chegar nele. Vale a pena destrinchar, porque as quatro caixas não são quatro casos independentes — são <b style="color:var(--ink)">dois casos</b>, e em cada um os dois sinais andam juntos.</p>
+      <p>Na figura, o ponto do primário está em cima e o do secundário está embaixo. A arbitragem <em>azul</em> põe o \(+\) de \(v_1\) no topo (terminal pontuado) e o \(+\) de \(v_2\) embaixo (também pontuado), com as duas correntes entrando pelos terminais pontuados. É o caso canônico: ambas as grandezas referidas aos pontos, e os dois sinais saem positivos na tensão e negativo na corrente.</p>
+      <p>A arbitragem <em>vermelha</em> mantém o primário igual e vira <b style="color:var(--ink)">as duas referências do secundário</b>: \(+\) de \(v_2\) no topo (não pontuado) e \(j_2\) entrando pelo topo. Trocar o terminal de referência de um acesso troca o sinal de \(v_2\) <em>e</em> o sinal de \(j_2\) — daí os dois sinais mudarem simultaneamente. Note que a condição \(v_1j_1 + v_2j_2 = 0\) continua valendo nas duas arbitragens: as duas são CR–CR, como o título do bloco avisa.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">As quatro combinações, uma a uma</h3>
+
+    <p>Fixe o primário: ponto no topo, \(\hat I_1\) entrando pelo topo, \(+\) de \(\hat V_1\) no topo. Varie o secundário nas duas escolhas que a prova costuma fazer — onde está o ponto e para onde aponta \(\hat I_2\) —, com \(\hat V_2\) sempre desenhada com \(+\) no topo. Saem quatro casos:</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 560" xmlns="http://www.w3.org/2000/svg">
+        <!-- ============ CASO 1 ============ -->
+        <g>
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M40 60 L120 60"/><path d="M40 160 L120 160"/>
+            <path d="M210 60 L300 60"/><path d="M210 160 L300 160"/>
+          </g>
+          <path d="M120 60 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M210 60 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M156 50 L156 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <path d="M170 50 L170 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <circle cx="130" cy="70" r="4" fill="#f5b942"/>
+          <circle cx="200" cy="70" r="4" fill="#f5b942"/>
+          <path d="M55 46 L95 46" stroke="#f5b942" stroke-width="1.6"/><path d="M95 46 L87 42 L87 50 Z" fill="#f5b942"/>
+          <text x="66" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₁</text>
+          <path d="M285 46 L245 46" stroke="#f5b942" stroke-width="1.6"/><path d="M245 46 L253 42 L253 50 Z" fill="#f5b942"/>
+          <text x="258" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₂</text>
+          <path d="M52 152 L52 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M52 74 L48 82 L56 82 Z" fill="#f5b942"/>
+          <path d="M288 152 L288 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M288 74 L284 82 L292 82 Z" fill="#f5b942"/>
+          <text x="30" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₁</text>
+          <text x="294" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₂</text>
+          <text x="40" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1 · ponto em CIMA · Î₂ ENTRANDO</text>
+          <text x="40" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁ = +r·V̂₂    Î₁ = −Î₂/r</text>
+          <text x="40" y="232" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">CR nos dois acessos — caso canônico</text>
+        </g>
+
+        <!-- ============ CASO 2 ============ -->
+        <g transform="translate(360,0)">
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M40 60 L120 60"/><path d="M40 160 L120 160"/>
+            <path d="M210 60 L300 60"/><path d="M210 160 L300 160"/>
+          </g>
+          <path d="M120 60 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M210 60 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M156 50 L156 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <path d="M170 50 L170 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <circle cx="130" cy="70" r="4" fill="#f5b942"/>
+          <circle cx="200" cy="70" r="4" fill="#f5b942"/>
+          <path d="M55 46 L95 46" stroke="#f5b942" stroke-width="1.6"/><path d="M95 46 L87 42 L87 50 Z" fill="#f5b942"/>
+          <text x="66" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₁</text>
+          <path d="M245 46 L285 46" stroke="#f5b942" stroke-width="1.6"/><path d="M285 46 L277 42 L277 50 Z" fill="#f5b942"/>
+          <text x="258" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₂</text>
+          <path d="M52 152 L52 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M52 74 L48 82 L56 82 Z" fill="#f5b942"/>
+          <path d="M288 152 L288 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M288 74 L284 82 L292 82 Z" fill="#f5b942"/>
+          <text x="30" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₁</text>
+          <text x="294" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₂</text>
+          <text x="40" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2 · ponto em CIMA · Î₂ SAINDO</text>
+          <text x="40" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁ = +r·V̂₂    Î₁ = +Î₂/r</text>
+          <text x="40" y="232" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">acesso 2 em CG — é o caso das cargas</text>
+        </g>
+
+        <!-- ============ CASO 3 ============ -->
+        <g transform="translate(0,300)">
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M40 60 L120 60"/><path d="M40 160 L120 160"/>
+            <path d="M210 60 L300 60"/><path d="M210 160 L300 160"/>
+          </g>
+          <path d="M120 60 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M210 60 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M156 50 L156 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <path d="M170 50 L170 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <circle cx="130" cy="70" r="4" fill="#f5b942"/>
+          <circle cx="200" cy="150" r="4" fill="#f5b942"/>
+          <path d="M55 46 L95 46" stroke="#f5b942" stroke-width="1.6"/><path d="M95 46 L87 42 L87 50 Z" fill="#f5b942"/>
+          <text x="66" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₁</text>
+          <path d="M285 46 L245 46" stroke="#f5b942" stroke-width="1.6"/><path d="M245 46 L253 42 L253 50 Z" fill="#f5b942"/>
+          <text x="258" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₂</text>
+          <path d="M52 152 L52 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M52 74 L48 82 L56 82 Z" fill="#f5b942"/>
+          <path d="M288 152 L288 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M288 74 L284 82 L292 82 Z" fill="#f5b942"/>
+          <text x="30" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₁</text>
+          <text x="294" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₂</text>
+          <text x="40" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">3 · ponto EMBAIXO · Î₂ ENTRANDO</text>
+          <text x="40" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁ = −r·V̂₂    Î₁ = +Î₂/r</text>
+          <text x="40" y="232" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">é a arbitragem VERMELHA do formulário</text>
+        </g>
+
+        <!-- ============ CASO 4 ============ -->
+        <g transform="translate(360,300)">
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M40 60 L120 60"/><path d="M40 160 L120 160"/>
+            <path d="M210 60 L300 60"/><path d="M210 160 L300 160"/>
+          </g>
+          <path d="M120 60 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M210 60 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+          <path d="M156 50 L156 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <path d="M170 50 L170 170" stroke="#4ade9a" stroke-width="1.8"/>
+          <circle cx="130" cy="70" r="4" fill="#f5b942"/>
+          <circle cx="200" cy="150" r="4" fill="#f5b942"/>
+          <path d="M55 46 L95 46" stroke="#f5b942" stroke-width="1.6"/><path d="M95 46 L87 42 L87 50 Z" fill="#f5b942"/>
+          <text x="66" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₁</text>
+          <path d="M245 46 L285 46" stroke="#f5b942" stroke-width="1.6"/><path d="M285 46 L277 42 L277 50 Z" fill="#f5b942"/>
+          <text x="258" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₂</text>
+          <path d="M52 152 L52 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M52 74 L48 82 L56 82 Z" fill="#f5b942"/>
+          <path d="M288 152 L288 74" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/><path d="M288 74 L284 82 L292 82 Z" fill="#f5b942"/>
+          <text x="30" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₁</text>
+          <text x="294" y="116" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">V̂₂</text>
+          <text x="40" y="196" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">4 · ponto EMBAIXO · Î₂ SAINDO</text>
+          <text x="40" y="214" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁ = −r·V̂₂    Î₁ = −Î₂/r</text>
+          <text x="40" y="232" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">acesso 2 em CG</text>
+        </g>
+      </svg>
+      <div class="pz-legend">Primário fixo em todos os quadros: ponto no topo, \(\hat I_1\) entrando pelo topo, \(\hat V_1\) com \(+\) no topo. \(\hat V_2\) sempre desenhada com \(+\) no topo. O que varia é a altura do ponto do secundário e o sentido de \(\hat I_2\).</div>
+    </div>
+
+    <div class="callout"><b>A regra prática, em uma frase.</b> Tensão: o sinal é \(+r\) se os dois \(+\) estão nos terminais <em>correspondentes</em> (ambos pontuados ou ambos não pontuados), e \(-r\) se estão em terminais trocados. Corrente: o sinal é \(-1/r\) se as duas correntes <b>entram</b> pelos terminais correspondentes, e \(+1/r\) se uma entra e a outra sai. Tudo o mais é consequência.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o teste de sanidade de dez segundos</span>
+      <p>Depois de escrever as duas relações, cheque a potência. Se ambas as setas estiverem em CR, o produto \(v_1i_1 + v_2i_2\) tem de dar <b style="color:var(--ink)">zero</b>. Se um dos acessos estiver em convenção do gerador — corrente <em>saindo</em> pelo terminal \(+\) —, então a conta correta é \(v_1i_1 = v_2i_2\). Substituindo as duas relações que você acabou de escrever, uma das duas igualdades <em>tem</em> de fechar. Se nenhuma fecha, um dos sinais está errado, e você descobre isso em dez segundos em vez de descobrir no fim da questão.</p>
+      <p>Esse teste é o mesmo que separa o Teste 5 de 2025, Q2, das alternativas erradas: lá o gabarito anota, antes de qualquer conta, "\(v_1\) e \(i_1\) estão na convenção do <b style="color:var(--ink)">receptor</b>, \(v_2\) e \(i_2\) estão na convenção do <b style="color:var(--ink)">gerador</b>" — e só depois escolhe os sinais.</p>
+    </div>
+  </section>
+
+  <section id="reflexao" class="panel src-ext">
+    <span class="eyebrow">15.4</span>
+    <h2>Reflexão de impedâncias: por que \(r\) aparece ao quadrado</h2>
+
+    <p>Esta é a manobra que aparece em quase todo exercício de TI da P3. Uma carga \(Z_L\) ligada ao secundário é vista, do primário, como \(r^2 Z_L\). A dedução cabe em três linhas, a partir das duas relações e de mais nada.</p>
+
+    <p>Ligue \(Z_L\) no secundário, com \(\hat I_2\) <em>saindo</em> do transformador em direção à carga — que é como a carga sempre é desenhada. Então, no acesso 2, o TI está em convenção do gerador e a carga em convenção do receptor:</p>
+
+    <div class="eq-block">\[ \hat V_2 = Z_L\,\hat I_2 \]</div>
+
+    <p>A impedância vista do primário é, por definição, \(Z_e = \hat V_1/\hat I_1\). Substitua \(\hat V_1 = r\hat V_2\) e \(\hat I_1 = \hat I_2/r\):</p>
+
+    <div class="eq-block">\[ Z_e \;=\; \frac{\hat V_1}{\hat I_1} \;=\; \frac{r\,\hat V_2}{\hat I_2 / r} \;=\; r^2\,\frac{\hat V_2}{\hat I_2} \;=\; \boxed{\;r^2 Z_L\;} \]</div>
+
+    <p>Uma potência de \(r\) vem da tensão, outra vem da corrente, e elas se multiplicam. Não há mistério no quadrado — há dois fatores independentes. O caminho inverso é simétrico: uma impedância do primário vista do secundário vale \(Z_1/r^2\).</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 260" xmlns="http://www.w3.org/2000/svg">
+        <!-- ANTES -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M40 60 L60 60"/><path d="M40 60 L40 180"/><path d="M40 180 L130 180"/>
+          <path d="M100 60 L130 60"/>
+          <path d="M218 60 L290 60"/><path d="M218 180 L290 180"/>
+          <path d="M290 60 L290 92"/><path d="M290 148 L290 180"/>
+        </g>
+        <circle cx="40" cy="120" r="0" fill="none"/>
+        <rect x="60" y="48" width="40" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="60" y="40" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Z_p</text>
+        <path d="M130 60 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25 q 14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+        <path d="M218 60 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25 q -14 12 0 25" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+        <path d="M166 50 L166 190" stroke="#4ade9a" stroke-width="1.8"/>
+        <path d="M180 50 L180 190" stroke="#4ade9a" stroke-width="1.8"/>
+        <circle cx="140" cy="70" r="4" fill="#f5b942"/>
+        <circle cx="208" cy="70" r="4" fill="#f5b942"/>
+        <text x="146" y="34" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">1 : r⁻¹</text>
+        <rect x="278" y="92" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="308" y="124" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Z_L</text>
+        <path d="M236 46 L272 46" stroke="#f5b942" stroke-width="1.6"/><path d="M272 46 L264 42 L264 50 Z" fill="#f5b942"/>
+        <text x="244" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Î₂</text>
+        <path d="M78 96 L78 76" stroke="#f5b942" stroke-width="1.6"/><path d="M78 76 L74 84 L82 84 Z" fill="#f5b942"/>
+        <text x="46" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Z_e →</text>
+        <text x="110" y="226" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ANTES — dois circuitos, um TI no meio</text>
+
+        <!-- seta -->
+        <path d="M370 118 L430 118" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M430 118 L420 112 L420 124 Z" fill="#4ade9a"/>
+
+        <!-- DEPOIS -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M470 60 L490 60"/><path d="M470 60 L470 180"/><path d="M470 180 L640 180"/>
+          <path d="M530 60 L640 60"/><path d="M640 60 L640 92"/><path d="M640 148 L640 180"/>
+        </g>
+        <rect x="490" y="48" width="40" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="490" y="40" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">Z_p</text>
+        <rect x="628" y="92" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <text x="558" y="124" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">r²·Z_L</text>
+        <path d="M508 96 L508 76" stroke="#f5b942" stroke-width="1.6"/><path d="M508 76 L504 84 L512 84 Z" fill="#f5b942"/>
+        <text x="476" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Z_e →</text>
+        <text x="470" y="226" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">DEPOIS — malha única, sem TI:  Z_e = Z_p + r²Z_L</text>
+      </svg>
+      <div class="pz-legend">Refletir apaga o transformador do desenho. O que sobra é uma malha única que qualquer método do <a href="modulo-07.html">módulo 07</a> resolve.</div>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Duas consequências que a prova cobra</h3>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">1 · o \(r^2\) é brutal</span>
+        <p>Num TI \(1{:}10\), \(r = n_1/n_2 = 1/10\) e a carga do secundário chega ao primário <b style="color:var(--ink)">dividida por 100</b>. É exatamente o que a Q4 do Teste 5 de 2025 pede: \(Z_{eq} = Z_p + Z_L/100\). Um fator 10 na espira vira fator 100 na impedância — e é por isso que um erro de "para que lado estou refletindo" custa dois zeros, não um.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">2 · o capacitor de correção muda</span>
+        <p>Um capacitor \(C\) no secundário tem \(Z_C = 1/(j\omega C)\); refletido vale \(r^2/(j\omega C) = 1/\!\left(j\omega \tfrac{C}{r^2}\right)\) — comporta-se como <b style="color:var(--ink)">\(C/r^2\)</b> visto do primário. Logo, para produzir no primário o efeito de um capacitor \(C_1\), é preciso instalar \(C_2 = r^2 C_1\) no secundário. Fecha com a discussão de <a href="modulo-14.html#trafo-fp">14.6 — correção através do TI</a>.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o cuidado que derruba metade das reflexões</span>
+      <p><b style="color:var(--ink)">Só se reflete o que está inteiramente do outro lado do transformador.</b> A dedução acima usou \(\hat V_2 = Z_L \hat I_2\) — ou seja, exigiu que \(Z_L\) fosse percorrida pela <em>mesma</em> corrente \(\hat I_2\) e submetida à <em>mesma</em> tensão \(\hat V_2\) do enrolamento. Um elemento em série com o primário, como o \(Z_p\) da figura, não satisfaz isso: ele vê \(\hat I_1\), não \(\hat I_2\). Ele <b style="color:var(--ink)">fica onde está</b> e simplesmente soma com a impedância refletida.</p>
+      <p>A forma errada de lembrar disso é "multiplique tudo por \(r^2\)". A forma certa é: apague o TI, traga a rede do lado 2 inteira para o lado 1 escalando <em>todas</em> as impedâncias dela por \(r^2\) e <em>todas</em> as fontes de tensão dela por \(r\) (as de corrente, por \(1/r\)), e depois ligue esse bloco no ponto onde o primário estava. A rede do lado 1 não é tocada.</p>
+      <p>E há um caso em que refletir simplesmente não vale: quando existe acoplamento entre os dois lados <em>por fora</em> do TI — um fio comum, um elemento ligando primário a secundário, uma fonte vinculada que lê uma grandeza de um lado e atua no outro. Aí os dois lados não estão isolados, a reflexão perde sentido e é preciso manter o TI e escrever as duas relações como equações do sistema. Ver <a href="#circuitos">15.6</a>.</p>
+    </div>
+  </section>
+
+  <section id="limite" class="panel src-ext">
+    <span class="eyebrow">15.5</span>
+    <h2>Do par acoplado ao TI: a álgebra que faz as derivadas sumirem</h2>
+
+    <p>O <a href="modulo-10.html#k">módulo 10, seção 10.5</a> definiu o coeficiente de acoplamento</p>
+
+    <div class="eq-block">\[ k = \frac{|M|}{\sqrt{L_1L_2}}, \qquad 0 \le k \le 1 \]</div>
+
+    <p>e mostrou por que \(k\) não pode passar de 1. O caso \(k=1\) é o limite físico: todo o fluxo de uma bobina enlaça a outra. Aí</p>
+
+    <div class="eq-block">\[ |M| = \sqrt{L_1L_2} \quad\Longrightarrow\quad \det \mathbf L = L_1L_2 - M^2 = 0 \]</div>
+
+    <p>A matriz de indutâncias é <b style="color:var(--ink)">singular</b>. Isso tem uma tradução imediata: as duas equações constitutivas deixam de ser independentes, e a razão \(V_1/V_2\) passa a ser um número, não uma função das correntes. É exatamente o que a 1ª questão da P3 2025 faz caminhar nos itens a → c.</p>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">A dedução em quatro linhas</h3>
+
+    <p>Escreva as relações constitutivas em Laplace, com c.i.n. e efeito mútuo aditivo:</p>
+
+    <div class="eq-block">\[ V_1(s) = sL_1\,J_1(s) + s|M|\,J_2(s), \qquad V_2(s) = s|M|\,J_1(s) + sL_2\,J_2(s) \]</div>
+
+    <p>Monte a razão e substitua \(|M| = \sqrt{L_1L_2}\):</p>
+
+    <div class="eq-block">\[ \frac{V_1}{V_2} = \frac{sL_1 J_1 + s\sqrt{L_1L_2}\,J_2}{s\sqrt{L_1L_2}\,J_1 + sL_2 J_2} \]</div>
+
+    <p>Fatore \(\sqrt{L_1}\) do numerador e \(\sqrt{L_2}\) do denominador:</p>
+
+    <div class="eq-block">\[ \frac{V_1}{V_2} = \frac{s\sqrt{L_1}\,\big(\sqrt{L_1}J_1 + \sqrt{L_2}J_2\big)}{s\sqrt{L_2}\,\big(\sqrt{L_1}J_1 + \sqrt{L_2}J_2\big)} \]</div>
+
+    <p>O parêntese é idêntico em cima e embaixo. Ele cancela — e leva consigo o \(s\) e toda a dependência das correntes:</p>
+
+    <div class="eq-block">\[ \boxed{\; r = \frac{V_1(s)}{V_2(s)} = \sqrt{\frac{L_1}{L_2}} = \frac{L_1}{|M|} = \frac{|M|}{L_2} \;} \]</div>
+
+    <p>As três formas são a mesma, porque \(|M|=\sqrt{L_1L_2}\). Na prova, a mais rápida costuma ser \(r = L_1/|M|\), que evita raiz.</p>
+
+    <div class="callout"><b>O que <em>não</em> some com \(k=1\).</b> A razão de tensões vira constante, mas as indutâncias ainda são finitas — o par acoplado com \(k=1\) <b>não</b> é um TI. Ele ainda drena corrente de magnetização, ainda contribui com \(sL_1\) para a impedância de malha, e a impedância de entrada de um circuito com ele <em>não</em> é a reflexão pura \(r^2 Z_L\). É o que acontece na 1ª questão da P3 2025: \(r=2\), mas \(Z_e(s) = (s^2+4s+1)/(s^2+1)\), e não \(4/(sC)\). Só quando \(L_1,L_2\to\infty\) a corrente de magnetização vai a zero e a reflexão passa a valer exatamente.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que a álgebra é tão limpa</span>
+      <p>Com \(\det\mathbf L = 0\), a matriz \(\mathbf L\) tem posto 1 e pode ser escrita como o produto externo de um vetor por ele mesmo:</p>
+      <div class="eq-block">\[ \mathbf L = \begin{bmatrix} L_1 & \sqrt{L_1L_2} \\ \sqrt{L_1L_2} & L_2 \end{bmatrix} = \begin{bmatrix} \sqrt{L_1} \\ \sqrt{L_2} \end{bmatrix} \begin{bmatrix} \sqrt{L_1} & \sqrt{L_2} \end{bmatrix} \]</div>
+      <p>Logo \(\mathbf V = s\mathbf L\mathbf J = s\,\big(\sqrt{L_1}J_1 + \sqrt{L_2}J_2\big)\begin{bmatrix}\sqrt{L_1}\\ \sqrt{L_2}\end{bmatrix}\): o vetor \(\mathbf V\) é <em>sempre</em> paralelo a \([\sqrt{L_1},\sqrt{L_2}]^{\!\top}\), qualquer que seja \(\mathbf J\). É por isso que a razão \(V_1/V_2\) não depende das correntes — ela é a razão das componentes de um vetor fixo. O escalar que multiplica é a única liberdade que resta, e ele é o "fluxo comum" do núcleo.</p>
+      <p>Consequência prática para a prova: com \(k=1\), \(\mathbf L\) não tem inversa, e portanto <b style="color:var(--ink)">análise nodal não funciona</b> diretamente no par acoplado — ela precisaria de \(\mathbf L^{-1}\). Use malhas, como o gabarito de 2025 faz.</p>
+    </div>
+  </section>
+
+  <section id="circuitos" class="panel src-ext">
+    <span class="eyebrow">15.6</span>
+    <h2>TI dentro de um circuito: refletir ou escrever as duas equações</h2>
+
+    <p>Há exatamente duas estratégias, e a escolha errada custa tempo, não pontos — desde que você saiba quando cada uma vale.</p>
+
+    <div class="theorem-grid">
+      <div class="theorem-card">
+        <span class="tag">(i) refletir e apagar o TI</span>
+        <p>Traga tudo o que está de um lado para o outro — impedâncias por \(r^{\pm2}\), fontes de tensão por \(r^{\pm1}\), fontes de corrente por \(r^{\mp1}\) — e resolva um circuito de uma malha só, sem elemento de dois acessos. <b style="color:var(--ink)">Mais rápido</b> quando o que se pede é uma impedância de entrada, uma corrente do primário ou uma potência total.</p>
+      </div>
+      <div class="theorem-card">
+        <span class="tag">(ii) manter o TI e acrescentar duas equações</span>
+        <p>Trate \(\hat V_1,\hat V_2,\hat I_1,\hat I_2\) como quatro incógnitas e junte ao sistema de malhas/nós as duas relações do elemento. <b style="color:var(--ink)">Obrigatório</b> quando se pede uma grandeza do outro lado, quando há fontes ideais nos dois lados, ou quando a reflexão não vale.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Quando a reflexão falha.</b> A reflexão pressupõe que os dois lados só se comunicam pelo transformador. Se houver qualquer outro caminho — um nó comum entre primário e secundário, um elemento ligando os dois lados, uma fonte vinculada cuja grandeza de controle está do outro lado — a rede do lado 2 não é "uma carga" do TI, e refletir dá resposta errada. Nesses casos, estratégia (ii), sem discussão.</div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Fontes ideais nos dois lados e superposição</h3>
+
+    <p>O Teste 3 da P3 2024 é o exemplo canônico da estratégia (ii). O circuito tem uma fonte de <em>corrente</em> ideal \(I_e\) no primário, uma fonte de <em>tensão</em> ideal \(V_o\) no secundário, e o TI de \(1{:}2\) entre elas. Não há o que refletir: não existe uma carga passiva isolada de um lado. O que existe é um sistema com duas excitações.</p>
+
+    <p>O gabarito resolve de duas maneiras. A curta escreve a 2ª LK no secundário, substitui as duas relações do TI e termina. A longa usa <b style="color:var(--ink)">superposição</b>, e é instrutiva por um motivo específico:</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o que a superposição revela sobre o TI</span>
+      <p>Ao inativar a fonte de tensão (curto-circuito), sobra a fonte de corrente: a corrente \(I_e\) é imposta ao primário, atravessa para o secundário dividida por \(r\), cai sobre o resistor de 4 Ω e volta pelo TI como tensão. Resultado: \(V_1' = 1\cdot I_e\).</p>
+      <p>Ao inativar a fonte de corrente (circuito aberto), o primário fica em aberto — logo \(I_1 = 0\) e, pela relação de corrente, \(I_2'' = 0\) também. O resistor de 4 Ω não tem queda, e \(V_2'' = V_o\) inteiro. O TI transporta isso para o primário como \(V_1'' = V_o/2\).</p>
+      <p>A lição: <b style="color:var(--ink)">o TI transmite o "aberto" e o "curto" de um lado para o outro</b>. Primário em aberto força secundário em aberto; primário em curto força secundário em curto. Isso é consequência direta de as duas relações serem proporcionalidades puras, sem termo aditivo — não vale para o par acoplado com \(k&lt;1\), onde o secundário em aberto ainda produz tensão induzida (é o Teste 2 de 2024).</p>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">O TI na matriz de malhas</h3>
+
+    <p>Se você optar pela estratégia (ii) num circuito com muitas malhas, o TI <em>não</em> entra como um termo de impedância — ele não é uma impedância. Ele entra como duas linhas de vínculo. Com \(\hat I_1 = \hat I_a\) e \(\hat I_2 = -\hat I_b\) (correntes de malha), o sistema fica:</p>
+
+    <div class="eq-block">\[ \underbrace{\begin{bmatrix} Z_{aa} & Z_{ab} \\ Z_{ba} & Z_{bb} \end{bmatrix}}_{\text{malhas usuais}}\begin{bmatrix}\hat I_a\\ \hat I_b\end{bmatrix} + \begin{bmatrix} \hat V_1 \\ -\hat V_2 \end{bmatrix} = \begin{bmatrix}\hat E_a \\ \hat E_b\end{bmatrix}, \qquad \hat V_1 = r\hat V_2, \quad \hat I_2 = r\hat I_1 \]</div>
+
+    <p>São quatro equações e quatro incógnitas. Na prática, elimina-se \(\hat V_1\) e \(\hat V_2\) por substituição em duas linhas e o sistema volta a ter o tamanho original — e o que sobra é, invariavelmente, o mesmo resultado da reflexão. Faz sentido: a reflexão <em>é</em> essa eliminação, feita antes de escrever o sistema.</p>
+  </section>
+
+  <section id="entrada" class="panel src-ext">
+    <span class="eyebrow">15.7</span>
+    <h2>Impedância de entrada e o fator de potência visto da fonte</h2>
+
+    <p>A pergunta que fecha quase toda questão longa de TI é: <em>o que o gerador enxerga?</em> A resposta tem duas etapas, e é o caminho dos itens d) e e) da 1ª questão da P3 2025.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-box"><span class="big">Z<sub>e</sub>(s)</span><span class="small">impedância de entrada em Laplace — refletir ou resolver o sistema</span></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><span class="big">Ẑ<sub>e</sub> = Z<sub>e</sub>(jω)</span><span class="small">substituir s = jω na frequência da fonte</span></div>
+      <div class="flow-arrow"><span class="line"></span></div>
+      <div class="flow-box"><span class="big">fp = Re{Ẑ<sub>e</sub>}/|Ẑ<sub>e</sub>|</span><span class="small">indutivo se Im{Ẑ<sub>e</sub>} &gt; 0</span></div>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Etapa 1 — \(Z_e(s)\)</h3>
+
+    <p>Por definição, com c.i.n. e uma única fonte,</p>
+
+    <div class="eq-block">\[ Z_e(s) = \frac{E_s(s)}{J_1(s)} \]</div>
+
+    <p>onde \(J_1\) é a corrente que a fonte entrega. Se o elemento de dois acessos for um TI verdadeiro, a reflexão já dá a resposta direto:</p>
+
+    <div class="eq-block">\[ Z_e(s) = Z_{\text{série do primário}}(s) + r^2\,Z_L(s) \]</div>
+
+    <p>Se for um par acoplado — mesmo com \(k=1\) —, é preciso montar o sistema de malhas e usar Cramer, porque a corrente de magnetização ainda existe. Foi assim em 2025: o determinante da matriz de malhas entregou \(J_1(s)\) e a razão \(E_s/J_1\) veio depois.</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · leitura de \(Z_e(s)\) como FCP</span>
+      <p>\(Z_e(s)\) é uma função de rede como qualquer outra. Os <b style="color:var(--ink)">polos</b> de \(Z_e\) são os zeros de \(J_1/E_s\), isto é, as frequências em que a fonte não consegue injetar corrente — ressonâncias paralelas vistas da entrada. Os <b style="color:var(--ink)">zeros</b> de \(Z_e\) são as frequências em que a entrada parece um curto. Em 2025, \(Z_e(s) = (s^2+4s+1)/(s^2+1)\) tem polos em \(s = \pm j\): em \(\omega = 1\) rad/s a entrada é um aberto ideal. E, de fato, é a ressonância entre \(L_2 = 1\) H e \(C = 1\) F do secundário, refletida.</p>
+    </div>
+
+    <h3 style="margin-top:1.6rem;font-size:1.1rem">Etapa 2 — fp a partir de \(\hat Z_e\)</h3>
+
+    <p>Com a fonte em \(e_s(t) = E_{max}\cos(\omega t + \theta)\), faça \(s = j\omega\). A potência aparente complexa vista da fonte é</p>
+
+    <div class="eq-block">\[ S = \hat E_s\,\hat J_1^{*} = \big(\hat Z_e \hat J_1\big)\hat J_1^{*} = \hat Z_e\,\big|\hat J_1\big|^2 \]</div>
+
+    <p>O módulo \(|\hat J_1|^2\) é <b style="color:var(--ink)">real e positivo</b>. Logo \(S\) e \(\hat Z_e\) têm <em>a mesma fase</em>, e o fator de potência sai da impedância sozinha, sem precisar calcular corrente nenhuma:</p>
+
+    <div class="eq-block">\[ \boxed{\; f_p = \frac{P}{|S|} = \frac{\operatorname{Re}\{\hat Z_e\}}{|\hat Z_e|} = \cos\big(\angle \hat Z_e\big) \;} \]</div>
+
+    <div class="callout"><b>Indutivo ou capacitivo, sem ambiguidade.</b> O \(\cos\) é par: \(\cos(+60^\circ) = \cos(-60^\circ)\). O fp é um número entre 0 e 1 e não carrega o sinal. Quem carrega é o <b>sinal de \(\operatorname{Im}\{\hat Z_e\}\)</b>: positivo ⟹ carga indutiva (corrente atrasada); negativo ⟹ capacitiva (corrente adiantada). Escrever "fp = 0,35 indutivo" é resposta completa; escrever só "0,35" perde a metade qualitativa do item — e a P3 2025 pede explicitamente "indicando se indica carga capacitiva ou carga indutiva".</div>
+
+    <p class="dim">Como o TI não altera potência nem fator de potência (<a href="#relacoes">15.2</a>), o fp visto da fonte é o fp da carga refletida somada ao que houver em série no primário. Se não houver nada em série, o fp visto do primário é <em>exatamente</em> o da carga do secundário — o \(r^2\) multiplica parte real e parte imaginária pelo mesmo número real e não gira o ângulo.</p>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">15.8</span>
+    <h2>Exercícios de provas e testes</h2>
+    <p class="dim">Doze exercícios sobre o mesmo elemento visto de todos os ângulos: como limite do par acoplado, como refletor de impedâncias, como vínculo dentro de um sistema de malhas e como caminho para o fator de potência. Em todos eles, a primeira providência é olhar os pontos.</p>
+
+    <div class="q-intro">
+      <div><b>12 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>provas P3 2024 e 2025, formulário P3 e testes de 2023, 2024 e 2025</div>
+      <div><b>Foco</b>relação de transformação · convenção de sinais · reflexão de impedâncias · \(Z_e(s)\) e fp</div>
+    </div>
+
+    <div class="exercise-list">
+
+      <!-- ================= PROVA · P3 2025 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, itens a) a e)</span>De \(k=1\) até o fator de potência, em cinco passos</span>
+          <span class="q-prova">P3/2025 — 5,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1ª Questão (5,0 pontos).</b> É dado o transformador com indutâncias \(L_1 = 4\,\mathrm H\) e \(L_2 = 1\,\mathrm H\) nos enrolamentos e coeficiente de acoplamento \(k = 1\) em condições iniciais nulas (c.i.n.) como visto na Figura 1.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M120 70 L220 70"/><path d="M120 200 L220 200"/>
+              <path d="M340 70 L440 70"/><path d="M340 200 L440 200"/>
+            </g>
+            <circle cx="120" cy="70" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="120" cy="200" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="440" cy="70" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="440" cy="200" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+
+            <path d="M220 70 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M340 70 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+
+            <path d="M234 56 q 46 -26 92 0" fill="none" stroke="#4ade9a" stroke-width="1.8" stroke-dasharray="5 4"/>
+            <text x="262" y="34" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">k = 1</text>
+
+            <circle cx="232" cy="80" r="4.5" fill="#f5b942"/>
+            <circle cx="328" cy="80" r="4.5" fill="#f5b942"/>
+
+            <text x="168" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁ = 4 H</text>
+            <text x="360" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂ = 1 H</text>
+
+            <path d="M140 56 L190 56" stroke="#f5b942" stroke-width="1.8"/><path d="M190 56 L181 51 L181 61 Z" fill="#f5b942"/>
+            <text x="150" y="46" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₁(t)</text>
+            <path d="M420 56 L370 56" stroke="#f5b942" stroke-width="1.8"/><path d="M370 56 L379 51 L379 61 Z" fill="#f5b942"/>
+            <text x="386" y="46" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₂(t)</text>
+
+            <path d="M100 190 L100 84" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M100 84 L95 94 L105 94 Z" fill="#f5b942"/>
+            <text x="58" y="142" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+            <path d="M460 190 L460 84" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M460 84 L455 94 L465 94 Z" fill="#f5b942"/>
+            <text x="468" y="142" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+
+            <text x="240" y="256" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1</text>
+          </svg>
+          <div class="pz-legend">Os <b>dois pontos estão nos terminais superiores</b>, um de frente para o outro, e <b>as duas correntes entram pelos terminais pontuados</b>. Efeito mútuo <b>aditivo</b>: os termos fora da diagonal entram com sinal \(+\).</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(L_1 = 4\ \mathrm H\) · \(L_2 = 1\ \mathrm H\) · \(k = 1\) · c.i.n.
+          <br><b>Para os itens d) e e):</b> \(C = 1\ \mathrm F\) · \(R = 1\ \Omega\) · \(e_s(t) = 110\sqrt2\cos(t/2)\) (V,s).
+        </div>
+
+        <p><b style="color:var(--ink)">(0,5) a)</b> Determine a matriz das indutâncias do transformador dado.</p>
+        <p><b style="color:var(--ink)">(0,5) b)</b> Determine a matriz de impedâncias do transformador dado no domínio da frequência de Laplace.</p>
+        <p><b style="color:var(--ink)">(1,0) c)</b> Calcule a relação de transformação \(r = \dfrac{V_1(s)}{V_2(s)}\) e a apresente na sua expressão mais simplificada possível.</p>
+
+        <p>Em seguida: <em>o transformador dado é inserido no circuito da Figura 2 em que \(C = 1\,\mathrm F\), \(R = 1\,\Omega\) e c.i.n.</em></p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 70 L130 70"/><path d="M190 70 L250 70"/>
+              <path d="M60 230 L250 230"/>
+              <path d="M60 70 L60 108"/><path d="M60 152 L60 230"/>
+              <path d="M370 70 L540 70"/><path d="M370 230 L540 230"/>
+              <path d="M540 70 L540 126"/><path d="M540 154 L540 230"/>
+            </g>
+
+            <circle cx="60" cy="130" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="122" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="4" y="136" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <path d="M130 70 l 8 -12 l 12 24 l 12 -24 l 12 24 l 8 -12 l 8 0" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+            <text x="138" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R = 1 Ω</text>
+
+            <path d="M250 70 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 70 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M264 56 q 46 -24 92 0" fill="none" stroke="#4ade9a" stroke-width="1.8" stroke-dasharray="5 4"/>
+            <text x="292" y="34" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">k = 1</text>
+            <circle cx="262" cy="80" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="80" r="4.5" fill="#f5b942"/>
+            <text x="196" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁ = 4 H</text>
+            <text x="388" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂ = 1 H</text>
+
+            <path d="M204 56 L240 56" stroke="#f5b942" stroke-width="1.8"/><path d="M240 56 L231 51 L231 61 Z" fill="#f5b942"/>
+            <text x="206" y="46" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₁(t)</text>
+            <path d="M424 56 L388 56" stroke="#f5b942" stroke-width="1.8"/><path d="M388 56 L397 51 L397 61 Z" fill="#f5b942"/>
+            <text x="430" y="46" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₂(t)</text>
+
+            <g stroke="#4ade9a" stroke-width="2.8">
+              <line x1="518" y1="126" x2="562" y2="126"/>
+              <line x1="518" y1="154" x2="562" y2="154"/>
+            </g>
+            <text x="500" y="108" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C = 1 F</text>
+
+            <path d="M584 216 L584 112" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M584 112 L579 122 L589 122 Z" fill="#f5b942"/>
+            <text x="590" y="170" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+
+            <path d="M92 150 L92 96" stroke="#f5b942" stroke-width="1.6"/><path d="M92 96 L87 106 L97 106 Z" fill="#f5b942"/>
+            <text x="76" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Z_e(s)</text>
+
+            <text x="280" y="280" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 2</text>
+          </svg>
+          <div class="pz-legend">Mesma marcação de pontos da Figura 1: ambos no topo, ambas as correntes entrando por eles. \(R\) está <b>em série com o primário</b>; \(C\) fecha a malha do secundário. \(Z_e(s)\) é vista pelo gerador.</div>
+        </div>
+
+        <p><b style="color:var(--ink)">(2,0) d)</b> Calcule a impedância \(Z_e(s)\) observada pelo gerador.</p>
+        <p><b style="color:var(--ink)">(1,0) e)</b> Considerando a tensão de excitação \(e_s(t) = 110\sqrt2\cos\dfrac{t}{2}\) (V,s), calcule o fator de potência observado pelo gerador, indicando se indica carga capacitiva ou carga indutiva.</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — \(k=1\) fecha os itens a, b e c de graça; mas o \(k=1\) <em>não</em> transforma o par acoplado num TI, e por isso os itens d) e e) exigem o sistema de malhas completo, não a reflexão.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Item a) — a indutância mútua a partir de \(k\)</div>
+              <p>O gabarito parte da definição do coeficiente de acoplamento:</p>
+              <div class="eq-block">\[ |M| = k\sqrt{L_1L_2} = 1\cdot\sqrt{4\times 1} = \sqrt{4} \;\Longrightarrow\; |M| = 2\ \mathrm H \]</div>
+              <p>Considerando as marcas de polaridade e os sentidos das correntes — ambos os pontos no topo, ambas as correntes entrando por eles —, o efeito mútuo é <b style="color:var(--ink)">aditivo</b> e os termos fora da diagonal são \(+|M|\):</p>
+              <div class="eq-block">\[ \mathbf L = \begin{bmatrix} L_1 & |M| \\ |M| & L_2 \end{bmatrix} = \begin{bmatrix} 4 & 2 \\ 2 & 1 \end{bmatrix}\ \mathrm{(H)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Item b) — a matriz de impedâncias em Laplace</div>
+              <p>Com c.i.n., cada indutância vira \(sL\) e cada mútua vira \(s|M|\). A matriz de impedâncias é \(\mathbf Z(s) = s\mathbf L\):</p>
+              <div class="eq-block">\[ \mathbf Z(s) = \begin{bmatrix} 4s & 2s \\ 2s & s \end{bmatrix} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Verificação que o gabarito não escreve: a matriz é singular</div>
+              <p>Vale a conferência de um segundo, porque ela antecipa o item c):</p>
+              <div class="eq-block">\[ \det\mathbf L = L_1L_2 - |M|^2 = 4\cdot 1 - 2^2 = 0 \]</div>
+              <p>Determinante nulo é a assinatura de \(k=1\). É o que garante que \(V_1/V_2\) sairá como número puro no próximo item.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Item c) — a relação de transformação</div>
+              <p>As tensões sobre os enrolamentos são dadas por</p>
+              <div class="eq-block">\[ \begin{bmatrix} V_1(s) \\ V_2(s) \end{bmatrix} = \begin{bmatrix} 4s & 2s \\ 2s & s \end{bmatrix} \begin{bmatrix} J_1(s) \\ J_2(s) \end{bmatrix} \]</div>
+              <p>com relação de transformação</p>
+              <div class="eq-block">\[ r = \frac{V_1(s)}{V_2(s)} = \frac{4s\,J_1(s) + 2s\,J_2(s)}{2s\,J_1(s) + s\,J_2(s)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">A simplificação, escrita por extenso</div>
+              <p>O gabarito salta direto para \(r=2\). A passagem é esta: fatore \(2s\) do numerador e \(s\) do denominador.</p>
+              <div class="eq-block">\[ r = \frac{2s\big(2J_1(s) + J_2(s)\big)}{s\big(2J_1(s) + J_2(s)\big)} \]</div>
+              <p>O parêntese \(\big(2J_1 + J_2\big)\) é <b style="color:var(--ink)">idêntico</b> em cima e embaixo — é isso que \(\det\mathbf L=0\) garante — e cancela junto com o \(s\):</p>
+              <div class="eq-block">\[ r = \frac{2s}{s} = 2 \]</div>
+              <p>Confere com as três formas equivalentes da <a href="#limite">seção 15.5</a>:</p>
+              <div class="eq-block">\[ \sqrt{\frac{L_1}{L_2}} = \sqrt{\frac41} = 2, \qquad \frac{L_1}{|M|} = \frac42 = 2, \qquad \frac{|M|}{L_2} = \frac21 = 2 \quad\checkmark \]</div>
+              <div class="final-answer">\( r = 2 \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Item d) — o sistema de malhas</div>
+              <p>Aplicando a 2ª LK às malhas do primário e do secundário e inserindo as relações constitutivas, obtém-se o sistema:</p>
+              <div class="eq-block">\[ \begin{bmatrix} R + sL_1 & s|M| \\[2pt] s|M| & sL_2 + \dfrac{1}{sC} \end{bmatrix} \begin{bmatrix} J_1(s) \\ J_2(s) \end{bmatrix} = \begin{bmatrix} E_s(s) \\ 0 \end{bmatrix} \]</div>
+              <p>Substituindo \(R=1\), \(L_1=4\), \(|M|=2\), \(L_2=1\) e \(C=1\):</p>
+              <div class="eq-block">\[ \underbrace{\begin{bmatrix} 4s + 1 & 2s \\[2pt] 2s & s + \dfrac{1}{s} \end{bmatrix}}_{T(s)} \begin{bmatrix} J_1(s) \\ J_2(s) \end{bmatrix} = \begin{bmatrix} E_s(s) \\ 0 \end{bmatrix} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">O determinante — e o cancelamento que \(k=1\) provoca</div>
+              <div class="eq-block">\[ \det T(s) = (4s+1)\left(s + \frac1s\right) - (2s)(2s) \]</div>
+              <div class="eq-block">\[ = \underbrace{4s^2}_{\text{cancela}} + \frac{4s}{s} + s + \frac1s - \underbrace{4s^2}_{\text{cancela}} = s + 4 + \frac1s \]</div>
+              <div class="eq-block">\[ \det T(s) = \frac{s^2 + 4s + 1}{s} \]</div>
+              <p class="dim">No manuscrito os dois \(4s^2\) aparecem literalmente riscados. O cancelamento não é coincidência: ele é \(L_1L_2 - M^2 = 0\) reaparecendo dentro do determinante de malhas, e é o que derruba a ordem do circuito de 3 para 2.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Cramer para \(J_1(s)\)</div>
+              <div class="eq-block">\[ J_1(s) = \frac{s}{s^2+4s+1}\begin{vmatrix} E_s(s) & 2s \\[2pt] 0 & s + \dfrac1s \end{vmatrix} = \frac{s}{s^2+4s+1}\cdot E_s(s)\left(s+\frac1s\right) \]</div>
+              <div class="eq-block">\[ = \frac{s}{s^2+4s+1}\cdot E_s(s)\cdot\frac{s^2+1}{s} \;\Longrightarrow\; J_1(s) = \frac{s^2+1}{s^2+4s+1}\,E_s(s) \]</div>
+              <p class="dim">O fator \(s/(s^2+4s+1)\) na frente é \(1/\det T(s)\), já escrito com o \(s\) do denominador subido.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">A impedância de entrada</div>
+              <div class="eq-block">\[ Z_e(s) = \frac{E_s(s)}{J_1(s)} = \frac{E_s(s)}{\dfrac{s^2+1}{s^2+4s+1}E_s(s)} \]</div>
+              <div class="final-answer">\[ Z_e(s) = \frac{s^2 + 4s + 1}{s^2 + 1} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">10</span>
+            <div class="step-body">
+              <div class="step-title">O restante do gabarito do item d): \(J_2\), \(V_2\) e \(V_1\)</div>
+              <p>O gabarito completa o quadro, ainda que o item só peça \(Z_e\). Por Cramer,</p>
+              <div class="eq-block">\[ J_2(s) = \frac{s}{s^2+4s+1}\begin{vmatrix} 4s+1 & E_s(s) \\[2pt] 2s & 0 \end{vmatrix} = \frac{s}{s^2+4s+1}\big(-2s\,E_s(s)\big) = \frac{-2s^2}{s^2+4s+1}\,E_s(s) \]</div>
+              <p>Sobre o capacitor, \(V_2(s) = -\dfrac{1}{sC}J_2(s)\) (sinal porque \(J_2\) foi arbitrada entrando no transformador, logo <em>saindo</em> do capacitor pelo \(+\)):</p>
+              <div class="eq-block">\[ V_2(s) = -\frac1s\cdot\frac{-2s^2}{s^2+4s+1}E_s(s) = \frac{2s}{s^2+4s+1}\,E_s(s) \]</div>
+              <p>E \(V_1 = r V_2\), com \(r=2\) do item c):</p>
+              <div class="eq-block">\[ V_1(s) = \frac{4s}{s^2+4s+1}\,E_s(s) \]</div>
+              <p>Alternativamente, direto da constitutiva — e o cancelamento aparece de novo:</p>
+              <div class="eq-block">\[ V_1(s) = sL_1J_1 + s|M|J_2 = \frac{4s(s^2+1) - 4s\cdot s^2}{s^2+4s+1}E_s(s) = \frac{4s^3 + 4s - 4s^3}{s^2+4s+1}E_s(s) = \frac{4s}{s^2+4s+1}E_s(s) \;\checkmark \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">11</span>
+            <div class="step-body">
+              <div class="step-title">Item e) — \(\hat Z_e\) na frequência da fonte</div>
+              <p>De \(e_s(t) = 110\sqrt2\cos(t/2)\) lê-se \(\omega = 1/2\) rad/s, logo \(s = j/2\):</p>
+              <div class="eq-block">\[ \hat Z_e = \frac{\left(\frac{j}{2}\right)^2 + 4\cdot\frac{j}{2} + 1}{\left(\frac{j}{2}\right)^2 + 1} = \frac{-\frac14 + 2j + 1}{-\frac14 + 1} = \frac{\frac34 + 2j}{\frac34} \]</div>
+              <div class="eq-block">\[ \hat Z_e = 1 + \frac{2}{3/4}\,j = 1 + \frac83\,j \]</div>
+              <div class="final-answer">\( \hat Z_e = 1 + \tfrac83 j\ \Omega \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">12</span>
+            <div class="step-body">
+              <div class="step-title">De \(\hat Z_e\) para o fator de potência</div>
+              <p>A potência aparente complexa vista do gerador é</p>
+              <div class="eq-block">\[ P_{ap} = \hat E_s\,\hat J_1^{*} = \big(\hat Z_e\hat J_1\big)\hat J_1^{*} = \hat Z_e\,\big|\hat J_1\big|^2 = \big|\hat J_1\big|^2\left(1 + \frac83 j\right) \]</div>
+              <p>Como \(|\hat J_1|^2\) é real positivo, \(P_{ap}\) tem a fase de \(\hat Z_e\), cuja parte imaginária é positiva — <b style="color:var(--ink)">carga indutiva</b>. Então:</p>
+              <div class="eq-block">\[ f_p = \frac{P}{|P_{ap}|} = \frac{\operatorname{Re}\{\hat Z_e\}}{|\hat Z_e|} = \frac{1}{\sqrt{1 + \frac{64}{9}}} = \frac{1}{\sqrt{\frac{73}{9}}} = \frac{3}{\sqrt{73}} \]</div>
+              <div class="eq-block">\[ f_p = \frac{3}{8{,}5440} = 0{,}35112 \]</div>
+              <div class="final-answer">\( f_p = 0{,}35112 \) — carga <b>indutiva</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">13</span>
+            <div class="step-body">
+              <div class="step-title">Onde a tensão de 110 V ficou</div>
+              <p>Em nenhum lugar — e isso é proposital. O fator de potência é uma <em>razão</em> entre potências e depende só do ângulo de \(\hat Z_e\). A amplitude \(110\sqrt2\) determinaria \(|\hat J_1|\), \(P\) e \(|P_{ap}|\) separadamente, mas some na divisão. Do enunciado, o item e) usa apenas a <b style="color:var(--ink)">frequência</b> \(\omega = 1/2\). Se você gastou tempo calculando \(\hat J_1\), gastou à toa.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · duas leituras do manuscrito</span>
+            <p><b style="color:var(--ink)">(1)</b> Na matriz \(T(s)\) e dentro dos determinantes de Cramer, o que o manuscrito parece escrever como "\(s + 1/5\)" é na verdade <b>\(s + 1/s\)</b>: é o termo \(sL_2 + 1/(sC)\) com \(L_2 = 1\) H e \(C = 1\) F. A caligrafia do professor grafa o "s" de forma parecida com um "5" — o mesmo fenômeno aparece no Teste 2 de 2024, onde a matriz "5, 25 / 25, 45" é na verdade \(\begin{bmatrix}s&2s\\2s&4s\end{bmatrix}\). A conferência dimensional resolve: \(1/5\) seria adimensional e não poderia somar com \(s\) numa impedância.</p>
+            <p><b style="color:var(--ink)">(2)</b> O "935112" da última linha é <b>0,35112</b> — o zero arredondado colado à vírgula vira um "9" na digitalização. Confirma-se pela própria conta: \(3/\sqrt{73} = 0{,}351123\).</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O erro estrutural desta questão é achar que \(r=2\) autoriza refletir. <b style="color:var(--ink)">Não autoriza.</b> Com \(L_1,L_2\) finitos, o elemento não é um TI e a corrente de magnetização existe. Se alguém tivesse refletido o capacitor para o primário — \(r^2/(sC) = 4/s\) — teria obtido \(Z_e = 1 + 4/s\), que é errado: falta o polo em \(s=\pm j\), que é justamente a ressonância \(L_2C\) do secundário.</p>
+            <p>O segundo erro é de sinal no item d), passo 10: \(V_2 = -J_2/(sC)\), com menos, porque \(J_2\) foi arbitrada <em>entrando</em> no transformador e portanto saindo do capacitor pelo terminal \(+\) de \(v_2\). Quem escrever \(V_2 = +J_2/(sC)\) obtém \(V_1\) e \(V_2\) com o sinal trocado — e, no item e), continua acertando o fp, porque o fp não depende do sinal de \(V_2\). É um erro que só aparece se o item pedir a tensão.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PROVA · P3 2024 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Prova · 1ª questão, itens a), b) e c)</span>Par acoplado subtrativo: o limite de \(|M|\), a matriz e o Cramer</span>
+          <span class="q-prova">P3/2024 — 3,0 pt</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1ª Questão (3,0 pontos).</b> Considere o circuito da Figura 1.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 60 L140 60"/><path d="M210 60 L270 60"/><path d="M330 60 L440 60"/>
+              <path d="M60 260 L560 260"/>
+              <path d="M60 60 L60 98"/><path d="M60 142 L60 260"/>
+              <path d="M440 60 L560 60"/>
+              <path d="M440 60 L440 106"/><path d="M440 194 L440 260"/>
+              <path d="M560 60 L560 126"/><path d="M560 154 L560 260"/>
+            </g>
+
+            <circle cx="60" cy="120" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="140" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="2" y="126" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <!-- L1 horizontal -->
+            <path d="M140 60 q 12 -16 24 0 q 12 -16 24 0 q 12 -16 24 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="150" y="98" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁</text>
+            <circle cx="140" cy="60" r="4.5" fill="#f5b942"/>
+
+            <!-- R -->
+            <path d="M270 60 l 8 -12 l 12 24 l 12 -24 l 12 24 l 8 -12 l 8 0" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+            <text x="296" y="38" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+
+            <!-- L2 vertical -->
+            <path d="M440 106 q 16 14 0 28 q 16 14 0 28 q 16 14 0 28" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="396" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+            <circle cx="440" cy="194" r="4.5" fill="#f5b942"/>
+
+            <!-- acoplamento M -->
+            <path d="M142 44 C 240 -14, 430 34, 452 186" fill="none" stroke="#4ade9a" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <text x="300" y="18" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">M</text>
+
+            <!-- C -->
+            <g stroke="#4ade9a" stroke-width="2.8">
+              <line x1="538" y1="126" x2="582" y2="126"/>
+              <line x1="538" y1="154" x2="582" y2="154"/>
+            </g>
+            <text x="590" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+
+            <!-- correntes de malha -->
+            <path d="M300 150 a 34 34 0 1 1 20 26" fill="none" stroke="#f5b942" stroke-width="1.8"/>
+            <path d="M320 176 L310 172 L316 165 Z" fill="#f5b942"/>
+            <text x="286" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">î₁</text>
+
+            <path d="M490 150 a 34 34 0 1 1 20 26" fill="none" stroke="#f5b942" stroke-width="1.8"/>
+            <path d="M510 176 L500 172 L506 165 Z" fill="#f5b942"/>
+            <text x="476" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">î₂</text>
+
+            <text x="270" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1</text>
+          </svg>
+          <div class="pz-legend">Ponto (•) no <b>terminal esquerdo</b> de \(L_1\) e ponto no <b>terminal inferior</b> de \(L_2\). A corrente \(\hat I_1\), horária, <b>entra pelo ponto</b> de \(L_1\) e, ao descer por \(L_2\), <b>entra pelo terminal não marcado</b> — o acoplamento é <b>subtrativo</b> para \(\hat I_1\), o que justifica o \(-2X_M\) da resolução.</div>
+        </div>
+
+        <div class="given-box">
+          <b>Dados do item a).</b> \(e_s(t) = 15\cos(100t + 45^\circ)\) (V,s) · \(L_1 = 40\ \mathrm{mH}\) · \(L_2 = 60\ \mathrm{mH}\) · \(|M| = 30\ \mathrm{mH}\) · \(C = 2{,}5\ \mathrm{mF}\) · \(R = 10\ \Omega\).
+        </div>
+
+        <p><b style="color:var(--ink)">(1,0) a)</b> O valor da indutância mútua é fisicamente possível? <b>Justifique.</b></p>
+        <p><b style="color:var(--ink)">(1,0) b)</b> Supondo \(|M| = 25\ \mathrm{mH}\) e os demais valores do item a), as equações de análise de malhas, em RPS, podem ser escritas na forma</p>
+        <div class="eq-block">\[ \begin{bmatrix} A & -B \\ B & -C \end{bmatrix}\begin{bmatrix} \hat I_1 \\ \hat I_2\end{bmatrix} = \begin{bmatrix} 15\,\underline{/45^\circ} \\ 0 \end{bmatrix}, \]</div>
+        <p>sendo \(A\), \(B\) e \(C\) números complexos. <b>Preencha a seguinte tabela:</b></p>
+
+        <table class="ltable">
+          <tr><th></th><th>REAL</th><th>IMAGINÁRIO</th></tr>
+          <tr><td><b>A</b></td><td>?</td><td>?</td></tr>
+          <tr><td><b>B</b></td><td>?</td><td>?</td></tr>
+          <tr><td><b>C</b></td><td>?</td><td>?</td></tr>
+        </table>
+
+        <p><b style="color:var(--ink)">(1,0) c)</b> Para outros valores dos componentes, foi obtido o sistema matricial</p>
+        <div class="eq-block">\[ \begin{bmatrix} 5+2j & -3j \\ 3j & -2j \end{bmatrix}\begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix} 12\,\underline{/60^\circ} \\ 0\end{bmatrix}. \]</div>
+        <p>Obtenha \(\hat I_1\) e \(\hat I_2\).</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — três itens independentes: um teste de possibilidade física (\(k\le1\)), uma montagem de matriz onde o sinal da mútua decide tudo, e um Cramer mecânico com complexos.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Item a) — o teto de \(|M|\)</div>
+              <p>O limite físico é \(k\le1\), isto é, \(|M| \le \sqrt{L_1L_2}\). Com \(L_1 = 40\) mH e \(L_2 = 60\) mH:</p>
+              <div class="eq-block">\[ \sqrt{L_1L_2} = \sqrt{40\times 60} = \sqrt{2400}\ \mathrm{mH} = 48{,}99\ \mathrm{mH} \]</div>
+              <p>Como \(|M| = 30\ \mathrm{mH} \le 48{,}99\ \mathrm{mH}\), <b style="color:var(--ink)">o valor é fisicamente possível</b>.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A justificativa completa — via \(k\)</div>
+              <p>Uma justificativa mais forte, e que o enunciado pede ("justifique"), passa pelo coeficiente de acoplamento explicitamente:</p>
+              <div class="eq-block">\[ k = \frac{|M|}{\sqrt{L_1L_2}} = \frac{30}{48{,}99} = 0{,}6124 \]</div>
+              <p>Como \(0 \le k \le 1\) é satisfeito, o par é realizável — e, além disso, está longe do acoplamento perfeito: cerca de 61% do fluxo é comum às duas bobinas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Item b) — as reatâncias em \(\omega = 100\) rad/s</div>
+              <p>Com \(|M| = 25\) mH e \(\omega = 100\) rad/s:</p>
+              <div class="eq-block">\[ X_1 = \omega L_1 = 100\times 0{,}040 = 4\ \Omega \]</div>
+              <div class="eq-block">\[ X_2 = \omega L_2 = 100\times 0{,}060 = 6\ \Omega \]</div>
+              <div class="eq-block">\[ X_m = \omega|M| = 100\times 0{,}025 = 2{,}5\ \Omega \]</div>
+              <div class="eq-block">\[ X_C = \frac{-1}{\omega C} = \frac{-1}{100\times 2{,}5\times10^{-3}} = -4\ \Omega \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Malha 1, termo a termo</div>
+              <p>O gabarito escreve a 2ª LK da malha 1 com cada contribuição separada — \(L_1\) percorrida só por \(\hat I_1\), \(L_2\) percorrida por \(\hat I_1 - \hat I_2\), e os termos de mútua com sinal negativo porque o acoplamento é subtrativo:</p>
+              <div class="eq-block">\[ \hat E_s = R\hat I_1 + j(X_1 - X_m)\hat I_1 + jX_m\hat I_2 + j(X_2-X_m)\hat I_1 - jX_2\hat I_2 \]</div>
+              <p>Agrupando \(\hat I_1\) e \(\hat I_2\):</p>
+              <div class="eq-block">\[ \hat E_s = \big(R + j(X_1 + X_2 - 2X_m)\big)\hat I_1 - j(X_2 - X_m)\hat I_2 \]</div>
+              <p>Numericamente, \(X_1 + X_2 - 2X_m = 4 + 6 - 5 = 5\) e \(X_2 - X_m = 6 - 2{,}5 = 3{,}5\):</p>
+              <div class="eq-block">\[ \hat E_s = (10 + j5)\,\hat I_1 - j3{,}5\,\hat I_2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Malha 2</div>
+              <div class="eq-block">\[ jX_2(\hat I_1 - \hat I_2) - jX_m\hat I_1 = jX_C\,\hat I_2 \]</div>
+              <p>Passando tudo para a esquerda e agrupando:</p>
+              <div class="eq-block">\[ j(X_2 - X_m)\hat I_1 - j(X_2 + X_C)\hat I_2 = 0 \]</div>
+              <p>Com \(X_2 + X_C = 6 - 4 = 2\):</p>
+              <div class="eq-block">\[ j3{,}5\,\hat I_1 - j2\,\hat I_2 = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A tabela preenchida</div>
+              <div class="eq-block">\[ \begin{bmatrix} 10 + 5j & -3{,}5j \\ 3{,}5j & -2j \end{bmatrix}\begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix} 15\,\underline{/45^\circ}\\ 0\end{bmatrix} \]</div>
+              <table class="ltable">
+                <tr><th></th><th>REAL</th><th>IMAGINÁRIO</th></tr>
+                <tr><td><b>A</b></td><td>10</td><td>5</td></tr>
+                <tr><td><b>B</b></td><td>0</td><td>3,5</td></tr>
+                <tr><td><b>C</b></td><td>0</td><td>2</td></tr>
+              </table>
+              <div class="final-answer">\( A = 10 + j5 \quad\cdot\quad B = j3{,}5 \quad\cdot\quad C = j2 \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Item c) — o determinante principal</div>
+              <div class="eq-block">\[ \Delta = \begin{vmatrix} 5+2j & -3j \\ 3j & -2j \end{vmatrix} = (5+2j)(-2j) - (-3j)(3j) \]</div>
+              <div class="eq-block">\[ = -10j - 4j^2 + 9j^2 = -10j + 4 - 9 = -5 - 10j \]</div>
+              <div class="eq-block">\[ |\Delta| = \sqrt{5^2 + 10^2} = \sqrt{125} = 11{,}18 \]</div>
+              <div class="eq-block">\[ \angle\Delta = 180^\circ + \operatorname{arctg}\!\left(\frac{-10}{-5}\right)\ \text{no 3º quadrante} = -180^\circ + 63{,}44^\circ = -116{,}56^\circ \]</div>
+              <div class="eq-block">\[ \Delta = 11{,}18\ \underline{/-116{,}56^\circ} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Os determinantes das colunas substituídas</div>
+              <div class="eq-block">\[ \Delta_1 = \begin{vmatrix} 12\,\underline{/60^\circ} & -3j \\ 0 & -2j \end{vmatrix} = 12\,\underline{/60^\circ}\cdot(-2j) = 12\,\underline{/60^\circ}\cdot 2\,\underline{/-90^\circ} = 24\ \underline{/-30^\circ} \]</div>
+              <div class="eq-block">\[ \Delta_2 = \begin{vmatrix} 5+2j & 12\,\underline{/60^\circ} \\ 3j & 0 \end{vmatrix} = 0 - 3j\cdot 12\,\underline{/60^\circ} = 12\,\underline{/60^\circ}\cdot 3\,\underline{/-90^\circ} = 36\ \underline{/-30^\circ} \]</div>
+              <p class="dim">Os fatores "\(2\underline{/-90^\circ}\)" e "\(3\underline{/-90^\circ}\)" do manuscrito são, respectivamente, \(-2j\) e \(-3j\cdot(-1)\) na expansão — ambos com módulo positivo e fase \(-90^\circ\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">As duas correntes</div>
+              <div class="eq-block">\[ \hat I_1 = \frac{\Delta_1}{\Delta} = \frac{24\ \underline{/-30^\circ}}{11{,}18\ \underline{/-116{,}56^\circ}} = \frac{24}{11{,}18}\ \underline{/(-30^\circ + 116{,}56^\circ)} = 2{,}15\ \underline{/86{,}56^\circ} \]</div>
+              <div class="eq-block">\[ \hat I_2 = \frac{\Delta_2}{\Delta} = \frac{36\ \underline{/-30^\circ}}{11{,}18\ \underline{/-116{,}56^\circ}} = 3{,}22\ \underline{/86{,}56^\circ} \]</div>
+              <div class="final-answer">\( \hat I_1 = 2{,}15\ \underline{/86{,}56^\circ}\ \mathrm A \quad\cdot\quad \hat I_2 = 3{,}22\ \underline{/86{,}56^\circ}\ \mathrm A \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">10</span>
+            <div class="step-body">
+              <div class="step-title">Verificação de 10 segundos</div>
+              <p>A segunda linha do sistema é \(3j\hat I_1 - 2j\hat I_2 = 0\), ou seja, \(\hat I_2 = \tfrac32\hat I_1\) — mesma fase, razão \(1{,}5\). Confere:</p>
+              <div class="eq-block">\[ \frac{3{,}22}{2{,}15} = 1{,}498 \approx \frac32 \quad\checkmark \qquad 86{,}56^\circ = 86{,}56^\circ \quad\checkmark \]</div>
+              <p>Quando a segunda equação é homogênea, as duas correntes saem sempre <em>em fase</em> (ou em oposição). Se as fases tiverem dado diferentes, há erro de conta em algum lugar.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · dois desvios do original</span>
+            <p><b style="color:var(--ink)">(1)</b> O gabarito escreve \(\sqrt{L_1L_2} = 48{,}98\) quando o valor correto é \(\sqrt{2400} = 48{,}9898 \approx 48{,}99\) mH. É arredondamento para baixo, não erro de método — e não muda a conclusão do item, já que \(30 \le 48{,}98\) de qualquer forma.</p>
+            <p><b style="color:var(--ink)">(2)</b> A fonte da Figura 1 é \(e_s(t)\), e não \(e_1(t)\) como aparece em algumas versões do enunciado circuladas. O item a) e o gabarito usam \(e_s(t)\) consistentemente.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O item b) é onde a questão se decide, e o culpado é sempre o mesmo: o sinal da mútua. O ponto de \(L_1\) está à <em>esquerda</em> e o de \(L_2\) está <em>embaixo</em>; \(\hat I_1\) entra pelo ponto de \(L_1\) mas entra pelo terminal <em>não</em> marcado de \(L_2\). Efeito subtrativo, \(-2X_m\). Quem ler os pontos como "do mesmo lado" escreve \(+2X_m\), obtém \(A = 10 + j15\) e perde o item inteiro — porque \(B\) e \(C\) também mudam.</p>
+            <p>Um sinal útil de que o sinal está certo: com acoplamento subtrativo, \(X_1 + X_2 - 2X_m = 5\) é <em>menor</em> que \(X_1 + X_2 = 10\). A indutância equivalente em série cai, como o quadro de associação de indutores acoplados do formulário prevê para \(M&lt;0\).</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Questões do formulário</h3>
+
+      <!-- ================= FORMULÁRIO · Q01 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 01</span>Trocar as indutâncias por um TI e achar \(v(t)\) em RPS</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Questão 01.</b> Se trocarmos as indutâncias por um transformador ideal conforme a figura abaixo, a tensão \(v(t)\) em RPS vale, em V,s. Dado \(e_s(t) = 100\cos(2t)\).</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <rect x="228" y="46" width="164" height="210" fill="none" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="6 5"/>
+            <text x="292" y="38" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">TI</text>
+
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 80 L150 80"/><path d="M210 80 L250 80"/>
+              <path d="M60 240 L250 240"/>
+              <path d="M60 80 L60 118"/><path d="M60 162 L60 240"/>
+              <path d="M370 80 L500 80"/><path d="M370 240 L500 240"/>
+              <path d="M500 80 L500 126"/><path d="M500 194 L500 240"/>
+            </g>
+
+            <circle cx="60" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="2" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <rect x="150" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="158" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">5 Ω</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="266" y="284" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">1 : √2</text>
+
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="230" r="4.5" fill="#f5b942"/>
+
+            <path d="M238 108 L238 168" stroke="#f5b942" stroke-width="1.8"/><path d="M238 168 L233 159 L243 159 Z" fill="#f5b942"/>
+            <text x="200" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₁(t)</text>
+
+            <path d="M418 190 L418 118" stroke="#f5b942" stroke-width="1.8"/><path d="M418 118 L413 127 L423 127 Z" fill="#f5b942"/>
+            <text x="390" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₂(t)</text>
+
+            <rect x="488" y="126" width="24" height="68" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="520" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">10 Ω</text>
+
+            <path d="M566 200 L566 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M566 120 L561 130 L571 130 Z" fill="#f5b942"/>
+            <text x="574" y="166" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v(t)</text>
+          </svg>
+          <div class="pz-legend">TI de relação \(1{:}\sqrt2\), com o <b>ponto no topo do primário</b> e o <b>ponto na base do secundário</b> — pontos em lados opostos. \(i_1\) desce pelo primário; \(i_2\) sobe pelo secundário; \(v(t)\) é a tensão sobre os 10 Ω.</div>
+        </div>
+
+        <div class="given-box"><b>Dados.</b> \(e_s(t) = 100\cos(2t)\) V · resistor série de 5 Ω no primário · carga de 10 Ω no secundário · \(n_1{:}n_2 = 1{:}\sqrt2\), logo \(r = n_1/n_2 = 1/\sqrt2\).</div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — refletir a carga para o primário resolve a corrente; só depois se volta ao secundário pela relação de correntes, e o sinal final vem da 2ª LK, não do transformador.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A carga refletida</div>
+              <div class="eq-block">\[ Z_r = \left(\frac{n_1}{n_2}\right)^2\cdot Z_{\rm sec} = \left(\frac{1}{\sqrt2}\right)^2\cdot 10 = \frac{10}{2} = 5\ \Omega \]</div>
+              <p class="dim">O TI abaixa tensão (\(r&lt;1\)) e portanto <em>reduz</em> a impedância vista do primário. Coerente: \(r^2 = 1/2\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A malha do primário vira uma malha resistiva simples</div>
+              <div class="eq-block">\[ Z_p = 5 + Z_r = 5 + 5 = 10\ \Omega \]</div>
+              <p>Como \(Z_p\) é real, não há defasagem e a corrente acompanha a fonte:</p>
+              <div class="eq-block">\[ i_1 = \frac{e_s}{10} = \frac{100\cos(2t)}{10} = 10\cos(2t)\ \mathrm A \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">De volta ao secundário pela relação de correntes</div>
+              <div class="eq-block">\[ i_2 = \frac{n_1}{n_2}\,i_1 = \frac{1}{\sqrt2}\cdot 10\cos(2t) = 5\sqrt2\,\cos(2t)\ \mathrm A \]</div>
+              <p class="dim">A corrente foi <em>reduzida</em> por \(r = 1/\sqrt2\) — o lado de mais espiras tem menos corrente. \(5\sqrt2 \approx 7{,}07\) A.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A tensão sobre os 10 Ω</div>
+              <p>A seta de \(v(t)\) e a seta de \(i_2\) estão em oposição no ramo do resistor — \(i_2\) sobe, \(v\) tem \(+\) em cima. Logo, convenção do gerador para o resistor, e a lei de Ohm entra com sinal negativo:</p>
+              <div class="eq-block">\[ v(t) = -i_2(t)\cdot 10 = -10\cdot 5\sqrt2\cos(2t) \]</div>
+              <div class="final-answer">\[ v(t) = -50\sqrt2\,\cos(2t)\ \mathrm{(V,s)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conferência pela potência — o gabarito não faz</div>
+              <p>O TI não consome potência, então a potência que sai do primário tem de chegar inteira ao secundário. No primário, a potência entregue ao bloco refletido é</p>
+              <div class="eq-block">\[ P_1 = \frac{|Z_r|\,|\hat I_1|^2}{2}\Big|_{\text{pico}} = \frac{5\cdot 10^2}{2} = 250\ \mathrm W \]</div>
+              <p>No secundário, dissipada nos 10 Ω:</p>
+              <div class="eq-block">\[ P_2 = \frac{10\cdot(5\sqrt2)^2}{2} = \frac{10\cdot 50}{2} = 250\ \mathrm W \quad\checkmark \]</div>
+              <p>Igualdade exata, como tem de ser. Se os dois não baterem, o erro está na razão \(r\) ou no seu expoente.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>Dois erros disputam esta questão. O primeiro é <b style="color:var(--ink)">refletir para o lado errado</b>: \(Z_r = r^2 Z_{\rm sec}\) traz do 2 para o 1; quem usar \(Z_{\rm sec}/r^2 = 20\ \Omega\) obtém \(Z_p = 25\) e \(i_1 = 4\cos2t\). A checagem mental é: \(r = n_1/n_2 = 1/\sqrt2 &lt; 1\), o primário tem <em>menos</em> espiras, logo o primário vê uma impedância <em>menor</em> — 5 Ω, não 20.</p>
+            <p>O segundo é o <b style="color:var(--ink)">sinal de \(v(t)\)</b>, e ele não vem do transformador: vem de \(i_2\) e \(v\) estarem arbitradas em oposição no ramo do resistor. O transformador entra só nos módulos. Em prova, o enunciado costuma valer o mesmo ponto com ou sem o sinal — mas o desenho é explícito, e a resposta em caixa traz o menos.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= FORMULÁRIO · Q02 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 02</span>Achar \(r\) a partir de um módulo de impedância — e a questão que o original não termina</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Questão 02.</b> Obtenha a razão de espiras \(r = n_1/n_2\) para que a nova impedância de entrada \(Z_{e_1}(j\omega)\) tenha módulo em \(\omega = 1\) rad/s igual a \(|Z_{e_1}(j1)| = 10\ \Omega\).</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 80 L150 80"/><path d="M210 80 L250 80"/>
+              <path d="M60 240 L250 240"/>
+              <path d="M60 80 L60 118"/><path d="M60 162 L60 240"/>
+              <path d="M370 80 L440 80"/><path d="M500 80 L560 80"/>
+              <path d="M370 240 L560 240"/>
+              <path d="M560 80 L560 126"/><path d="M560 154 L560 240"/>
+            </g>
+
+            <circle cx="60" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="2" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <rect x="150" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="154" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">4/5 Ω</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="266" y="284" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">n₁ : n₂</text>
+
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942"/>
+
+            <rect x="440" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="452" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">20 Ω</text>
+
+            <g stroke="#4ade9a" stroke-width="2.8">
+              <line x1="538" y1="126" x2="582" y2="126"/>
+              <line x1="538" y1="154" x2="582" y2="154"/>
+            </g>
+            <text x="590" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">0,25 F</text>
+
+            <path d="M100 152 L100 100" stroke="#f5b942" stroke-width="1.8"/><path d="M100 100 L95 109 L105 109 Z" fill="#f5b942"/>
+            <text x="68" y="178" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">Z_e₁(jω)</text>
+          </svg>
+          <div class="pz-legend">Resistor de \(4/5\ \Omega\) em série com o primário; no secundário, 20 Ω em série com um capacitor de 0,25 F. \(Z_{e_1}\) é vista da fonte. A figura original não desenha os pontos — e, neste problema, não faz diferença: só entram módulos.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a incógnita é \(r\), e ela aparece só dentro de \(r^2\). Trate \(u = r^2\) e o problema vira uma equação do 2º grau; a raiz negativa é descartada por ser \(r^2\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A impedância do secundário em \(\omega = 1\)</div>
+              <div class="eq-block">\[ Z_{\rm sec} = 20 + \frac{1}{j\omega C} = 20 - \frac{j}{\omega C} = 20 - \frac{j}{1\times 0{,}25} = 20 - 4j\ \Omega \]</div>
+              <p>Fatorando o 4, que vai facilitar o resto:</p>
+              <div class="eq-block">\[ Z_{\rm sec} = 4(5 - j) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Refletindo para o primário</div>
+              <div class="eq-block">\[ Z_r = r^2\cdot Z_{\rm sec} = r^2\left(20 - \frac{j}{\omega C}\right) = 4r^2\,(5 - j) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A impedância de entrada</div>
+              <div class="eq-block">\[ Z_p = \frac45 + 4r^2(5-j) = 4\left(\frac15 + 5r^2 - r^2 j\right) \]</div>
+              <p>Separando parte real e imaginária:</p>
+              <div class="eq-block">\[ \operatorname{Re}\{Z_{e_1}\} = 4\left(\frac15 + 5r^2\right), \qquad \operatorname{Im}\{Z_{e_1}\} = -4r^2 \]</div>
+              <div class="eq-block">\[ |Z_p| = |Z_{e_1}| = \sqrt{\left(4\left(\frac15 + 5r^2\right)\right)^2 + \left(-4r^2\right)^2} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Impondo o módulo e chegando à biquadrada</div>
+              <div class="eq-block">\[ |Z_{e_1}|^2 = 10^2 = 4^2\left(\frac{1}{25} + 2r^2 + 25r^4 + r^4\right) \]</div>
+              <p>Dividindo por 16 e reorganizando:</p>
+              <div class="eq-block">\[ \frac{1}{25} + 2r^2 + 26r^4 = \frac{100}{16} = 6{,}25 \]</div>
+              <div class="eq-block">\[ 26r^4 + 2r^2 - \frac{621}{100} = 0 \]</div>
+              <p class="dim">Confere: \(6{,}25 - 0{,}04 = 6{,}21 = 621/100\). É aqui que o formulário para.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Completando a questão — o original não faz isto</div>
+              <p>Substituição \(u = r^2\), com \(u &gt; 0\):</p>
+              <div class="eq-block">\[ 26u^2 + 2u - 6{,}21 = 0 \]</div>
+              <div class="eq-block">\[ u = \frac{-2 \pm \sqrt{4 + 4\cdot 26\cdot 6{,}21}}{2\cdot 26} = \frac{-2 \pm \sqrt{4 + 645{,}84}}{52} = \frac{-2 \pm \sqrt{649{,}84}}{52} \]</div>
+              <div class="eq-block">\[ \sqrt{649{,}84} = 25{,}4920 \;\Longrightarrow\; u = \frac{-2 + 25{,}4920}{52} = \frac{23{,}4920}{52} = 0{,}451769 \]</div>
+              <p>A outra raiz, \(u = -0{,}5287\), é descartada: \(u = r^2\) não pode ser negativo. Então</p>
+              <div class="eq-block">\[ r = \sqrt{0{,}451769} = 0{,}67214 \]</div>
+              <div class="final-answer">\( r = \dfrac{n_1}{n_2} \approx 0{,}672 \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Verificação numérica do resultado</div>
+              <div class="eq-block">\[ Z_r = 4r^2(5-j) = 4(0{,}45177)(5-j) = 9{,}0354 - 1{,}8071\,j \]</div>
+              <div class="eq-block">\[ Z_{e_1} = 0{,}8 + 9{,}0354 - 1{,}8071\,j = 9{,}8354 - 1{,}8071\,j \]</div>
+              <div class="eq-block">\[ |Z_{e_1}| = \sqrt{96{,}735 + 3{,}266} = \sqrt{100{,}001} = 10{,}00\ \Omega \quad\checkmark \]</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · o original para no meio</span>
+            <p>A Questão 02 do formulário <b style="color:var(--ink)">termina na equação biquadrada</b> \(26r^4 + 2r^2 - 621/100 = 0\): não há valor final de \(r\) nem caixa de resposta na folha. A resolução dos passos 05 e 06 acima é complemento externo. Se essa questão cair em prova, o ponto está na montagem — mas o item vai pedir o número, e vale ter o \(0{,}672\) na ponta da língua como ordem de grandeza.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O erro aritmético frequente está na expansão de \(\left(\frac15 + 5r^2\right)^2\): dá \(\frac{1}{25} + 2r^2 + 25r^4\), com <b style="color:var(--ink)">\(2r^2\)</b> no termo cruzado (\(2\cdot\frac15\cdot5 = 2\)), não \(\frac{10}{5}r^2\) mal calculado nem \(r^2\). Somado ao \(r^4\) da parte imaginária, sai o \(26r^4\).</p>
+            <p>O erro conceitual é esquecer que o resistor de \(4/5\ \Omega\) <b style="color:var(--ink)">não é refletido</b> — está em série com o primário, do lado de cá do transformador. Multiplicar ele também por \(r^2\) é o deslize previsto na <a href="#reflexao">seção 15.4</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= FORMULÁRIO · Q03 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 03</span>Impedância vista em a–b, e uma caixa de resposta que não fecha</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p><b style="color:var(--ink)">Questão 03.</b> A figura apresenta um transformador ideal com \(r = \dfrac{n_1}{n_2} = \sqrt5\). A impedância [dessa rede] vista nos terminais \(a\) e \(b\) é</p>
+        <p class="dim">A redação "A impedância nessa vista nos terminais \(a\) e \(b\) é" está assim no original; falta palavra, provavelmente "dessa rede".</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M110 80 L250 80"/><path d="M110 240 L250 240"/>
+              <path d="M110 80 L110 116"/><path d="M110 204 L110 240"/>
+              <path d="M370 80 L500 80"/><path d="M370 240 L500 240"/>
+            </g>
+
+            <rect x="86" y="116" width="48" height="88" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="14" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">10 + j5</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="264" y="284" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">n₁ : n₂</text>
+            <text x="286" y="44" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="13">TI</text>
+
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942"/>
+
+            <circle cx="500" cy="80" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="500" cy="240" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="516" y="86" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="16">a</text>
+            <text x="516" y="246" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="16">b</text>
+
+            <path d="M546 200 L546 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M546 120 L541 130 L551 130 Z" fill="#f5b942"/>
+            <text x="554" y="166" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Z_ab</text>
+          </svg>
+          <div class="pz-legend">A impedância \(10 + j5\) está em paralelo com o <b>primário</b>. Os terminais \(a\) e \(b\) são os do <b>secundário</b>, abertos. Olha-se, portanto, <b>do secundário para o primário</b> — reflexão no sentido \(1 \to 2\), divisão por \(r^2\).</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a única decisão da questão é o <em>sentido</em> da reflexão. Olhando de \(a\)–\(b\), você está no lado 2; o que se vê do lado 1 chega dividido por \(r^2\), não multiplicado.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Reflexão do primário para o secundário</div>
+              <p>A relação é \(Z_2 = Z_1/r^2\), ou, equivalentemente, \(Z_2 = (n_2/n_1)^2 Z_1\). O gabarito escreve na segunda forma:</p>
+              <div class="eq-block">\[ Z_r = \left(\frac{n_2}{n_1}\right)^2\cdot(10 + j5) = \left(\frac{1}{\sqrt5}\right)^2\cdot 5(2 + j) \]</div>
+              <div class="eq-block">\[ = \frac15\cdot 5(2+j) = 2 + j\ \Omega \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Nada mais entra na conta</div>
+              <p>Não há impedância no secundário e o primário só tem o bloco \(10+j5\) em paralelo com o enrolamento. Logo, o que se vê em \(a\)–\(b\) é exatamente a impedância refletida — sem soma com nada:</p>
+              <div class="eq-block">\[ Z_{ab} = Z_r = 2 + j\ \Omega \]</div>
+              <div class="final-answer">\( Z_{ab} = 2 + j\ \Omega \)</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Verificação de coerência</div>
+              <p>\(r = \sqrt5 &gt; 1\) significa \(n_1 &gt; n_2\): o secundário tem <em>menos</em> espiras, logo vê uma impedância <em>menor</em>. De \(|10+j5| = 11{,}18\) para \(|2+j| = 2{,}236\) — razão \(5\), que é \(r^2\). \(\checkmark\)</p>
+              <p>O ângulo não muda: \(\operatorname{arctg}(5/10) = \operatorname{arctg}(1/2) = 26{,}57^\circ\) nos dois casos. Dividir por um real positivo não gira o fasor — é a razão pela qual <b style="color:var(--ink)">o TI não altera o fator de potência</b>.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · a inconsistência do original, sem escolher lado em silêncio</span>
+            <p>O formulário apresenta o desenvolvimento acima, chegando a \(Z_r = 2 + j\ \Omega\), e em seguida uma caixa de resposta com</p>
+            <div class="eq-block">\[ \boxed{Z_{ab} = 5 + j\ \Omega} \]</div>
+            <p><b style="color:var(--ink)">Os dois valores não batem</b>, e a folha não explica a passagem de um para o outro. Não há, no enunciado transcrito, nenhum elemento adicional que pudesse somar \(3\) à parte real: o secundário está aberto e o primário tem apenas o bloco \(10+j5\).</p>
+            <p>Qual dos dois é consistente com o enunciado: <b style="color:var(--ink)">\(2 + j\ \Omega\)</b>. Três argumentos independentes apontam para ele. (1) É o que a própria linha de cálculo da folha produz. (2) A razão dos módulos, \(11{,}18/2{,}236 = 5 = r^2\), é exatamente a reflexão esperada; \(5+j\) daria razão \(2{,}19\), que não é \(r^2\) nem \(1/r^2\) nem nada relacionado a \(\sqrt5\). (3) O Teste 1 da P3 2023 é a mesma questão com outros números — \(r=\sqrt2\), \(Z_1 = 8+j4\) — e a resposta oficial lá é \(Z_2 = Z_1/r^2 = 4+j2\), sem termo extra. O procedimento é idêntico.</p>
+            <p>A hipótese mais econômica é que o "5" da caixa seja resíduo de colagem — o \(5\) que aparece fatorado em \(5(2+j)\) na linha acima, ou um recorte de outra questão, já que o formulário é uma colagem de gabaritos de provas diferentes. <b>Use \(2+j\ \Omega\).</b> Mas saiba que a folha traz \(5+j\), e não se assuste ao reencontrá-lo.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O erro de reflexo é multiplicar por \(r^2\) quando se deve dividir: \(\sqrt5^2\cdot(10+j5) = 50 + j25\), que nem está entre as opções plausíveis. O antídoto é sempre verbalizar a pergunta: "estou <em>em qual lado</em> e olhando <em>para qual lado</em>?". Em \(a\)–\(b\) você está no lado 2 olhando para o lado 1 — divide por \(r^2\).</p>
+            <p>O segundo antídoto é o teste do módulo do passo 03: a razão entre o módulo original e o refletido tem de ser exatamente \(r^2 = 5\). Se der qualquer outro número, o expoente ou o sentido estão errados.</p>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+      <!-- ================= TESTE 1 · P3 2023 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 1 · Questão única</span>Reflexão do primário para o secundário, com dedução formal</span>
+          <span class="q-prova">Teste 1 · P3/2023</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1 –</b> A Figura 5 apresenta um transformador ideal com \(r = \dfrac{n_1}{n_2} = \sqrt2\). A impedância "vista" nos terminais \(a\) e \(b\) é (em \(\Omega\)):</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M110 80 L250 80"/><path d="M110 240 L250 240"/>
+              <path d="M110 80 L110 116"/><path d="M110 204 L110 240"/>
+              <path d="M370 80 L500 80"/><path d="M370 240 L500 240"/>
+            </g>
+            <rect x="86" y="116" width="48" height="88" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="24" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">8 + j4</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="264" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">n₁ : n₂</text>
+
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942" opacity="0.35"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942" opacity="0.35"/>
+            <text x="216" y="284" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">pontos não desenhados no original — só módulos entram</text>
+
+            <path d="M216 108 L252 108" stroke="#f5b942" stroke-width="1.6"/><path d="M252 108 L244 104 L244 112 Z" fill="#f5b942"/>
+            <text x="220" y="130" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₁</text>
+            <path d="M404 108 L368 108" stroke="#f5b942" stroke-width="1.6"/><path d="M368 108 L376 104 L376 112 Z" fill="#f5b942"/>
+            <text x="394" y="130" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₂</text>
+
+            <circle cx="500" cy="80" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="500" cy="240" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <text x="516" y="86" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="16">a</text>
+            <text x="516" y="246" fill="#e7ede9" font-family="IBM Plex Mono, monospace" font-size="16">b</text>
+          </svg>
+          <div class="pz-legend">Laço fechado no primário com a impedância \(8 + j4\); terminais \(a\) e \(b\) abertos no secundário. A figura original não traz pontos de polaridade.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(16 + j8\)</li>
+          <li data-alt="b">\(32 + j8\)</li>
+          <li data-alt="c">\(10 + j\)</li>
+          <li data-alt="d">\(2 + j\)</li>
+          <li data-alt="e">\(4 + j2\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o gabarito não usa a "regrinha" \(Z/r^2\): ele a deduz das três equações do circuito. Vale seguir o caminho longo uma vez, porque é ele que mostra de onde vem cada sinal.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">As três relações disponíveis</div>
+              <p>"A relação de transformação do transformador ideal é \(r = \hat V_1/\hat V_2 = \sqrt2\), com tensão \(\hat V_1\) no primário e \(\hat V_2\) no secundário. Foi dada a impedância no primário \(Z_1 = 8 + j4\ (\Omega)\). Temos:"</p>
+              <div class="eq-block">\[ \frac{\hat V_1}{\hat V_2} = r, \qquad \frac{\hat I_1}{\hat I_2} = -\frac1r, \qquad \hat V_1 = -Z_1\,\hat I_1 \]</div>
+              <p class="dim">O sinal em \(\hat V_1 = -Z_1\hat I_1\) vem de \(Z_1\) estar em <em>laço fechado</em> com o primário: a corrente que sai do enrolamento é a que entra na impedância.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Substituindo as duas primeiras na terceira</div>
+              <div class="eq-block">\[ r\,\hat V_2 = -Z_1\left(-\frac1r\right)\hat I_2 \]</div>
+              <p>"ou"</p>
+              <div class="eq-block">\[ \hat V_2 = \frac{Z_1}{r^2}\,\hat I_2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A impedância vista em a–b</div>
+              <p>Como \(Z_2 = \dfrac{\hat V_2}{\hat I_2}\), obtemos</p>
+              <div class="eq-block">\[ Z_2 = \frac{Z_1}{r^2} = \frac{8 + j4}{(\sqrt2)^2} = \frac{8+j4}{2} \]</div>
+              <div class="final-answer">\( Z_2 = 4 + j2\ \Omega \) — alternativa <b>e)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Lendo as alternativas erradas — cada uma é um erro nomeado</div>
+              <table class="ltable">
+                <tr><th>Alt.</th><th>Valor</th><th>Erro que produz esse valor</th></tr>
+                <tr><td>a)</td><td>\(16+j8\)</td><td>Multiplicou por \(r^2 = 2\) em vez de dividir — refletiu no sentido errado.</td></tr>
+                <tr><td>b)</td><td>\(32+j8\)</td><td>Aplicou \(r^2\) só à parte real e \(r\) à imaginária — mistura de expoentes.</td></tr>
+                <tr><td>c)</td><td>\(10+j\)</td><td>Não pertence a esta família; é distrator.</td></tr>
+                <tr><td>d)</td><td>\(2+j\)</td><td>Dividiu por \(r^4 = 4\) — usou \(r=\sqrt2\) e elevou a quarta, ou dividiu duas vezes.</td></tr>
+                <tr><td><b>e)</b></td><td>\(4+j2\)</td><td>Correta: divisão por \(r^2 = 2\).</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>Em teste, não há tempo para as três equações: leia \(r = \sqrt2\), conclua \(r^2 = 2\) e pergunte "estou no lado com <em>menos</em> espiras?". Sim — \(n_2 &lt; n_1\) — logo a impedância vista é <em>menor</em>: divide. Tudo em menos de dez segundos.</p>
+            <p>Repare que os pontos <b style="color:var(--ink)">não estão desenhados</b> na figura, e nem precisavam: impedância é razão \(\hat V/\hat I\), e trocar o ponto de lado inverte o sinal das <em>duas</em> grandezas, deixando a razão intacta. Sinal de polaridade importa para tensões e correntes individuais, não para impedâncias vistas.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 2 · P3 2024 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 2 · Questão única</span>Par acoplado com secundário em aberto: \(G_v(s)\)</span>
+          <span class="q-prova">Teste 2 · P3/2024</span>
+        </div>
+
+        <p><b style="color:var(--ink)">2 –</b> Indique a expressão da função de rede \(G_v(s) = \left.\dfrac{V_2(s)}{E_s(s)}\right|_{\text{c.i.n.}}\) no circuito da Figura 4 com o <b>secundário em aberto</b> e \(R_1 = 2\ \Omega\), \(L_1 = 1\ \mathrm H\), \(L_2 = 4\ \mathrm H\) e \(M = 2\ \mathrm H\).</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M60 80 L140 80"/><path d="M200 80 L250 80"/>
+              <path d="M60 240 L250 240"/>
+              <path d="M60 80 L60 118"/><path d="M60 162 L60 240"/>
+              <path d="M370 80 L500 80"/><path d="M370 240 L500 240"/>
+            </g>
+
+            <circle cx="60" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="53" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="2" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <path d="M140 80 l 8 -13 l 12 26 l 12 -26 l 12 26 l 8 -13 l 8 0" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+            <text x="148" y="54" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R = 2 Ω</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M266 62 q 44 -22 88 0" fill="none" stroke="#4ade9a" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <text x="300" y="42" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">M</text>
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942"/>
+            <text x="196" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁ = 1</text>
+            <text x="388" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂ = 4</text>
+
+            <path d="M204 62 L240 62" stroke="#f5b942" stroke-width="1.8"/><path d="M240 62 L231 57 L231 67 Z" fill="#f5b942"/>
+            <text x="204" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₁(t)</text>
+            <path d="M440 62 L404 62" stroke="#f5b942" stroke-width="1.8"/><path d="M404 62 L413 57 L413 67 Z" fill="#f5b942"/>
+            <text x="446" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₂(t) = 0</text>
+
+            <path d="M226 200 L226 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M226 120 L221 130 L231 130 Z" fill="#f5b942"/>
+            <text x="186" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+
+            <circle cx="500" cy="80" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="500" cy="240" r="6" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <path d="M462 200 L462 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M462 120 L457 130 L467 130 Z" fill="#f5b942"/>
+            <text x="470" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+
+            <text x="270" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 4</text>
+          </svg>
+          <div class="pz-legend">Pontos <b>ambos no topo</b>, adjacentes. Secundário <b>em aberto</b>: \(j_2 = 0\). As duas tensões estão marcadas com \(+\) em cima.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{2s}{s+2}\)</li>
+          <li data-alt="b">\(\dfrac{1}{s+2}\)</li>
+          <li data-alt="c">\(\dfrac{s}{s+1}\)</li>
+          <li data-alt="d">\(\dfrac{s}{s+2}\)</li>
+          <li data-alt="e">\(\dfrac{1}{s+1}\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — com \(j_2 = 0\), as duas equações constitutivas viram duas linhas triviais, e a razão \(V_2/V_1\) sai igual a \(M/L_1\), sem \(s\). O resto é divisor de tensão.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">As relações constitutivas</div>
+              <p>Pontos do mesmo lado e correntes entrando por eles ⟹ mútua aditiva. Com \(L_1 = 1\), \(L_2 = 4\), \(M = 2\):</p>
+              <div class="eq-block">\[ \begin{bmatrix} V_1(s) \\ V_2(s)\end{bmatrix} = \begin{bmatrix} s & 2s \\ 2s & 4s\end{bmatrix}\begin{bmatrix} J_1(s)\\ J_2(s)\end{bmatrix} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Impondo o secundário em aberto</div>
+              <p>Com \(J_2(s) = 0\), as duas linhas se reduzem a</p>
+              <div class="eq-block">\[ \left\{\begin{aligned} V_1(s) &= s\,J_1(s) \\ V_2(s) &= 2s\,J_1(s)\end{aligned}\right. \;\longrightarrow\; V_2(s) = 2\,V_1(s) \]</div>
+              <p class="dim">Dividindo uma equação pela outra, \(J_1\) e \(s\) cancelam. O fator 2 é \(M/L_1 = 2/1\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O divisor de tensão no primário</div>
+              <p>"Considerando que, nesta situação, o primário sofre apenas <b>indução própria</b>", o primário é apenas \(R\) em série com \(sL_1 = s\):</p>
+              <div class="eq-block">\[ V_1(s) = \frac{sL_1}{R + sL_1}\,E_s(s) = \frac{s}{s+2}\,E_s(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Transportando para o secundário</div>
+              <div class="eq-block">\[ V_2(s) = 2\,V_1(s) = \frac{2s}{s+2}\,E_s(s) \]</div>
+              <div class="eq-block">\[ G_v(s) = \left.\frac{V_2(s)}{E_s(s)}\right|_{\text{c.i.n.}} = \frac{2s}{s+2} \]</div>
+              <div class="final-answer">\( G_v(s) = \dfrac{2s}{s+2} \) — alternativa <b>a)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Por que \(L_2\) não aparece na resposta</div>
+              <p>O gabarito não comenta, mas é o ponto conceitual da questão: com o secundário em aberto <b style="color:var(--ink)">não circula corrente em \(L_2\)</b>, e portanto \(L_2\) não induz nada em si mesma. A tensão \(v_2\) é inteiramente induzida <em>pela</em> corrente do primário, e o único parâmetro que faz essa ponte é \(M\). Por isso a resposta depende de \(L_1\), \(M\) e \(R\) — e é indiferente a \(L_2\).</p>
+              <p>Corolário de conferência: se a alternativa que você escolheu tiver \(L_2 = 4\) em algum lugar, ela está errada por construção.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Coerência com o acoplamento</div>
+              <div class="eq-block">\[ k = \frac{M}{\sqrt{L_1L_2}} = \frac{2}{\sqrt{1\cdot 4}} = \frac22 = 1 \]</div>
+              <p>Este par tem \(k=1\) — acoplamento perfeito. Coerente com a <a href="#limite">seção 15.5</a>: a razão de transformação é \(r = V_1/V_2 = \sqrt{L_1/L_2} = \sqrt{1/4} = 1/2\), e de fato \(V_2 = 2V_1\). O ganho 2 do passo 02 é exatamente \(1/r\).</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · leitura do manuscrito</span>
+            <p>A matriz manuscrita traz os elementos escritos como "5, 25 / 25, 45": é \(\begin{bmatrix}s & 2s\\ 2s & 4s\end{bmatrix}\), com a caligrafia do "s" parecendo "5". O mesmo fenômeno aparece no gabarito da 1ª questão da P3 2025. Na primeira linha lê-se "As relações constitutivas do transformador <s>são</s>", com a palavra repetida no início da linha seguinte.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>A alternativa d), \(s/(s+2)\), é \(V_1/E_s\) — ou seja, é a resposta de quem parou no divisor de tensão e esqueceu de transportar para o secundário. É o distrator mais popular deste teste. A alternativa c), \(s/(s+1)\), é o divisor feito com \(R = 1\) no lugar de \(R=2\).</p>
+            <p>Erro estrutural: tentar "refletir" \(L_2\) para o primário. Não há carga no secundário — ele está aberto —, e nem o elemento é um TI. Reflexão aqui não se aplica.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 3 · P3 2024 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 3 · Questão única</span>TI 1:2 entre duas fontes ideais — e por que refletir não serve</span>
+          <span class="q-prova">Teste 3 · P3/2024</span>
+        </div>
+
+        <p><b style="color:var(--ink)">3 –</b> Considere o circuito da Figura 5, composto por uma <b>fonte de corrente</b> e uma <b>fonte de tensão ideais</b> (ou seja, fontes sem perdas), e um <b>transformador ideal</b> com uma relação de espiras <b>1:2</b>, como indicado na Figura. A tensão \(V_1(s)\) sobre o primário do transformador será igual a:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 80 L150 80"/><path d="M210 80 L260 80"/>
+              <path d="M70 240 L260 240"/>
+              <path d="M70 80 L70 118"/><path d="M70 162 L70 240"/>
+              <path d="M380 80 L450 80"/><path d="M510 80 L580 80"/>
+              <path d="M380 240 L580 240"/>
+              <path d="M580 80 L580 118"/><path d="M580 162 L580 240"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M70 154 L70 126" stroke="#4ade9a" stroke-width="2"/><path d="M70 126 L66 134 L74 134 Z" fill="#4ade9a"/>
+            <text x="4" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I_e(s)</text>
+            <circle cx="70" cy="80" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="70" cy="240" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+
+            <path d="M110 200 L110 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M110 120 L105 130 L115 130 Z" fill="#f5b942"/>
+            <text x="116" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V_e</text>
+
+            <rect x="150" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="164" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">1 Ω</text>
+
+            <path d="M236 200 L236 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M236 120 L231 130 L241 130 Z" fill="#f5b942"/>
+            <text x="196" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V₁</text>
+
+            <path d="M260 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M380 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M306 66 L306 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M320 66 L320 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="292" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">1 : 2</text>
+            <circle cx="272" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="368" cy="90" r="4.5" fill="#f5b942"/>
+
+            <path d="M404 200 L404 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M404 120 L399 130 L409 130 Z" fill="#f5b942"/>
+            <text x="410" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V₂</text>
+
+            <rect x="450" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="464" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">4 Ω</text>
+
+            <path d="M556 60 L520 60" stroke="#f5b942" stroke-width="1.8"/><path d="M520 60 L529 55 L529 65 Z" fill="#f5b942"/>
+            <text x="530" y="46" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">I₂</text>
+
+            <circle cx="580" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="573" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="574" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="606" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V₀(s)</text>
+
+            <text x="280" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 5</text>
+          </svg>
+          <div class="pz-legend">Pontos <b>ambos no topo</b>. \(I_2\) aponta para a <b>esquerda</b> — entra no resistor de 4 Ω vindo da fonte de tensão. Todas as setas de tensão com \(+\) em cima. A fonte de corrente é ideal: impõe \(I_e\) no primário qualquer que seja \(V_e\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(1\cdot I_2 + \tfrac12 V_e\)</li>
+          <li data-alt="b">\(\tfrac12 I_e + 2V_0\)</li>
+          <li data-alt="c">\(-2\cdot I_2 + V_e\)</li>
+          <li data-alt="d">\(1\cdot I_e + \tfrac12 V_0\)</li>
+          <li data-alt="e">\(2\cdot I_e + \tfrac14 V_0\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a resposta tem de ser escrita em função das <em>fontes</em> \(I_e\) e \(V_0\). Basta escrever a 2ª LK do secundário, aplicar as duas relações do TI e eliminar \(I_2\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">2ª LK no circuito secundário</div>
+              <p>Percorrendo a malha do secundário:</p>
+              <div class="eq-block">\[ -V_2(s) - 4\,I_2(s) + V_o(s) = 0 \]</div>
+              <p>Logo:</p>
+              <div class="eq-block">\[ V_2(s) = -4\,I_2(s) + V_o(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Relação de tensões do TI</div>
+              <p>Como o transformador é ideal, e com \(n_1{:}n_2 = 1{:}2\):</p>
+              <div class="eq-block">\[ \frac{V_1(s)}{V_2(s)} = \frac{n_1}{n_2} = \frac12 \;\rightarrow\; V_1(s) = \frac12\big(-4\,I_2 + V_o(s)\big) \qquad (1) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Relação de correntes do TI</div>
+              <p>A corrente do primário é a da fonte, \(I_e\), e vale:</p>
+              <div class="eq-block">\[ \frac{I_e(s)}{I_2(s)} = -\frac{n_2}{n_1} = -\frac21 \;\rightarrow\; I_2(s) = -\frac12 I_e(s) \qquad (2) \]</div>
+              <p class="dim">O sinal negativo vem do sentido de \(I_2\): ela aponta para a <em>esquerda</em>, isto é, <em>sai</em> do terminal pontuado do secundário enquanto \(I_e\) <em>entra</em> pelo pontuado do primário.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Substituindo (2) em (1)</div>
+              <div class="eq-block">\[ V_1(s) = \frac12\left(-4\cdot\left(-\frac12 I_e(s)\right) + V_o(s)\right) = \frac12\big(2I_e(s) + V_o(s)\big) \]</div>
+              <div class="eq-block">\[ V_1(s) = I_e(s) + \frac12 V_o(s) \]</div>
+              <div class="final-answer">\( V_1 = 1\cdot I_e + \tfrac12 V_0 \) — alternativa <b>d)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">2ª maneira do gabarito — superposição, parcela da fonte de corrente</div>
+              <p>Inativando a fonte de tensão (\(V_o = 0\), curto-circuito), restam \(I_e\) e os dois resistores. As relações do TI valem igualmente para as parcelas com apóstrofo:</p>
+              <div class="eq-block">\[ \frac{V_1'(s)}{V_2'(s)} = \frac{n_1}{n_2} = \frac12 \;\rightarrow\; V_1'(s) = \frac12 V_2'(s) \]</div>
+              <div class="eq-block">\[ \frac{I_e(s)}{I_2'(s)} = -\frac{n_2}{n_1} = -\frac21 \;\rightarrow\; I_2'(s) = -\frac12 I_e(s) \]</div>
+              <p>2ª LK no secundário curto-circuitado:</p>
+              <div class="eq-block">\[ V_2' + 4I_2' = 0 \;\rightarrow\; V_2' = -4\left(-\frac12 I_e\right) = 2I_e \]</div>
+              <div class="eq-block">\[ V_1'(s) = \frac12\cdot 2I_e = 1\cdot I_e \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Superposição — parcela da fonte de tensão</div>
+              <p>Inativando a fonte de corrente (circuito aberto), o primário fica aberto e \(I_e = 0\). Pela relação de correntes,</p>
+              <div class="eq-block">\[ \frac{I_2''(s)}{I_e(s)} = -\frac{n_1}{n_2}; \quad\text{no entanto, } I_2''(s) = 0 \text{ pois } I_e = 0 \]</div>
+              <p>Sem corrente, o resistor de 4 Ω não tem queda e \(V_o\) aparece inteira sobre o secundário:</p>
+              <div class="eq-block">\[ V_2'' = V_o \]</div>
+              <div class="eq-block">\[ \frac{V_1''(s)}{V_2''(s)} = \frac{n_1}{n_2} = \frac12 \;\rightarrow\; V_1''(s) = \frac12 V_o \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Somando as parcelas</div>
+              <div class="eq-block">\[ V_1 = V_1' + V_1'' = 1\cdot I_e + \frac12 V_o \]</div>
+              <p class="dim">Mesmo resultado da 1ª maneira, como tem de ser — e com o dobro do trabalho. A superposição só compensa aqui como treino de conceito.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">A pegadinha das alternativas: \(V_e\) e \(I_2\) não são dados</div>
+              <p>As alternativas a) e c) trazem \(V_e\) e \(I_2\), que são <b style="color:var(--ink)">incógnitas</b>, não excitações. \(V_e\) é a tensão que aparece sobre a fonte de corrente; \(I_2\) é a corrente do secundário. Uma resposta escrita em função delas não resolve nada. Só \(I_e\) e \(V_0\) são impostos de fora — e apenas b), d) e e) são candidatas legítimas.</p>
+              <p>Entre essas três, b) e e) erram o expoente: b) usa \(\tfrac12 I_e\) e \(2V_0\), que é o resultado de trocar \(r\) por \(1/r\) nas duas relações; e) usa \(2I_e\) e \(\tfrac14 V_0\), que aplica \(r^2\) onde deveria entrar \(r\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">09</span>
+            <div class="step-body">
+              <div class="step-title">Por que refletir não resolve este teste</div>
+              <p>Há uma fonte ideal de cada lado. Refletir o secundário para o primário exigiria transformar \(V_0\) em \(V_0/2\) e o resistor de 4 Ω em 1 Ω, o que é legítimo — mas o resultado seria a tensão sobre o <em>bloco refletido</em>, e ainda seria preciso separar dela a parcela do resistor para chegar a \(V_1\). Como o objetivo é exatamente \(V_1\), a estratégia (ii) da <a href="#circuitos">seção 15.6</a> — manter o TI e escrever as duas relações — é mais curta. Refletir é para quando se quer corrente de entrada, impedância ou potência.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · erro de digitação no gabarito</span>
+            <p>Na penúltima equação da 2ª maneira, o gabarito escreve</p>
+            <div class="eq-block">\[ V_1''(s) = \frac12 V_2'(s) \]</div>
+            <p>com <b>uma</b> aspa em \(V_2\), quando deveria ser \(V_2''(s)\) — a parcela da fonte de tensão, não a da fonte de corrente. É erro de digitação; o valor usado em seguida (\(\tfrac12 V_o\)) é o correto, e a resposta final não é afetada. Também vale notar que \(V_2' = 2I_e\) e \(V_2'' = V_o\) são grandezas distintas, e trocá-las daria \(V_1'' = I_e\), duplicando indevidamente a parcela da fonte de corrente.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O sinal de (2) é o único ponto delicado. Os dois pontos estão no topo, \(I_e\) entra pelo ponto do primário, mas \(I_2\) está desenhada <em>saindo</em> pelo ponto do secundário — é o caso 2 da <a href="#pontos-sinais">seção 15.3</a> com os papéis invertidos. Quem escrever \(I_2 = +\tfrac12 I_e\) obtém \(V_1 = -I_e + \tfrac12 V_0\), que não está entre as alternativas — o que, em teste, é um aviso útil de que o sinal caiu.</p>
+            <p>Segundo ponto: em superposição com TI, lembre que <b style="color:var(--ink)">abrir o primário abre o secundário</b>. Muita gente inativa a fonte de corrente e continua calculando \(I_2''\) pela malha do secundário, esquecendo que a relação do TI já forçou \(I_2'' = 0\).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 4 · P3 2024 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 4 · Questão única</span>Potência aparente através de um TI 10:1 — e a relação de espiras que não serve para nada</span>
+          <span class="q-prova">Teste 4 · P3/2024</span>
+        </div>
+
+        <p><b style="color:var(--ink)">4 –</b> Considere que o transformador da Figura 6 é <b>ideal</b> e está transferindo uma potência de <b>100 W</b> à carga <b>Z</b>, cuja impedância é \((5 + j10)\ \Omega\). O módulo da potência aparente \(|P_{ap}|\), em VA, no circuito da Figura 6 será mais próximo de:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M80 80 L250 80"/><path d="M80 240 L250 240"/>
+              <path d="M80 80 L80 118"/><path d="M80 162 L80 240"/>
+              <path d="M370 80 L520 80"/><path d="M370 240 L520 240"/>
+              <path d="M520 80 L520 126"/><path d="M520 194 L520 240"/>
+            </g>
+
+            <circle cx="80" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <path d="M68 140 q 6 -10 12 0 q 6 10 12 0" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="18" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁</text>
+            <circle cx="80" cy="80" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="80" cy="240" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+
+            <path d="M140 62 L190 62" stroke="#f5b942" stroke-width="1.8"/><path d="M190 62 L181 57 L181 67 Z" fill="#f5b942"/>
+            <text x="152" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₁</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="278" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">10 : 1</text>
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942"/>
+
+            <path d="M410 62 L460 62" stroke="#f5b942" stroke-width="1.8"/><path d="M460 62 L451 57 L451 67 Z" fill="#f5b942"/>
+            <text x="424" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₂</text>
+
+            <rect x="508" y="126" width="24" height="68" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="544" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">Z = 5 + j10</text>
+
+            <text x="270" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 6</text>
+          </svg>
+          <div class="pz-legend">Pontos <b>ambos no topo</b>; \(\hat I_1\) entra pelo ponto do primário e \(\hat I_2\) sai pelo ponto do secundário em direção à carga \(Z\). \(P = 100\) W é a potência ativa <b>absorvida por \(Z\)</b>.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">200</li>
+          <li data-alt="b">220</li>
+          <li data-alt="c">255</li>
+          <li data-alt="d">170</li>
+          <li data-alt="e">135</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o fator de potência da carga é o cosseno do ângulo de \(Z\), e \(|P_{ap}| = P/\cos\theta\). O "10:1" do enunciado não entra em lugar nenhum.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Módulo e fase da carga</div>
+              <p>A potência ativa absorvida pela carga \(Z\) é \(P = 100\) W, fornecida no enunciado. Como \(Z = 5 + j10\):</p>
+              <div class="eq-block">\[ |Z| = \sqrt{5^2 + 10^2} = \sqrt{125} = 11{,}18\ \Omega \]</div>
+              <div class="eq-block">\[ \theta = \operatorname{arctg}\left(\frac{10}{5}\right) = \operatorname{arctg}(2) = 63{,}44^\circ \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">De \(P\) para \(|P_{ap}|\)</div>
+              <p>A relação entre \(|P_{ap}|\) e \(P\) é a definição de fator de potência:</p>
+              <div class="eq-block">\[ P = |P_{ap}|\cos\theta \;\rightarrow\; |P_{ap}| = \frac{P}{\cos(63{,}44^\circ)} = \frac{100}{0{,}443} = 223{,}65\ \mathrm{VA} \]</div>
+              <div class="final-answer">\( |P_{ap}| \approx 223{,}65\ \mathrm{VA} \Rightarrow \) mais próximo de <b>220</b> — alternativa <b>b)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O caminho exato, sem arredondar o cosseno</div>
+              <p>O gabarito usa \(\cos(63{,}44^\circ) \approx 0{,}443\). O valor sem arredondamento é</p>
+              <div class="eq-block">\[ \cos\theta = \frac{\operatorname{Re}\{Z\}}{|Z|} = \frac{5}{11{,}18} = 0{,}44721 \]</div>
+              <div class="eq-block">\[ |P_{ap}| = \frac{100}{0{,}44721} = 223{,}61\ \mathrm{VA} \]</div>
+              <p>Um caminho ainda mais direto evita o cosseno por completo. De \(P = R|\hat I_2|^2\):</p>
+              <div class="eq-block">\[ |\hat I_2|^2 = \frac{P}{R} = \frac{100}{5} = 20\ \mathrm{A^2_{ef}} \]</div>
+              <div class="eq-block">\[ |P_{ap}| = |Z|\,|\hat I_2|^2 = 11{,}18\times 20 = 223{,}6\ \mathrm{VA} \]</div>
+              <p>Ou, equivalentemente, \(|P_{ap}| = P\cdot|Z|/R = 100\cdot 11{,}18/5 = 223{,}6\) VA. Três caminhos, mesmo número.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Onde entra o transformador 10:1 — em lugar nenhum</div>
+              <p>Esta é a pergunta oculta do teste. O TI é ideal, logo <b style="color:var(--ink)">não consome nem armazena potência</b>: toda a potência complexa que entra pelo primário sai pelo secundário. Portanto</p>
+              <div class="eq-block">\[ \hat V_1\hat I_1^{*} = \hat V_2\hat I_2^{*} \;\Longrightarrow\; |P_{ap}|_{\text{primário}} = |P_{ap}|_{\text{secundário}} \]</div>
+              <p>O enunciado pergunta \(|P_{ap}|\) "no circuito da Figura 6" sem dizer de que lado — e não precisa dizer, porque é o mesmo número dos dois lados. A relação \(10{:}1\) mudaria \(\hat V_1\) e \(\hat I_1\) individualmente (dez vezes mais tensão, dez vezes menos corrente), mas o produto delas é invariante.</p>
+              <p>Pelo mesmo motivo, o <b style="color:var(--ink)">fator de potência visto da fonte é 0,447 indutivo</b>, idêntico ao da carga. Conferindo pela reflexão: \(r = 10\), \(r^2 Z = 100(5+j10) = 500 + j1000\), cujo ângulo continua \(63{,}44^\circ\).</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · a alternativa é o valor aproximado</span>
+            <p>O cálculo dá \(223{,}6\) VA e a alternativa correta é \(220\). Não é erro do gabarito — o enunciado pede o valor "mais próximo de", e a distância para as vizinhas confirma a escolha: \(|223{,}6 - 220| = 3{,}6\) contra \(|223{,}6 - 200| = 23{,}6\) e \(|223{,}6 - 255| = 31{,}4\). Em questões com "mais próximo de", calcule o número exato e só depois compare; arredondar no meio da conta pode empurrar para a alternativa errada quando as opções são próximas.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O erro mais comum é aplicar \(r\) ou \(r^2\) em algum lugar — tipicamente chegando a \(2236\) ou \(22{,}36\) VA, que sequer estão entre as opções, ou "corrigindo" \(223{,}6\) por 10 e marcando 200 ou 255 por eliminação. O antídoto é a linha da tabela da <a href="#relacoes">seção 15.2</a>: <b style="color:var(--ink)">potência complexa atravessa o TI multiplicada por 1</b>.</p>
+            <p>O segundo erro é confundir \(P\) com \(|P_{ap}|\) e responder 100, ou calcular \(Q = P\tan\theta = 200\) VAr e marcar a) 200. \(Q\) não é \(|P_{ap}|\): \(|P_{ap}| = \sqrt{100^2 + 200^2} = 223{,}6\) VA — que é, aliás, uma quarta forma de chegar à resposta.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 5 · P3 2025 · Q1 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão 1</span>Impedância de malha com mútua subtrativa</span>
+          <span class="q-prova">Teste 5 · P3/2025 — Q1</span>
+        </div>
+
+        <p><b style="color:var(--ink)">1 –</b> No circuito da Figura 1 a bobina \(L_3\) está desacoplada magneticamente de \(L_1\) e \(L_2\). Indique a expressão da impedância total da malha \(Z(s)\) em unidades SI.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M80 80 L150 80"/><path d="M220 80 L280 80"/><path d="M350 80 L400 80"/><path d="M460 80 L520 80"/>
+              <path d="M80 250 L520 250"/>
+              <path d="M80 80 L80 118"/><path d="M80 162 L80 250"/>
+              <path d="M520 80 L520 120"/><path d="M520 208 L520 250"/>
+            </g>
+
+            <circle cx="80" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="73" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="74" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="16" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e_s(t)</text>
+
+            <path d="M150 80 q 12 -18 24 0 q 12 -18 24 0 q 12 -18 22 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="158" y="110" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁</text>
+            <circle cx="150" cy="80" r="4.5" fill="#f5b942"/>
+
+            <path d="M280 80 q 12 -18 24 0 q 12 -18 24 0 q 12 -18 22 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="288" y="110" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+            <circle cx="350" cy="80" r="4.5" fill="#f5b942"/>
+
+            <path d="M154 58 C 210 12, 300 12, 346 58" fill="none" stroke="#4ade9a" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <text x="242" y="26" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">M</text>
+
+            <path d="M400 80 l 8 -13 l 12 26 l 12 -26 l 12 26 l 8 -13 l 8 0" fill="none" stroke="#4ade9a" stroke-width="2.2"/>
+            <text x="418" y="56" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+
+            <path d="M520 120 q 16 14 0 28 q 16 14 0 28 q 16 14 0 28" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <text x="548" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₃</text>
+
+            <path d="M120 178 L120 122" stroke="#f5b942" stroke-width="1.8"/><path d="M120 122 L115 131 L125 131 Z" fill="#f5b942"/>
+            <text x="104" y="200" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Z(s)</text>
+
+            <path d="M236 250 L196 250" stroke="#f5b942" stroke-width="1.8"/><path d="M196 250 L205 245 L205 255 Z" fill="#f5b942"/>
+            <text x="200" y="274" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i(t)</text>
+
+            <text x="330" y="150" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">L₁ = 1 H · L₂ = 2 H</text>
+            <text x="330" y="170" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">M = 1 H · L₃ = 5 H</text>
+            <text x="330" y="190" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">R = 3 Ω</text>
+            <text x="246" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 1</text>
+          </svg>
+          <div class="pz-legend">Malha única. Ponto (•) no <b>terminal esquerdo de \(L_1\)</b> e ponto no <b>terminal direito de \(L_2\)</b> — extremidades <b>opostas</b> em relação ao sentido de percurso. A corrente \(i(t)\) entra por um ponto e sai pelo outro: mútua <b>subtrativa</b>.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(6s + 3\)</li>
+          <li data-alt="b">\(8s\)</li>
+          <li data-alt="c">\(10s + 3\)</li>
+          <li data-alt="d">\(5s + 3\)</li>
+          <li data-alt="e">\(3\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — malha única, uma só corrente. A mútua entra <em>duas vezes</em> (uma em cada bobina), e por isso o coeficiente é \(2M\), não \(M\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A definição de \(Z(s)\)</div>
+              <div class="eq-block">\[ Z(s) = \frac{E_s(s)}{I(s)} \]</div>
+              <p>O professor redesenha o circuito marcando a corrente única \(i(t)\) e as tensões \(v_1\), \(v_2\) e \(v_3\) sobre as três bobinas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Relações constitutivas de \(L_1\) e \(L_2\)</div>
+              <p>Com a mesma corrente \(I(s)\) nas duas bobinas e mútua subtrativa:</p>
+              <div class="eq-block">\[ \begin{bmatrix} V_1(s) \\ V_2(s)\end{bmatrix} = \begin{bmatrix} sL_1 & -sM \\ -sM & sL_2\end{bmatrix}\begin{bmatrix} I(s) \\ I(s)\end{bmatrix} \]</div>
+              <p>E, para a bobina desacoplada,</p>
+              <div class="eq-block">\[ V_3(s) = sL_3\,I(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">2ª LK na malha</div>
+              <div class="eq-block">\[ V_1(s) + V_2(s) + V_3(s) + R\,I(s) = E_s(s) \]</div>
+              <p>Expandindo cada tensão pela linha correspondente da matriz:</p>
+              <div class="eq-block">\[ (L_1 - M)s\,I(s) + (L_2 - M)s\,I(s) + L_3 s\,I(s) + R\,I(s) = E_s(s) \]</div>
+              <div class="eq-block">\[ \big[(L_1 + L_2 + L_3 - 2M)\,s + R\big]\,I(s) = E_s(s) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A impedância e o número</div>
+              <div class="eq-block">\[ Z(s) = (L_1 + L_2 + L_3 - 2M)\,s + R \]</div>
+              <div class="eq-block">\[ L_1 + L_2 + L_3 - 2M = 1 + 2 + 5 - 2\cdot 1 = 6, \qquad R = 3 \]</div>
+              <div class="final-answer">\( Z(s) = 6s + 3 \) — alternativa <b>a)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Verificação de possibilidade física</div>
+              <p>Vale checar que o par é realizável e, de quebra, que a associação faz sentido:</p>
+              <div class="eq-block">\[ k = \frac{M}{\sqrt{L_1L_2}} = \frac{1}{\sqrt{1\cdot 2}} = \frac{1}{1{,}414} = 0{,}707 \le 1 \quad\checkmark \]</div>
+              <p>E a indutância equivalente da série acoplada, \(L_1 + L_2 - 2M = 1\) H, é <b style="color:var(--ink)">positiva</b> — condição necessária para um elemento passivo. Se a conta tivesse dado negativa, o sinal da mútua estaria errado. Esse teste é mais rápido do que reler a figura.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>As alternativas mapeiam os erros um a um. <b>c) \(10s+3\)</b> é \(L_1+L_2+L_3+2M\): mútua lida como aditiva. <b>b) \(8s\)</b> é \(L_1+L_2+L_3\) sem mútua nenhuma e sem o resistor. <b>d) \(5s+3\)</b> é \(L_1+L_2+L_3-3M\) ou \(-M\) aplicado uma vez a mais. <b>e) 3</b> é quem esqueceu as bobinas.</p>
+            <p>O erro estrutural é escrever \(-M\) uma vez só, obtendo \(L_1+L_2+L_3-M = 7\). O <b style="color:var(--ink)">fator 2</b> existe porque a mesma corrente atravessa as duas bobinas: \(L_1\) recebe \(-M\,di/dt\) da corrente que passa por \(L_2\), e \(L_2\) recebe \(-M\,di/dt\) da corrente que passa por \(L_1\). Dois termos, cada um valendo \(M\).</p>
+            <p>Leitura dos pontos: percorrendo a malha no sentido de \(i(t)\), a corrente <b>entra</b> pelo terminal pontuado de \(L_1\) (ponto à esquerda, corrente vindo da esquerda) e <b>sai</b> pelo pontuado de \(L_2\) (ponto à direita). Uma entra, a outra sai ⟹ subtrativo. É o caso (b) do quadro "associação de indutores acoplados — série, \(M&lt;0\)" do formulário, com \(L_{eq} = L_1 + L_2 - 2M\).</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 5 · P3 2025 · Q2 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão 2</span>Receptor de um lado, gerador do outro: as quatro trocas de sinal</span>
+          <span class="q-prova">Teste 5 · P3/2025 — Q2</span>
+        </div>
+
+        <p><b style="color:var(--ink)">2 –</b> A expressão correta para as tensões \(v_1\) e \(v_2\) em função de \(i_1\) e \(i_2\) (Figura 2) é:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M120 80 L250 80"/><path d="M120 240 L250 240"/>
+              <path d="M370 80 L500 80"/><path d="M370 240 L500 240"/>
+            </g>
+            <circle cx="120" cy="80" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="120" cy="240" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="500" cy="80" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+            <circle cx="500" cy="240" r="5" fill="none" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M264 66 q 46 -24 92 0" fill="none" stroke="#4ade9a" stroke-width="1.6" stroke-dasharray="5 4"/>
+            <text x="292" y="44" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">|M|</text>
+            <text x="200" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L₁</text>
+            <text x="392" y="170" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">L₂</text>
+
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="230" r="4.5" fill="#f5b942"/>
+
+            <path d="M200 62 L150 62" stroke="#f5b942" stroke-width="1.8"/><path d="M150 62 L159 57 L159 67 Z" fill="#f5b942"/>
+            <text x="164" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₁</text>
+
+            <path d="M420 62 L470 62" stroke="#f5b942" stroke-width="1.8"/><path d="M470 62 L461 57 L461 67 Z" fill="#f5b942"/>
+            <text x="432" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i₂</text>
+
+            <path d="M92 110 L92 210" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M92 210 L87 200 L97 200 Z" fill="#f5b942"/>
+            <text x="58" y="166" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">v₁</text>
+            <text x="34" y="234" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">+ embaixo</text>
+
+            <path d="M528 210 L528 110" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M528 110 L523 120 L533 120 Z" fill="#f5b942"/>
+            <text x="540" y="166" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">v₂</text>
+            <text x="540" y="110" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">+ em cima</text>
+
+            <text x="270" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 2</text>
+          </svg>
+          <div class="pz-legend">Ponto (•) <b>no topo de \(L_1\)</b> e <b>na base de \(L_2\)</b> — alturas opostas. \(i_1\) <b>sai</b> pelo terminal superior esquerdo; \(i_2\) <b>sai</b> pelo terminal superior direito. \(v_1\) tem \(+\) <b>embaixo</b>; \(v_2\) tem \(+\) <b>em cima</b>.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(v_1 = -L_1\dfrac{di_1}{dt} - |M|\dfrac{di_2}{dt}\ ;\quad v_2 = L_2\dfrac{di_2}{dt} + |M|\dfrac{di_1}{dt}\)</li>
+          <li data-alt="b">\(v_1 = -L_1\dfrac{di_1}{dt} + |M|\dfrac{di_2}{dt}\ ;\quad v_2 = -L_2\dfrac{di_2}{dt} + |M|\dfrac{di_1}{dt}\)</li>
+          <li data-alt="c">\(v_1 = L_1\dfrac{di_1}{dt} + |M|\dfrac{di_2}{dt}\ ;\quad v_2 = -L_2\dfrac{di_2}{dt} - |M|\dfrac{di_1}{dt}\)</li>
+          <li data-alt="d">\(v_1 = L_1\dfrac{di_1}{dt} - |M|\dfrac{di_2}{dt}\ ;\quad v_2 = -L_2\dfrac{di_2}{dt} + |M|\dfrac{di_1}{dt}\)</li>
+          <li data-alt="e">\(v_1 = -L_1\dfrac{di_1}{dt} - |M|\dfrac{di_2}{dt}\ ;\quad v_2 = -L_2\dfrac{di_2}{dt} - |M|\dfrac{di_2}{dt}\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — três decisões independentes: a convenção de cada acesso (fixa o sinal do termo próprio) e a posição relativa dos pontos (fixa o sinal do termo mútuo).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">As três observações do gabarito</div>
+              <div class="src-block src-prof">
+                <span class="src-kicker">do professor · gabarito Teste 5, Q2</span>
+                <p>"\(v_1\) e \(i_1\) estão na convenção do <b>receptor</b>.<br>\(v_2\) e \(i_2\) estão na convenção do <b>gerador</b>.<br>O efeito da mútua é <b>subtrativo</b>."</p>
+              </div>
+              <p>Dessas três frases saem os quatro sinais, sem nenhuma conta.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Por que o acesso 1 é receptor e o acesso 2 é gerador</div>
+              <p>Convenção do <b style="color:var(--ink)">receptor</b>: a corrente <em>entra</em> pelo terminal \(+\). Convenção do <b style="color:var(--ink)">gerador</b>: a corrente <em>sai</em> pelo terminal \(+\).</p>
+              <p><b>Acesso 1:</b> \(v_1\) tem \(+\) embaixo; \(i_1\) sai pelo terminal <em>de cima</em>, o que é o mesmo que entrar pelo de baixo. Corrente entrando pelo \(+\) ⟹ <b style="color:var(--ink)">receptor</b>, termo próprio com \(+L_1\).</p>
+              <p><b>Acesso 2:</b> \(v_2\) tem \(+\) em cima; \(i_2\) sai pelo terminal de cima. Corrente saindo pelo \(+\) ⟹ <b style="color:var(--ink)">gerador</b>, termo próprio com \(-L_2\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Por que a mútua é subtrativa</div>
+              <p>O ponto de \(L_1\) está no topo e o de \(L_2\) na base. Referida aos pontos, \(i_1\) <em>sai</em> pelo pontuado de \(L_1\) (topo) e \(i_2\) <em>entra</em> pelo pontuado de \(L_2\) (base, já que \(i_2\) sai pelo topo). Uma sai, a outra entra pelos terminais correspondentes: os fluxos se opõem e o efeito mútuo é <b style="color:var(--ink)">subtrativo</b>.</p>
+              <p>Subtrativo significa que o termo mútuo entra com sinal <em>contrário</em> ao termo próprio em cada linha:</p>
+              <div class="eq-block">\[ v_1: \quad +L_1\frac{di_1}{dt} \;\Longrightarrow\; -|M|\frac{di_2}{dt} \]</div>
+              <div class="eq-block">\[ v_2: \quad -L_2\frac{di_2}{dt} \;\Longrightarrow\; +|M|\frac{di_1}{dt} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">As duas relações</div>
+              <div class="eq-block">\[ v_1 = L_1\frac{di_1}{dt} - |M|\frac{di_2}{dt} \]</div>
+              <div class="eq-block">\[ v_2 = -L_2\frac{di_2}{dt} + |M|\frac{di_1}{dt} \]</div>
+              <div class="final-answer">alternativa <b>d)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Eliminação rápida, para o caso de dúvida</div>
+              <p>Um teste de 4 sinais admite 16 combinações, mas as alternativas cobrem só 5. Duas checagens eliminam quatro delas:</p>
+              <table class="ltable">
+                <tr><th>Alt.</th><th>Sinal de \(L_1\)</th><th>Sinal de \(L_2\)</th><th>Veredicto</th></tr>
+                <tr><td>a)</td><td>\(-\)</td><td>\(+\)</td><td>trocou as duas convenções</td></tr>
+                <tr><td>b)</td><td>\(-\)</td><td>\(-\)</td><td>acesso 1 errado</td></tr>
+                <tr><td>c)</td><td>\(+\)</td><td>\(-\)</td><td>convenções certas, <b>mútua aditiva</b> — errada</td></tr>
+                <tr><td><b>d)</b></td><td>\(+\)</td><td>\(-\)</td><td>convenções certas e mútua subtrativa ✓</td></tr>
+                <tr><td>e)</td><td>\(-\)</td><td>\(-\)</td><td>acesso 1 errado (e com erro de digitação)</td></tr>
+              </table>
+              <p>Ou seja: fixar o sinal de \(L_1\) como \(+\) já reduz a c) e d); o sinal da mútua decide entre as duas.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · erro de digitação no enunciado original</span>
+            <p>Na alternativa <b>e)</b>, o segundo termo de \(v_2\) traz \(\dfrac{di_2}{dt}\) onde deveria trazer \(\dfrac{di_1}{dt}\):</p>
+            <div class="eq-block">\[ \text{e)}\quad v_2 = -L_2\frac{di_2}{dt} - |M|\frac{di_{\mathbf 2}}{dt} \]</div>
+            <p>Do jeito como está escrita, a alternativa e) nem sequer é uma relação de acoplamento — ela não envolve \(i_1\) e descreveria uma bobina isolada de indutância \(L_2 + |M|\). É provável erro de digitação, mantido aqui como no original. A alternativa e) seria errada de qualquer forma, então o erro não afeta a resolução — mas convém reconhecê-lo em vez de perder tempo tentando interpretá-la.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>O erro dominante é <b style="color:var(--ink)">misturar as duas decisões</b>: achar que a posição dos pontos decide o sinal de \(L_1\) e \(L_2\), ou que a convenção decide o sinal da mútua. São independentes. Os pontos só falam sobre o termo <em>cruzado</em>; a convenção só fala sobre o termo <em>próprio</em>.</p>
+            <p>Receita de prova, nesta ordem: <b>(1)</b> para cada acesso, pergunte "a corrente entra pelo \(+\)?" — sim ⟹ \(+L\), não ⟹ \(-L\). <b>(2)</b> pergunte "as duas correntes entram pelos pontos, ou uma entra e a outra sai?" — mesmas ⟹ aditivo, diferentes ⟹ subtrativo. <b>(3)</b> aditivo significa o termo mútuo com o <em>mesmo</em> sinal do próprio na mesma linha; subtrativo, com o sinal <em>oposto</em>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= TESTE 5 · P3 2025 · Q4 ================= -->
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão 4</span>TI 1:10 — a carga chega ao primário dividida por cem</span>
+          <span class="q-prova">Teste 5 · P3/2025 — Q4</span>
+        </div>
+
+        <p><b style="color:var(--ink)">4 –</b> Considere o circuito da Figura 3. A impedância equivalente, vista pela fonte de tensão do primário é:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 300" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 80 L140 80"/><path d="M200 80 L250 80"/>
+              <path d="M70 240 L250 240"/>
+              <path d="M70 80 L70 118"/><path d="M70 162 L70 240"/>
+              <path d="M370 80 L520 80"/><path d="M370 240 L520 240"/>
+              <path d="M520 80 L520 126"/><path d="M520 194 L520 240"/>
+            </g>
+
+            <circle cx="70" cy="140" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="63" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+            <text x="64" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">−</text>
+            <text x="14" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Ês</text>
+
+            <rect x="140" y="68" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="154" y="58" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">Z_p</text>
+
+            <path d="M206 108 L242 108" stroke="#f5b942" stroke-width="1.8"/><path d="M242 108 L233 103 L233 113 Z" fill="#f5b942"/>
+            <text x="212" y="128" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₁</text>
+
+            <path d="M250 80 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32 q 16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M370 80 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32 q -16 16 0 32" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+            <path d="M296 66 L296 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <path d="M310 66 L310 254" stroke="#4ade9a" stroke-width="1.8"/>
+            <text x="276" y="46" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">1 : 10</text>
+            <circle cx="262" cy="90" r="4.5" fill="#f5b942"/>
+            <circle cx="358" cy="90" r="4.5" fill="#f5b942"/>
+
+            <path d="M226 200 L226 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M226 120 L221 130 L231 130 Z" fill="#f5b942"/>
+            <text x="186" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₁</text>
+
+            <path d="M394 200 L394 120" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="5 4"/><path d="M394 120 L389 130 L399 130 Z" fill="#f5b942"/>
+            <text x="400" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">V̂₂</text>
+
+            <path d="M420 62 L470 62" stroke="#f5b942" stroke-width="1.8"/><path d="M470 62 L461 57 L461 67 Z" fill="#f5b942"/>
+            <text x="434" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">Î₂</text>
+
+            <rect x="508" y="126" width="24" height="68" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="544" y="166" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">Z_L</text>
+
+            <text x="270" y="288" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">Figura 3</text>
+          </svg>
+          <div class="pz-legend">TI de relação \(1{:}10\), pontos <b>ambos no topo</b>. \(Z_p\) está <b>em série com o primário</b> — não se reflete. \(\hat I_2\) sai do enrolamento em direção a \(Z_L\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(Z_p + Z_L\)</li>
+          <li data-alt="b">\(Z_p + \dfrac{1}{100}Z_L\)</li>
+          <li data-alt="c">\(Z_p \;/\!/\; 100\,Z_L\)</li>
+          <li data-alt="d">\(Z_p + 100\,Z_L\)</li>
+          <li data-alt="e">\(\dfrac{1}{100}\left(Z_p + Z_L\right)\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — \(r = n_1/n_2 = 1/10\), logo \(r^2 = 1/100\). \(Z_L\) chega ao primário dividida por 100; \(Z_p\) fica onde está e soma.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">As relações do TI, com os pontos da figura</div>
+              <p>"No Trafo ideal do enunciado, temos a seguinte relação entre as tensões e correntes fasoriais nos circuitos primário e secundário:"</p>
+              <div class="eq-block">\[ \frac{\hat V_1}{\hat V_2} = \frac{n_1}{n_2} = \frac{1}{10} \]</div>
+              <div class="eq-block">\[ \frac{\hat I_1}{\hat I_2} = +\frac{n_2}{n_1} = 10 \]</div>
+              <p class="dim">O sinal \(+\) na relação de correntes é consequência de \(\hat I_1\) entrar pelo ponto do primário e \(\hat I_2\) <em>sair</em> pelo ponto do secundário — caso 2 da <a href="#pontos-sinais">seção 15.3</a>.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A impedância \(Z_L\) referida ao primário</div>
+              <div class="eq-block">\[ \frac{\hat V_1}{\hat I_1} = \frac{\frac{1}{10}\hat V_2}{10\,\hat I_2} = \frac{1}{100}\cdot\frac{\hat V_2}{\hat I_2} = \frac{1}{100}\,Z_L \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Somando o que está em série</div>
+              <p>"Logo, a impedância vista pela fonte de tensão no primário será:"</p>
+              <div class="eq-block">\[ Z_{\text{equivalente}} = Z_p + \frac{1}{100}Z_L \]</div>
+              <div class="final-answer">\( Z_{eq} = Z_p + \tfrac{1}{100}Z_L \) — alternativa <b>b)</b></div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A mesma conta pela fórmula direta</div>
+              <p>Sem passar pelas quatro grandezas, basta a regra da <a href="#reflexao">seção 15.4</a>:</p>
+              <div class="eq-block">\[ r = \frac{n_1}{n_2} = \frac{1}{10} \;\Longrightarrow\; r^2 = \frac{1}{100} \]</div>
+              <div class="eq-block">\[ Z_{eq} = Z_p + r^2 Z_L = Z_p + \frac{Z_L}{100} \]</div>
+              <p>A pergunta de sanidade: o primário tem <em>menos</em> espiras (1 contra 10), logo enxerga uma impedância <em>menor</em>. Divide. Se a resposta tivesse dado \(100Z_L\), o sentido estaria invertido.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">As alternativas erradas, catalogadas</div>
+              <table class="ltable">
+                <tr><th>Alt.</th><th>O erro</th></tr>
+                <tr><td>a) \(Z_p + Z_L\)</td><td>Esqueceu a reflexão — tratou o TI como um fio.</td></tr>
+                <tr><td>c) \(Z_p /\!/ 100Z_L\)</td><td>Topologia errada: \(Z_p\) está em <b>série</b> com o primário, não em paralelo. Além disso, sentido de reflexão invertido.</td></tr>
+                <tr><td>d) \(Z_p + 100Z_L\)</td><td>Refletiu para o lado errado: usou \(1/r^2 = 100\) no lugar de \(r^2\).</td></tr>
+                <tr><td>e) \(\tfrac{1}{100}(Z_p+Z_L)\)</td><td>Refletiu \(Z_p\) também, que é o erro descrito em 15.4: só se reflete o que está inteiramente do outro lado.</td></tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p>A notação "1 : 10" é a origem de metade dos erros porque não diz explicitamente o que é \(r\). A convenção do curso é \(r = n_1/n_2\) — o <b>primeiro</b> número sobre o <b>segundo</b> —, logo \(1{:}10\) significa \(r = 0{,}1\) e não \(r = 10\). No Teste 4 de 2024 a figura traz "10 : 1" e ali \(r = 10\). Ler a ordem errada troca a resposta entre as alternativas b) e d), que estão as duas na lista justamente por isso.</p>
+            <p>Segundo ponto: \(Z_p\) em série com o primário fica intocada. Se \(Z_p\) estivesse no <em>secundário</em>, em série com \(Z_L\), a resposta seria \(r^2(Z_p + Z_L) = (Z_p+Z_L)/100\) — que é a alternativa e). As duas configurações diferem só por onde o bloco foi desenhado, e a figura resolve.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="modulo-16.html">
+    <div>
+      <span class="nm-label">Próximo módulo</span>
+      <span class="nm-title">16 · Bipórticos: z, y, h e ABCD</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+    <footer>
+      <div class="agenda">
+        <div><b>P1</b>26/10 · 14:20</div>
+        <div><b>P2</b>02/12</div>
+        <div><b>T1</b>02/09</div>
+        <div><b>T2</b>14/10</div>
+        <div><b>T3</b>18/11</div>
+        <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+      </div>
+      <p class="foot-note">Módulo 15 — Transformador ideal: relação de transformação, convenção de pontos e sinais, reflexão de impedâncias, o TI como limite do par acoplado e impedância de entrada. Exercícios da P3 2025 (1ª questão, itens a a e), da P3 2024 (1ª questão, itens a, b e c), do formulário P3 (Questões 01, 02 e 03 da p. 1 col. esquerda, mais o bloco "Setas de tensão são marcadas em CR.") e dos Testes 1 de 2023, 2, 3 e 4 de 2024 e 5 de 2025 (questões 1, 2 e 4). Aprofunda a seção <a href="modulo-10.html#trafo">10.7</a> do módulo de acoplamento magnético.</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>

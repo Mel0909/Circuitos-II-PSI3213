@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circuitos II</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['\\(','\\)']], displayMath: [['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js" id="MathJax-script" async></script>
+<link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="app-shell">
+
+  <aside class="sidebar">
+    <div class="brand">PSI 3213</div>
+    <div class="brand-sub">Circuitos Elétricos II<br>Escola Politécnica da USP</div>
+
+    <div class="side-group">
+      <div class="side-label">P1</div>
+      <a class="side-item" href="modulo-00.html">
+        <span class="side-num">00</span>
+        <span class="side-title">EDOs e problema de valor inicial</span>
+      </a>
+      <a class="side-item" href="index.html">
+        <span class="side-num">01</span>
+        <span class="side-title">Transformada de Laplace</span>
+      </a>
+      <a class="side-item" href="modulo-02.html">
+        <span class="side-num">02</span>
+        <span class="side-title">Laplace aplicada a circuitos</span>
+      </a>
+      <a class="side-item" href="modulo-03.html">
+        <span class="side-num">03</span>
+        <span class="side-title">Antitransformada e doublet</span>
+      </a>
+      <a class="side-item" href="modulo-04.html">
+        <span class="side-num">04</span>
+        <span class="side-title">Periódicas e ponta de prova</span>
+      </a>
+      <a class="side-item" href="modulo-05.html">
+        <span class="side-num">05</span>
+        <span class="side-title">Redes de 2ª ordem</span>
+      </a>
+      <a class="side-item" href="modulo-revisao.html">
+        <span class="side-num">R</span>
+        <span class="side-title">Revisão · folha A4</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P2</div>
+      <a class="side-item" href="modulo-06.html">
+        <span class="side-num">06</span>
+        <span class="side-title">Funções de rede e de transferência</span>
+      </a>
+      <a class="side-item" href="modulo-07.html">
+        <span class="side-num">07</span>
+        <span class="side-title">Análise nodal e de malhas em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-08.html">
+        <span class="side-num">08</span>
+        <span class="side-title">FCPs e estabilidade</span>
+      </a>
+      <a class="side-item" href="modulo-09.html">
+        <span class="side-num">09</span>
+        <span class="side-title">Teoremas de rede em <em>s</em></span>
+      </a>
+      <a class="side-item" href="modulo-10.html">
+        <span class="side-num">10</span>
+        <span class="side-title">Acoplamento magnético</span>
+      </a>
+      <a class="side-item" href="modulo-11.html">
+        <span class="side-num">11</span>
+        <span class="side-title">Regime permanente senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-12.html">
+        <span class="side-num">12</span>
+        <span class="side-title">Diagramas de Bode</span>
+      </a>
+    </div>
+
+    <div class="side-group">
+      <div class="side-label">P3</div>
+      <a class="side-item" href="modulo-13.html">
+        <span class="side-num">13</span>
+        <span class="side-title">Potência em regime senoidal</span>
+      </a>
+      <a class="side-item" href="modulo-14.html">
+        <span class="side-num">14</span>
+        <span class="side-title">Fator de potência e instalações</span>
+      </a>
+      <a class="side-item" href="modulo-15.html">
+        <span class="side-num">15</span>
+        <span class="side-title">Transformador ideal</span>
+      </a>
+      <a class="side-item" href="modulo-16.html">
+        <span class="side-num">16</span>
+        <span class="side-title">Bipórticos: z, y, h e ABCD</span>
+      </a>
+      <a class="side-item active" href="#top">
+        <span class="side-num">17</span>
+        <span class="side-title">Bode assintótico: critérios e erros</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-col">
+
+    <nav class="topbar" id="top">
+      <div class="crumb-group">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir/fechar menu" aria-expanded="true">
+          <span></span><span></span><span></span>
+        </button>
+        <span class="crumb">P3 · Bode assintótico: critérios e erros</span>
+      </div>
+      <div class="tabs">
+        <a href="#intro">O que fica entre as retas</a>
+        <a href="#tabela">A tabela do formulário</a>
+        <a href="#normalizacao">Normalizações</a>
+        <a href="#criterios">Critérios C2, C3, C4</a>
+        <a href="#erro">Erro assíntota × real</a>
+        <a href="#cruzamento">Cruzar 0 dB</a>
+        <a href="#leitura">Ler um valor</a>
+        <a href="#exercicios">Exercícios</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-text">
+        <div class="eyebrow">P3 · Módulo 17 · PSI3213 Circuitos Elétricos II</div>
+        <h1><span class="tone-a">As retas você já sabe traçar.</span> <span class="tone-b">A questão é o que cabe entre elas.</span></h1>
+        <p class="hero-sub">O diagrama assintótico é um desenho feito só de retas, e retas nunca passam exatamente por onde a função passa. A diferença não é aleatória: ela tem valor fechado, tabelado, e cai na prova. Neste módulo estão os critérios C2, C3 e C4 exatamente como o professor os escreve, as normalizações sem as quais o patamar de baixa frequência sai errado, o erro de \(\mp 3\) dB do polo simples, o erro \(-20\log(2\zeta)\) do par complexo, e as duas contas de leitura direta que dominam os testes de P3: onde a última assíntota cruza 0 dB, e quanto vale a amplitude numa frequência dada.</p>
+        <div class="hero-meta">
+          <span><b>Curso</b>PSI3213 — Circuitos Elétricos II</span>
+          <span><b>Módulo</b>17 · Bode assintótico: critérios e erros</span>
+          <span><b>Pré-requisito</b>Módulo 12 — Diagramas de Bode</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="splane-widget">
+          <div class="splane-header">
+            <span>POLO SIMPLES · ASSÍNTOTA × CURVA REAL</span>
+            <span>erro = −3 dB em ω = p</span>
+          </div>
+          <div style="background:#08120f;border-radius:2px;padding:0.5rem">
+            <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+              <!-- grade -->
+              <g stroke="#1b2b25" stroke-width="1">
+                <path d="M60 40 L60 230"/>
+                <path d="M151.5 40 L151.5 230"/>
+                <path d="M220.8 40 L220.8 230"/>
+                <path d="M290 40 L290 230"/>
+                <path d="M359.2 40 L359.2 230"/>
+                <path d="M428.5 40 L428.5 230"/>
+                <path d="M520 40 L520 230"/>
+                <path d="M60 80 L520 80"/>
+                <path d="M60 135 L520 135"/>
+                <path d="M60 190 L520 190"/>
+              </g>
+              <!-- eixos -->
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M60 40 L60 230"/>
+                <path d="M60 230 L530 230"/>
+              </g>
+              <!-- assintota -->
+              <path d="M60 80 L290 80 L520 190" fill="none" stroke="#4ade9a" stroke-width="2.6"/>
+              <!-- curva real -->
+              <path d="M60 80.2 L151.5 81.4 L220.8 85.3 L290 96.5 L359.2 118.4 L428.5 147.7 L520 190"
+                    fill="none" stroke="#f5b942" stroke-width="2.4"/>
+              <!-- marcas de erro -->
+              <path d="M290 80 L290 96.5" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 3"/>
+              <path d="M220.8 80 L220.8 85.3" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+              <path d="M359.2 113 L359.2 118.4" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+              <circle cx="290" cy="96.5" r="3.5" fill="#f5b942"/>
+              <text x="298" y="103" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">−3 dB</text>
+              <text x="176" y="80" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−1 dB</text>
+              <text x="366" y="112" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−1 dB</text>
+              <!-- rotulos de eixo -->
+              <text x="44" y="84" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+              <text x="30" y="194" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−20</text>
+              <text x="14" y="60" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">dB</text>
+              <text x="48" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1p</text>
+              <text x="208" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">p/2</text>
+              <text x="284" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">p</text>
+              <text x="350" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2p</text>
+              <text x="506" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">10p</text>
+              <text x="524" y="248" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+              <text x="330" y="276" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">— assíntota</text>
+              <text x="440" y="276" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">— real</text>
+            </svg>
+          </div>
+          <div class="splane-readout">A assíntota erra no máximo 3 dB, e erra num só ponto. Uma oitava para cada lado da quebra o erro já caiu a 1 dB; duas oitavas, a 0,3 dB. Por isso o esboço de retas é aceitável — e por isso, quando a questão pede o valor <em>na</em> quebra, ele não é.</div>
+        </div>
+      </div>
+    </header>
+
+<main>
+
+  <section id="intro" class="panel src-ext">
+    <span class="eyebrow">17.1</span>
+    <h2>O que fica entre as retas</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
+    <p>O <a href="modulo-12.html">módulo 12</a> ensinou a desenhar as assíntotas: o que é decibel e o que é década, o <a href="modulo-12.html#pecas">catálogo fator a fator</a>, a <a href="modulo-12.html#fase">regra da fase em duas décadas</a>, o sinal do ganho, o cancelamento aproximado polo–zero e a <a href="modulo-12.html#reconstrucao">reconstrução de \(F(s)\) a partir do diagrama</a>. Nada disso se repete aqui. Se algum desses pontos ainda estiver frouxo, volte ao 12 antes de continuar.</p>
+
+    <p>Este módulo trata do que fica <em>entre</em> as retas. Três perguntas, nesta ordem:</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">onde a curva se afasta</span>
+        <p>A assíntota e a curva real coincidem longe das quebras e divergem perto delas. O afastamento é máximo exatamente na frequência característica de cada fator — que é justamente onde as questões gostam de perguntar.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">por quanto</span>
+        <p>Para polo ou zero real simples, \(\mp 3\) dB na quebra. Para um par complexo conjugado, \(-20\log(2\zeta)\) dB — que depende do amortecimento e pode chegar a dezenas de dB. Essa é a Questão 06 do formulário.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">com que critério fechar o traçado</span>
+        <p>O professor escreve os critérios como <b style="color:var(--ink)">C2</b>, <b style="color:var(--ink)">C3</b> e <b style="color:var(--ink)">C4</b>, com uma regra de conversão para polos e um bloco de <b style="color:var(--ink)">Normalizações</b>. Sem a normalização, o patamar de baixa frequência sai errado em dB — é o erro silencioso mais comum da matéria.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">e como ler um número</span>
+        <p>Os testes de P3 não pedem o desenho: pedem um número. "Quanto vale em \(\omega=2\)?", "em que \(\omega\) a amplitude vale \(-6\) dB?", "onde a última assíntota cruza 0 dB?". Isso é aritmética de retas, não de curvas.</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>A distinção que os enunciados fazem questão de marcar.</b> Quando o teste diz "a amplitude do diagrama <em>assintótico</em>", você responde com as retas e ignora todo erro — mesmo que o ponto pedido caia em cima de uma quebra. Quando o enunciado fala em "curva real", "erro" ou "diferença entre a curva real e a aproximação assintótica", aí sim a correção entra. Ler qual dos dois está sendo pedido é metade da questão.</div>
+  </section>
+
+  <section id="tabela" class="panel src-prof">
+    <span class="eyebrow">17.2</span>
+    <h2>A tabela do formulário, fator a fator</h2>
+
+    <p>O formulário traz um slide com três colunas — <b style="color:var(--ink)">Fator</b>, <b style="color:var(--ink)">Módulo (dB)</b> e <b style="color:var(--ink)">Fase (graus)</b> — e uma linha por tipo de fator. Cada célula de módulo e de fase traz um pequeno gráfico esquemático com o eixo \(\omega\) na horizontal, a assíntota de módulo em verde e a de fase em vermelho. Reproduzida abaixo, na mesma ordem:</p>
+
+    <table class="ltable">
+      <tr><th>Fator</th><th>Módulo (dB)</th><th>Fase (graus)</th></tr>
+      <tr>
+        <td>Ganho: \(K>0\)</td>
+        <td>Reta horizontal em \(20\log K\).</td>
+        <td>Reta horizontal em \(0^{\circ}\).</td>
+      </tr>
+      <tr>
+        <td>Zero na origem (nulo): \((j\omega)^{N}\)</td>
+        <td>Reta de inclinação \(20N\) dB/dec, cruzando o eixo em \(\omega=1\).</td>
+        <td>Reta horizontal em \(N\cdot 90^{\circ}\).</td>
+      </tr>
+      <tr>
+        <td>Polo na origem (nulo): \(\dfrac{1}{(j\omega)^{N}}\)</td>
+        <td>Reta de inclinação \(-20N\) dB/dec, cruzando o eixo em \(\omega=1\).</td>
+        <td>Reta horizontal em \(-N\cdot 90^{\circ}\).</td>
+      </tr>
+      <tr>
+        <td>Zero real negativo: \(\left(\dfrac{j\omega}{z}+1\right)^{N}\)</td>
+        <td>0 dB até \(\omega=z\); a partir de \(z\), \(+20N\) dB/dec.</td>
+        <td>\(0^{\circ}\) até \(0{,}1z\); rampa de \(0{,}1z\) a \(10z\); \(N\cdot 90^{\circ}\) depois de \(10z\).</td>
+      </tr>
+      <tr>
+        <td>Polo real negativo: \(\dfrac{1}{\left(\dfrac{j\omega}{p}+1\right)^{N}}\)</td>
+        <td>0 dB até \(\omega=p\); a partir de \(p\), \(-20N\) dB/dec.</td>
+        <td>\(0^{\circ}\) até \(0{,}1p\); rampa descendente de \(0{,}1p\) a \(10p\); \(-N\cdot 90^{\circ}\) depois de \(10p\).</td>
+      </tr>
+      <tr>
+        <td>2 polos complexos conjugados</td>
+        <td>0 dB até \(\omega=\omega_n\); a partir daí \(-40\) dB/dec.</td>
+        <td>\(0^{\circ}\) até \(0{,}1\omega_n\); rampa descendente passando por \(-90^{\circ}\) em \(\omega=\omega_n\); \(-180^{\circ}\) a partir de \(10\omega_n\).</td>
+      </tr>
+      <tr>
+        <td>2 zeros complexos conjugados</td>
+        <td>0 dB até \(\omega=\omega_n\); a partir daí \(+40\) dB/dec.</td>
+        <td>\(0^{\circ}\) até \(0{,}1\omega_n\); rampa ascendente passando por \(+90^{\circ}\) em \(\omega=\omega_n\); \(+180^{\circ}\) a partir de \(10\omega_n\).</td>
+      </tr>
+    </table>
+
+    <p>Detalhes do slide: nas duas linhas de zero/polo na origem há um <b style="color:var(--ink)">1</b> em roxo marcando o cruzamento em \(\omega=1\); nas linhas de zero/polo real negativo os pontos de quebra \(z\) e \(p\) aparecem em roxo; nos dois últimos gráficos de fase a posição \(\omega=\omega_n\) é marcada por uma linha vertical tracejada rosa.</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · como a tabela se usa na prática</span>
+      <p>A tabela não é para ser decorada linha a linha — ela é uma <b style="color:var(--ink)">lista de parcelas a somar</b>. O diagrama de módulo de uma função inteira é a soma vertical das colunas do meio; o de fase, a soma vertical das colunas da direita. Na prática o roteiro é:</p>
+      <ol class="steps">
+        <li>Normalize \(F(s)\) (seção <a href="#normalizacao">17.3</a>) e separe os fatores. Toda quebra tem de aparecer na forma \((1+j\omega/\omega_c)\).</li>
+        <li>O patamar de baixa frequência é só da linha do ganho: \(20\log K\), com \(K\) já normalizado. As demais linhas contribuem 0 dB abaixo da sua quebra — exceto as de origem, que não têm quebra e valem para todo \(\omega\).</li>
+        <li>Some as inclinações, não os valores. Abaixo de todas as quebras, a inclinação é \(20N_0\) dB/dec, com \(N_0\) a ordem do zero na origem (negativo se for polo). A cada quebra, some \(+20N\) (zero real), \(-20N\) (polo real), \(+40\) (par de zeros complexos) ou \(-40\) (par de polos complexos).</li>
+        <li>Ande da esquerda para a direita calculando o valor em cada quebra a partir do valor na quebra anterior e da inclinação do trecho — é o que faz o gabarito do Teste 5 de 2024.</li>
+      </ol>
+      <p>Duas leituras que a tabela deixa implícitas e que valem registrar. Primeira: as células de módulo mostram <b style="color:var(--ink)">0 dB até a quebra</b> porque o fator está normalizado — o ganho de baixa frequência já foi extraído e mora na linha do \(K\). Segunda: a coluna de fase do par complexo usa \(0{,}1\omega_n\) e \(10\omega_n\) exatamente como a de um polo real usa \(0{,}1p\) e \(10p\); a diferença é só a amplitude total do salto, \(180^{\circ}\) em vez de \(90^{\circ}\), e portanto a inclinação da rampa, \(90^{\circ}\)/dec em vez de \(45^{\circ}\)/dec.</p>
+    </div>
+
+    <div class="history-note">
+      <span><b>fonte</b>formulário P3 · p. 1, coluna esquerda</span>
+      <span><b>título original</b>Fator / Módulo (dB) / Fase (graus)</span>
+      <span><b>base</b>módulo 12, seção <a href="modulo-12.html#pecas">12.3</a></span>
+    </div>
+  </section>
+
+  <section id="normalizacao" class="panel src-prof">
+    <span class="eyebrow">17.3</span>
+    <h2>Normalizações: o passo que quase ninguém escreve e todo mundo precisa</h2>
+
+    <p>O formulário traz, ao lado do bloco de critérios, um quadro curto intitulado <b style="color:var(--ink)">Normalizações</b>, com duas linhas:</p>
+
+    <div class="eq-block">\[ s+c \;\longrightarrow\; c\left(\frac{s}{c}+1\right) \]</div>
+
+    <div class="eq-block">\[ s^2+2\alpha s+\omega_n^2 \;\longrightarrow\; \omega_n^2\left(\frac{s^2}{\omega_n^2}+\frac{2\alpha s}{\omega_n^2}+1\right) \]</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que essa forma e não a outra</span>
+      <p>A razão é a tabela da seção <a href="#tabela">17.2</a>. Todas as suas linhas de quebra dizem "<b style="color:var(--ink)">0 dB até a quebra</b>". Isso só é verdade para um fator escrito como \((1+j\omega/\omega_c)\): em \(\omega\to 0\) ele vale \(1\), e \(20\log 1 = 0\). Escrito como \((j\omega+\omega_c)\), em \(\omega\to 0\) ele vale \(\omega_c\), e contribui \(20\log\omega_c\) dB — um patamar que a tabela não prevê e que você vai esquecer de somar.</p>
+      <p>Normalizar é, portanto, <em>tirar de cada fator o seu valor em baixa frequência e jogá-lo todo no ganho \(K\)</em>. Feito isso, o patamar de baixa frequência é \(20\log K\) e mais nada, e a tabela pode ser aplicada literalmente.</p>
+    </div>
+
+    <p>A álgebra, num caso de um zero e um polo:</p>
+
+    <div class="eq-block">\[ \frac{K(s+z)}{(s+p)} \;=\; \frac{K\,z\left(\dfrac{s}{z}+1\right)}{p\left(\dfrac{s}{p}+1\right)} \;=\; \underbrace{\frac{Kz}{p}}_{K'}\cdot\frac{1+s/z}{1+s/p} \]</div>
+
+    <p>Em \(\omega=0\) o segundo fator vale 1, de modo que o ganho de baixa frequência é exatamente \(K'=Kz/p\), e o patamar do diagrama vale</p>
+
+    <div class="eq-block">\[ M(0) = 20\log\left|\frac{Kz}{p}\right| \ \text{dB} \]</div>
+
+    <p>No caso geral, com \(m\) zeros finitos \(z_i\) e \(n\) polos finitos \(p_k\):</p>
+
+    <div class="eq-block">\[ F(s)=K\,\frac{\prod_{i}(s+z_i)}{\prod_{k}(s+p_k)} \;=\; \underbrace{K\,\frac{\prod_i z_i}{\prod_k p_k}}_{K'}\cdot\frac{\prod_i\left(1+s/z_i\right)}{\prod_k\left(1+s/p_k\right)} \]</div>
+
+    <div class="callout"><b>A conta que decide dois testes deste módulo.</b> No Teste 5 de 2024, \(F(s)=6\dfrac{s+2}{(s+1)(s+3)}\) tem \(K'=6\cdot\dfrac{2}{1\cdot 3}=4\), e o patamar vale \(20\log 4=12\) dB — o gabarito começa exatamente por essa linha, chamando-a de "a cte". No Teste 6 de 2024, \(G(s)=\dfrac{1}{16}\dfrac{s(s+8)^2}{(s+2)^2}\) tem \(K'=\dfrac{1}{16}\cdot\dfrac{8^2}{2^2}=\dfrac{64}{64}=1\), e a constante vale \(0\) dB. Quem não normaliza pega \(20\log 6\) e \(20\log(1/16)\) e erra o diagrama inteiro por um deslocamento vertical constante.</div>
+
+    <p>Para o par complexo, a segunda linha do quadro faz a mesma coisa. Dividindo por \(\omega_n^2\) e usando \(\zeta=\alpha/\omega_n\):</p>
+
+    <div class="eq-block">\[ s^2+2\alpha s+\omega_n^2 = \omega_n^2\left[\left(\frac{s}{\omega_n}\right)^{2}+2\zeta\left(\frac{s}{\omega_n}\right)+1\right] \]</div>
+
+    <p>e em \(s=j\omega\), com \(u=\omega/\omega_n\):</p>
+
+    <div class="eq-block">\[ \frac{s^2+2\alpha s+\omega_n^2}{\omega_n^2}\bigg|_{s=j\omega} = \left(1-u^{2}\right)+j\,2\zeta u \]</div>
+
+    <p>que vale 1 em \(u=0\), como tinha de ser. O ganho de baixa frequência do par inteiro, \(\omega_n^2\), foi para o \(K'\).</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · verificação de sanidade em 5 segundos</span>
+      <p>Depois de normalizar, teste \(\omega\to 0\) na expressão original e no diagrama. Para \(F(s)=6(s+2)/[(s+1)(s+3)]\): \(F(0)=6\cdot 2/(1\cdot 3)=4\), e \(20\log 4 = 12\) dB. Se o patamar que você desenhou não bate com \(20\log|F(0)|\), a normalização está errada. Quando há zero ou polo na origem esse teste não se aplica diretamente — \(F(0)\) é \(0\) ou \(\infty\); nesse caso teste em \(\omega=1\), onde os fatores de origem contribuem \(0\) dB e o resto ainda está no patamar (se as quebras estiverem longe de 1).</p>
+    </div>
+  </section>
+
+  <section id="criterios" class="panel src-prof">
+    <span class="eyebrow">17.4</span>
+    <h2>Os critérios C2, C3 e C4, como o professor escreve</h2>
+
+    <p>O formulário abre o bloco assim:</p>
+
+    <div class="callout">Apresentamos a seguir um resumo dos critérios a serem obedecidos na construção dos diagramas assintóticos. <b>C2</b>, <b>C3</b> e <b>C4</b> se referem aos zeros. <b>Para determinar as contribuições dos polos, basta trocar o sinal do módulo e da fase.</b></div>
+
+    <p class="dim">A folha começa em C2 — não há C1 transcrito nela.</p>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">C2 · Contribuições dos zeros simples</h3>
+
+    <p><b style="color:var(--ink)">Na origem:</b> módulo \(20\log\omega\); fase \(+90^{\circ}\).</p>
+
+    <p><b style="color:var(--ink)">Em \(-\omega_i\):</b></p>
+
+    <div class="eq-block">\[ \text{Módulo}=\begin{cases} 0, & \omega<\omega_i\\[4pt] 20\log\left(\dfrac{\omega}{\omega_i}\right), & \omega>\omega_i \end{cases} \]</div>
+
+    <div class="eq-block">\[ \text{Fase}=\begin{cases} 0, & \omega<\omega_i/10\\[4pt] 45^{\circ}\log\left(10\dfrac{\omega}{\omega_i}\right), & \omega_i/10<\omega<10\omega_i\\[4pt] 90^{\circ}, & \omega>10\omega_i \end{cases} \]</div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">C3 · Contribuições dos zeros de multiplicidade \(N\)</h3>
+
+    <p><b style="color:var(--ink)">Na origem:</b> módulo \(20\cdot N\log\omega\); fase \(+90^{\circ}\cdot N\).</p>
+
+    <p><b style="color:var(--ink)">Em \(\omega_i\):</b></p>
+
+    <div class="eq-block">\[ \text{Módulo}=\begin{cases} 0, & \omega<\omega_i\\[4pt] 20\log\left(\dfrac{\omega}{\omega_i}\right), & \omega>\omega_i \end{cases} \]</div>
+
+    <div class="eq-block">\[ \text{Fase}=\begin{cases} 0, & \omega<\omega_i/10\\[4pt] 45^{\circ}\cdot N\log\left(10\dfrac{\omega}{\omega_i}\right), & \omega_i/10<\omega<10\omega_i\\[4pt] 90^{\circ}\cdot N, & \omega>10\omega_i \end{cases} \]</div>
+
+    <div class="callout"><b>Inconsistência do original, registrada e não corrigida.</b> Em <b>C3</b> o módulo está escrito <em>sem</em> o fator \(N\): a folha traz \(20\log(\omega/\omega_i)\), idêntico ao de C2, quando pelo padrão do resto do bloco — e pela linha "na origem", que traz \(20\cdot N\log\omega\), e pela fase, que traz \(45^{\circ}\cdot N\) e \(90^{\circ}\cdot N\) — deveria ser \(20\cdot N\log(\omega/\omega_i)\). A transcrição acima reproduz a folha tal como está. Ao resolver, use \(20N\log(\omega/\omega_i)\): um zero duplo em \(\omega_i\) sobe a \(+40\) dB/dec depois da quebra, não a \(+20\).</div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">C4 · Contribuições dos zeros simples complexos conjugados</h3>
+
+    <p>Quebra em \(\omega_n\) (<em>ver slides</em>):</p>
+
+    <div class="eq-block">\[ \text{Módulo}=\begin{cases} 0, & \omega<\omega_i\\[4pt] 40\log\left(\dfrac{\omega}{\omega_i}\right), & \omega>\omega_i \end{cases} \]</div>
+
+    <div class="eq-block">\[ \text{Fase}=\begin{cases} 0, & \omega<\omega_i/10\\[4pt] 90^{\circ}\log\left(10\dfrac{\omega}{\omega_i}\right), & \omega_i/10<\omega<10\omega_i\\[4pt] 180^{\circ}, & \omega>10\omega_i \end{cases} \]</div>
+
+    <p>À direita do bloco C4, em destaque:</p>
+
+    <div class="eq-block">\[ \left(s^2+2\alpha s+\omega_n^2\right),\qquad \zeta=\frac{\alpha}{\omega_n} \]</div>
+
+    <div class="eq-block">\[ \text{Erro}=\pm\,20\log(2\zeta) \qquad \left(\frac{\text{zero}}{\text{polo}}\right) \]</div>
+
+    <p class="dim">Na folha o sinal "+" está em vermelho e o "−" em verde-azulado, casando com "zero" em vermelho e "polo" em verde-azulado: <b style="color:var(--ink)">+</b> para zero, <b style="color:var(--ink)">−</b> para polo.</p>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · lendo os três critérios</span>
+      <p><b style="color:var(--ink)">C2</b> é o fator real simples. As duas sentenças do módulo dizem o óbvio da tabela — 0 dB antes, \(20\log(\omega/\omega_i)\) depois, ou seja, \(+20\) dB/dec — mas na forma de <em>função</em>, e é essa forma que resolve os testes de leitura numérica: \(20\log(\omega/\omega_i)\) é a equação da reta, e você a iguala ao valor pedido. A sentença da fase é a mesma rampa de duas décadas do <a href="modulo-12.html#fase">módulo 12</a>, escrita explicitamente: \(45^{\circ}\log(10\omega/\omega_i)\) vale \(0\) em \(\omega=\omega_i/10\) (porque \(\log 1=0\)), \(45^{\circ}\) em \(\omega=\omega_i\) e \(90^{\circ}\) em \(\omega=10\omega_i\). São \(45^{\circ}\) por década, e a rampa é reta <em>no eixo log</em>.</p>
+      <p><b style="color:var(--ink)">C3</b> é C2 multiplicado pela multiplicidade. Tudo escala: inclinação \(20N\) dB/dec, salto total \(90^{\circ}N\), rampa de \(45^{\circ}N\) por década. O intervalo da rampa não muda — continua sendo de \(\omega_i/10\) a \(10\omega_i\), duas décadas, independentemente de \(N\). Esse é o detalhe que se erra: multiplicidade muda a <em>altura</em> da rampa, não a sua <em>largura</em>.</p>
+      <p><b style="color:var(--ink)">C4</b> é o par complexo tratado como um bloco só. Note que a inclinação é \(40\) dB/dec e o salto de fase \(180^{\circ}\): são <em>dois</em> zeros, e o assintótico não sabe distinguir um par complexo de um zero real duplo. Toda a diferença entre os dois casos está no erro, e é por isso que o formulário coloca \(\text{Erro}=\pm 20\log(2\zeta)\) logo ao lado de C4: é a única correção que o critério assintótico não consegue embutir. Repare também que C4 usa \(\omega_i\) nas fórmulas embora o texto fale em \(\omega_n\) — é a mesma frequência, a característica do par.</p>
+      <p>E a frase de abertura — "<em>para determinar as contribuições dos polos, basta trocar o sinal do módulo e da fase</em>" — é o que dispensa escrever C2', C3' e C4'. Um polo real simples em \(-\omega_i\) contribui \(-20\log(\omega/\omega_i)\) acima da quebra e \(-45^{\circ}\log(10\omega/\omega_i)\) na rampa. O mesmo vale para o erro: \(+20\log(2\zeta)\) para o par de zeros, \(-20\log(2\zeta)\) para o par de polos.</p>
+    </div>
+  </section>
+
+  <section id="erro" class="panel src-ext">
+    <span class="eyebrow">17.5</span>
+    <h2>O erro entre a assíntota e a curva real</h2>
+
+    <p>A assíntota é uma aproximação, e o tamanho do engano é calculável em fechado. Há dois casos, e só dois: fator real e par complexo.</p>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Polo ou zero real simples: os \(\mp 3\) dB</h3>
+
+    <p>Tome um polo real normalizado, \(H(j\omega)=\dfrac{1}{1+j\omega/p}\). O módulo exato em dB é</p>
+
+    <div class="eq-block">\[ M_{\rm real}(\omega) = -20\log\sqrt{1+\left(\frac{\omega}{p}\right)^{2}} = -10\log\left[1+\left(\frac{\omega}{p}\right)^{2}\right] \]</div>
+
+    <p>e o assintótico, pela tabela,</p>
+
+    <div class="eq-block">\[ M_{\rm asn}(\omega)=\begin{cases} 0, & \omega<p\\[4pt] -20\log\left(\dfrac{\omega}{p}\right), & \omega>p \end{cases} \]</div>
+
+    <p>Na quebra, \(\omega=p\), a assíntota vale \(0\) e a curva real vale</p>
+
+    <div class="eq-block">\[ M_{\rm real}(p) = -10\log 2 = -3{,}0103\ \text{dB} \;\approx\; -3\ \text{dB} \]</div>
+
+    <p>Uma oitava abaixo, \(\omega=p/2\), a assíntota ainda vale \(0\) e a real vale</p>
+
+    <div class="eq-block">\[ -10\log\left(1+\tfrac{1}{4}\right) = -10\log 1{,}25 = -0{,}969\ \text{dB} \;\approx\; -1\ \text{dB} \]</div>
+
+    <p>Uma oitava acima, \(\omega=2p\), a assíntota vale \(-20\log 2 = -6{,}021\) dB e a real vale</p>
+
+    <div class="eq-block">\[ -10\log(1+4) = -10\log 5 = -6{,}990\ \text{dB} \quad\Longrightarrow\quad \text{erro} = -6{,}990-(-6{,}021) = -0{,}969\ \text{dB} \]</div>
+
+    <p>Os dois erros de uma oitava são iguais em módulo — a curva de erro é simétrica em torno da quebra <em>no eixo logarítmico</em>. Para o zero real simples tudo se repete com o sinal trocado: \(+3\) dB na quebra, \(+1\) dB a uma oitava.</p>
+
+    <table class="ltable">
+      <tr><th>\(\omega/p\)</th><th>Assíntota (dB)</th><th>Curva real (dB)</th><th>Erro (dB)</th></tr>
+      <tr><td>0,1</td><td>0</td><td>−0,04</td><td>−0,04</td></tr>
+      <tr><td>0,25 (2 oitavas abaixo)</td><td>0</td><td>−0,26</td><td>−0,26</td></tr>
+      <tr><td>0,5 (1 oitava abaixo)</td><td>0</td><td>−0,97</td><td>−0,97</td></tr>
+      <tr><td>1 (quebra)</td><td>0</td><td>−3,01</td><td><b>−3,01</b></td></tr>
+      <tr><td>2 (1 oitava acima)</td><td>−6,02</td><td>−6,99</td><td>−0,97</td></tr>
+      <tr><td>4 (2 oitavas acima)</td><td>−12,04</td><td>−12,30</td><td>−0,26</td></tr>
+      <tr><td>10</td><td>−20,00</td><td>−20,04</td><td>−0,04</td></tr>
+    </table>
+
+    <p>A fase erra de outro jeito. A rampa de duas décadas do critério C2 é uma aproximação linear de \(-\arctan(\omega/p)\). Em \(\omega=p\) as duas coincidem exatamente (\(-45^{\circ}\) nas duas). O erro é máximo nas <b style="color:var(--ink)">extremidades</b> da rampa, onde a aproximação já saturou e o arco-tangente ainda não:</p>
+
+    <div class="eq-block">\[ \omega=\frac{p}{10}:\quad \text{aprox.}=0^{\circ},\qquad \text{real}=-\arctan(0{,}1)=-5{,}71^{\circ} \quad\Longrightarrow\quad \text{erro}=+5{,}71^{\circ} \]</div>
+
+    <div class="eq-block">\[ \omega=10p:\quad \text{aprox.}=-90^{\circ},\qquad \text{real}=-\arctan(10)=-84{,}29^{\circ} \quad\Longrightarrow\quad \text{erro}=-5{,}71^{\circ} \]</div>
+
+    <p>Ou seja, \(\pm 5{,}7^{\circ}\) nos dois cantos, e menos no meio. Para efeito de prova: a fase assintótica é boa a uns \(6^{\circ}\), o que quase nunca muda uma alternativa.</p>
+
+    <div class="callout"><b>Regra de bolso.</b> Longe de uma década de qualquer quebra, a assíntota de módulo erra menos de 0,05 dB — despreze. Dentro de uma oitava, erra até 1 dB. Na quebra, 3 dB por fator. Se duas quebras estiverem a menos de uma década uma da outra, os erros se somam: dois polos reais distintos próximos podem dar 4 a 6 dB de afastamento entre o esboço e a curva.</div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Par complexo conjugado: o erro depende de \(\zeta\)</h3>
+
+    <p>Aqui a correção deixa de ser um número fixo. Tome o par de polos normalizado, com \(u=\omega/\omega_n\):</p>
+
+    <div class="eq-block">\[ H(ju)=\frac{1}{\left(1-u^{2}\right)+j\,2\zeta u} \quad\Longrightarrow\quad M_{\rm real}=-20\log\sqrt{\left(1-u^{2}\right)^{2}+\left(2\zeta u\right)^{2}} \]</div>
+
+    <p>Na frequência de quebra, \(u=1\), o termo real se anula e sobra só o imaginário:</p>
+
+    <div class="eq-block">\[ M_{\rm real}(\omega_n) = -20\log\left|\,j\,2\zeta\,\right| = -20\log(2\zeta) \]</div>
+
+    <p>A assíntota, pela tabela, vale \(0\) dB em \(\omega=\omega_n\). Logo o erro é o próprio valor:</p>
+
+    <div class="eq-block">\[ \boxed{\ \text{Erro}\big|_{\omega=\omega_n} = -20\log(2\zeta)\ \text{dB}\quad (\text{par de polos}) \ }\]</div>
+
+    <p>e, para um par de <em>zeros</em>, o sinal se inverte: \(+20\log(2\zeta)\). É exatamente o \(\text{Erro}=\pm 20\log(2\zeta)\) que o formulário escreve ao lado de C4, com \(+\) para zero e \(-\) para polo.</p>
+
+    <p>Três leituras do resultado:</p>
+
+    <div class="roc-grid">
+      <div class="roc-card">
+        <span class="tag">\(\zeta=1/2\) · erro nulo</span>
+        <p>\(-20\log(1)=0\). Com \(\zeta=0{,}5\) a curva real passa <em>exatamente</em> pela quina da assíntota. É o único amortecimento em que o esboço acerta na quebra.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">\(\zeta&lt;1/2\) · erro positivo</span>
+        <p>A curva fica <em>acima</em> da assíntota. Quanto menor \(\zeta\), maior o afastamento — e ele explode: \(\zeta=0{,}05\) dá \(+20\) dB.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">\(\zeta&gt;1/2\) · erro negativo</span>
+        <p>A curva fica <em>abaixo</em>. Em \(\zeta=1\) (amortecimento crítico) o erro vale \(-20\log 2=-6\) dB: são dois polos reais coincidentes, cada um contribuindo \(-3\) dB.</p>
+      </div>
+      <div class="roc-card">
+        <span class="tag">\(\zeta&lt;1/\sqrt{2}\) · há pico</span>
+        <p>Só abaixo de \(\zeta\approx 0{,}707\) a curva real tem um máximo local, em \(\omega_r=\omega_n\sqrt{1-2\zeta^{2}}\), de valor \(1/(2\zeta\sqrt{1-\zeta^{2}})\). Acima disso a curva é monotonicamente decrescente e não há ressonância.</p>
+      </div>
+    </div>
+
+    <table class="ltable">
+      <tr><th>\(\zeta\)</th><th>\(2\zeta\)</th><th>Erro na quebra = \(-20\log(2\zeta)\) (polos)</th><th>Comentário</th></tr>
+      <tr><td>0,05</td><td>0,10</td><td>+20,0 dB</td><td>ressonância muito aguda</td></tr>
+      <tr><td>0,10</td><td>0,20</td><td>+13,98 dB</td><td>pico pronunciado</td></tr>
+      <tr><td>0,20</td><td>0,40</td><td>+7,96 dB</td><td>pico visível</td></tr>
+      <tr><td>0,25</td><td>0,50</td><td>+6,02 dB</td><td>caso da Questão 06 (com sinal de zero)</td></tr>
+      <tr><td>0,30</td><td>0,60</td><td>+4,44 dB</td><td>—</td></tr>
+      <tr><td>0,50</td><td>1,00</td><td>0,00 dB</td><td>assíntota exata na quebra</td></tr>
+      <tr><td>\(1/\sqrt{2}\approx 0{,}707\)</td><td>1,414</td><td>−3,01 dB</td><td>limite: último \(\zeta\) com pico</td></tr>
+      <tr><td>1,00</td><td>2,00</td><td>−6,02 dB</td><td>polo real duplo: \(2\times(-3)\) dB</td></tr>
+    </table>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+        <!-- grade -->
+        <g stroke="#1b2b25" stroke-width="1">
+          <path d="M90 40 L90 270"/>
+          <path d="M162 40 L162 270"/>
+          <path d="M258 40 L258 270"/>
+          <path d="M330 40 L330 270"/>
+          <path d="M402 40 L402 270"/>
+          <path d="M498 40 L498 270"/>
+          <path d="M570 40 L570 270"/>
+          <path d="M90 92 L570 92"/>
+          <path d="M90 140 L570 140"/>
+          <path d="M90 194 L570 194"/>
+          <path d="M90 248 L570 248"/>
+        </g>
+        <!-- eixos -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M90 30 L90 275"/>
+          <path d="M85 140 L585 140"/>
+        </g>
+        <!-- assintota -->
+        <path d="M90 140 L330 140 L570 260" fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+        <!-- zeta = 0,1 -->
+        <path d="M90 139.7 L162 139.3 L204.5 138 L257.8 132.7 L292.8 123.4 L312 105 L330 98 L346 109 L365 140 L402 169 L444.5 194 L497.8 223 L570 260"
+              fill="none" stroke="#f5b942" stroke-width="2.2"/>
+        <!-- zeta = 0,25 -->
+        <path d="M90 139.8 L162 139.5 L204.5 138.5 L257.8 133.9 L292.8 127.5 L312 122.5 L330 122 L346 126 L365 144.5 L402 170 L444.5 194.6 L497.8 223 L570 260"
+              fill="none" stroke="#f5b942" stroke-width="2.2" stroke-dasharray="7 4"/>
+        <!-- zeta = 0,707 -->
+        <path d="M90 140 L162 140.3 L204.5 140.5 L257.8 140.8 L292.8 142.8 L330 149 L365 160.6 L402 177 L444.5 197.4 L497.8 223.9 L570 260"
+              fill="none" stroke="#f5b942" stroke-width="2.2" stroke-dasharray="2 4"/>
+        <!-- marcacao na quebra -->
+        <path d="M330 140 L330 98" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <circle cx="330" cy="98" r="3.5" fill="#f5b942"/>
+        <circle cx="330" cy="122" r="3.5" fill="#f5b942"/>
+        <circle cx="330" cy="149" r="3.5" fill="#f5b942"/>
+        <text x="338" y="96" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">ζ=0,1 → +14 dB</text>
+        <text x="338" y="120" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">ζ=0,25 → +6 dB</text>
+        <text x="338" y="163" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">ζ=0,707 → −3 dB</text>
+        <!-- rotulos -->
+        <text x="58" y="96" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">+16</text>
+        <text x="72" y="144" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+        <text x="58" y="198" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−18</text>
+        <text x="58" y="252" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−36</text>
+        <text x="46" y="48" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">dB</text>
+        <text x="72" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1</text>
+        <text x="322" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+        <text x="560" y="292" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">10</text>
+        <text x="290" y="312" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">u = ω / ωₙ</text>
+        <text x="110" y="70" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">— assíntota (0 dB → −40 dB/dec)</text>
+        <text x="110" y="88" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">— curva real, três valores de ζ</text>
+      </svg>
+      <div class="pz-legend">Par de polos complexos conjugados normalizado. A assíntota é sempre a mesma — não depende de \(\zeta\). A curva real, sim: sobe \(+14\) dB acima da quina para \(\zeta=0{,}1\) e desce \(-3\) dB abaixo dela para \(\zeta=0{,}707\). Fora da faixa de uma década em torno de \(\omega_n\) as três curvas se colam na assíntota, e é por isso que o esboço assintótico continua útil.</div>
+    </div>
+
+    <div class="callout"><b>Por que a assíntota não vê \(\zeta\).</b> Em baixa frequência o par tende a 1; em alta, a \(-u^{2}\). Nenhum dos dois limites contém \(\zeta\) — ele só aparece no termo \(j2\zeta u\), que domina exatamente quando \(1-u^{2}=0\), isto é, em \(u=1\). Todo o efeito do amortecimento está concentrado na vizinhança da quebra. É a definição geométrica do erro do assintótico para um par complexo.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde se erra</span>
+      <p>Três confusões recorrentes. (i) Trocar \(\alpha\) por \(\zeta\): o fator é \(s^2+2\alpha s+\omega_n^2\), então \(\alpha\) é <em>metade</em> do coeficiente de \(s\), e \(\zeta=\alpha/\omega_n\). Em \(s^2+5s+100\), \(\alpha=2{,}5\) e não \(5\). (ii) Esquecer o sinal: o formulário coloca \(+\) para zero e \(-\) para polo, e quando o fator está no <em>numerador</em> a curva real fica <em>abaixo</em> da assíntota se \(\zeta<1/2\). (iii) Aplicar \(-20\log(2\zeta)\) fora da quebra: a fórmula vale só em \(\omega=\omega_n\). Em qualquer outra frequência é preciso a expressão completa \(-20\log\sqrt{(1-u^2)^2+(2\zeta u)^2}\).</p>
+    </div>
+  </section>
+
+  <section id="cruzamento" class="panel src-ext">
+    <span class="eyebrow">17.6</span>
+    <h2>Assíntotas cruzando o eixo de 0 dB, e por que a média é geométrica</h2>
+
+    <p>O eixo de 0 dB é o eixo das abscissas do diagrama de módulo, e cruzá-lo significa \(|F(j\omega)|=1\). Achar essa frequência é a pergunta mais direta que se pode fazer sobre um esboço de Bode, e ela aparece em duas formas: "onde a <em>última</em> assíntota cruza 0 dB" (Teste 6 de 2023) e "em que \(\omega\) a amplitude vale \(x\) dB" (Teste 6 de 2024).</p>
+
+    <p>A conta é sempre a mesma. Cada trecho de assíntota é uma <b style="color:var(--ink)">reta no plano \((\log\omega,\ \text{dB})\)</b>, com equação</p>
+
+    <div class="eq-block">\[ M(\omega) = M(\omega_a) + S\cdot\log_{10}\left(\frac{\omega}{\omega_a}\right) \]</div>
+
+    <p>onde \(\omega_a\) é o início do trecho, \(M(\omega_a)\) o valor ali e \(S\) a inclinação em dB/dec. Iguale \(M(\omega)\) ao valor pedido e isole \(\omega\). Para o cruzamento de 0 dB:</p>
+
+    <div class="eq-block">\[ 0 = M(\omega_a) + S\log_{10}\left(\frac{\omega}{\omega_a}\right) \;\Longrightarrow\; \log_{10}\left(\frac{\omega}{\omega_a}\right) = -\frac{M(\omega_a)}{S} \;\Longrightarrow\; \omega = \omega_a\,10^{-M(\omega_a)/S} \]</div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">O caso das duas assíntotas simétricas — a Questão 05</h3>
+
+    <p>A situação da Questão 05 do formulário é esta: uma assíntota sobe a \(+x\) dB/dec entre \(\omega_0\) e \(\omega_1\), a seguinte desce a \(-x\) dB/dec entre \(\omega_1\) e \(\omega_2\), e ambas cruzam \(0\) dB — a primeira em \(\omega_0\), a segunda em \(\omega_2\). Pergunta-se \(\omega_1\), a frequência do vértice.</p>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+        <g stroke="#1b2b25" stroke-width="1">
+          <path d="M70 40 L70 270"/>
+          <path d="M200 40 L200 270"/>
+          <path d="M330 40 L330 270"/>
+          <path d="M460 40 L460 270"/>
+          <path d="M590 40 L590 270"/>
+          <path d="M70 120 L590 120"/>
+          <path d="M70 160 L590 160"/>
+          <path d="M70 240 L590 240"/>
+        </g>
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M70 30 L70 275"/>
+          <path d="M65 200 L600 200"/>
+        </g>
+        <!-- assintotas -->
+        <path d="M110 236 L200 200 L330 120 L460 200 L560 240" fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+        <!-- prolongamentos tracejados -->
+        <path d="M330 120 L460 200" stroke="#4ade9a" stroke-width="2.8" fill="none"/>
+        <!-- triangulos -->
+        <path d="M200 200 L330 200 L330 120 Z" fill="rgba(74,222,154,0.10)" stroke="#5d6e67" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <path d="M330 200 L460 200 L330 120 Z" fill="rgba(245,185,66,0.10)" stroke="#5d6e67" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <!-- marcas -->
+        <circle cx="200" cy="200" r="4" fill="#f5b942"/>
+        <circle cx="460" cy="200" r="4" fill="#f5b942"/>
+        <circle cx="330" cy="120" r="4" fill="#f5b942"/>
+        <path d="M330 200 L330 120" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+        <text x="184" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₀</text>
+        <text x="322" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₁</text>
+        <text x="446" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₂</text>
+        <text x="228" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">+x dB/dec</text>
+        <text x="380" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−x dB/dec</text>
+        <text x="236" y="192" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">log(ω₁/ω₀)</text>
+        <text x="366" y="192" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">log(ω₂/ω₁)</text>
+        <text x="338" y="106" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">M(ω₁)</text>
+        <text x="34" y="204" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0 dB</text>
+        <text x="40" y="48" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">dB</text>
+        <text x="596" y="204" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+        <text x="180" y="296" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">eixo horizontal: escala logarítmica em ω</text>
+      </svg>
+      <div class="pz-legend">Dois triângulos retângulos com a mesma altura \(M(\omega_1)\) e inclinações \(+x\) e \(-x\). Como as inclinações têm o mesmo módulo, as bases são iguais — e as bases, no plano log-log, são \(\log(\omega_1/\omega_0)\) e \(\log(\omega_2/\omega_1)\).</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · dedução por semelhança de triângulos</span>
+      <p>Subindo de \(\omega_0\) a \(\omega_1\) com inclinação \(+x\), partindo de \(0\) dB:</p>
+      <div class="eq-block">\[ M(\omega_1) = x\log_{10}\left(\frac{\omega_1}{\omega_0}\right) \]</div>
+      <p>Descendo de \(\omega_1\) a \(\omega_2\) com inclinação \(-x\) e chegando a \(0\) dB:</p>
+      <div class="eq-block">\[ 0 = M(\omega_1) - x\log_{10}\left(\frac{\omega_2}{\omega_1}\right) \quad\Longrightarrow\quad M(\omega_1) = x\log_{10}\left(\frac{\omega_2}{\omega_1}\right) \]</div>
+      <p>São o mesmo \(M(\omega_1)\) visto pelos dois lados: os dois triângulos têm a mesma altura e o mesmo ângulo, logo a mesma base.</p>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · formulário P3, Questão 05</span>
+      <div class="eq-block">\[ 20\log\left(\frac{\omega_1}{\omega_0}\right)=-20\log\left(\frac{\omega_1}{\omega_2}\right) =20\log\left(\frac{\omega_2}{\omega_1}\right) \implies \frac{\omega_1}{\omega_0}=\frac{\omega_2}{\omega_1} \implies \omega_1=\sqrt{\omega_0\omega_2} \]</div>
+    </div>
+
+    <p>O resultado é a <b style="color:var(--ink)">média geométrica</b> de \(\omega_0\) e \(\omega_2\), não a aritmética. A razão é o eixo: distância no eixo horizontal do diagrama de Bode é <em>diferença de logaritmos</em>, não diferença de frequências. O ponto médio geométrico de \(\omega_0\) e \(\omega_2\) é o ponto que está à mesma <em>distância desenhada</em> dos dois, e</p>
+
+    <div class="eq-block">\[ \log\omega_1 = \frac{\log\omega_0+\log\omega_2}{2} \;\Longleftrightarrow\; \omega_1 = 10^{(\log\omega_0+\log\omega_2)/2} = \sqrt{\omega_0\omega_2} \]</div>
+
+    <div class="callout"><b>Teste numérico.</b> Com \(\omega_0=1\) e \(\omega_2=100\), a média geométrica dá \(\omega_1=10\) — que é o ponto visualmente central entre \(10^0\) e \(10^2\) numa folha de Bode. A média aritmética daria \(50{,}5\), que no desenho fica a três quartos do caminho. Se o esboço e a sua conta discordarem visivelmente, foi média errada.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · generalização para inclinações diferentes</span>
+      <p>Se as inclinações não forem simétricas — \(+x_1\) na subida e \(-x_2\) na descida — os triângulos deixam de ser congruentes, mas as duas expressões de \(M(\omega_1)\) continuam iguais:</p>
+      <div class="eq-block">\[ x_1\log\left(\frac{\omega_1}{\omega_0}\right)=x_2\log\left(\frac{\omega_2}{\omega_1}\right) \;\Longrightarrow\; (x_1+x_2)\log\omega_1 = x_1\log\omega_0 + x_2\log\omega_2 \]</div>
+      <div class="eq-block">\[ \Longrightarrow\quad \omega_1 = \omega_0^{\,x_1/(x_1+x_2)}\cdot\omega_2^{\,x_2/(x_1+x_2)} \]</div>
+      <p>que é uma média geométrica <em>ponderada</em> pelas inclinações e recai em \(\sqrt{\omega_0\omega_2}\) quando \(x_1=x_2\).</p>
+    </div>
+  </section>
+
+  <section id="leitura" class="panel src-ext">
+    <span class="eyebrow">17.7</span>
+    <h2>Ler um valor do diagrama numa frequência dada</h2>
+
+    <p>Metade dos testes de Bode da P3 é uma pergunta de leitura: dado \(F(s)\), quanto vale a amplitude em \(\omega=2\)? Ou o inverso: em que \(\omega\) a amplitude vale \(-6\) dB? Não se desenha nada de verdade — faz-se a aritmética das retas. A receita, em cinco passos:</p>
+
+    <div class="solve-step">
+      <span class="step-num">01</span>
+      <div class="step-body">
+        <div class="step-title">Normalize e liste as quebras</div>
+        <p>Escreva \(F\) como \(K'\cdot\dfrac{\prod(1+s/z_i)}{\prod(1+s/p_k)}\), eventualmente multiplicada por \(s^{N_0}\) se houver zero/polo na origem. Anote \(K'\), a ordem \(N_0\) e a lista ordenada de quebras com sua multiplicidade e sinal.</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">02</span>
+      <div class="step-body">
+        <div class="step-title">Fixe o ponto de partida</div>
+        <p>Se \(N_0=0\), o trecho mais à esquerda é o patamar \(20\log|K'|\) e vale até a primeira quebra. Se \(N_0\neq 0\), o trecho mais à esquerda é a reta \(20\log|K'| + 20N_0\log\omega\), que passa por \(20\log|K'|\) em \(\omega=1\) — e este é o ponto de ancoragem.</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">03</span>
+      <div class="step-body">
+        <div class="step-title">Ande até o trecho que contém a frequência pedida</div>
+        <p>Para cada quebra ultrapassada, atualize o valor com a inclinação vigente e atualize a inclinação. Só duas contas por quebra:</p>
+        <div class="eq-block">\[ M(\omega_{j+1}) = M(\omega_j) + S_j\log_{10}\left(\frac{\omega_{j+1}}{\omega_j}\right), \qquad S_{j+1}=S_j + \Delta S_{j+1} \]</div>
+        <p>com \(\Delta S = +20N\) para zero real de multiplicidade \(N\), \(-20N\) para polo real, \(+40\) e \(-40\) para pares complexos.</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">04</span>
+      <div class="step-body">
+        <div class="step-title">Avalie ou inverta dentro do trecho</div>
+        <p>Se a pergunta dá \(\omega\), substitua na equação do trecho. Se a pergunta dá o valor em dB, isole \(\omega\). Atenção a um ponto: <b style="color:var(--ink)">um valor em dB pode ser atingido em mais de um trecho</b>. O Teste 6 de 2024 pede \(-6\) dB e tem duas respostas, uma na assíntota ascendente e outra na descendente. Verifique todos os trechos cuja faixa de valores contenha o número pedido.</p>
+      </div>
+    </div>
+
+    <div class="solve-step">
+      <span class="step-num">05</span>
+      <div class="step-body">
+        <div class="step-title">Decida se o erro importa</div>
+        <p>Se o enunciado disse "diagrama <em>assintótico</em>", pare no passo 04 — a resposta é a das retas, sem correção. Se pediu valor real, meça a distância do ponto às quebras vizinhas: a mais de uma década, o erro é menor que 0,05 dB por fator e some; a uma oitava, some \(\mp 1\) dB por fator; em cima da quebra, \(\mp 3\) dB (real) ou \(\mp 20\log(2\zeta)\) (complexo).</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Dois atalhos que economizam tempo de prova.</b> Primeiro: para a <em>última</em> assíntota, não ande por todas as quebras — faça \(s\to\infty\) direto na expressão, mantendo só os termos de maior grau. Para \(F(s)=\dfrac{10s(s+3)}{(s+2)(s+4)(s+5)}\) isso dá \(F\cong\dfrac{10s^2}{s^3}=\dfrac{10}{s}\), e \(20\log(10/\omega)=0\) em \(\omega=10\), sem conta nenhuma de patamar. É o que o gabarito do Teste 6 de 2023 faz, e ele apresenta em seguida "a forma tradicional" só para conferir. Segundo: para a <em>primeira</em> assíntota, faça \(s\to 0\) do mesmo jeito, mantendo só os termos de menor grau.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · dB por oitava, quando a conta sai de cabeça</span>
+      <p>Muitos gabaritos manuscritos da disciplina trabalham em <b style="color:var(--ink)">dB por oitava</b> em vez de dB por década, porque as quebras costumam ser potências de 2 e \(20\log 2 = 6{,}02\approx 6\). A conversão é direta: \(\pm 20\) dB/dec \(=\pm 6\) dB/oit; \(\pm 40\) dB/dec \(=\pm 12\) dB/oit. Foi assim que o esboço do gabarito do Teste 6 de 2024 rotulou as retas — "6 dB/oit" e "−6 dB/oit" — e é o que torna imediato ler que, de \(\omega=2\) a \(\omega=8\) (duas oitavas) descendo a \(-6\) dB/oit, caem-se \(12\) dB: de \(+6\) para \(-6\).</p>
+    </div>
+  </section>
+
+  <section id="exercicios" class="panel">
+    <span class="eyebrow">17.8</span>
+    <h2>Exercícios de provas e testes</h2>
+    <p class="dim">Estes exercícios treinam as quatro perguntas que a P3 faz sobre Bode assintótico: identificar \(F(s)\) a partir do desenho, calcular o erro na quebra de um par complexo, ler a amplitude numa frequência dada e achar a frequência de um valor em dB.</p>
+
+    <div class="q-intro">
+      <div><b>6 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>formulário P3 e testes das P3 de 2023 e 2024</div>
+      <div><b>Foco</b>normalização · erro na quebra · cruzamento de 0 dB · leitura de valor</div>
+    </div>
+
+    <h3 style="margin-top:1.5rem;font-size:1.15rem">Questões do formulário</h3>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 05</span>Duas assíntotas simétricas que cruzam o eixo das abscissas</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p>Em um diagrama de Bode, sabe-se que entre \(\omega_0\) e \(\omega_1\) a assíntota 1 cresce a \(x\ \frac{\rm dB}{\rm dec}\) e que entre \(\omega_1\) e \(\omega_2\) a assíntota 2 decresce a \(-x\ \frac{\rm dB}{\rm dec}\). As assíntotas cruzam o eixo das abscissas em \(\omega_0\) e \(\omega_2\). Pode-se dizer que \(\omega_1\) vale:</p>
+
+        <p class="dim">No original o enunciado grafa "\(\omega^{1}\)", com o 1 sobrescrito; pelo contexto e pela própria resolução trata-se de \(\omega_1\). Erro do original, mantido na transcrição.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 560 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 240"/>
+              <path d="M190 40 L190 240"/>
+              <path d="M310 40 L310 240"/>
+              <path d="M430 40 L430 240"/>
+              <path d="M70 100 L520 100"/>
+              <path d="M70 140 L520 140"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 245"/>
+              <path d="M65 180 L530 180"/>
+            </g>
+            <path d="M120 200 L190 180 L310 100 L430 180 L500 200" fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <path d="M310 180 L310 100" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <circle cx="190" cy="180" r="4" fill="#f5b942"/>
+            <circle cx="430" cy="180" r="4" fill="#f5b942"/>
+            <circle cx="310" cy="100" r="4" fill="#f5b942"/>
+            <text x="176" y="202" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₀</text>
+            <text x="302" y="202" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₁</text>
+            <text x="418" y="202" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω₂</text>
+            <text x="204" y="128" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">assíntota 1 · +x dB/dec</text>
+            <text x="352" y="128" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">assíntota 2 · −x dB/dec</text>
+            <text x="30" y="184" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0 dB</text>
+            <text x="40" y="48" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">dB</text>
+            <text x="526" y="184" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+            <text x="180" y="266" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">eixo ω em escala logarítmica</text>
+          </svg>
+          <div class="pz-legend">Só duas assíntotas, ambas ancoradas em 0 dB nas pontas, com inclinações opostas de mesmo módulo.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o vértice está a igual <em>distância logarítmica</em> dos dois cruzamentos, porque as duas retas têm a mesma inclinação em módulo.</div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Escreva a altura do vértice pelos dois lados</div>
+              <p>Pela assíntota 1, que parte de \(0\) dB em \(\omega_0\) e sobe a \(+x\) dB/dec:</p>
+              <div class="eq-block">\[ M(\omega_1) = 0 + x\log_{10}\left(\frac{\omega_1}{\omega_0}\right) \]</div>
+              <p>Pela assíntota 2, que sai do vértice e desce a \(-x\) dB/dec até chegar a \(0\) dB em \(\omega_2\):</p>
+              <div class="eq-block">\[ 0 = M(\omega_1) - x\log_{10}\left(\frac{\omega_2}{\omega_1}\right) \quad\Longrightarrow\quad M(\omega_1) = x\log_{10}\left(\frac{\omega_2}{\omega_1}\right) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Iguale as duas expressões</div>
+              <p>Na forma do gabarito, com \(x=20\):</p>
+              <div class="eq-block">\[ 20\log\left(\frac{\omega_1}{\omega_0}\right)=-20\log\left(\frac{\omega_1}{\omega_2}\right) =20\log\left(\frac{\omega_2}{\omega_1}\right) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Cancele o logaritmo e resolva</div>
+              <div class="eq-block">\[ \log\left(\frac{\omega_1}{\omega_0}\right)=\log\left(\frac{\omega_2}{\omega_1}\right) \;\Longrightarrow\; \frac{\omega_1}{\omega_0}=\frac{\omega_2}{\omega_1} \;\Longrightarrow\; \omega_1^{2}=\omega_0\,\omega_2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Por que o \(x\) some, e o que isso significa</div>
+              <p>O valor de \(x\) cancela porque ele aparece como fator comum dos dois lados: a resposta não depende de <em>quão</em> íngremes são as retas, só de elas terem inclinações de mesmo módulo. Geometricamente são dois triângulos retângulos congruentes de altura \(M(\omega_1)\).</p>
+              <p>A conta em logaritmos também pode ser lida assim:</p>
+              <div class="eq-block">\[ \log\omega_1 - \log\omega_0 = \log\omega_2 - \log\omega_1 \;\Longrightarrow\; \log\omega_1 = \frac{\log\omega_0+\log\omega_2}{2} \]</div>
+              <p>ou seja, \(\log\omega_1\) é a média <em>aritmética</em> dos logaritmos, o que equivale a \(\omega_1\) ser a média <em>geométrica</em> das frequências.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \omega_1 = \sqrt{\omega_0\,\omega_2} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>O erro clássico é responder \((\omega_0+\omega_2)/2\). Ele nasce de olhar o desenho e ver o vértice "no meio" — o que é verdade no papel, mas o papel está em escala logarítmica. Ponto médio no desenho é média geométrica na grandeza. O segundo erro é tentar usar o valor de \(x\): se você chegou a uma resposta que contém \(x\), releia a álgebra, porque ele obrigatoriamente cancela. Terceiro: o resultado exige que <em>ambas</em> as assíntotas cruzem 0 dB nos pontos dados — se uma delas cruzar em outro nível, a simetria se perde e é preciso a forma ponderada da seção <a href="#cruzamento">17.6</a>.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Formulário · Questão 06</span>Erro em dB na quebra de um par complexo conjugado</span>
+          <span class="q-prova">Formulário P3</span>
+        </div>
+
+        <p>Um dos fatores no numerador de uma função de rede é \(s^2+5s+100\), sendo que os outros zeros e polos estão distantes, de forma a não interferir no erro (= diferença entre a curva real) e a aproximação assíntota correspondente a esse fator) na frequência característica (ou de quebra). Esse erro vale, aproximadamente, em dB:</p>
+
+        <p class="dim">A pontuação do parêntese está truncada/mal fechada no original — "(= diferença entre a curva real) e a aproximação assíntota …". Transcrito tal como está na folha.</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 560 290" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 240"/>
+              <path d="M190 40 L190 240"/>
+              <path d="M310 40 L310 240"/>
+              <path d="M430 40 L430 240"/>
+              <path d="M70 90 L520 90"/>
+              <path d="M70 130 L520 130"/>
+              <path d="M70 210 L520 210"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 245"/>
+              <path d="M65 170 L530 170"/>
+            </g>
+            <!-- assintota: 0 dB ate wn=10, depois +40 dB/dec -->
+            <path d="M70 170 L310 170 L500 74" fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <!-- curva real de 2 zeros com zeta=0,25: fica ABAIXO na quebra (-6 dB) -->
+            <path d="M70 170.2 L150 170.6 L230 173 L275 178 L310 194 L345 185 L380 166 L430 133 L470 104 L500 80"
+                  fill="none" stroke="#f5b942" stroke-width="2.4"/>
+            <path d="M310 170 L310 194" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="4 3"/>
+            <circle cx="310" cy="194" r="4" fill="#f5b942"/>
+            <text x="318" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">erro = −6 dB</text>
+            <text x="298" y="262" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ωₙ = 10</text>
+            <text x="356" y="120" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">+40 dB/dec</text>
+            <text x="150" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">0 dB</text>
+            <text x="34" y="174" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0 dB</text>
+            <text x="40" y="48" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">dB</text>
+            <text x="526" y="174" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+            <text x="100" y="262" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ζ = 0,25 · par de ZEROS complexos</text>
+          </svg>
+          <div class="pz-legend">Par de zeros com \(\zeta=0{,}25\): a assíntota é 0 dB até \(\omega_n=10\) e depois \(+40\) dB/dec; a curva real mergulha \(6\) dB abaixo da quina, num anti-ressonância, e volta a colar na assíntota uma década adiante.</div>
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — identifique \(\omega_n\) e \(\alpha\) por comparação com \(s^2+2\alpha s+\omega_n^2\), monte \(\zeta\) e aplique \(\pm 20\log(2\zeta)\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Compare com a forma padrão</div>
+              <div class="eq-block">\[ s^2+2\alpha s+\omega_n^2 = s^2+5s+100 \]</div>
+              <p>Termo a termo:</p>
+              <div class="eq-block">\[ \omega_n^2 = 100 \;\Longrightarrow\; \omega_n = 10, \qquad 2\alpha = 5 \;\Longrightarrow\; \alpha = \frac{5}{2} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Calcule o amortecimento</div>
+              <div class="eq-block">\[ \zeta=\frac{\alpha}{\omega_n}=\frac{5/2}{10}=\frac{5}{20}=\frac{1}{4}=0{,}25 \]</div>
+              <p class="dim">No original o denominador está grafado "\(\omega n\)", sem o subscrito.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Confirme que os zeros são mesmo complexos</div>
+              <p>O discriminante de \(s^2+5s+100\) é \(25-400=-375<0\): as raízes são \(s=-2{,}5\pm j\,9{,}68\), de fato um par conjugado. Equivalentemente, \(\zeta=0{,}25<1\). Se \(\zeta\) tivesse dado \(\ge 1\) as raízes seriam reais e a fórmula \(\pm 20\log(2\zeta)\) não se aplicaria — seriam dois polos/zeros reais, cada um com o seu \(\mp 3\) dB em quebras distintas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Aplique a fórmula do erro</div>
+              <div class="eq-block">\[ \text{Erro}=20\log(2\zeta)=20\log\left(2\cdot\frac{5/2}{10}\right)=20\log\left(\frac{1}{2}\right)=20\log 2^{-1} \]</div>
+              <div class="eq-block">\[ =-20\log 2 = -20\cdot(0{,}3) = -6\ \text{dB} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Confira pela definição, sem a fórmula pronta</div>
+              <p>O fator normalizado, em \(s=j\omega\) com \(u=\omega/\omega_n\), vale \((1-u^2)+j2\zeta u\). Em \(u=1\):</p>
+              <div class="eq-block">\[ \left|(1-1)+j\,2(0{,}25)(1)\right| = \left|\,j\,0{,}5\,\right| = 0{,}5 \]</div>
+              <div class="eq-block">\[ M_{\rm real}(\omega_n)=20\log(0{,}5)=-6{,}02\ \text{dB} \]</div>
+              <p>A assíntota vale \(0\) dB em \(\omega=\omega_n\) por construção, logo o erro é o próprio valor: \(-6\) dB. Bate.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \text{Erro} \approx -6\ \text{dB} \)  (a curva real fica 6 dB <em>abaixo</em> da assíntota em \(\omega=10\) rad/s)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Três armadilhas. A primeira é tomar \(\alpha=5\) em vez de \(2{,}5\): o coeficiente de \(s\) é \(2\alpha\), não \(\alpha\), e o erro sairia \(20\log 1 = 0\) dB — alternativa que costuma estar na lista. A segunda é o sinal: o fator está no <b style="color:var(--ink)">numerador</b>, é um par de zeros, e o formulário manda usar o \(+\) na fórmula \(\pm 20\log(2\zeta)\) — o que dá \(+20\log(0{,}5)=-6\) dB, negativo porque \(2\zeta<1\). Se o mesmo fator estivesse no denominador, o resultado seria \(+6\) dB. Não confunda o sinal da fórmula com o sinal do resultado. A terceira é ignorar a hipótese do enunciado: ele diz que "os outros zeros e polos estão distantes" justamente para que o erro seja o daquele fator sozinho; se houvesse outra quebra a menos de uma década, os erros se somariam.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Testes</h3>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 4 · Questão única</span>Identificar \(H(s)\) a partir do diagrama assintótico de módulo</span>
+          <span class="q-prova">Teste 4 · P3/2023</span>
+        </div>
+
+        <p>O gráfico da Figura 8 representa a aproximação de Bode para o módulo da resposta em frequência (em dB) da função de rede \(H(s)\). Sabe-se que tal função de rede contém todos os polos e zeros reais não positivos. Identifique, entre as opções abaixo, uma possível expressão de \(H(s)\):</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 290"/>
+              <path d="M191.1 40 L191.1 290"/>
+              <path d="M243.3 40 L243.3 290"/>
+              <path d="M364.5 40 L364.5 290"/>
+              <path d="M416.7 40 L416.7 290"/>
+              <path d="M590 40 L590 290"/>
+              <path d="M70 66 L590 66"/>
+              <path d="M70 98 L590 98"/>
+              <path d="M70 142.8 L590 142.8"/>
+              <path d="M70 162 L590 162"/>
+              <path d="M70 194 L590 194"/>
+              <path d="M70 258 L590 258"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 295"/>
+              <path d="M65 130 L600 130"/>
+            </g>
+            <!-- assintota -->
+            <path d="M70 110.8 L243.3 142.8 L364.5 165.2 L416.7 194.2 L590 258.2"
+                  fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <!-- pontos notaveis -->
+            <circle cx="243.3" cy="142.8" r="3.6" fill="#f5b942"/>
+            <circle cx="364.5" cy="165.2" r="3.6" fill="#f5b942"/>
+            <circle cx="416.7" cy="194.2" r="3.6" fill="#f5b942"/>
+            <path d="M243.3 130 L243.3 142.8" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <text x="250" y="140" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">−8 dB em ω=1</text>
+            <text x="252" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−20 dB/dec</text>
+            <text x="300" y="186" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−60 dB/dec</text>
+            <text x="440" y="212" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−40 dB/dec</text>
+            <!-- eixo vertical -->
+            <text x="38" y="70" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">40</text>
+            <text x="38" y="102" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">20</text>
+            <text x="46" y="134" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+            <text x="34" y="147" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−8</text>
+            <text x="30" y="166" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−20</text>
+            <text x="30" y="198" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−40</text>
+            <text x="16" y="52" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">|H| dB</text>
+            <!-- eixo horizontal -->
+            <text x="52" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1</text>
+            <text x="174" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,5</text>
+            <text x="228" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1,0</text>
+            <text x="350" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">5,0</text>
+            <text x="402" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">10,0</text>
+            <text x="572" y="310" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">100</text>
+            <text x="596" y="134" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+            <text x="440" y="330" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω (rad/s), escala log</text>
+          </svg>
+          <div class="pz-legend">Figura 8, redesenhada. Três mudanças de inclinação: de \(-20\) para \(-60\) dB/dec em \(\omega=5\) e de \(-60\) para \(-40\) dB/dec em \(\omega=10\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">\(\dfrac{8s}{(s+1)(s+5)^2}\)</li>
+          <li data-alt="b">\(\dfrac{4(s+10)}{(s+1)(s+5)^2}\)</li>
+          <li data-alt="c">\(\dfrac{10(s+10)}{s(s+5)^2}\)</li>
+          <li data-alt="d">\(\dfrac{s+10}{s(s+5)^2}\)</li>
+          <li data-alt="e">\(\dfrac{2{,}5(s+10)}{s(s+5)^2}\)</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — as mudanças de inclinação dão a lista de quebras e suas multiplicidades; o valor da reta em \(\omega=1\) dá a constante <em>normalizada</em>, que depois precisa ser desnormalizada para virar o coeficiente de \(H(s)\).</div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Leia a inclinação inicial: há um polo na origem</div>
+              <p>O trecho mais à esquerda desce a \(-20\) dB/dec e não tem começo horizontal: não há patamar em baixa frequência. Isso só acontece com um <b style="color:var(--ink)">polo na origem</b>, de ordem 1 (\(-20\) dB/dec, pela linha correspondente da tabela da seção <a href="#tabela">17.2</a>). Já elimina as alternativas a) e b), que têm \((s+1)\) e nenhum polo em \(s=0\) — elas começariam com patamar.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Decomponha o diagrama nas parcelas, como no gabarito</div>
+              <p>O gabarito apresenta as quatro parcelas tracejadas que somadas dão a Figura 8:</p>
+              <ul class="steps">
+                <li>\(-20\log(j\omega)\) — reta de \(-20\) dB/dec passando por \(0\) dB em \(\omega=1\);</li>
+                <li>\(-40\log\left(1+\dfrac{j\omega}{5}\right)\) — quebra em \(\omega=5\), \(-40\) dB/dec;</li>
+                <li>\(20\log\left(1+\dfrac{j\omega}{10}\right)\) — quebra em \(\omega=10\), \(+20\) dB/dec;</li>
+                <li>\(20\log 0{,}4\) — reta horizontal em \(-8\) dB.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">De onde vêm as multiplicidades</div>
+              <p>Confira as somas de inclinação. Antes de \(\omega=5\): só o polo na origem, \(-20\) dB/dec. Em \(\omega=5\) a inclinação passa a \(-60\), ou seja, o salto é \(\Delta S = -40\) dB/dec — um <b style="color:var(--ink)">polo real duplo</b>, \((1+j\omega/5)^{2}\). Em \(\omega=10\) a inclinação passa de \(-60\) a \(-40\), salto \(\Delta S = +20\) dB/dec — um <b style="color:var(--ink)">zero real simples</b>, \((1+j\omega/10)\). Não há mais mudanças até \(\omega=100\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Determine a constante pelo valor em \(\omega=1\)</div>
+              <p>Em \(\omega=1\) as parcelas das quebras (5 e 10) ainda valem \(0\) dB, e a parcela \(-20\log(j\omega)\) vale \(-20\log 1 = 0\). Sobra só a constante, que o gráfico lê como \(-8\) dB. Logo, com \(A\) a constante normalizada:</p>
+              <div class="eq-block">\[ -8 = 20\log A \;\longrightarrow\; A = 10^{-8/20} = 10^{-2/5} = 0{,}4 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Monte \(H(j\omega)\) na forma normalizada e desnormalize</div>
+              <p>O gabarito escreve a função reunindo as parcelas e ajustando os fatores de escala:</p>
+              <div class="eq-block">\[ H(j\omega) = \frac{\left(\frac{4}{100}\cdot 25\right)}{j\omega\left(1+\frac{j\omega}{5}\right)\left(1+\frac{j\omega}{5}\right)}\,(10+j\omega) \]</div>
+              <div class="eq-block">\[ \longrightarrow\quad H(j\omega) = \frac{10+j\omega}{j\omega\,(5+j\omega)^{2}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A desnormalização, escrita por extenso</div>
+              <p>O gabarito condensa esta passagem no fator \(\frac{4}{100}\cdot 25\). Por extenso: a forma normalizada é</p>
+              <div class="eq-block">\[ H(j\omega) = A\cdot\frac{1}{j\omega}\cdot\frac{1+\frac{j\omega}{10}}{\left(1+\frac{j\omega}{5}\right)^{2}}, \qquad A=0{,}4 \]</div>
+              <p>Para voltar à forma \((s+z)\) e \((s+p)\), multiplique e divida pelos valores de quebra:</p>
+              <div class="eq-block">\[ 1+\frac{j\omega}{10}=\frac{10+j\omega}{10}, \qquad \left(1+\frac{j\omega}{5}\right)^{2}=\frac{(5+j\omega)^{2}}{25} \]</div>
+              <div class="eq-block">\[ H(j\omega)=0{,}4\cdot\frac{1}{j\omega}\cdot\frac{\frac{10+j\omega}{10}}{\frac{(5+j\omega)^{2}}{25}} =0{,}4\cdot\frac{25}{10}\cdot\frac{10+j\omega}{j\omega\,(5+j\omega)^{2}} \]</div>
+              <div class="eq-block">\[ 0{,}4\cdot\frac{25}{10}=0{,}4\cdot 2{,}5 = 1 \quad\Longrightarrow\quad H(j\omega)=\frac{10+j\omega}{j\omega\,(5+j\omega)^{2}} \]</div>
+              <p>Confere com a conferência do próprio gabarito: \(\frac{4}{100}\cdot 25 = 1\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">Volte para \(s\)</div>
+              <p>Fazendo \(j\omega\to s\):</p>
+              <div class="eq-block">\[ H(s)=\frac{s+10}{s\,(s+5)^{2}} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">08</span>
+            <div class="step-body">
+              <div class="step-title">Elimine as alternativas c) e e)</div>
+              <p>As três candidatas c), d) e e) têm a mesma estrutura de polos e zeros, e diferem só no coeficiente. Basta comparar o patamar. Para \(H(s)=\dfrac{c\,(s+10)}{s(s+5)^2}\), a constante normalizada é</p>
+              <div class="eq-block">\[ A = c\cdot\frac{10}{5^{2}} = \frac{10c}{25} = 0{,}4\,c \]</div>
+              <p>Como o gráfico exige \(A=0{,}4\), vem \(c=1\): alternativa d). Para c), \(c=10\) daria \(A=4\), isto é \(+12\) dB em \(\omega=1\); para e), \(c=2{,}5\) daria \(A=1\), isto é \(0\) dB em \(\omega=1\). Nenhuma das duas bate com os \(-8\) dB lidos.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \text{d) }\ H(s)=\dfrac{s+10}{s\,(s+5)^{2}} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · sobre a leitura do canto esquerdo da figura</span>
+            <p>A descrição original da Figura 8 registra o início do traçado em "aproximadamente \(+8\) dB em \(\omega=0{,}1\)". Isso não é compatível com os outros dois valores marcados na mesma figura: uma reta de \(-20\) dB/dec que passa por \(-8\) dB em \(\omega=1\) vale \(-8+20=+12\) dB uma década antes, em \(\omega=0{,}1\). O redesenho acima usa \(+12\) dB, que é o valor consistente com a inclinação e com o cruzamento de \(0\) dB em \(\omega=0{,}4\) (também marcado na figura original). A leitura do canto não afeta a resposta: a constante é determinada pelo ponto \(-8\) dB em \(\omega=1\).</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>O erro mais comum é confundir a constante normalizada \(A\) com o coeficiente \(c\) da forma fatorada. Eles só coincidem quando o produto das quebras de numerador e denominador dá 1 — aqui \(A = 0{,}4\,c\), e quem responde "\(c=0{,}4\)" cai em nenhuma alternativa ou, pior, marca c) por associação com o \(10\) do zero. Segundo erro: ler o salto de inclinação em \(\omega=5\) como um polo simples porque só se olha o rótulo "\(-60\) dB/dec" sem subtrair o \(-20\) que já vinha. O que conta é o <em>salto</em>, \(\Delta S\), não a inclinação absoluta. Terceiro: esquecer que "polos e zeros reais não positivos" no enunciado é o que autoriza usar só as linhas de fator real da tabela — sem essa hipótese, um par complexo com \(\omega_n=5\) daria o mesmo assintótico.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 6 · Questão única</span>Frequência em que a última assíntota cruza 0 dB</span>
+          <span class="q-prova">Teste 6 · P3/2023</span>
+        </div>
+
+        <p>Considere a função de rede</p>
+        <div class="eq-block">\[ F(s) = \frac{10\,s\,(s+3)}{(s+2)(s+4)(s+5)} \]</div>
+        <p>Qual é a frequência \(\omega\) (em rad/s) onde a última assíntota de Bode cruza o eixo das abscissas (0 dB)?</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 280"/>
+              <path d="M243.3 40 L243.3 280"/>
+              <path d="M295.5 40 L295.5 280"/>
+              <path d="M326 40 L326 280"/>
+              <path d="M347.7 40 L347.7 280"/>
+              <path d="M364.5 40 L364.5 280"/>
+              <path d="M416.7 40 L416.7 280"/>
+              <path d="M590 40 L590 280"/>
+              <path d="M70 110 L590 110"/>
+              <path d="M70 190 L590 190"/>
+              <path d="M70 230 L590 230"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 285"/>
+              <path d="M65 150 L600 150"/>
+            </g>
+            <!-- assintota -->
+            <path d="M70 240 L295.5 135.9 L326 135.9 L347.7 125.9 L364.5 125.9 L416.7 150 L590 230"
+                  fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <circle cx="416.7" cy="150" r="4.5" fill="#f5b942"/>
+            <path d="M416.7 150 L416.7 186" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <text x="424" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω = 10 rad/s</text>
+            <text x="120" y="200" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">+20 dB/dec (zero na origem)</text>
+            <text x="452" y="206" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−20 dB/dec · última assíntota</text>
+            <text x="36" y="154" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0 dB</text>
+            <text x="18" y="52" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">|F| dB</text>
+            <text x="52" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1</text>
+            <text x="238" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+            <text x="291" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+            <text x="322" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">3</text>
+            <text x="344" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">4</text>
+            <text x="361" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">5</text>
+            <text x="408" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">10</text>
+            <text x="574" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">100</text>
+            <text x="596" y="154" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+          </svg>
+          <div class="pz-legend">Diagrama assintótico de \(F\). Quebras em 2 (polo), 3 (zero), 4 e 5 (polos). Depois de \(\omega=5\) a inclinação líquida é \(+20-20+20-20-20=-20\) dB/dec, e essa última reta cruza 0 dB em \(\omega=10\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">10</li>
+          <li data-alt="b">11</li>
+          <li data-alt="c">12</li>
+          <li data-alt="d">9</li>
+          <li data-alt="e">7</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a última assíntota é o comportamento em alta frequência; faça \(s\to\infty\) direto na expressão e resolva uma equação de uma linha.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A última assíntota é a assíntota de \(\omega\) alto</div>
+              <p>Palavras do gabarito: "a última assíntota coincidirá com a assíntota para \(\omega\) alto". Mantendo só os termos de maior grau em cada polinômio:</p>
+              <div class="eq-block">\[ F(s) \cong \frac{10\,s\cdot s}{s\cdot s\cdot s} = \frac{10\,s^{2}}{s^{3}} = \frac{10}{s} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Iguale a 0 dB</div>
+              <div class="eq-block">\[ M(\omega)=20\log\left(\frac{10}{\omega}\right)=0 \;\Longrightarrow\; \frac{10}{\omega}=1 \;\Longrightarrow\; \omega = 10 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A forma tradicional, para conferir</div>
+              <p>O gabarito refaz pelo caminho longo: parte da constante normalizada e vai somando as contribuições de cada quebra até chegar ao último trecho.</p>
+              <div class="eq-block">\[ 20\log\frac{10\cdot 3}{2\cdot 4\cdot 5} + 20\log 2 + 20\log\frac{4}{3} - 20\log\frac{\omega}{5} \]</div>
+              <div class="eq-block">\[ = 20\log\frac{10\cdot 3\cdot \cancel{2}\cdot \cancel{4}\cdot \cancel{5}}{\cancel{2}\cdot \cancel{4}\cdot \cancel{5}\cdot \cancel{3}\cdot \omega} = 20\log\frac{10}{\omega} \]</div>
+              <p class="dim">No original os fatores 2, 4, 5 do numerador e 2, 4, 5, 3 do denominador estão riscados — cancelamentos feitos à mão.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem cada parcela da "forma tradicional"</div>
+              <p>O gabarito escreve os quatro termos sem explicar a origem. Por extenso, normalizando:</p>
+              <div class="eq-block">\[ F(s)=\frac{10\,s\,(s+3)}{(s+2)(s+4)(s+5)} = \underbrace{\frac{10\cdot 3}{2\cdot 4\cdot 5}}_{K'=0{,}75}\cdot\frac{s\left(1+\frac{s}{3}\right)}{\left(1+\frac{s}{2}\right)\left(1+\frac{s}{4}\right)\left(1+\frac{s}{5}\right)} \]</div>
+              <p>Os quatro termos do gabarito são, em ordem: o patamar \(20\log K' = 20\log\frac{30}{40}\); o valor acumulado ao subir de \(\omega=1\) a \(\omega=2\) a \(+20\) dB/dec, que é \(20\log\frac{2}{1}=20\log 2\); o valor acumulado ao subir de \(\omega=3\) a \(\omega=4\) a \(+20\) dB/dec — entre 2 e 3 a inclinação é nula, porque o polo em 2 cancela o zero na origem, e entre 3 e 4 o zero em 3 a devolve — que é \(20\log\frac{4}{3}\); e, finalmente, a descida a \(-20\) dB/dec a partir de \(\omega=5\), que é \(-20\log\frac{\omega}{5}\). Entre 4 e 5 a inclinação volta a ser nula. Somando e cancelando resulta \(20\log(10/\omega)\), o mesmo da conta curta.</p>
+              <p>Tabela das inclinações, trecho a trecho:</p>
+              <table class="ltable">
+                <tr><th>Faixa</th><th>Inclinação (dB/dec)</th><th>Valor no fim da faixa</th></tr>
+                <tr><td>\(\omega<2\)</td><td>+20 (zero na origem)</td><td>\(20\log 0{,}75 + 20\log 2 = 3{,}52\) dB</td></tr>
+                <tr><td>\(2<\omega<3\)</td><td>0 (polo em 2)</td><td>3,52 dB</td></tr>
+                <tr><td>\(3<\omega<4\)</td><td>+20 (zero em 3)</td><td>\(3{,}52+20\log\frac43 = 6{,}02\) dB</td></tr>
+                <tr><td>\(4<\omega<5\)</td><td>0 (polo em 4)</td><td>6,02 dB</td></tr>
+                <tr><td>\(\omega>5\)</td><td>−20 (polo em 5)</td><td>\(6{,}02-20\log\frac{\omega}{5}\)</td></tr>
+              </table>
+              <p>Igualando o último a zero: \(20\log\frac{\omega}{5}=6{,}02 \Rightarrow \frac{\omega}{5}=2 \Rightarrow \omega=10\). Bate.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \text{a) }\ \omega = 10\ \text{rad/s} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · sobre o esboço manuscrito do gabarito</span>
+            <p>Na folha original, entre os termos "\(+20\log 2\)" e "\(+20\log\frac43\)", há um pequeno desenho à mão de um diagrama de Bode encaixado no meio da linha de contas: um traço grosso que sobe e desce, com o eixo marcado <span style="font-family:'IBM Plex Mono',monospace">2 3 4 5</span> e uma marcação rasurada junto ao eixo \(\omega\), ilegível. É um esboço de orientação, para o professor conferir a ordem das quebras e a inclinação de cada trecho, e <b style="color:var(--ink)">não contém nenhum valor necessário ao resultado</b> — a conta fecha inteiramente com o que está transcrito acima. O redesenho que abre este cartão foi construído a partir de \(F(s)\), não do esboço.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>O erro de montagem é achar que "última assíntota" é a que sai da última quebra <em>com o valor da constante original</em>, esquecendo tudo o que se acumulou pelo caminho — daí saem as alternativas 9, 11 e 12, todas próximas de 10. A conta curta \(F\cong 10/s\) evita isso completamente e é a que se deve usar sob pressão de tempo: leve segundos, não depende de normalizar nem de ordenar quebras, e funciona para qualquer \(F\) racional. Outro descuido: contar grau errado. Aqui o numerador tem grau 2 e o denominador grau 3, logo a última assíntota tem \(-20\) dB/dec; se os graus fossem iguais, ela seria horizontal e nunca cruzaria 0 dB (a menos que já estivesse nele).</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 5 · Questão única</span>Amplitude do diagrama assintótico em \(\omega=2\) rad/s</span>
+          <span class="q-prova">Teste 5 · P3/2024</span>
+        </div>
+
+        <p>Considere a função de rede</p>
+        <div class="eq-block">\[ F(s) = 6\,\frac{s+2}{(s+1)(s+3)}\quad\text{(unidades SI)} \]</div>
+        <p>Em \(\omega=2\) rad/s, a amplitude do diagrama <b style="color:var(--ink)">assintótico</b> de Bode \(|F(j\omega)|\) vale, em dB:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 280"/>
+              <path d="M243.3 40 L243.3 280"/>
+              <path d="M295.5 40 L295.5 280"/>
+              <path d="M326 40 L326 280"/>
+              <path d="M416.7 40 L416.7 280"/>
+              <path d="M590 40 L590 280"/>
+              <path d="M70 102 L590 102"/>
+              <path d="M70 126 L590 126"/>
+              <path d="M70 198 L590 198"/>
+              <path d="M70 248 L590 248"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 285"/>
+              <path d="M65 150 L600 150"/>
+            </g>
+            <!-- assintota -->
+            <path d="M70 102 L243.3 102 L295.5 126 L326 126 L416.7 167.8 L590 247.8"
+                  fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <circle cx="295.5" cy="126" r="4.5" fill="#f5b942"/>
+            <path d="M295.5 126 L295.5 280" stroke="#f5b942" stroke-width="1.4" stroke-dasharray="4 3"/>
+            <path d="M70 126 L295.5 126" stroke="#f5b942" stroke-width="1.2" stroke-dasharray="4 3"/>
+            <text x="304" y="122" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">6 dB em ω = 2</text>
+            <text x="120" y="94" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">patamar 12 dB</text>
+            <text x="248" y="146" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">−20 dB/dec</text>
+            <text x="300" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">0</text>
+            <text x="346" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">−20 dB/dec</text>
+            <text x="36" y="106" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">12</text>
+            <text x="42" y="130" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">6</text>
+            <text x="46" y="154" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+            <text x="18" y="52" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">|F| dB</text>
+            <text x="52" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1</text>
+            <text x="238" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+            <text x="291" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+            <text x="321" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">3</text>
+            <text x="408" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">10</text>
+            <text x="574" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">100</text>
+            <text x="596" y="154" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+          </svg>
+          <div class="pz-legend">Redesenho do esboço do gabarito. Patamar em 12 dB até \(\omega=1\); descida de \(-20\) dB/dec até \(\omega=2\), onde vale 6 dB; trecho horizontal entre 2 e 3 (o zero em 2 cancela a inclinação do polo em 1); nova descida de \(-20\) dB/dec a partir de \(\omega=3\).</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">12</li>
+          <li data-alt="b">9</li>
+          <li data-alt="c">6</li>
+          <li data-alt="d">0</li>
+          <li data-alt="e">−6</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — normalize para achar o patamar, desça uma oitava a \(-20\) dB/dec, e não corrija nada: o enunciado pediu o valor <em>assintótico</em>.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A constante</div>
+              <p>Palavras do gabarito: "a cte é"</p>
+              <div class="eq-block">\[ 20\log\frac{6\cdot 2}{1\cdot 3} = 20\log 4 = 12\ \text{dB} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">De onde vem essa constante</div>
+              <p>É a normalização da seção <a href="#normalizacao">17.3</a> aplicada a \(F\):</p>
+              <div class="eq-block">\[ F(s)=6\,\frac{s+2}{(s+1)(s+3)} = 6\cdot\frac{2\left(1+\frac{s}{2}\right)}{1\cdot\left(1+\frac{s}{1}\right)\cdot 3\left(1+\frac{s}{3}\right)} = \underbrace{\frac{6\cdot 2}{1\cdot 3}}_{K'=4}\cdot\frac{1+\frac{s}{2}}{\left(1+s\right)\left(1+\frac{s}{3}\right)} \]</div>
+              <p>Confirmação direta: \(F(0)=6\cdot\frac{2}{1\cdot 3}=4\), e \(20\log 4 = 12{,}04 \approx 12\) dB.</p>
+              <p>Quebras: polo em \(\omega=1\), zero em \(\omega=2\), polo em \(\omega=3\). A primeira delas é o polo em 1, logo o patamar de 12 dB vale de \(\omega\to 0\) até \(\omega=1\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Equação da primeira reta inclinada</div>
+              <p>Palavras do gabarito: "a 1ª reta inclinada tem equação \(12-20\log\frac{\omega}{1}\)". Ela começa em \(\omega=1\), onde vale 12 dB, e desce a \(-20\) dB/dec porque acima de \(\omega=1\) o polo em 1 já contribui e o zero em 2 ainda não.</p>
+              <div class="eq-block">\[ M(\omega) = 12 - 20\log\left(\frac{\omega}{1}\right), \qquad 1<\omega<2 \]</div>
+              <p class="dim">No manuscrito, o algarismo 1 do denominador está reforçado/rasurado.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Avalie em \(\omega=2\)</div>
+              <div class="eq-block">\[ M(2) = 12 - 20\log 2 = 12 - 6{,}02 = 6\ \text{dB} \]</div>
+              <p class="dim">Na linha correspondente do manuscrito, parte do "20 log" aparece riscada e reescrita por cima.</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Por que \(\omega=2\) não exige decidir "antes ou depois da quebra"</div>
+              <p>O ponto pedido cai <em>exatamente</em> sobre a quebra do zero. No assintótico isso não é ambiguidade: a reta que vem da esquerda e a que sai para a direita têm o mesmo valor no vértice, por continuidade. Pela esquerda, \(12-20\log 2 = 6\); pela direita, o trecho é horizontal em 6 dB até \(\omega=3\). As duas dão 6 dB.</p>
+              <p>Uma oitava em escala log vale exatamente \(20\log 2 = 6{,}02\) dB de queda a \(-20\) dB/dec — é o "6 dB por oitava" da seção <a href="#leitura">17.7</a>, e permite fazer a conta de cabeça: de 12 dB em \(\omega=1\), uma oitava abaixo a \(-6\) dB/oit dá 6 dB em \(\omega=2\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">Quanto a curva real vale nesse ponto — e por que isso não é a resposta</div>
+              <p>Só para dimensionar: em \(\omega=2\) a curva real vale</p>
+              <div class="eq-block">\[ |F(j2)| = 6\cdot\frac{|2+j2|}{|1+j2|\,|3+j2|} = 6\cdot\frac{2{,}828}{2{,}236\cdot 3{,}606} = 6\cdot 0{,}3508 = 2{,}105 \]</div>
+              <div class="eq-block">\[ 20\log(2{,}105) = 6{,}47\ \text{dB} \]</div>
+              <p>Diferença de meio dB em relação ao assintótico — as três quebras estão a menos de uma década umas das outras e seus erros se compensam parcialmente (\(+3\) dB do zero em 2 contra \(-3\) do polo em 1 e parte do polo em 3). Mas o enunciado disse "diagrama <b style="color:var(--ink)">assintótico</b>", então a resposta é 6, não 6,47 — e nenhuma alternativa traz 6,47 de qualquer forma.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \text{c) }\ 6\ \text{dB} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Duas armadilhas explícitas nas alternativas. A alternativa a) 12 dB é o patamar — é o que responde quem esquece que a quebra do polo em \(\omega=1\) já foi ultrapassada. A alternativa d) 0 dB é \(20\log|6|\)... não: é o que sai de quem normaliza errado e toma a constante como \(20\log\frac{6}{1\cdot 3}=6\) dB, depois desce 6 dB e chega a 0 — o esquecimento de multiplicar pelo \(2\) do zero, isto é, do fator de normalização \((s+2)\to 2(1+s/2)\). É exatamente o erro silencioso da seção <a href="#normalizacao">17.3</a>. A alternativa b) 9 dB é a média entre 12 e 6, para quem hesita entre patamar e reta. Faça sempre a checagem \(F(0)\): se \(20\log|F(0)|\) não bater com o patamar desenhado, a normalização está errada.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Teste 6 · Questão única</span>Frequências em que a amplitude assintótica vale \(-6\) dB</span>
+          <span class="q-prova">Teste 6 · P3/2024</span>
+        </div>
+
+        <p>Considere a função de rede</p>
+        <div class="eq-block">\[ G(s) = \frac{1}{16}\,\frac{s\,(s+8)^{2}}{(s+2)^{2}} \]</div>
+        <p>Os pontos onde a amplitude do diagrama <b style="color:var(--ink)">assintótico</b> de Bode \(|G(j\omega)|\) tem o valor de \(-6\) dB possuem \(\omega\) (rad/s) igual a:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 620 330" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="#1b2b25" stroke-width="1">
+              <path d="M70 40 L70 280"/>
+              <path d="M191.1 40 L191.1 280"/>
+              <path d="M243.3 40 L243.3 280"/>
+              <path d="M295.5 40 L295.5 280"/>
+              <path d="M347.7 40 L347.7 280"/>
+              <path d="M399.8 40 L399.8 280"/>
+              <path d="M590 40 L590 280"/>
+              <path d="M70 104 L590 104"/>
+              <path d="M70 139 L590 139"/>
+              <path d="M70 181 L590 181"/>
+              <path d="M70 230 L590 230"/>
+            </g>
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M70 30 L70 285"/>
+              <path d="M65 160 L600 160"/>
+            </g>
+            <!-- assintota -->
+            <path d="M70 230 L191.1 181 L243.3 160 L295.5 139 L399.8 181 L590 104"
+                  fill="none" stroke="#4ade9a" stroke-width="2.8"/>
+            <!-- nivel -6 dB -->
+            <path d="M70 181 L590 181" stroke="#f5b942" stroke-width="1.6" stroke-dasharray="6 4"/>
+            <circle cx="191.1" cy="181" r="5" fill="none" stroke="#f5b942" stroke-width="2.2"/>
+            <circle cx="399.8" cy="181" r="5" fill="none" stroke="#f5b942" stroke-width="2.2"/>
+            <path d="M295.5 139 L295.5 160" stroke="#5d6e67" stroke-width="1.2" stroke-dasharray="4 3"/>
+            <text x="150" y="204" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω = 0,5</text>
+            <text x="386" y="204" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">ω = 8</text>
+            <text x="596" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">−6</text>
+            <text x="96" y="200" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">6 dB/oit</text>
+            <text x="316" y="132" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">−6 dB/oit</text>
+            <text x="470" y="126" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">6 dB/oit</text>
+            <text x="42" y="143" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">6</text>
+            <text x="46" y="164" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0</text>
+            <text x="34" y="185" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">−6</text>
+            <text x="18" y="52" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">|G| dB</text>
+            <text x="52" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,1</text>
+            <text x="180" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">0,5</text>
+            <text x="238" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">1</text>
+            <text x="291" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2</text>
+            <text x="344" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">4</text>
+            <text x="395" y="316" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">8</text>
+            <text x="574" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">100</text>
+            <text x="596" y="164" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">ω</text>
+          </svg>
+          <div class="pz-legend">Redesenho do esboço do gabarito. A reta de \(+6\) dB/oit cruza \(-6\) dB em \(\omega=0{,}5\) (primeiro ponto circulado) e 0 dB em \(\omega=1\); atinge \(+6\) dB em \(\omega=2\), onde o polo duplo inverte a inclinação para \(-6\) dB/oit; a descida cruza 0 dB em \(\omega=4\) e \(-6\) dB em \(\omega=8\) (segundo ponto circulado), onde o zero duplo devolve \(+6\) dB/oit.</div>
+        </div>
+
+        <ul class="q-alts">
+          <li data-alt="a">1 e 8</li>
+          <li data-alt="b">0,5 e 4</li>
+          <li data-alt="c">0,5 e 16</li>
+          <li data-alt="d">0,5 e 8</li>
+          <li data-alt="e">1 e 4</li>
+        </ul>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — a constante normalizada dá exatamente 0 dB, o que deixa a primeira assíntota reduzida a \(20\log\omega\); e o valor \(-6\) dB é atingido em <em>dois</em> trechos, não um.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">A constante</div>
+              <p>Palavras do gabarito: "a cte vale"</p>
+              <div class="eq-block">\[ 20\log\left(\frac{1}{16}\cdot\frac{8^{2}}{2^{2}}\right) = 20\log\left(\frac{1}{16}\cdot\frac{64}{4}\right) = 20\log\left(\frac{1}{16}\cdot 16\right) = 20\log 1 = 0\ \text{dB} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A normalização completa, e as quebras</div>
+              <div class="eq-block">\[ G(s)=\frac{1}{16}\cdot\frac{s\cdot 64\left(1+\frac{s}{8}\right)^{2}}{4\left(1+\frac{s}{2}\right)^{2}} = \underbrace{\frac{1}{16}\cdot\frac{64}{4}}_{K'=1}\cdot\frac{s\left(1+\frac{s}{8}\right)^{2}}{\left(1+\frac{s}{2}\right)^{2}} \]</div>
+              <p>Com \(K'=1\), o diagrama tem três parcelas: um zero na origem (reta de \(+20\) dB/dec passando por 0 dB em \(\omega=1\)), um polo duplo em \(\omega=2\) (\(\Delta S=-40\) dB/dec) e um zero duplo em \(\omega=8\) (\(\Delta S=+40\) dB/dec). As inclinações trecho a trecho:</p>
+              <table class="ltable">
+                <tr><th>Faixa</th><th>Inclinação</th><th>Equação do trecho</th></tr>
+                <tr><td>\(\omega<2\)</td><td>+20 dB/dec = +6 dB/oit</td><td>\(M=20\log\omega\)</td></tr>
+                <tr><td>\(2<\omega<8\)</td><td>−20 dB/dec = −6 dB/oit</td><td>\(M=6-20\log\frac{\omega}{2}\)</td></tr>
+                <tr><td>\(\omega>8\)</td><td>+20 dB/dec = +6 dB/oit</td><td>\(M=-6+20\log\frac{\omega}{8}\)</td></tr>
+              </table>
+              <p>Repare no valor no vértice: em \(\omega=2\), \(M=20\log 2 = 6\) dB, que é onde a inclinação inverte. Em \(\omega=8\), \(M = 6-20\log 4 = 6-12 = -6\) dB.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Primeira solução: pela equação da 1ª assíntota</div>
+              <p>Palavras do gabarito: "pela equação da 1ª assíntota tem-se"</p>
+              <div class="eq-block">\[ 20\log\omega = -6 \;\longrightarrow\; \log\omega = -\frac{6}{20} = -0{,}3 \;\longrightarrow\; \omega = 10^{-0{,}3} \approx \frac{1}{2} \]</div>
+              <p class="dim">Como \(\log 2 \approx 0{,}3\), \(10^{-0{,}3}=1/2\) exatamente na aritmética de prova.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Segunda solução: pela equação da última assíntota</div>
+              <p>Palavras do gabarito: "pela equação da 2ª (ou da última) assíntota"</p>
+              <div class="eq-block">\[ 6 - 20\log\frac{\omega}{2} = -6 \;\Longrightarrow\; 20\log\frac{\omega}{2} = 12 \;\Longrightarrow\; \log\frac{\omega}{2}=0{,}6 \;\Longrightarrow\; \frac{\omega}{2}=4 \;\longrightarrow\; \omega = 8 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Verifique que não há uma terceira solução</div>
+              <p>O gabarito para em duas. Convém confirmar que o nível \(-6\) dB não é cortado de novo. O terceiro trecho, para \(\omega>8\), tem equação \(M=-6+20\log(\omega/8)\), que vale \(-6\) só em \(\omega=8\) — é o mesmo ponto, o próprio vértice — e cresce a partir dali. Antes de \(\omega=0{,}5\), a primeira assíntota está sempre abaixo de \(-6\) dB e é monotonicamente crescente, então corta o nível uma única vez. Logo são exatamente dois pontos: \(\omega=0{,}5\) e \(\omega=8\).</p>
+              <p>Confirmação pela aritmética de oitavas, que é como o esboço do gabarito está rotulado: subindo a \(+6\) dB/oit, de \(-6\) dB em \(\omega=0{,}5\) passa-se a 0 dB em \(\omega=1\) e a \(+6\) dB em \(\omega=2\); descendo a \(-6\) dB/oit a partir dali, 0 dB em \(\omega=4\) e \(-6\) dB em \(\omega=8\). Duas oitavas para cada lado do pico.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( \text{d) }\ \omega = 0{,}5\ \text{rad/s}\ \text{e}\ \omega = 8\ \text{rad/s} \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · marcas do manuscrito</span>
+            <p>Duas rasuras registradas na folha original. Na linha "\(12-20\log 2\)" do Teste 5 da mesma página, parte do "\(20\log\)" aparece <b style="color:var(--ink)">riscada e reescrita</b> por cima. E aqui, no Teste 6, o ordinal em "pela equação da <b style="color:var(--ink)">2ª</b> (ou da última) assíntota" traz uma rasura sobre o algarismo, aparentemente um número anterior corrigido para 2. Nenhuma das duas altera o conteúdo: a leitura "2ª" é a consistente com a estrutura do diagrama, já que o trecho que contém \(\omega=8\) é de fato o segundo trecho inclinado — mas note que ele não é a última assíntota no sentido estrito, já que depois de \(\omega=8\) há um terceiro trecho, subindo. O parêntese "(ou da última)" do professor é uma imprecisão inofensiva neste caso: a conta usada é a do trecho \(2<\omega<8\), e o ponto \(\omega=8\) é a extremidade dele.</p>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>A armadilha central é <b style="color:var(--ink)">parar na primeira raiz</b>. O enunciado diz "os pontos", no plural, e todas as alternativas trazem dois valores — sinal de que é preciso varrer todos os trechos cuja faixa de valores contenha \(-6\) dB. As alternativas b) 0,5 e 4 e e) 1 e 4 são feitas de cruzamentos de <em>0 dB</em>, não de \(-6\): \(\omega=1\) e \(\omega=4\) são exatamente onde a curva corta o eixo. Quem confunde o nível pedido cai nelas. A alternativa c) 0,5 e 16 vem de descer mais uma oitava a partir de 8, esquecendo que em \(\omega=8\) o zero duplo já inverteu a inclinação. E a alternativa a) 1 e 8 mistura um cruzamento de 0 dB com um de \(-6\) dB. Segundo ponto: normalize antes de tudo. Aqui \(K'=1\) e o resultado é limpo, mas quem trabalha com o \(\frac{1}{16}\) solto pega \(20\log(1/16)=-24\) dB de patamar e erra o diagrama inteiro.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <a class="next-module" href="index.html">
+    <div>
+      <span class="nm-label">Voltar ao início</span>
+      <span class="nm-title">01 · Transformada de Laplace</span>
+    </div>
+    <span class="nm-arrow">→</span>
+  </a>
+
+</main>
+
+    <footer>
+      <div class="agenda">
+        <div><b>P1</b>26/10 · 14:20</div>
+        <div><b>P2</b>02/12</div>
+        <div><b>T1</b>02/09</div>
+        <div><b>T2</b>14/10</div>
+        <div><b>T3</b>18/11</div>
+        <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
+      </div>
+      <p class="foot-note">Módulo 17 — Bode assintótico: a tabela "Fator / Módulo (dB) / Fase (graus)" do formulário P3, o bloco de Normalizações, os critérios C2, C3 e C4 (com a inconsistência do fator \(N\) em C3 registrada), o erro entre a assíntota e a curva real para fator real (\(\mp 3\) dB) e para par complexo (\(\mp 20\log 2\zeta\)), o cruzamento de 0 dB e a média geométrica \(\omega_1=\sqrt{\omega_0\omega_2}\), e a leitura de valores em frequência dada. Exercícios das Questões 05 e 06 do formulário P3 e dos Testes 4 e 6 da P3 2023 e 5 e 6 da P3 2024. Aprofunda o <a href="modulo-12.html">módulo 12</a> — último módulo do site.</p>
+    </footer>
+
+  </div>
+</div>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+menuToggle.addEventListener('click', () => {
+  const collapsed = document.body.classList.toggle('nav-collapsed');
+  menuToggle.setAttribute('aria-expanded', String(!collapsed));
+  setTimeout(() => window.dispatchEvent(new Event('resize')), 240);
+});
+
+/* ---------- resoluções retráteis ---------- */
+document.querySelectorAll('.sol-btn').forEach(btn => {
+  const sol = btn.nextElementSibling;
+  if(!sol || !sol.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = sol.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
+    }
+  });
+});
+</script>
+
+</body>
+</html>
