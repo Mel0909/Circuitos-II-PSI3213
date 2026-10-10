@@ -174,6 +174,12 @@ window.MathJax = {
   <section id="intro" class="panel">
     <span class="eyebrow">6.1</span>
     <h2>De onde vem \(G(s)\): a resposta já vinha partida em duas</h2>
+
+    <div class="src-legend">
+      <span><i class="k-prof"></i> material do professor — quadro, notas de aula e gabaritos oficiais</span>
+      <span><i class="k-ext"></i> complemento externo — teoria de apoio, deduções e comentários</span>
+    </div>
+
     <p>Nos módulos anteriores, toda vez que transformamos uma equação diferencial com condições iniciais, a resposta saiu com a mesma estrutura. Vale a pena reler essa estrutura, porque é dela que nasce o capítulo inteiro.</p>
 
     <p>A transformada de Laplace \(Y(s)\) da resposta \(y(t)\), para uma excitação \(x(t)\) de transformada \(X(s)\), é dada por</p>
@@ -930,7 +936,119 @@ window.MathJax = {
       </div>
     </div>
 
-    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.2 &nbsp;Teorema do Valor Final (TVF)</h3>
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.2 &nbsp;O TVI do quadro: o enunciado e as três descontinuidades</h3>
+
+    <p>A versão acima serve para resolver exercício. A do quadro de 21/09 é mais funda: ela separa o TVI em <b style="color:var(--ink)">três casos</b> de comportamento de \(f(t)\) na origem, e mostra que num deles o teorema simplesmente não se aplica. É desse terceiro caso que saem as pegadinhas de prova.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · item 2.3 a)</span>
+      <p><b>TVI — enunciado.</b> É dada uma função racional \(F(s)\) e sabe-se que \(f(t)\) é de OE. Assume-se que \(F(s)=\mathcal{L}[f(t)]\), <b>mas não é necessário conhecer nem determinar \(f(t)\)</b>.</p>
+      <p>Enfim, se \(F(s)\) for <b>estritamente própria</b>, então</p>
+      <div class="eq-block">\[ f(0_+) = \lim_{s\to\infty}\,[\,sF(s)\,]. \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade</span>
+      <p>No quadro, na linha "sabe-se que \(f(t)\) é <s>—</s> e de OE", o professor <b>riscou uma palavra</b> antes de "de OE". O texto riscado não é legível, e por isso não foi reproduzido acima. O resto do enunciado está transcrito literalmente.</p>
+    </div>
+
+    <p class="dim">As três demonstrações abaixo são as do quadro, na íntegra. A numeração das equações — (1) a (6), (ii.1), (iii.1) — é a do professor. Cada caso abre num bloco próprio.</p>
+
+    <button class="demo-btn">Demonstração · caso i) — \(f(t)\) contínua na origem ↓</button>
+    <div class="proof-block">
+      <div class="src-block src-prof">
+        <span class="src-kicker">do professor · quadro 21/09/2026 · caso i)</span>
+        <p>No quadro, "\(f(t)\) é contínua na origem \((t=0)\)" aparece circulado.</p>
+        <p>Como \(f(t)\) é de OE, existe a \(\mathcal{L}[\dot f(t)]\), que é determinada pelo Teorema da derivada no tempo:</p>
+        <div class="eq-block">\[ \mathcal{L}[\dot f(t)] = \int_{0_-}^{\infty}\dot f(t)\,e^{-st}\,dt \tag{1} \]</div>
+        <div class="eq-block">\[ \mathcal{L}[\dot f(t)] = sF(s) - f(0_-) \tag{2} \]</div>
+
+        <p>Tomando \(\lim_{s\to\infty}\) em (1), temos</p>
+        <div class="eq-block">\[ L = \lim_{s\to\infty}\mathcal{L}[\dot f(t)] = \lim_{s\to\infty}\int_{0_-}^{\infty}\dot f(t)\,e^{-st}\,dt \]</div>
+
+        <p>Existe \(\mathcal{L}[\dot f(t)]\), i.é, a integral de definição da \(\mathcal{L}[\cdot]\) converge na RC. Assim podemos <b>trocar a ordem dos operadores</b> \(\lim_{s\to\infty}\) e \(\int_{0_-}\):</p>
+        <div class="eq-block">\[ L = \int_{0_-}^{\infty}\dot f(t)\,\underbrace{\lim_{s\to\infty}e^{-st}}_{=\,0}\,dt = 0 \tag{3} \]</div>
+
+        <p>Tomando \(\lim_{s\to\infty}\) em (2), temos</p>
+        <div class="eq-block">\[ L = \lim_{s\to\infty}[\,sF(s)\,] - f(0_-) \tag{4} \]</div>
+
+        <p>Substituindo (3) em (4), obtemos</p>
+        <div class="eq-block">\[ \lim_{s\to\infty}[\,sF(s)\,] = f(0_-) \tag{5} \]</div>
+
+        <p>Como \(f(t)\) é contínua em torno de \(t=0\), temos</p>
+        <div class="eq-block">\[ f(t)\big|_{t=0} = f(0), \qquad f(0_-) = \lim_{t\uparrow 0} f(t) = f(0), \qquad f(0_+) = \lim_{t\downarrow 0} f(t) = f(0) \]</div>
+        <div class="eq-block">\[ \therefore\; f(0_+) = f(0_-) \]</div>
+
+        <p>e, por (5), demonstra-se</p>
+        <div class="eq-block">\[ f(0_+) = \lim_{s\to\infty}[\,sF(s)\,]. \]</div>
+      </div>
+    </div>
+
+    <button class="demo-btn">Demonstração · caso ii) — degrau de altura \(A\) na origem ↓</button>
+    <div class="proof-block">
+      <div class="src-block src-prof">
+        <span class="src-kicker">do professor · quadro 21/09/2026 · caso ii)</span>
+        <p>Isto é:</p>
+        <div class="eq-block">\[ f(t) = f_c(t) + A\,H(t) \]</div>
+        <p>com \(f_c(t)\) contínua, donde</p>
+        <div class="eq-block">\[ \dot f(t) = \dot f_c(t) + A\,\delta(t) \tag{ii.1} \]</div>
+        <div class="eq-block">\[ L = \lim_{s\to\infty}\int_{0_-}^{\infty}\dot f_c(t)\,e^{-st}\,dt \;+\; \lim_{s\to\infty}\int_{0_-}^{\infty}A\,\delta(t)\,e^{-st}\,dt \]</div>
+        <p>No quadro, o <b>primeiro termo está riscado</b>: ele é nulo pelo caso i), já que \(f_c(t)\) é contínua. Sobra só a parcela do impulso.</p>
+
+        <p>Pelo Teorema da amostragem de \(\delta(t)\), temos</p>
+        <div class="eq-block">\[ L = \lim_{s\to\infty} A\,e^{-st}\Big|_{t=0} = \lim_{s\to\infty} A \;\Rightarrow\; L = A \tag{6} \]</div>
+
+        <p>Da Eq. (2), substituindo (6), temos</p>
+        <div class="eq-block">\[ \lim_{s\to\infty}[\,sF(s)\,] - f(0_-) = A \]</div>
+        <p>ou seja</p>
+        <div class="eq-block">\[ \lim_{s\to\infty}[\,sF(s)\,] = f(0_-) + A \]</div>
+
+        <p>Integrando (ii.1) de \(t=0_-\) a \(t=0_+\), temos</p>
+        <div class="eq-block">\[ \int_{0_-}^{0_+}\dot f(t)\,dt = \int_{0_-}^{0_+}\dot f_c(t)\,dt + \int_{0_-}^{0_+}A\,\delta(t)\,dt \]</div>
+        <div class="eq-block">\[ f(t)\Big|_{0_-}^{0_+} = f_c(t)\Big|_{0_-}^{0_+} + A \]</div>
+        <div class="eq-block">\[ f(0_+) - f(0_-) = f_c(0) - f_c(0) + A \]</div>
+        <div class="eq-block">\[ \text{ou}\quad f(0_+) = A + f(0_-) \]</div>
+        <div class="eq-block">\[ \therefore\; \lim_{s\to\infty}[\,sF(s)\,] = f(0_+) \]</div>
+      </div>
+      <div class="src-block src-ext">
+        <span class="src-kicker">complemento externo · o que o caso ii) mostra</span>
+        <p>O degrau na origem <b>não quebra</b> o TVI: o limite continua entregando \(f(0_+)\), o valor depois do salto. As duas contas do quadro se encontram exatamente aí — uma dá \(f(0_-)+A\), a outra dá \(f(0_+)=f(0_-)+A\). É a versão rigorosa do que o exemplo \(F(s)=1/s\) já sugeria em 6.10.1.</p>
+      </div>
+    </div>
+
+    <button class="demo-btn">Demonstração · caso iii) — descontinuidade impulsiva de área \(A\) ↓</button>
+    <div class="proof-block">
+      <div class="src-block src-prof">
+        <span class="src-kicker">do professor · quadro 21/09/2026 · caso iii)</span>
+        <p class="dim">Grafia do quadro: "discontinuidade".</p>
+        <div class="eq-block">\[ f(t) = f_c(t) + A\,\delta(t) \tag{iii.1} \]</div>
+        <p>com \(f_c(t)\) contínua. Portanto sua derivada primeira é</p>
+        <div class="eq-block">\[ \dot f(t) = \dot f_c + A\,\delta^{(1)}(t) \]</div>
+        <div class="eq-block">\[ L = \lim_{s\to\infty}\int_{0_-}^{\infty}\dot f_c(t)\,e^{-st}\,dt \;+\; \lim_{s\to\infty}\int_{0_-}^{\infty}A\,\delta^{(1)}(t)\,e^{-st}\,dt \]</div>
+        <p>Como no caso ii), o <b>primeiro termo está riscado no quadro</b> — é nulo.</p>
+
+        <p>Usamos o Teorema da amostragem do <b>doublet</b>:</p>
+        <div class="eq-block">\[ L = \lim_{s\to\infty}\left\{-\frac{d}{dt}\Big[A\,e^{-st}\Big]\bigg|_{t=0}\right\} = \lim_{s\to\infty}\left\{\Big[A\,s\,e^{-st}\Big]\bigg|_{t=0}\right\} = \lim_{s\to\infty}[\,A\,s\,] \]</div>
+        <div class="eq-block">\[ L = \infty\cdot\operatorname{sign}(A) \]</div>
+
+        <p>Substituindo \(t=0_+\) em (iii.1), temos</p>
+        <div class="eq-block">\[ f(0_+) = f_c(0_+) + A\,\delta(0_+) = f_c(0_+) + 0 \]</div>
+        <p>Substituindo \(t=0_-\) em (iii.1), temos</p>
+        <div class="eq-block">\[ f(0_-) = f_c(0_-) + A\,\delta(0_-) = f_c(0_-) + 0 \]</div>
+        <p>Mas sabemos que \(f_c(0_+) = f_c(0_-)\). Portanto, temos</p>
+        <div class="eq-block">\[ f(0_+) = f(0_-) \]</div>
+        <p>E também</p>
+        <div class="eq-block">\[ \lim_{s\to\infty}[\,sF(s)\,] = \infty\cdot\operatorname{sign}(A) \]</div>
+
+        <p><b>Portanto, o TVI não se aplica, no caso iii), à \(F(s)\) completa.</b> Porém, dividindo,</p>
+        <div class="eq-block">\[ F(s) = \frac{N(s)}{D(s)} \;\Longrightarrow\; F(s) = Q(s) + \boxed{\dfrac{R(s)}{D(s)}} \]</div>
+        <p>temos que <b>à parcela \(R(s)/D(s)\) aplica-se o TVI</b>. No quadro, a fração \(R(s)/D(s)\) está circulada, com a anotação "aplica-se o TVI".</p>
+      </div>
+    </div>
+
+    <div class="callout"><b>Caso iii) é o resultado mais importante desta seção.</b> Quando \(F(s)\) é própria mas <em>não</em> estritamente própria, a divisão polinomial deixa um termo constante \(Q(s)\) — e constante em \(s\) é <b>impulso em \(t\)</b>. A função tem um \(A\delta(t)\) na origem, \(\lim_{s\to\infty}sF(s)\) diverge, e o TVI <b>não vale para \(F(s)\)</b>. A saída não é desistir: divida \(N(s)\) por \(D(s)\), jogue \(Q(s)\) fora e aplique o TVI só ao resto \(R(s)/D(s)\), que é estritamente próprio por construção. Em prova, a pegadinha é exatamente esta — uma \(F(s)\) com \(\deg N = \deg D\) oferecida como se fosse inocente. O doublet \(\delta^{(1)}(t)\) e seu teorema da amostragem estão no <a href="modulo-03.html#doublet">módulo 03</a>.</div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.3 &nbsp;Teorema do Valor Final (TVF)</h3>
 
     <div class="theorem-card" style="margin-top:1.1rem">
       <span class="tag">enunciado</span>
@@ -1023,6 +1141,233 @@ window.MathJax = {
       </table>
       <p class="dim" style="margin-top:0.9rem">É uma checagem de graça em qualquer exercício: calcule \(G(0)\) e \(G(\infty)\) pela álgebra e confira contra os dois circuitos desenhados à mão. Se não baterem, o erro está na montagem, não na antitransformação.</p>
     </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.4 &nbsp;O TVF do quadro: a hipótese é a abscissa de convergência</h3>
+
+    <p>No quadro de 21/09 a hipótese do TVF é escrita de outro jeito: não "onde estão os polos de \(sF(s)\)", mas <b style="color:var(--ink)">quanto vale a abscissa de convergência \(\sigma_0\)</b>. É a mesma ideia lida pela RC.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · item 2.3 b)</span>
+      <p><b>TVF — enunciado.</b> É dada \(F(s)\) e deseja-se calcular \(\lim_{t\to\infty} f(t)\), para \(f(t)=\mathcal{L}^{-1}[F(s)]\), <b>sem determinar \(f(t)\)</b>. Isto é, \(f(t)\) é de OE.</p>
+      <p>Se a abscissa de convergência da \(\mathcal{L}[f(t)]\) for \(\sigma_0&lt;0\), então</p>
+      <div class="eq-block">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}\,[\,sF(s)\,]. \]</div>
+    </div>
+
+    <button class="demo-btn">Demonstração do TVF — Eqs. (1) a (3) ↓</button>
+    <div class="proof-block">
+      <div class="src-block src-prof">
+        <span class="src-kicker">do professor · quadro 21/09/2026 · demonstração do TVF</span>
+        <p>Como \(f(t)\) é de OE, podemos aplicar o Teorema da derivada no tempo:</p>
+        <div class="eq-block">\[ \mathcal{L}[\dot f(t)] = sF(s) - f(0_-) \tag{1} \]</div>
+
+        <p>Aplicamos \(\lim_{s\to 0}\) na Eq. acima e chamamos de \(L\) o primeiro membro:</p>
+        <div class="eq-block">\[ L = \lim_{s\to 0}\int_{0_-}^{\infty}\dot f(t)\,e^{-st}\,dt \]</div>
+
+        <p>Considerando que a região de convergência (RC) de \(\dot f(t)\), pelo Teorema da \(d/dt\), é a mesma da RC da \(f(t)\), temos convergência da \(\int_{0_-}\). Isto ocorre porque \(\sigma_0&lt;0\) <b>e a RC inclui a origem</b>. Assim, podemos trocar \(\lim_{s\to 0}\) com \(\int_{0_-}\).</p>
+
+        <p>Assim, temos</p>
+        <div class="eq-block">\[ L = \int_{0_-}^{\infty}\dot f(t)\,\underbrace{\lim_{s\to 0}e^{-st}}_{=\,1}\,dt = \int_{0_-}^{\infty}\dot f(t)\,dt = f(t)\Big|_{0_-}^{\infty} \]</div>
+        <div class="eq-block">\[ L = \lim_{t\to\infty} f(t) - f(0_-) \tag{2} \]</div>
+
+        <p>Com o 2º membro de (1), temos</p>
+        <div class="eq-block">\[ L = \lim_{s\to 0}\big[\,sF(s) - f(0_-)\,\big] = \lim_{s\to 0}[\,sF(s)\,] - f(0_-) \tag{3} \]</div>
+
+        <p>Tomando a igualdade entre os 2ºs membros de (2) e (3), temos</p>
+        <div class="eq-block">\[ \lim_{t\to\infty} f(t) - f(0_-) = \lim_{s\to 0}[\,sF(s)\,] - f(0_-) \]</div>
+        <p>ou</p>
+        <div class="eq-block">\[ \boxed{\;\lim_{t\to\infty} f(t) = \lim_{s\to 0}[\,sF(s)\,]\;} \]</div>
+        <p>\(\sigma_0&lt;0\) significa que <b>todos os polos não-triviais de \(F(s)\) têm parte real negativa</b>.</p>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o que é "polo não-trivial"</span>
+      <p><b>Polo não-trivial</b> é o polo que sobra depois de cancelar os fatores comuns entre \(N(s)\) e \(D(s)\). Uma raiz de \(D(s)\) que também é raiz de \(N(s)\) não é polo de verdade — é uma singularidade removível, e não aparece na antitransformada, logo não entra na conta da abscissa de convergência. Quem fixa \(\sigma_0\) é o polo não-trivial <em>mais à direita</em>: \(\sigma_0 = \max_\ell \operatorname{Re}\{p_\ell\}\). Daí a equivalência do quadro: \(\sigma_0&lt;0\) é o mesmo que "todos os polos no semiplano esquerdo aberto".</p>
+      <p>Repare que essa hipótese é <b>mais restritiva</b> que a de 6.10.1: um polo simples na origem, típico de excitação em degrau, dá \(\sigma_0=0\) e reprova o teste do quadro, embora o TVF na forma "todos os polos de \(sF(s)\) à esquerda" ainda valha. As duas formulações não se contradizem — a do quadro cobre \(F(s)\), a outra cobre \(sF(s)\). Em prova, aplique a do quadro a \(sF(s)\) quando houver o polo do degrau. A seção 6.10.5 trata justamente desses casos de fronteira, \(\sigma_0=0\), um por um.</p>
+      <p>Essa condição é exatamente o critério de <b>estabilidade assintótica</b> lido pelas FCPs, no <a href="modulo-08.html#classificacao">módulo 08</a>: parte real negativa em todas elas, os modos naturais morrem, e o que sobra em \(t\to\infty\) é só a resposta forçada. É também a condição que autoriza trocar a rede pelo <a href="modulo-11.html#teorema">regime permanente senoidal</a> — lá, com \(\operatorname{Re}\{p_\ell\}&lt;0\), a resposta permanente é \(\hat R_p = F(j\omega)\hat E\). Mesma hipótese, três leituras.</p>
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.5 &nbsp;TVF na fronteira: polos sobre o eixo \(j\omega\)</h3>
+
+    <p>O quadro fecha o TVF pelo lado que a prova cobra: o que sobra quando a hipótese \(\sigma_0&lt;0\) falha <b style="color:var(--ink)">exatamente na fronteira</b>, isto é, com \(\sigma_0=0\). O professor desenha o plano-\(s\) com dois "×" <b style="color:var(--ink)">sobre o eixo imaginário</b> — um acima e um abaixo da origem — e percorre três casos: o par conjugado em \(\pm j\omega_p\), o polo simples na origem e o polo duplo na origem. É o contraponto exato do <a href="#tvf-sigma-positivo">Exercício 4</a> da seção de exercícios, em que \(\sigma_0=1&gt;0\) e o TVF devolve um número falso.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · o plano-s da fronteira</span>
+      <p>Os polos em questão estão <b>sobre</b> o eixo imaginário: \(\operatorname{Re}\{p\}=0\). A origem é o ponto em que, além disso, \(\operatorname{Im}\{p\}=0\).</p>
+      <div class="pz-widget">
+        <svg viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg">
+          <path d="M40 170 L604 170" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          <path d="M596 165 L608 170 L596 175" fill="rgba(231,237,233,0.75)"/>
+          <text x="558" y="196" fill="rgba(231,237,233,0.75)" font-family="IBM Plex Mono, monospace" font-size="13">Re{·}</text>
+
+          <path d="M320 300 L320 28" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          <path d="M315 36 L320 24 L325 36" fill="rgba(231,237,233,0.75)"/>
+          <text x="334" y="34" fill="rgba(231,237,233,0.75)" font-family="IBM Plex Mono, monospace" font-size="13">Im{·}</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <path d="M309 69 L331 91 M331 69 L309 91"/>
+            <path d="M309 249 L331 271 M331 249 L309 271"/>
+          </g>
+          <text x="344" y="76" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">p = +jωₚ</text>
+          <text x="344" y="272" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12">p* = −jωₚ</text>
+
+          <circle cx="320" cy="170" r="6" fill="none" stroke="#f5b942" stroke-width="2"/>
+          <text x="192" y="198" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">origem · s = 0</text>
+          <path d="M296 186 L312 176" stroke="#f5b942" stroke-width="1.4" fill="none"/>
+
+          <text x="40" y="52" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">Re{p} = 0 → σ₀ = 0 → A HIPÓTESE DO TVF FALHA</text>
+          <text x="40" y="300" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">a fronteira não é um caso só: são três</text>
+        </svg>
+      </div>
+    </div>
+
+    <h4 style="margin-top:1.6rem;font-size:1rem;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">CASO 1 — PAR CONJUGADO SOBRE O EIXO IMAGINÁRIO</h4>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · par conjugado em ±jωp</span>
+      <p>Toma-se a parcela do par conjugado na expansão em frações parciais:</p>
+      <div class="eq-block">\[ F(s) = \frac{A}{s-p} + \frac{A^{*}}{s-p^{*}} \]</div>
+      <div class="eq-block">\[ \xrightarrow{\;\mathcal{L}^{-1}\;}\quad f(t) = A\,e^{pt} + A^{*}e^{p^{*}t} \]</div>
+
+      <p>Com a condição em caixa no quadro,</p>
+      <div class="eq-block">\[ \boxed{\;\operatorname{Re}\{p\}=0 \quad\text{e}\quad \operatorname{Im}\{p\}\neq 0\;} \;\Longrightarrow\; p = j\omega_p,\qquad p^{*} = -j\omega_p \]</div>
+      <p>de modo que</p>
+      <div class="eq-block">\[ f(t) = A\,e^{j\omega_p t} + A^{*}e^{-j\omega_p t} = 2\operatorname{Re}\{A\}\cos(\omega_p t + \angle A) \]</div>
+      <p>e a conclusão do quadro é que o limite <b>não existe</b>:</p>
+      <div class="final-answer">\[ \nexists\;\lim_{t\to\infty} f(t) \]</div>
+      <p class="dim">Ao lado desse resultado o professor desenha uma senoide que não decai.</p>
+      <div class="pz-widget">
+        <svg viewBox="0 0 640 240" xmlns="http://www.w3.org/2000/svg">
+          <path d="M60 220 L60 40" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          <path d="M55 48 L60 36 L65 48" fill="rgba(231,237,233,0.75)"/>
+          <text x="14" y="42" fill="rgba(231,237,233,0.75)" font-family="IBM Plex Mono, monospace" font-size="13">f(t)</text>
+
+          <path d="M50 130 L604 130" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+          <path d="M596 125 L608 130 L596 135" fill="rgba(231,237,233,0.75)"/>
+          <text x="594" y="154" fill="rgba(231,237,233,0.75)" font-family="IBM Plex Mono, monospace" font-size="13">t</text>
+
+          <path d="M70 70 L560 70" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="5 5" fill="none"/>
+          <path d="M70 190 L560 190" stroke="#5d6e67" stroke-width="1.4" stroke-dasharray="5 5" fill="none"/>
+          <text x="566" y="66" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">+2|A|</text>
+          <text x="566" y="196" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">−2|A|</text>
+
+          <path d="M70 130 c 21.6 -80 38.4 -80 60 0 c 21.6 80 38.4 80 60 0 c 21.6 -80 38.4 -80 60 0 c 21.6 80 38.4 80 60 0 c 21.6 -80 38.4 -80 60 0 c 21.6 80 38.4 80 60 0 c 21.6 -80 38.4 -80 60 0 c 21.6 80 38.4 80 60 0" stroke="#4ade9a" stroke-width="2.4" fill="none"/>
+
+          <text x="150" y="222" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12" letter-spacing="1">AMPLITUDE CONSTANTE — OSCILA PARA SEMPRE, NÃO TENDE A NADA</text>
+        </svg>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade (i)</span>
+      <p>No quadro, o segundo termo de \(f(t)\) está escrito \(A^{*}e^{-pt}\). O correto — e o que a própria linha seguinte do quadro usa — é \(A^{*}e^{p^{*}t}\). As duas grafias coincidem <em>só</em> quando \(p\) é imaginário puro, que é exatamente o caso em análise (\(p=j\omega_p \Rightarrow p^{*}=-p\)), e é por isso que o resultado final não sofre. Fora da fronteira elas divergem: para \(p=-\sigma+j\omega\), \(-p = \sigma-j\omega\) tem parte real <b>positiva</b>. A antitransformada de \(\dfrac{A^{*}}{s-p^{*}}\) é sempre \(A^{*}e^{p^{*}t}\).</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade (ii)</span>
+      <p>O fator escrito no quadro é \(2\operatorname{Re}\{A\}\), mas a combinação correta do par conjugado é \(2|A|\) — o quadro traz \(\operatorname{Re}\{\cdot\}\) onde cabe o <b>módulo</b>. A álgebra de uma linha, escrevendo \(A=|A|e^{j\angle A}\) e \(A^{*}=|A|e^{-j\angle A}\):</p>
+      <div class="eq-block">\[ A\,e^{j\omega_p t} + A^{*}e^{-j\omega_p t} = |A|\,e^{j(\omega_p t+\angle A)} + |A|\,e^{-j(\omega_p t+\angle A)} = 2|A|\cos(\omega_p t + \angle A) \]</div>
+      <p>Os dois fatores só coincidem quando \(\angle A = 0\), em que \(A\) é real e \(\operatorname{Re}\{A\}=|A|\). Para \(A\) complexo, \(\operatorname{Re}\{A\}=|A|\cos(\angle A)\) — e a fase já está dentro do cosseno, então usá-la duas vezes erraria a amplitude. O que <b>não</b> muda é a conclusão: qualquer amplitude não-nula multiplicando um cosseno que não decai dá uma função sem limite em \(t\to\infty\).</p>
+    </div>
+
+    <h4 style="margin-top:1.6rem;font-size:1rem;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">CASO 2 — POLO SIMPLES NA ORIGEM</h4>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · F(s) = 1/s</span>
+      <p>Agora \(\operatorname{Re}\{p\}=0\) <b>e</b> \(\operatorname{Im}\{p\}=0\), donde \(p=0\):</p>
+      <div class="eq-block">\[ F(s) = \frac{1}{s} \]</div>
+      <p>Aplicando o TVF,</p>
+      <div class="eq-block">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}[\,sF(s)\,] = \lim_{s\to 0} 1 = 1 \]</div>
+      <p>e o professor escreve, ao lado:</p>
+      <div class="final-answer"><b style="color:var(--phosphor);font-size:1.05rem">"Não vale o TVF mas deu certo!"</b></div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a hipótese é suficiente, não necessária</span>
+      <p>De fato \(f(t)=H(t)\), e \(\lim_{t\to\infty}H(t)=1\): o número que o TVF devolveu está certo. A lição é precisa — a hipótese \(\sigma_0&lt;0\) é <b>suficiente, não necessária</b>. Quando ela vale, o teorema garante que o limite existe e que a fórmula o entrega; quando ela falha, o teorema <em>não diz nada</em>, nem a favor nem contra.</p>
+      <p>O polo simples na origem é o caso de fronteira em que o TVF acerta por <b>sorte estrutural</b>: o degrau tem valor final, e o fator \(s\) do TVF é justamente o que cancela o polo. Isso não é licença para usar o teorema sem checar — é o oposto. Nos outros dois casos da fronteira a mesma conta desanda: no polo duplo o limite não é finito, no par em \(\pm j\omega_p\) não existe. Sem olhar onde está o polo você não tem como saber em qual dos três você caiu.</p>
+    </div>
+
+    <h4 style="margin-top:1.6rem;font-size:1rem;color:var(--ink-dim);font-family:'IBM Plex Mono',monospace;letter-spacing:0.06em">CASO 3 — POLO DUPLO NA ORIGEM</h4>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro 21/09/2026 · F(s) = 1/s²</span>
+      <div class="eq-block">\[ F(s) = \frac{1}{s^2} \]</div>
+      <p>Aplicando o TVF,</p>
+      <div class="eq-block">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}[\,sF(s)\,] = \lim_{s\to 0}\frac{1}{s} = \infty \]</div>
+      <div class="final-answer"><b style="color:var(--phosphor);font-size:1.05rem">"Não existe valor final finito!"</b></div>
+      <p class="dim" style="margin-top:0.9rem">Aqui \(f(t)=t\,H(t)\) — a rampa —, que cresce sem limite.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · os cinco regimes da fronteira</span>
+      <p>Esta é a peça que amarra a seção: <b>"o TVF não vale" e "o limite não existe" são coisas diferentes</b>. A hipótese é sobre o teorema, não sobre a função — e o caso \(1/s\) é a prova, porque lá o teorema não vale e o limite existe do mesmo jeito.</p>
+      <table class="ltable">
+        <thead><tr><th>polos de \(F(s)\)</th><th>\(\sigma_0\)</th><th>o TVF vale?</th><th>existe \(\lim_{t\to\infty}f(t)\)?</th><th>o que \(\lim_{s\to0}sF(s)\) devolve</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>todos com parte real negativa</td>
+            <td>\(\sigma_0&lt;0\)</td>
+            <td><b>sim</b></td>
+            <td>sim, e é finito</td>
+            <td>o valor final correto</td>
+          </tr>
+          <tr>
+            <td>\(p=0\) <b>simples</b> &nbsp;<span style="color:var(--ink-dim)">ex. \(1/s\)</span></td>
+            <td>\(\sigma_0=0\)</td>
+            <td>não</td>
+            <td>sim, e é finito</td>
+            <td>acerta — \(1\), e \(f(t)=H(t)\) tende a \(1\)</td>
+          </tr>
+          <tr>
+            <td>\(p=0\) <b>duplo</b> ou de ordem maior &nbsp;<span style="color:var(--ink-dim)">ex. \(1/s^2\)</span></td>
+            <td>\(\sigma_0=0\)</td>
+            <td>não</td>
+            <td>não há valor final <b>finito</b></td>
+            <td>\(\infty\) — e a rampa \(t\,H(t)\) de fato diverge</td>
+          </tr>
+          <tr>
+            <td>par em \(\pm j\omega_p\) &nbsp;<span style="color:var(--ink-dim)">ex. \(\omega/(s^2+\omega^2)\)</span></td>
+            <td>\(\sigma_0=0\)</td>
+            <td>não</td>
+            <td><b>não existe</b> — oscila para sempre</td>
+            <td>um número (\(0\)) que não significa nada</td>
+          </tr>
+          <tr>
+            <td>algum polo com parte real positiva &nbsp;<span style="color:var(--ink-dim)">ex. \((s+5)/(s-1)\)</span></td>
+            <td>\(\sigma_0&gt;0\)</td>
+            <td>não</td>
+            <td>não é finito</td>
+            <td>resposta <b>falsa</b> — veja o <a href="#tvf-sigma-positivo">Exercício 4</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:1rem">Leia as duas últimas colunas em par. Elas não andam juntas: nas linhas 2 e 3 o limite (ou a sua divergência) é exatamente o que a conta indica, embora o teorema não autorize a conta; nas linhas 4 e 5 a conta devolve um número e o número mente. A única coisa que distingue esses casos é <b>a posição e a multiplicidade dos polos</b>. Por isso a ordem em prova é sempre a mesma: localizar os polos primeiro, calcular o limite depois.</p>
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">6.10.6 &nbsp;A cola: os dois teoremas em uma tabela</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · resumo de prova</span>
+      <p>Tudo o que você precisa levar para a prova sobre os dois teoremas — incluindo a única coluna que os exercícios cobram de verdade, a última.</p>
+      <table class="ltable">
+        <thead><tr><th>teorema</th><th>hipótese</th><th>fórmula</th><th>quando a hipótese falha</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><b>TVI</b><br><span style="color:var(--ink-dim)">valor inicial</span></td>
+            <td>\(F(s)\) <b>estritamente própria</b><br>\((\deg N &lt; \deg D)\)</td>
+            <td>\( f(0_+) = \lim\limits_{s\to\infty}[\,sF(s)\,] \)</td>
+            <td>Divida: \(F(s)=Q(s)+\dfrac{R(s)}{D(s)}\). Aplique o TVI <b>só</b> a \(R(s)/D(s)\); o \(Q(s)\) é o impulso em \(t=0\), que não tem valor inicial finito. Se \(F(s)\) for imprópria \((\deg N > \deg D)\), o \(Q(s)\) traz doublets.</td>
+          </tr>
+          <tr>
+            <td><b>TVF</b><br><span style="color:var(--ink-dim)">valor final</span></td>
+            <td>abscissa de convergência \(\sigma_0&lt;0\) — todos os polos não-triviais com parte real negativa</td>
+            <td>\( \lim\limits_{t\to\infty} f(t) = \lim\limits_{s\to 0}[\,sF(s)\,] \)</td>
+            <td><b>Não aplique.</b> Ou o limite não existe (polos em \(\pm j\omega\)) ou não é finito (polo à direita). O \(\lim_{s\to0}sF(s)\) costuma devolver um número mesmo assim — e o número é falso. Exceção útil: polo simples na origem vindo da excitação, em que se testa \(\sigma_0\) de \(sF(s)\). Os cinco regimes estão separados na tabela de 6.10.5.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </section>
 
   <section id="exercicios" class="panel">
@@ -1031,8 +1376,8 @@ window.MathJax = {
     <p class="dim">A mesma rede de dois elementos reativos, atacada duas vezes: primeiro pela rede livre, para achar as FCPs; depois pelas funções de rede, para verificar que os polos delas são realmente um submulticonjunto daquelas FCPs.</p>
 
     <div class="q-intro">
-      <div><b>3 exercícios</b>todos resolvidos passo a passo</div>
-      <div><b>Origem</b>exemplos das aulas de 31/08 e 14/09/2026</div>
+      <div><b>7 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>exemplos das aulas de 31/08, 14/09 e 21/09/2026</div>
       <div><b>Foco</b>rede livre · det T(s) · polos × FCPs · TVI e TVF</div>
     </div>
 
@@ -1081,7 +1426,7 @@ window.MathJax = {
 
     <div class="exercise-list">
 
-      <div class="q-card">
+      <div class="q-card src-prof">
         <div class="q-head">
           <span class="q-title"><span class="q-num">Exercício 1</span>FCPs da rede pela rede livre</span>
           <span class="q-prova">aula 31/08</span>
@@ -1243,7 +1588,7 @@ window.MathJax = {
         </div>
       </div>
 
-      <div class="q-card">
+      <div class="q-card src-prof">
         <div class="q-head">
           <span class="q-title"><span class="q-num">Exercício 2</span>Funções de rede da mesma rede — e seus polos</span>
           <span class="q-prova">aula 31/08</span>
@@ -1323,7 +1668,7 @@ window.MathJax = {
         </div>
       </div>
 
-      <div class="q-card">
+      <div class="q-card src-prof">
         <div class="q-head">
           <span class="q-title"><span class="q-num">Exercício 3</span>TVI e TVF sem antitransformar nada</span>
           <span class="q-prova">aula 14/09</span>
@@ -1379,7 +1724,7 @@ window.MathJax = {
               <p>Os dois estão no semiplano esquerdo aberto — são as FCPs da rede, que já sabíamos estáveis. <b style="color:var(--ink)">Hipótese satisfeita</b>, o TVF pode ser aplicado:</p>
               <div class="eq-block">\[ v_2(\infty) = \lim_{s\to0} s\,V_2(s) = \lim_{s\to0}\frac{10}{s^2+2s+2} = \frac{10}{2} \]</div>
               <div class="final-answer">\[ v_2(\infty) = 5\ \mathrm{V} \]</div>
-              <p class="dim">Note que o polo de \(V_2(s)\) na origem — o único que o fator \(s\) precisava cancelar — vem do <em>degrau</em>, não da rede. É o caso legítimo do terceiro cartão da seção 6.10.2.</p>
+              <p class="dim">Note que o polo de \(V_2(s)\) na origem — o único que o fator \(s\) precisava cancelar — vem do <em>degrau</em>, não da rede. É o caso legítimo do terceiro cartão da seção 6.10.3.</p>
             </div>
           </div>
 
@@ -1406,6 +1751,212 @@ window.MathJax = {
 
           <div class="q-idea"><b>Para comparação</b> — a resposta completa, que não foi necessária em nenhum item, é \(v_2(t) = 5\big[1 - e^{-t}\big(\cos t + \operatorname{sen} t\big)\big]\ \mathrm{V}\), para \(t \ge 0\). Confira: em \(t=0\) dá \(0\); o limite em \(t\to\infty\) dá \(5\); e \(\dot v_2(t) = 10\,e^{-t}\operatorname{sen} t\) vale \(0\) na origem. Os três valores que os teoremas entregaram de graça.</div>
 
+        </div>
+      </div>
+
+    </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Exercícios da aula — TVI e TVF</h3>
+    <p class="dim">Quatro exercícios curtos do quadro de 21/09, sem circuito nenhum: só \(F(s)\) e a pergunta "o teorema pode ser aplicado?". Os dois primeiros treinam o caso iii) do TVI; os dois últimos são um par montado para você errar o segundo.</p>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 1</span>TVI direto numa \(F(s)\) estritamente própria</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+        <p>Dada</p>
+        <div class="eq-block">\[ F(s)=\frac{4s+7}{2s^2+5s+2} \]</div>
+        <p>calcule \(f(0_+)\) para \(f(t)=\mathcal{L}^{-1}[F(s)]\), <b style="color:var(--ink)">sem determinar \(f(t)\)</b>.</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — checar o grau antes de qualquer conta. \(\deg N = 1 &lt; 2 = \deg D\): estritamente própria, TVI liberado, sem divisão nenhuma.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Verificar a hipótese</div>
+              <p>\(F(s)\) é estritamente própria. Então, aplica-se o TVI a \(F(s)\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Montar \(sF(s)\) e levantar a indeterminação</div>
+              <div class="eq-block">\[ f(0_+) = \lim_{s\to\infty}[\,sF(s)\,] = \lim_{s\to\infty}\frac{4s^2+7s}{2s^2+5s+2} \overset{\text{Teo. L'Hôpital}}{=} \lim_{s\to\infty}\frac{8s+7}{4s+5} \overset{\text{Teo. L'Hôpital}}{=} \lim_{s\to\infty}\frac{8}{4} \]</div>
+              <div class="final-answer">\[ f(0_+) = 2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Atalho equivalente (não está no quadro)</div>
+              <p>\(\lim_{s\to\infty}sF(s)\) de uma racional é a razão dos coeficientes líderes de numerador e denominador quando os graus se igualam. Aqui \(sF(s)\) tem grau 2 sobre grau 2, e a razão é \(4/2=2\). Dá o mesmo resultado sem os dois L'Hôpital — útil quando o tempo é curto.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Erro típico: aplicar L'Hôpital sem antes multiplicar por \(s\), e calcular \(\lim_{s\to\infty}F(s)=0\). Isso não é \(f(0_+)\) — é só a confirmação de que \(F(s)\) é estritamente própria.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 2</span>Própria mas não estritamente: dividir primeiro</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+        <p>Dada</p>
+        <div class="eq-block">\[ F(s)=\frac{s+3}{s+1}=\frac{N(s)}{D(s)} \]</div>
+        <p>calcule \(f(0_+)\), sendo \(f(t)=\mathcal{L}^{-1}[F(s)]\).</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — \(\deg N = \deg D = 1\). É o caso iii) da seção 6.10.2: \(f(t)\) tem impulso na origem e o TVI <em>não</em> vale para \(F(s)\). Divida e aplique só ao resto.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Verificar a hipótese — e ela falha</div>
+              <p>\(F(s)\) é própria mas <b style="color:var(--ink)">não é estritamente própria</b>. Então, não se aplica diretamente o TVI. Mas dividimos \(N(s)\) por \(D(s)\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">A divisão polinomial, como no quadro</div>
+              <div class="codeblock"><span class="cmd">  s + 3  |  s + 1  = D(s)</span>
+<span class="out"> −s − 1  |  ─────────────</span>
+<span class="cmt"> ──────  |  1  = Q(s)</span>
+<span class="cmd">  R(s) = 2</span></div>
+              <div class="eq-block">\[ F(s) = 1 + \underbrace{\frac{2}{s+1}}_{F_2(s)} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">TVI na parcela estritamente própria</div>
+              <p>Aplicamos o TVI a \(F_2(s)\), obtendo</p>
+              <div class="eq-block">\[ f(0_+) = \lim_{s\to\infty}[\,s\,F_2(s)\,] = \lim_{s\to\infty}\frac{2s}{s+1} \overset{\text{Teo. L'Hôpital}}{=} \lim_{s\to\infty}\frac{2}{1} \]</div>
+              <div class="final-answer">\[ f(0_+) = 2 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Onde foi parar o \(Q(s)=1\)</div>
+              <p>O termo descartado é a parte impulsiva: \(\mathcal{L}^{-1}[1]=\delta(t)\). A função inteira é \(f(t)=\delta(t)+2e^{-t}H(t)\). Fora da origem só existe a segunda parcela, e é dela que se lê \(f(0_+)=2\). O impulso não tem "valor" em \(0_+\) — é exatamente o que o caso iii) provou ao dar \(\lim_{s\to\infty}sF(s)=\infty\).</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Erro típico: aplicar o TVI a \(F(s)\) sem dividir. Sai \(\lim_{s\to\infty}\frac{s^2+3s}{s+1}=\infty\) — e quem não conferiu o grau interpreta o infinito como erro de conta, não como o aviso de que a hipótese foi violada. A conferência de grau custa dois segundos e decide a questão.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 3</span>TVF com \(\sigma_0 &lt; 0\): a hipótese vale</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+        <p>Calcule \(\lim_{t\to\infty} f(t)\), sendo \(f(t)=\mathcal{L}^{-1}[F(s)]\) e</p>
+        <div class="eq-block">\[ F(s)=\frac{s+5}{s+1} \]</div>
+        <p>sem calcular \(f(t)\).</p>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o TVF não pede propriedade estrita; pede \(\sigma_0 &lt; 0\). Aqui o único polo é \(-1\), então a hipótese passa mesmo com \(\deg N = \deg D\).</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Verificar a abscissa de convergência</div>
+              <p>A abscissa de convergência da \(f(t)\) é \(\sigma_0=-1\). Assim, podemos aplicar o TVF.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Tomar o limite em \(s\to 0\)</div>
+              <div class="eq-block">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}[\,sF(s)\,] = \lim_{s\to 0}\frac{s^2+5s}{s+1} \]</div>
+              <div class="final-answer">\[ \lim_{t\to\infty} f(t) = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Conferência (não está no quadro)</div>
+              <p>Dividindo, \(F(s)=1+\dfrac{4}{s+1}\), logo \(f(t)=\delta(t)+4e^{-t}H(t)\). Para \(t\to\infty\) a exponencial morre e o impulso já passou: o limite é \(0\), como o TVF entregou.</p>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · onde se erra</span>
+            <p>Erro típico: recusar o TVF porque \(F(s)\) não é estritamente própria. Propriedade estrita é hipótese do <b>TVI</b>, não do TVF. O TVF só olha onde estão os polos.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof" id="tvf-sigma-positivo">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 4</span>Mesma cara, \(\sigma_0 &gt; 0\): o TVF não vale</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+        <p>Calcule \(\lim_{t\to\infty} f(t)\) para</p>
+        <div class="eq-block">\[ F(s)=\frac{s+5}{s-1} \]</div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — um sinal trocado no denominador muda tudo. O polo em \(s=+1\) dá \(\sigma_0=1&gt;0\), a RC não inclui a origem, e o TVF <b>não pode ser aplicado</b>. A conta, se feita, mente.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Verificar a abscissa de convergência</div>
+              <p>Verificamos que a abscissa de convergência de \(f(t)\) é \(\sigma_0=1\). Então, <b style="color:var(--ink)">ou \(\nexists\;\lim_{t\to\infty} f(t)\), ou \(\lim_{t\to\infty} f(t)\) não é finito</b>.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">O que o TVF aplicado cegamente devolveria</div>
+              <p>Se fôssemos aplicar o TVF cegamente, obteríamos</p>
+              <div class="eq-block">\[ \lim_{t\to\infty} f(t) = \lim_{s\to 0}\frac{s^2+5s}{s-1} = 0, \]</div>
+              <p><b style="color:var(--ink)">que é falso.</b></p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">A verificação do professor — dividindo</div>
+              <p>No quadro, dentro de uma caixa:</p>
+              <div class="codeblock"><span class="cmd">  s + 5  |  s − 1  = D(s)</span>
+<span class="out"> −s + 1  |  ─────────────</span>
+<span class="cmt"> ──────  |  1  = Q(s)</span>
+<span class="cmd">  R(s) = 6</span></div>
+              <div class="eq-block">\[ F(s) = 1 + \frac{6}{s-1} \;\Longrightarrow\; f(t) = \delta(t) + 6e^{t}H(t) \;\Longrightarrow\; \lim_{t\to\infty} f(t) = \infty \]</div>
+              <div class="final-answer">\(\displaystyle\lim_{t\to\infty} f(t) = \infty\) — e não \(0\)</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · o par 3 e 4 é deliberado</span>
+            <p>Os Exercícios 3 e 4 formam um par montado de propósito: <b>mesma cara, hipóteses opostas</b>. \(\frac{s+5}{s+1}\) e \(\frac{s+5}{s-1}\) diferem por um sinal, têm o mesmo numerador, o mesmo grau, a mesma divisão polinomial de uma linha — e o \(\lim_{s\to0}sF(s)\) devolve \(0\) nos dois casos. Num deles o \(0\) é a resposta; no outro é uma mentira, e a resposta certa é \(\infty\). Nada na álgebra do limite avisa qual é qual. Só a posição do polo avisa. Por isso a ordem correta em prova é sempre: <b>primeiro localizar os polos, depois calcular o limite</b> — nunca o contrário.</p>
+          </div>
         </div>
       </div>
 
@@ -1439,7 +1990,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Baseado nas notas de aula de 31/08 e 14/09/2026 — Funções de rede, funções de transferência e os teoremas do valor inicial e final (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Baseado nas notas de aula de 31/08, 14/09 e 21/09/2026 — Funções de rede, funções de transferência e os teoremas do valor inicial e final (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
 </footer>
 
   </div><!-- /content-col -->
@@ -1554,6 +2105,19 @@ document.querySelectorAll('.sol-btn').forEach(btn => {
     btn.textContent = isOpen ? 'Ocultar resolução ↑' : 'Ver resolução ↓';
     if(window.MathJax && window.MathJax.typesetPromise){
       window.MathJax.typesetPromise([sol]);
+    }
+  });
+});
+
+/* ---------- demonstrações retráteis ---------- */
+document.querySelectorAll('.demo-btn').forEach(btn => {
+  const blk = btn.nextElementSibling;
+  if(!blk || !blk.classList.contains('proof-block')) return;
+  btn.addEventListener('click', () => {
+    const isOpen = blk.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    if(window.MathJax && window.MathJax.typesetPromise){
+      window.MathJax.typesetPromise([blk]);
     }
   });
 });

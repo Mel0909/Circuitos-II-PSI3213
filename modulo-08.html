@@ -127,6 +127,7 @@ window.MathJax = {
         <a href="#intro">Onde as FCPs moram</a>
         <a href="#receita">As duas receitas</a>
         <a href="#quantas">Quantas FCPs</a>
+        <a href="#todas-fcps">Achar todas as FCPs</a>
         <a href="#classificacao">Os três comportamentos</a>
         <a href="#coeficientes">Critério dos coeficientes</a>
         <a href="#ganho">Faixas de ganho</a>
@@ -266,7 +267,7 @@ window.MathJax = {
       <div class="flow-arrow"><span class="line"></span></div>
       <div class="flow-box"><div class="big">5</div><div class="small">classificar<br>no plano-s</div></div>
     </div>
-    <p class="flow-note">Os passos 1 a 4 são a receita literal do professor, transcrita na <a href="#receita">seção 8.2</a>. O passo 5 é o critério de estabilidade da <a href="#classificacao">seção 8.4</a>. Na prova, os dois vêm sempre juntos.</p>
+    <p class="flow-note">Os passos 1 a 4 são a receita literal do professor, transcrita na <a href="#receita">seção 8.2</a>. O passo 5 é o critério de estabilidade da <a href="#classificacao">seção 8.5</a>. Na prova, os dois vêm sempre juntos.</p>
   </section>
 
   <section id="receita" class="panel src-prof">
@@ -452,8 +453,274 @@ window.MathJax = {
     </div>
   </section>
 
-  <section id="classificacao" class="panel src-prof">
+  <section id="todas-fcps" class="panel">
     <span class="eyebrow">8.4</span>
+    <h2>4.1 — Como determinar <em>todas</em> as FCPs: o exemplo que derruba a receita</h2>
+
+    <p>A seção anterior <em>afirma</em> que um corte de capacitores põe uma FCP na origem. Esta seção <b style="color:var(--ink)">prova</b> — e, no caminho, mostra que o método que você usaria por reflexo devolve a resposta errada sem dar nenhum aviso. O professor resolve o mesmo circuito duas vezes: por análise nodal acham-se 2 FCPs; por variáveis de estado, 3. Uma das duas contas está incompleta, e não é a segunda.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 4 — Estabilidade e teoremas das redes, 4.1, Ex. 1</span>
+      <div class="final-answer">"Vamos determinar a resposta livre de um circuito com corte de capacitores."</div>
+    </div>
+
+    <div class="pz-widget">
+      <svg viewBox="0 0 700 330" xmlns="http://www.w3.org/2000/svg">
+        <!-- trilhos -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M110 90 L352 90"/>
+          <path d="M366 90 L540 90"/>
+          <path d="M110 270 L540 270"/>
+          <path d="M110 90 L110 160"/>
+          <path d="M110 200 L110 270"/>
+          <path d="M210 90 L210 135"/>
+          <path d="M210 207 L210 270"/>
+          <path d="M320 90 L320 34 L341 34"/>
+          <path d="M377 34 L398 34 L398 90"/>
+          <path d="M430 90 L430 164"/>
+          <path d="M430 178 L430 270"/>
+          <path d="M540 90 L540 160"/>
+          <path d="M540 200 L540 270"/>
+        </g>
+
+        <!-- fonte de corrente j0 H(t) -->
+        <circle cx="110" cy="180" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M110 196 L110 166" stroke="#4ade9a" stroke-width="2" fill="none"/>
+        <path d="M105 172 L110 162 L115 172" fill="#4ade9a"/>
+        <text x="20" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j₀H(t)</text>
+
+        <!-- indutor L -->
+        <path d="M210 135 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18 q -15 9 0 18" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+        <text x="226" y="172" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+        <path d="M186 232 L186 254" stroke="#f5b942" stroke-width="1.8" fill="none"/>
+        <path d="M181 246 L186 256 L191 246" fill="#f5b942"/>
+        <text x="128" y="252" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j_L(t)</text>
+
+        <!-- capacitor C1, horizontal, entre e1 e e2 -->
+        <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+          <line x1="352" y1="74" x2="352" y2="106"/>
+          <line x1="366" y1="74" x2="366" y2="106"/>
+        </g>
+        <text x="334" y="68" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+        <text x="378" y="68" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">−</text>
+        <text x="340" y="128" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₁(t)</text>
+        <text x="350" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+
+        <!-- c.i. de C1, em paralelo -->
+        <circle cx="359" cy="34" r="18" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M374 34 L346 34" stroke="#4ade9a" stroke-width="2" fill="none"/>
+        <path d="M352 29 L342 34 L352 39" fill="#4ade9a"/>
+        <text x="190" y="38" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₁v₁₀δ(t)</text>
+
+        <!-- capacitor C2, vertical, de e2 ao terra -->
+        <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+          <line x1="406" y1="164" x2="454" y2="164"/>
+          <line x1="406" y1="178" x2="454" y2="178"/>
+        </g>
+        <text x="462" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+        <text x="388" y="162" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+        <text x="388" y="200" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">−</text>
+        <text x="344" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₂(t)</text>
+
+        <!-- c.i. de C2, em paralelo -->
+        <circle cx="540" cy="180" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+        <path d="M540 196 L540 166" stroke="#4ade9a" stroke-width="2" fill="none"/>
+        <path d="M535 172 L540 162 L545 172" fill="#4ade9a"/>
+        <text x="452" y="120" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₂v₂₀δ(t)</text>
+
+        <!-- nós -->
+        <circle cx="320" cy="90" r="4" fill="rgba(231,237,233,0.75)"/>
+        <circle cx="430" cy="90" r="4" fill="rgba(231,237,233,0.75)"/>
+        <text x="248" y="82" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">e₁(t)</text>
+        <text x="438" y="78" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">e₂(t)</text>
+
+        <!-- terra -->
+        <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+          <path d="M325 270 L325 286"/>
+          <path d="M311 286 L339 286"/>
+          <path d="M316 292 L334 292"/>
+          <path d="M321 298 L329 298"/>
+        </g>
+        <text x="345" y="294" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">v₃(t) = 0 · referência</text>
+
+        <!-- o corte -->
+        <rect x="404" y="8" width="192" height="224" fill="none" stroke="#f5b942" stroke-width="1.8" stroke-dasharray="6 5"/>
+        <text x="412" y="26" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">lado B — só o nó e₂(t)</text>
+        <text x="116" y="60" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">lado A — todo o resto da rede</text>
+        <text x="602" y="152" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="11">corte {C₁,C₂}</text>
+      </svg>
+      <div class="pz-legend">A fonte \(j_0H(t)\) em paralelo com \(L\) e as fontes impulsivas \(C_1v_{10}\delta(t)\) e \(C_2v_{20}\delta(t)\) são a representação das condições iniciais — cada capacitor e o seu gerador de c.i. contam como <b style="color:var(--ink)">um ramo só</b>. A linha tracejada é o corte: ela só atravessa os ramos de \(C_1\) e \(C_2\).</div>
+    </div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro</span>
+      <p>"O conjunto de ramos \(\{C_1, C_2\}\) constitui um corte do circuito."</p>
+      <div class="given-box">
+        <span>\(v_1(0_-) = v_{10}\)</span>
+        <span>\(v_2(0_-) = v_{20}\)</span>
+        <span>\(j_L(0_-) = j_0\)</span>
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que esses dois ramos são um corte</span>
+      <p>Corte, na definição da <a href="#quantas">seção 8.3</a>, é um conjunto de ramos cuja remoção <b style="color:var(--ink)">parte o grafo da rede em duas peças desconexas</b>. Tire \(C_1\) e tire \(C_2\): o nó \(e_2(t)\) fica sozinho, sem nenhum caminho para o resto do circuito. De um lado do corte, \(L\), a fonte e a referência; do outro, um nó e nada mais.</p>
+      <p>A consequência física é a da seção anterior: a carga total do lado \(B\) não tem por onde escoar. Qualquer combinação de \(v_1\) e \(v_2\) que mantenha a carga do nó \(e_2\) constante é um estado que a rede sustenta <em>para sempre</em> — e "para sempre" é \(e^{0\cdot t}\), ou seja, \(p=0\). O circuito tem <b style="color:var(--ink)">três elementos reativos</b>: \(L\), \(C_1\) e \(C_2\). Guarde esse número.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Sol. 1 — por análise nodal</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, Sol. 1</span>
+      <p>Duas tensões nodais incógnitas, \(E_1(s)\) e \(E_2(s)\). Por inspeção:</p>
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix}
+          sC_1 + \dfrac{1}{sL} &amp; -sC_1 \\[6pt]
+          -sC_1 &amp; s(C_1+C_2)
+        \end{bmatrix}}_{Y_n(s)}
+        \begin{bmatrix} E_1(s) \\[6pt] E_2(s) \end{bmatrix}
+        =
+        \begin{bmatrix} C_1 v_{10} - \dfrac{j_0}{s} \\[6pt] C_2 v_{20} - C_1 v_{10} \end{bmatrix}
+      \]</div>
+      <p>O determinante, desenvolvido:</p>
+      <div class="eq-block">\[
+        \begin{aligned}
+          \det\big(Y_n(s)\big) &amp;= (C_1^2 + C_1C_2)\,s^2 + \frac{C_1+C_2}{L} - C_1^2 s^2 \\[6pt]
+          &amp;= C_1C_2\,s^2 + \frac{C_1+C_2}{L} \\[6pt]
+          &amp;= C_1C_2\left(s^2 + \frac{1}{L}\,\frac{C_1+C_2}{C_1C_2}\right)
+        \end{aligned}
+      \]</div>
+      <p>"Com FCPs":</p>
+      <div class="eq-block">\[ p_{1,2} = \pm\, j\sqrt{\frac{1}{L}\,\frac{C_1+C_2}{C_1C_2}} \]</div>
+    </div>
+
+    <div class="callout" style="text-align:center">
+      <b style="font-size:1.35rem;line-height:1.5">"São todas as FCPs ou falta alguma?"</b>
+    </div>
+
+    <p class="dim">A pergunta é do professor, escrita em destaque no quadro logo depois da Sol. 1. Antes de rolar a página: o polinômio tem grau 2 e a rede tem três elementos reativos.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Sol. 2 — com variáveis de estado</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, Sol. 2</span>
+      <p>"No caso, temos as variáveis de estado \(j_L(t)\), \(v_1(t)\) e \(v_2(t)\), que usamos em 3 equações:"</p>
+
+      <div class="solve-step">
+        <span class="step-num">01</span>
+        <div class="step-body">
+          <div class="step-title">2ª LK na malha</div>
+          <div class="eq-block">\[ L\frac{d}{dt}j_L(t) - v_2(t) - v_1(t) = 0 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">02</span>
+        <div class="step-body">
+          <div class="step-title">1ª LK em \(e_1(t)\)</div>
+          <div class="eq-block">\[ j_L(t) + C_1\frac{d}{dt}v_1(t) = 0 \]</div>
+        </div>
+      </div>
+
+      <div class="solve-step">
+        <span class="step-num">03</span>
+        <div class="step-body">
+          <div class="step-title">1ª LK em \(e_2(t)\)</div>
+          <div class="eq-block">\[ -C_1\frac{d}{dt}v_1(t) + C_2\frac{d}{dt}v_2(t) = 0 \]</div>
+        </div>
+      </div>
+
+      <p>Transformando as três, já com as condições iniciais embutidas:</p>
+      <div class="eq-block">\[
+        \begin{aligned}
+          V_1(s) + V_2(s) - sL\,J_L(s) &amp;= -L j_0 \\[6pt]
+          sC_1 V_1(s) + J_L(s) &amp;= C_1 v_{10} \\[6pt]
+          -sC_1 V_1(s) + sC_2 V_2(s) &amp;= C_2 v_{20} - C_1 v_{10}
+        \end{aligned}
+      \]</div>
+
+      <p>Em forma matricial, com a matriz \(T(s)\) do sistema em variáveis de estado:</p>
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix}
+          1 &amp; 1 &amp; -sL \\[4pt]
+          sC_1 &amp; 0 &amp; 1 \\[4pt]
+          -sC_1 &amp; sC_2 &amp; 0
+        \end{bmatrix}}_{T(s)}
+        \begin{bmatrix} V_1(s) \\[4pt] V_2(s) \\[4pt] J_L(s) \end{bmatrix}
+        =
+        \begin{bmatrix} -L j_0 \\[4pt] C_1 v_{10} \\[4pt] C_2 v_{20} - C_1 v_{10} \end{bmatrix}
+      \]</div>
+
+      <div class="eq-block">\[
+        \begin{aligned}
+          \det\big(T(s)\big) &amp;= -sL\,s^2 C_1C_2 - s\,(C_1+C_2) \\[6pt]
+          &amp;= -L\,C_1C_2\;s\left(s^2 + \frac{1}{L}\,\frac{C_1+C_2}{C_1C_2}\right)
+        \end{aligned}
+      \]</div>
+
+      <p>"com FCPs":</p>
+      <div class="eq-block">\[ p_1 = 0, \qquad p_{2,3} = \pm\, j\sqrt{\frac{1}{L}\,\frac{C_1+C_2}{C_1C_2}} \]</div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">A resposta: falta uma</h3>
+
+    <div class="callout"><b>Falta uma.</b> A análise nodal devolveu 2 FCPs; as variáveis de estado devolveram 3. A diferença inteira está num fator: o \(\det T(s)\) carrega um \(s\) multiplicando o mesmo polinômio de 2º grau, e o \(\det Y_n(s)\) não carrega. A FCP perdida é exatamente \(p=0\) — a FCP nula do corte de capacitores.</div>
+
+    <div class="eq-block">\[
+      \underbrace{C_1C_2\left(s^2 + \tfrac{1}{L}\tfrac{C_1+C_2}{C_1C_2}\right)}_{\det Y_n(s)\;\text{— grau }2}
+      \qquad\text{vs.}\qquad
+      \underbrace{-L\,C_1C_2\;\boxed{s}\left(s^2 + \tfrac{1}{L}\tfrac{C_1+C_2}{C_1C_2}\right)}_{\det T(s)\;\text{— grau }3}
+    \]</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que a análise nodal perde a raiz</span>
+      <p>As incógnitas da análise nodal são \(E_1\) e \(E_2\) — <b style="color:var(--ink)">duas</b>, porque a rede tem dois nós fora da referência. As variáveis de estado são \(j_L\), \(v_1\) e \(v_2\) — <b style="color:var(--ink)">três</b>, uma por elemento reativo. O número de incógnitas fixa o grau máximo do determinante, e a análise nodal já começa com uma a menos do que o necessário.</p>
+      <p>A raiz da coisa é que <em>tensões nodais não são variáveis de estado</em>. Aqui \(v_1 = e_1 - e_2\) e \(v_2 = e_2\): a análise nodal escreve as três tensões de interesse a partir de duas, e com isso embute uma relação entre \(v_1\) e \(v_2\) que o corte impõe. O modo associado ao corte é precisamente aquele em que a carga presa no lado \(B\) se redistribui sem mexer no resto — ele não produz nenhuma variação nas tensões nodais escolhidas como incógnitas, e por isso <b style="color:var(--ink)">não aparece</b> no \(\det Y_n(s)\). O modo existe; a formulação é que é cega a ele.</p>
+      <p class="dim">É o mesmo mecanismo do passo 2 das receitas, visto pelo outro lado: quando o passo 2 manda "manter a tensão do capacitor como incógnita", ele está restaurando a variável de estado que a formulação pura tinha eliminado.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a consequência prática, sem rodeios</span>
+      <p><b style="color:var(--ink)">As receitas de 4 passos da <a href="#receita">seção 8.2</a> não garantem todas as FCPs.</b> Elas garantem desde que o passo 2 seja aplicado — e o passo 2 depende de você <em>reconhecer</em> o corte de capacitores ou o laço de indutores antes de montar a matriz. Se a degeneração passar despercebida, os passos 1, 3 e 4 rodam normalmente, o determinante sai limpo, e a FCP nula simplesmente não existe no seu resultado. Nenhum sinal de erro.</p>
+      <p>Então: sempre que houver <b style="color:var(--ink)">corte de capacitores ou laço de indutores</b>, espere um determinante de grau <em>menor</em> que o número de elementos reativos. Nesse caso, ou você monta o sistema em variáveis de estado — cujo determinante traz todas as FCPs, como o \(T(s)\) acima —, ou você conta os modos degenerados à mão e acrescenta a raiz nula ao resultado da matriz de análise.</p>
+      <p>Pelo <a href="modulo-07.html#dualidade">pareamento dual do módulo 07</a>, corte de capacitores e laço de indutores são a mesma situação vista nos dois métodos: o que a análise nodal perde num corte de capacitores, a análise de malhas perde num laço de indutores. A tabela de dualidade de lá é a maneira mais rápida de converter um caso no outro. O inventário dos mecanismos que põem raiz na origem está na <a href="#quantas">seção 8.3</a>.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Quadro de verificação</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · procedimento seguro, em quatro conferências</span>
+      <table class="ltable">
+        <thead><tr><th>#</th><th>Conferência</th><th>No exemplo do quadro</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>i</td>
+          <td>Conte os elementos reativos. Esse número é o <b style="color:var(--ink)">máximo</b> de FCPs que a rede pode ter.</td>
+          <td>\(L\), \(C_1\), \(C_2\) ⟹ no máximo 3 FCPs.</td>
+        </tr>
+        <tr>
+          <td>ii</td>
+          <td>Procure, no circuito <em>já com as fontes independentes inativadas</em>, cortes de capacitores e laços de indutores.</td>
+          <td>\(\{C_1,C_2\}\) é corte: removê-los isola o nó \(e_2\).</td>
+        </tr>
+        <tr>
+          <td>iii</td>
+          <td>Se houver, espere grau <em>menor</em> no determinante da matriz de análise, e uma <b style="color:var(--ink)">FCP nula por degeneração</b> para cada degeneração encontrada.</td>
+          <td>A AN devolveu grau 2 com 3 elementos reativos — o sinal de alarme. Falta \(p=0\).</td>
+        </tr>
+        <tr>
+          <td>iv</td>
+          <td>Na dúvida, monte o sistema em variáveis de estado (uma equação por elemento reativo). O determinante dele traz <b style="color:var(--ink)">todas</b> as FCPs, sem exceção e sem passo 2.</td>
+          <td>\(\det T(s)\) de grau 3 ⟹ \(p_1=0\) e \(p_{2,3}=\pm j\sqrt{\cdot}\).</td>
+        </tr>
+        </tbody>
+      </table>
+      <p class="dim">O item (iii) é o que transforma a contagem num teste de verdade: grau do determinante menor que o número de elementos reativos é uma afirmação <em>verificável</em> sobre a sua própria conta. Se ela acontecer e você não tiver identificado nenhuma degeneração, a conta está errada ou a degeneração está lá e você não a viu.</p>
+    </div>
+  </section>
+
+  <section id="classificacao" class="panel src-prof">
+    <span class="eyebrow">8.5</span>
     <h2>Os três comportamentos: estável, marginal, instável</h2>
 
     <p>Sabendo onde estão as FCPs, a classificação é mecânica. O formulário da P2 traz as três definições em caixas seguidas, na folha 2, logo depois do item b) da Questão 01. Estão reproduzidas abaixo <em>exatamente como estão escritas</em>.</p>
@@ -577,7 +844,7 @@ window.MathJax = {
   </section>
 
   <section id="coeficientes" class="panel src-prof">
-    <span class="eyebrow">8.5</span>
+    <span class="eyebrow">8.6</span>
     <h2>O critério dos coeficientes: nunca calcule as raízes</h2>
 
     <p>Em quase toda questão de estabilidade da P2 o polinômio característico é de segundo grau e tem um parâmetro livre dentro. Calcular as raízes em função do parâmetro e depois exigir parte real negativa é possível, e é trabalhoso. O professor não faz isso. A observação que ele escreve na Questão 04 da folha 2 do formulário é uma frase de sete palavras:</p>
@@ -639,7 +906,7 @@ window.MathJax = {
   </section>
 
   <section id="ganho" class="panel src-ext">
-    <span class="eyebrow">8.6</span>
+    <span class="eyebrow">8.7</span>
     <h2>Faixas de ganho de fonte vinculada: o formato clássico da prova</h2>
 
     <p>Junte as três peças anteriores e você tem a questão que a P2 faz em todos os anos. Uma fonte vinculada com ganho simbólico está dentro da rede; o ganho entra na matriz e sobrevive até a equação característica; a pergunta é <b style="color:var(--ink)">para quais valores do ganho a rede permanece estável</b>.</p>
@@ -717,7 +984,7 @@ window.MathJax = {
   </section>
 
   <section id="revisao2a" class="panel src-prof">
-    <span class="eyebrow">8.7</span>
+    <span class="eyebrow">8.8</span>
     <h2>Volta ao 2º grau: \(\alpha\), \(\omega_o\) e os três regimes</h2>
 
     <p>Uma vez obtido o polinômio característico, ele é o mesmo objeto do <a href="modulo-05.html">módulo 05</a>. As três caixas finais do formulário fecham o ciclo: da equação diferencial ao polinômio, e do polinômio ao formato da resposta livre.</p>
@@ -771,7 +1038,7 @@ window.MathJax = {
       <p>e, pela tabela de transformadas do próprio formulário (\(t^k e^{at} \leftrightarrow k!/(s-a)^{k+1}\), com \(k=1\)),</p>
       <div class="final-answer">\[ x_l(t) = \big(A_1 + A_2\,t\big)e^{-\alpha t}\,H(t) \]</div>
       <p>As constantes saem do problema de valor inicial, como no <a href="modulo-05.html#pvi-critico">módulo 05</a>: \(A_1 = x(0^-)\) e \(A_2 = \dot x(0^-) + \alpha\,x(0^-)\).</p>
-      <p><b style="color:var(--ink)">O detalhe de estabilidade que importa aqui.</b> O termo \(t\,e^{-\alpha t}\) tem um \(t\) que cresce, mas \(e^{-\alpha t}\) decai mais rápido do que qualquer polinômio cresce — logo, com \(\alpha&gt;0\), \(x_l(t)\to 0\) e a rede é assintoticamente estável, exatamente como nos outros dois regimes. Multiplicidade só é problema <em>sobre o eixo imaginário</em>, onde não há exponencial decrescente para segurar o \(t\). É a mesma distinção da <a href="#classificacao">seção 8.4</a>.</p>
+      <p><b style="color:var(--ink)">O detalhe de estabilidade que importa aqui.</b> O termo \(t\,e^{-\alpha t}\) tem um \(t\) que cresce, mas \(e^{-\alpha t}\) decai mais rápido do que qualquer polinômio cresce — logo, com \(\alpha&gt;0\), \(x_l(t)\to 0\) e a rede é assintoticamente estável, exatamente como nos outros dois regimes. Multiplicidade só é problema <em>sobre o eixo imaginário</em>, onde não há exponencial decrescente para segurar o \(t\). É a mesma distinção da <a href="#classificacao">seção 8.5</a>.</p>
     </div>
 
     <div class="src-block src-ext">
@@ -793,7 +1060,7 @@ window.MathJax = {
   </section>
 
   <section id="exercicios" class="panel">
-    <span class="eyebrow">8.8</span>
+    <span class="eyebrow">8.9</span>
     <h2>Exercícios de provas e testes</h2>
     <p class="dim">Todos treinam a mesma sequência: determinante → equação característica → condição de sinal. O que muda é o tamanho da matriz e o que se pede no fim — faixa de ganho, valor exato de ganho, ou a lista das FCPs.</p>
 
@@ -1327,7 +1594,7 @@ window.MathJax = {
               <p>"Uma única FCP" poderia significar uma <em>raiz dupla</em>: duas FCPs coincidentes. Vale calcular esse caso para saber por que ele não é a resposta. Com \(a=r_m-10\), \(b=-2\), \(c=-10\), o discriminante zera quando</p>
               <div class="eq-block">\[ b^2 - 4ac = 4 + 40(r_m - 10) = 0 \;\Longrightarrow\; r_m - 10 = -\frac{1}{10} \;\Longrightarrow\; r_m = 9{,}9\ \Omega \]</div>
               <div class="eq-block">\[ -0{,}1s^2 - 2s - 10 = 0 \;\Longrightarrow\; s^2 + 20s + 100 = 0 \;\Longrightarrow\; (s+10)^2 = 0 \;\Longrightarrow\; s = -10 \text{ (dupla)} \]</div>
-              <p>Resultado limpo — mas <b style="color:var(--ink)">não</b> é "uma única FCP". São duas FCPs iguais, com multiplicidade 2, e a rede continua de 2ª ordem: a resposta livre contém \((A_1 + A_2 t)e^{-10t}\), dois modos independentes. É o amortecimento crítico da <a href="#revisao2a">seção 8.7</a>.</p>
+              <p>Resultado limpo — mas <b style="color:var(--ink)">não</b> é "uma única FCP". São duas FCPs iguais, com multiplicidade 2, e a rede continua de 2ª ordem: a resposta livre contém \((A_1 + A_2 t)e^{-10t}\), dois modos independentes. É o amortecimento crítico da <a href="#revisao2a">seção 8.8</a>.</p>
               <p>A resposta do gabarito, \(r_m=10\), é a única em que a rede passa a ter <em>um</em> modo próprio e um só. O enunciado reforça a leitura ao pedir "o valor de \(r_m\) <b>e da FCP única</b>" — no singular, uma FCP, não um par coincidente.</p>
             </div>
           </div>
@@ -1860,7 +2127,7 @@ window.MathJax = {
               <div class="step-title">Conferindo que as FCPs ficam de fato sobre o eixo</div>
               <p>Trocando o sinal do polinômio (o que não altera as raízes) e pondo \(r_m=0\):</p>
               <div class="eq-block">\[ LC\,s^2 + 1 = 0 \;\Longrightarrow\; s^2 = -\frac{1}{LC} \;\Longrightarrow\; s = \pm\frac{j}{\sqrt{LC}} \]</div>
-              <p>Par conjugado puramente imaginário, <b style="color:var(--ink)">simples</b>. Pela <a href="#classificacao">seção 8.4</a>, isso é exatamente estabilidade marginal: a resposta livre é \(\cos(\omega_0 t + \phi)\) com \(\omega_0 = 1/\sqrt{LC}\), limitada e eterna.</p>
+              <p>Par conjugado puramente imaginário, <b style="color:var(--ink)">simples</b>. Pela <a href="#classificacao">seção 8.5</a>, isso é exatamente estabilidade marginal: a resposta livre é \(\cos(\omega_0 t + \phi)\) com \(\omega_0 = 1/\sqrt{LC}\), limitada e eterna.</p>
               <p>Comparando com a forma padrão \(s^2 + 2\alpha s + \omega_o^2\):</p>
               <div class="eq-block">\[ s^2 + \frac{r_m}{L}s + \frac{1}{LC} = 0 \;\Longrightarrow\; 2\alpha = \frac{r_m}{L}, \qquad \omega_o = \frac{1}{\sqrt{LC}} \]</div>
               <p>Ou seja: \(r_m\) é literalmente a <b style="color:var(--ink)">resistência série equivalente</b> da malha. \(r_m&gt;0\) amortece, \(r_m=0\) oscila puro, \(r_m&lt;0\) é resistência negativa e a oscilação cresce — instável.</p>
@@ -2121,7 +2388,7 @@ window.MathJax = {
             <p><b style="color:var(--ink)">Erro 1 — associar e parar.</b> O erro que a alternativa b) existe para capturar. Associação de indutores em paralelo é uma simplificação que <em>perde</em> uma FCP, e a FCP perdida é sempre a nula do laço. Se você associar, tem de somar \(s=0\) à lista no fim — e essa regra é exatamente o que o passo 2 da receita do professor evita.</p>
             <p><b style="color:var(--ink)">Erro 2 — tratar a rede como se tivesse terra e três nós.</b> O circuito é livre, sem terra marcado. Adotar o trilho inferior como referência é o que o gabarito faz e é o certo — há um só nó independente, \(E_1\). Quem tenta numerar dois ou três nós inventa incógnitas e chega a um determinante identicamente nulo.</p>
             <p><b style="color:var(--ink)">Erro 3 — não perceber que \(R\) e \(C\) também entram.</b> A FCP nula é do laço de indutores, mas as duas outras dependem de \(G\), \(C\) e do \(L\) equivalente. Quem só olha o laço responde \(s=0\) e para.</p>
-            <p class="dim">Vale registrar o que esse resultado diz sobre a rede: uma FCP nula simples e um par com parte real \(-1/2\). Pela <a href="#classificacao">seção 8.4</a>, a rede é <b style="color:var(--ink)">marginalmente estável</b> — a resposta livre tende a uma constante (a corrente aprisionada no laço) e não a zero. Não há RPS nessa rede.</p>
+            <p class="dim">Vale registrar o que esse resultado diz sobre a rede: uma FCP nula simples e um par com parte real \(-1/2\). Pela <a href="#classificacao">seção 8.5</a>, a rede é <b style="color:var(--ink)">marginalmente estável</b> — a resposta livre tende a uma constante (a corrente aprisionada no laço) e não a zero. Não há RPS nessa rede.</p>
           </div>
         </div>
       </div>
@@ -2156,7 +2423,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Montado a partir da folha 2 do formulário oficial da P2 (caixas "Assintoticamente Estável", "Marginalmente Estável", "Instáveis", "Obtendo FCPs com Análise de Malhas", "Obtendo FCPs com Análise Nodal", inativação de geradores, "Equação diferencial de segunda ordem", "Polinômio característico" e "Comportamento"; Questões 01b, 02, 04, 05, 06 e 07), do gabarito da P2 de 2023 (1ª questão item b; Testes 3 e 5), da P2 de 2025 (1ª questão item a e 2ª questão item b) e do 4º Teste de 2025 (questões 2 e 4) — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Montado a partir da folha 2 do formulário oficial da P2 (caixas "Assintoticamente Estável", "Marginalmente Estável", "Instáveis", "Obtendo FCPs com Análise de Malhas", "Obtendo FCPs com Análise Nodal", inativação de geradores, "Equação diferencial de segunda ordem", "Polinômio característico" e "Comportamento"; Questões 01b, 02, 04, 05, 06 e 07), do gabarito da P2 de 2023 (1ª questão item b; Testes 3 e 5), da P2 de 2025 (1ª questão item a e 2ª questão item b) e do 4º Teste de 2025 (questões 2 e 4), e das notas de aula — item 4, Estabilidade e teoremas das redes, 4.1 (como determinar todas as FCPs de um circuito), Ex. 1 do quadro (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II</p>
 </footer>
 
   </div><!-- /content-col -->

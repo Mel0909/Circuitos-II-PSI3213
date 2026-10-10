@@ -224,13 +224,26 @@ window.MathJax = {
     <h2>O teorema do regime permanente senoidal</h2>
 
     <div class="src-block src-prof">
-      <span class="src-kicker">do professor · enunciado do teorema do RPS, como usado nos gabaritos de 2023 e 2025</span>
-      <p><b>Hipótese.</b> Seja uma rede linear, invariante no tempo, com função de rede \(H(s) = R(s)/U(s)\) cujos polos \(s_1,\dots,s_n\) satisfazem todos \(\mathrm{Re}\{s_k\} &lt; 0\) (rede assintoticamente estável).</p>
-      <p><b>Excitação.</b> \(u(t) = A\cos(\omega t + \theta)\,H(t)\).</p>
-      <p><b>Tese.</b> Decorrido o transitório, a saída é</p>
-      <div class="eq-block">\[ r_{\text{perm}}(t) \;=\; |H(j\omega)|\,A\,\cos\!\big(\omega t + \theta + \angle H(j\omega)\big) \]</div>
-      <p>ou, na forma fasorial, com \(\hat U = A\,\underline{/\,\theta}\):</p>
-      <div class="eq-block">\[ \hat R \;=\; H(j\omega)\cdot \hat U \]</div>
+      <span class="src-kicker">do professor · quadro 24/09/2026 · item 2.4 — Função de rede em RPS</span>
+      <p><b>Função de rede.</b> A função de rede \(F(s)\) entre a transformada \(E(s)\) da excitação e a transformada \(R(s)\) da resposta é dada por</p>
+      <div class="eq-block">\[ F(s) \;=\; \frac{R(s)}{E(s)}\bigg|_{\text{c.i.n.}} \]</div>
+      <p><b>Excitação senoidal.</b></p>
+      <div class="eq-block">\[ e(t) = E_m\cos(\omega t + \theta), \qquad\text{com fasor}\quad \hat E = E_m\angle\theta \]</div>
+      <p>que determina a <b>resposta permanente</b></p>
+      <div class="eq-block">\[ r_p(t) = R_m\cos(\omega t + \psi), \qquad\text{com fasor}\quad \hat R_p = R_m\angle\psi \]</div>
+      <p>sendo</p>
+      <div class="eq-block">\[ \boxed{\;\hat R_p = F(j\omega)\,\hat E\;} \]</div>
+      <p>com</p>
+      <div class="eq-block">\[ F(j\omega) = M(\omega)\angle\Phi(\omega), \qquad \Big[\,F(j\omega) = F(s)\big|_{s=j\omega}\,\Big] \]</div>
+      <p><b>com as condições</b> \(\operatorname{Re}\{p_\ell\} &lt; 0\) para todos os polos \(p_\ell\) de \(F(s)\) <b>[FCPs]</b>.</p>
+    </div>
+
+    <div class="callout"><b>O professor escreve "[FCPs]" ao lado da condição — e essa anotação é a ponte com o módulo 08.</b> Os polos \(p_\ell\) de \(F(s)\) são as raízes de \(D(s)\), isto é, as frequências complexas próprias da rede. Logo \(\operatorname{Re}\{p_\ell\} &lt; 0\) não é uma hipótese nova inventada para este item: é literalmente o critério de <a href="modulo-08.html#classificacao">estabilidade assintótica do módulo 08</a>, reaproveitado aqui como <em>licença de uso</em> do cálculo fasorial. Conferir as FCPs vem antes de escrever qualquer fasor.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · conversão de notação</span>
+      <p>O quadro chama a função de rede de \(F(s)\), a excitação de \(E(s)\) e a resposta de \(R(s)\). No resto deste módulo — e nos gabaritos de 2023 e 2025 — as mesmas quantidades aparecem como \(H(s)\), \(U(s)\) e \(R(s)\), com a excitação escrita \(u(t)=A\cos(\omega t+\theta)H(t)\). É a mesma coisa: \(F\leftrightarrow H\), \(E\leftrightarrow U\), \(E_m\leftrightarrow A\). Separando \(\hat R_p = F(j\omega)\hat E\) em módulo e fase, \(R_m = M(\omega)\,E_m\) e \(\psi = \theta + \Phi(\omega)\), ou seja</p>
+      <div class="eq-block">\[ r_p(t) = M(\omega)\,E_m\cos\!\big(\omega t + \theta + \Phi(\omega)\big), \qquad M(\omega)=|F(j\omega)|,\;\; \Phi(\omega)=\angle F(j\omega) \]</div>
     </div>
 
     <p>Leia o enunciado devagar e repare no que ele <em>não</em> diz. Ele não diz que a saída é senoidal desde \(t=0\) — não é; há um transitório. Ele não diz nada sobre condições iniciais — elas afetam o transitório e desaparecem junto com ele. E ele não vale "em geral": vale sob a hipótese, e a hipótese é sobre os polos.</p>
@@ -265,65 +278,158 @@ window.MathJax = {
     </div>
   </section>
 
-  <section id="porque" class="panel src-ext">
+  <section id="porque" class="panel">
     <span class="eyebrow">11.3</span>
     <h2>Por que \(s = j\omega\), e não outro ponto qualquer</h2>
 
-    <p>A justificativa é uma expansão em frações parciais feita até o fim. Vale fazer uma vez na vida, porque ela deixa a hipótese de estabilidade <em>visível</em> — você vê o termo que precisa morrer.</p>
+    <p>A justificativa é a expansão em frações parciais de \(R(s)=F(s)E(s)\), levada até o fim. Vale acompanhar uma vez na vida, porque ela deixa a hipótese de estabilidade <em>visível</em>: você vê, linha por linha, qual termo precisa morrer para que o fasor signifique algo. Abaixo está a demonstração como o professor a fez no quadro.</p>
 
-    <p>Escreva o cosseno de entrada na forma exponencial, que é a que gera frações parciais limpas:</p>
+    <button class="demo-btn">Demonstração do teorema do RPS · quadro 24/09/2026 — passos 01 a 10 ↓</button>
+    <div class="proof-block">
 
-    <div class="eq-block">\[ u(t) = A\cos(\omega t + \theta)H(t) = \frac{A e^{j\theta}}{2}e^{j\omega t}H(t) + \frac{A e^{-j\theta}}{2}e^{-j\omega t}H(t) \]</div>
+      <div class="src-block src-prof">
+        <span class="src-kicker">do professor · quadro 24/09/2026 · item 2.4 — demonstração</span>
 
-    <div class="eq-block">\[ U(s) = \frac{A e^{j\theta}/2}{s - j\omega} + \frac{A e^{-j\theta}/2}{s + j\omega} \]</div>
+        <div class="solve-step">
+          <span class="step-num">01</span>
+          <div class="step-body">
+            <div class="step-title">Os polos da rede, com multiplicidade</div>
+            <p>Sejam \(\{p_\ell\}_{\ell=1}^{r}\) os \(r\) polos <b>distintos</b> de \(F(s)\), com multiplicidades \(\{m_\ell\}_{\ell=1}^{r}\) e a condição</p>
+            <div class="eq-block">\[ \sum_{\ell=1}^{r} m_\ell = n, \qquad\text{com } n = \operatorname{gr}\{D(s)\}, \]</div>
+            <p>sendo \(F(s)=\dfrac{N(s)}{D(s)}\).</p>
+          </div>
+        </div>
 
-    <p>A resposta transformada é \(R(s) = H(s)U(s)\). Suponha, para a conta ficar concreta, que \(H(s)\) tenha polos simples \(s_1,\dots,s_n\). Então \(R(s)\) tem \(n+2\) polos, e a expansão é</p>
+        <div class="solve-step">
+          <span class="step-num">02</span>
+          <div class="step-body">
+            <div class="step-title">A resposta transformada</div>
+            <p>Como \(F(s)=\dfrac{R(s)}{E(s)}\), temos</p>
+            <div class="eq-block">\[ R(s) = F(s)\,E(s) \]</div>
+            <p class="dim">Nota de fidelidade: no quadro, na linha "Como \(F(s)=R(s)/E(s)\)", o denominador está grafado de modo ambíguo — parece \(F(s)\). A linha seguinte, \(R(s)=F(s)E(s)\), confirma que o denominador é \(E(s)\).</p>
+          </div>
+        </div>
 
-    <div class="eq-block">\[ R(s) \;=\; \underbrace{\frac{K}{s - j\omega} + \frac{K^{*}}{s + j\omega}}_{\text{polos da excitação}} \;+\; \underbrace{\sum_{k=1}^{n}\frac{c_k}{s - s_k}}_{\text{polos da rede}} \]</div>
+        <div class="solve-step">
+          <span class="step-num">03</span>
+          <div class="step-body">
+            <div class="step-title">Frações parciais: polos da rede e polos da excitação</div>
+            <p>Sendo \(F(s)\) estritamente própria, temos a expansão em frações parciais da \(R(s)\), que separa os polos da <b>rede</b> dos dois polos da <b>excitação</b>:</p>
+            <div class="eq-block">\[ R(s) = \sum_{\ell=1}^{r}\sum_{k=1}^{m_\ell}\frac{B_{\ell k}}{(s-p_\ell)^k} + \frac{A}{s-j\omega} + \frac{A^{*}}{s+j\omega} \]</div>
+          </div>
+        </div>
 
-    <p>O resíduo em \(s = j\omega\) sai por inspeção, porque o fator \((s-j\omega)\) cancela exatamente:</p>
+        <div class="solve-step">
+          <span class="step-num">04</span>
+          <div class="step-body">
+            <div class="step-title">Antitransformando</div>
+            <p>Com antitransformada de Laplace:</p>
+            <div class="eq-block">\[ r(t) = \sum_{\ell=1}^{r}\sum_{k=1}^{m_\ell} B_{\ell k}\,\frac{t^{k-1}}{(k-1)!}\,e^{p_\ell t} + A\,e^{j\omega t} + A^{*}e^{-j\omega t} \]</div>
+          </div>
+        </div>
 
-    <div class="eq-block">\[ K = \lim_{s\to j\omega}(s - j\omega)\,H(s)\,U(s) = H(j\omega)\cdot\frac{A e^{j\theta}}{2} \]</div>
+        <div class="solve-step">
+          <span class="step-num">05</span>
+          <div class="step-body">
+            <div class="step-title">O limite: o duplo somatório morre</div>
+            <p>Como</p>
+            <div class="eq-block">\[ r_p(t) = \lim_{t\to\infty} r(t) \quad\text{e}\quad \operatorname{Re}\{p_\ell\} &lt; 0, \]</div>
+            <p>temos</p>
+            <div class="eq-block">\[ r_p = A\,e^{j\omega t} + A^{*}e^{-j\omega t} \]</div>
+            <div class="callout"><b>É neste passo, e só neste, que a hipótese entra.</b> Cada parcela do duplo somatório tem módulo \(|B_{\ell k}|\,\dfrac{t^{k-1}}{(k-1)!}\,e^{\operatorname{Re}\{p_\ell\}t}\). A exponencial com \(\operatorname{Re}\{p_\ell\} &lt; 0\) vence qualquer potência \(t^{k-1}\), e por isso o somatório inteiro vai a zero — inclusive com polos múltiplos. Retire a hipótese e a igualdade acima simplesmente não se escreve: nada foi calculado errado, o limite é que deixa de existir.</div>
+          </div>
+        </div>
 
-    <p>Como \(H(s)\) tem coeficientes reais, o resíduo no polo conjugado é o conjugado: \(K^{*} = H(-j\omega)\,A e^{-j\theta}/2\). Antitransformando o par conjugado pela regra do formulário (\(z/(s-p) + \bar z/(s-\bar p) \leftrightarrow 2|z|e^{\sigma t}\cos(\omega t + \angle z)\), aqui com \(\sigma = 0\)):</p>
+        <div class="solve-step">
+          <span class="step-num">06</span>
+          <div class="step-body">
+            <div class="step-title">O resíduo \(A\) no polo \(s=j\omega\)</div>
+            <p><b>Com o resíduo</b></p>
+            <div class="eq-block">\[ A = \Big[\,R(s)\,(s-j\omega)\,\Big]\Big|_{s=j\omega} \]</div>
+            <p>Sendo</p>
+            <div class="eq-block">\[ E(s) = E_m\,\frac{s\cos\theta - \omega\,\mathrm{sen}\,\theta}{s^2+\omega^2} \]</div>
+            <p>temos</p>
+            <div class="eq-block">\[ A = \left[\,F(s)\cdot\frac{s\cos\theta - \omega\,\mathrm{sen}\,\theta}{s+j\omega}\,\right]\Bigg|_{s=j\omega} \]</div>
+            <div class="eq-block">\[ = F(j\omega)\,\frac{j\omega\cos\theta - \omega\,\mathrm{sen}\,\theta}{2j\omega} \]</div>
+            <div class="eq-block">\[ = F(j\omega)\left[\frac{\cos\theta}{2} + j\,\frac{\mathrm{sen}\,\theta}{2}\right] \]</div>
+            <div class="eq-block">\[ A = F(j\omega)\cdot\frac{e^{j\theta}}{2}\,E_m \]</div>
+          </div>
+        </div>
 
-    <div class="eq-block">\[ 2|K|\cos\big(\omega t + \angle K\big) \;=\; 2\cdot\frac{|H(j\omega)|A}{2}\,\cos\big(\omega t + \theta + \angle H(j\omega)\big) \]</div>
+        <div class="solve-step">
+          <span class="step-num">07</span>
+          <div class="step-body">
+            <div class="step-title">"donde" — o conjugado \(A^{*}\) e \(F(j\omega)\) em módulo e fase</div>
+            <p>O quadro segue sob o título <b>"donde"</b>. Como \(F(s)\) tem coeficientes reais, o resíduo no polo \(s=-j\omega\) é o conjugado do anterior:</p>
+            <div class="eq-block">\[ A^{*} = F^{*}(j\omega)\cdot\frac{e^{-j\theta}}{2}\,E_m \]</div>
+            <p>E a função de rede avaliada em \(s=j\omega\) é escrita em forma polar — módulo e fase:</p>
+            <div class="eq-block">\[ F(j\omega) = M(\omega)\,e^{j\Phi(\omega)} \]</div>
+          </div>
+        </div>
 
-    <div class="eq-block">\[ \boxed{\; r_{\text{perm}}(t) = |H(j\omega)|\,A\,\cos\big(\omega t + \theta + \angle H(j\omega)\big) \;} \]</div>
+        <div class="solve-step">
+          <span class="step-num">08</span>
+          <div class="step-body">
+            <div class="step-title">A resposta permanente, termo a termo</div>
+            <p>Substituindo \(A\) e \(A^{*}\) em \(r_p = A\,e^{j\omega t} + A^{*}e^{-j\omega t}\):</p>
+            <div class="eq-block">\[ \hat R_p = E_m\,M(\omega)\,e^{j\Phi(\omega)}\cdot\frac{e^{j\theta}}{2}\,e^{j\omega t} + M(\omega)\,e^{-j\Phi(\omega)}\cdot\frac{e^{-j\theta}}{2}\,e^{-j\omega t} \]</div>
+          </div>
+        </div>
 
-    <p>É exatamente a tese do teorema. Note que ela caiu dos <b style="color:var(--ink)">resíduos dos dois polos da excitação</b> — e só deles. A rede entrou na conta apenas como o número \(H(j\omega)\).</p>
+        <div class="solve-step">
+          <span class="step-num">09</span>
+          <div class="step-body">
+            <div class="step-title">A forma compacta</div>
+            <p>Os dois termos são conjugados um do outro; o quadro os junta em um único fasor:</p>
+            <div class="eq-block">\[ \hat R_p = E_m\,M(\omega)\,\exp\!\big[j(\Phi(\omega)+\theta)\big] \]</div>
+          </div>
+        </div>
 
-    <p>Falta a outra metade da soma, que é onde mora a hipótese:</p>
+        <div class="solve-step">
+          <span class="step-num">10</span>
+          <div class="step-body">
+            <div class="step-title">De volta ao tempo — o enunciado do teorema</div>
+            <div class="eq-block">\[ r_p(t) = \operatorname{Re}\{\hat R_p\,\} = E_m\,M(\omega)\cos\big(\omega t + \Phi(\omega) + \theta\big) \]</div>
+          </div>
+        </div>
 
-    <div class="eq-block">\[ r_{\text{transit}}(t) = \sum_{k=1}^{n} c_k\, e^{s_k t}, \qquad c_k = \lim_{s\to s_k}(s-s_k)H(s)U(s) \]</div>
-
-    <p>Escrevendo \(s_k = \sigma_k + j\omega_k\), o módulo de cada parcela é \(|c_k|e^{\sigma_k t}\). Três desfechos, e nenhum depende de \(c_k\):</p>
-
-    <div class="examples-grid">
-      <div class="example-card">
-        <span class="tag">\(\sigma_k &lt; 0\)</span>
-        <div class="steps">\(|c_k|e^{\sigma_k t} \to 0\) quando \(t\to\infty\).</div>
-        <div class="result">o termo morre — sobra só a senoide</div>
       </div>
-      <div class="example-card">
-        <span class="tag">\(\sigma_k = 0\)</span>
-        <div class="steps">\(|c_k|e^{0\cdot t} = |c_k|\), constante. Fica para sempre, somado à senoide permanente.</div>
-        <div class="result diverge">não morre — não é RPS</div>
+
+      <div class="src-block src-ext">
+        <span class="src-kicker">complemento externo · nota de fidelidade sobre a grafia</span>
+        <p>Duas observações sobre como o fecho está <em>escrito</em> no quadro, nenhuma delas afetando o resultado. Na linha de \(A^{*}\) o expoente está grafado de modo ambíguo: o conjugado exige \(e^{-j\theta}\), e é justamente o que a linha seguinte usa. E os dois \(E_m\) da penúltima linha aparecem como inserções acima da linha — o professor voltou e os acrescentou depois.</p>
       </div>
-      <div class="example-card">
-        <span class="tag">\(\sigma_k &gt; 0\)</span>
-        <div class="steps">\(|c_k|e^{\sigma_k t} \to \infty\). Em pouco tempo esse termo domina tudo.</div>
-        <div class="result diverge">explode — não existe regime</div>
+
+      <div class="src-block src-ext">
+        <span class="src-kicker">complemento externo · o que o fecho revela</span>
+        <p>Vale parar no passo 10 um instante. O "teoremão" — <b>amplitude multiplicada por \(M(\omega)\), fase somada com \(\Phi(\omega)\)</b> — não é um postulado que alguém decidiu adotar: ele <em>cai direto do resíduo</em>. O \(M(\omega)\) que multiplica \(E_m\) e o \(\Phi(\omega)\) que soma com \(\theta\) são módulo e fase do mesmo \(F(j\omega)\) que apareceu no passo 06, quando se calculou o resíduo no polo da excitação. Não há passo intermediário escondido entre "expandir em frações parciais" e "multiplicar fasor por função de rede".</p>
+      </div>
+
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · leitura intuitiva</span>
+      <p>Sem reescrever a álgebra do quadro: cada polo \(p_\ell = \sigma_\ell + j\omega_\ell\) da rede contribui com uma parcela de módulo proporcional a \(e^{\sigma_\ell t}\), e o desfecho não depende de \(B_{\ell k}\) — só do sinal de \(\sigma_\ell\). Num par complexo conjugado, o formato mais comum numa rede de 2ª ordem, as duas parcelas se juntam numa oscilação em \(\omega_\ell\) com envelope \(e^{\sigma_\ell t}\); essa frequência \(\omega_\ell\) é da <em>rede</em>, não tem relação nenhuma com o \(\omega\) da excitação, e é justamente ela que precisa sumir para a saída voltar a ter uma única frequência.</p>
+      <div class="examples-grid">
+        <div class="example-card">
+          <span class="tag">\(\sigma_\ell &lt; 0\)</span>
+          <div class="steps">A parcela vai a zero quando \(t\to\infty\), mesmo com multiplicidade.</div>
+          <div class="result">o termo morre — sobra só a senoide</div>
+        </div>
+        <div class="example-card">
+          <span class="tag">\(\sigma_\ell = 0\)</span>
+          <div class="steps">Amplitude constante (ou crescente em \(t^{k-1}\), se \(m_\ell &gt; 1\)). Fica para sempre.</div>
+          <div class="result diverge">não morre — não é RPS</div>
+        </div>
+        <div class="example-card">
+          <span class="tag">\(\sigma_\ell &gt; 0\)</span>
+          <div class="steps">A parcela cresce sem limite e em pouco tempo domina tudo.</div>
+          <div class="result diverge">explode — não existe regime</div>
+        </div>
       </div>
     </div>
 
-    <p>Faça o caso concreto de um par de polos complexos \(s_{1,2} = \sigma \pm j\omega_d\), que é o formato mais comum numa rede de 2ª ordem. As duas parcelas se combinam em</p>
-
-    <div class="eq-block">\[ c_1 e^{(\sigma + j\omega_d)t} + c_1^{*} e^{(\sigma - j\omega_d)t} \;=\; 2|c_1|\,e^{\sigma t}\cos(\omega_d t + \angle c_1) \]</div>
-
-    <p>A oscilação em \(\omega_d\) está lá, com amplitude \(2|c_1|e^{\sigma t}\). Com \(\sigma &lt; 0\) é uma senoide amortecida que some; com \(\sigma &gt; 0\) é uma senoide crescente que engole a saída. A frequência \(\omega_d\) não tem nada a ver com \(\omega\): é a rede oscilando no ritmo dela.</p>
-
-    <div class="callout"><b>Se algum \(\mathrm{Re}\{s_k\} &gt; 0\), não existe regime permanente.</b> E aqui está o que faz a questão de prova ser uma questão de prova: a expressão \(H(j\omega)\hat U\) continua perfeitamente calculável. Você substitui \(s = j\omega\), obtém um complexo, escreve um cosseno bonito com amplitude e fase. Esse cosseno <em>de fato</em> aparece na soma — é a parcela dos polos da excitação, e ela existe mesmo com a rede instável. Só que a parcela dos polos da rede também existe, cresce exponencialmente, e é ela que você mede no osciloscópio. O número fasorial é verdadeiro sobre uma parcela irrelevante. Chamar isso de "a saída" é o erro.</div>
+    <div class="callout"><b>O cálculo fasorial é o resíduo dos dois polos da excitação. Nada mais que isso.</b> A demonstração torna o ponto inescapável: \(F(j\omega)\hat E\) saiu do passo 06, que é o resíduo em \(s=j\omega\) — um polo que veio do cosseno de entrada, não da rede. Os polos da rede <em>também</em> produzem termos, e eles estão lá no passo 04; não aparecem no regime apenas porque decaem. Se algum \(\operatorname{Re}\{p_\ell\}\ge 0\), o duplo somatório não morre, o passo 05 não se escreve — e \(F(j\omega)\hat E\) continua sendo um número perfeitamente calculável, só deixa de ser a resposta. É a mesma conta do <a href="modulo-08.html#classificacao">módulo 08, seção de classificação</a>, e é exatamente o que se cobra no <a href="#exercicios">item c da 1ª questão da P2 2025</a>, onde um dos dois valores de \(g_m\) põe o polo no semiplano direito.</div>
   </section>
 
   <section id="fasores" class="panel">
@@ -469,12 +575,12 @@ window.MathJax = {
   <section id="exercicios" class="panel">
     <span class="eyebrow">11.8</span>
     <h2>Exercícios de provas e testes</h2>
-    <p class="dim">Esses seis exercícios treinam a única decisão que o RPS exige — olhar os polos antes de fasorizar — e, depois dela, a aritmética complexa que resolve a questão em três linhas.</p>
+    <p class="dim">Esses dez exercícios treinam a única decisão que o RPS exige — olhar os polos antes de fasorizar — e, depois dela, a aritmética complexa que resolve a questão em três linhas. Os quatro últimos são os do quadro, onde o professor testa a hipótese do teorema nos casos em que ela falha.</p>
 
     <div class="q-intro">
-      <div><b>6 exercícios</b>todos resolvidos passo a passo</div>
-      <div><b>Origem</b>prova P2 2025, formulário e testes de 2023 e 2025</div>
-      <div><b>Foco</b>existência do RPS · fasores · impedância com vinculada · passa-tudo</div>
+      <div><b>10 exercícios</b>todos resolvidos passo a passo</div>
+      <div><b>Origem</b>prova P2 2025, formulário, testes de 2023 e 2025 e o quadro da aula de 21/09/2026</div>
+      <div><b>Foco</b>existência do RPS · fasores · impedância com vinculada · passa-tudo · polos na origem</div>
     </div>
 
     <div class="exercise-list">
@@ -706,11 +812,11 @@ window.MathJax = {
             <div class="step-body">
               <div class="step-title">A matriz de malhas em \(s\), avaliada em \(s = j\)</div>
               <p>Com \(e_s(t) = 2\cos(t+90^\circ)\), tem-se \(\omega = 1\), logo \(s = j\omega = j\), e \(\hat E_s = 2\,\underline{/\,90^\circ}\). Condições iniciais nulas em regime permanente.</p>
-              <div class="eq-block">\[ \left.\begin{bmatrix} R_1 + \dfrac{1}{sC} + R_2 & -R_2 \\[6pt] -R_2 & R_2 + sL \end{bmatrix}\right|_{s=j} \begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix}\hat E_s\\ 0\end{bmatrix} \]</div>
+              <div class="eq-block">\[ \left.\begin{bmatrix} R_1 + \dfrac{1}{sC} + R_2 &amp; -R_2 \\[6pt] -R_2 &amp; R_2 + sL \end{bmatrix}\right|_{s=j} \begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix}\hat E_s\\ 0\end{bmatrix} \]</div>
               <p>Substituindo \(R_1 = 1\), \(R_2 = 2\), \(C = 1\), \(L = 2\) e \(s = j\):</p>
               <div class="eq-block">\[ R_1 + \frac{1}{jC} + R_2 = 1 + \frac{1}{j} + 2 = 3 - j \qquad\text{(pois } 1/j = -j\text{)} \]</div>
               <div class="eq-block">\[ R_2 + jL = 2 + j2 \]</div>
-              <div class="eq-block">\[ \begin{bmatrix} 3-j & -2 \\ -2 & 2+2j \end{bmatrix}\begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix}2\,\underline{/\,90^\circ}\\ 0\end{bmatrix} \]</div>
+              <div class="eq-block">\[ \begin{bmatrix} 3-j &amp; -2 \\ -2 &amp; 2+2j \end{bmatrix}\begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \begin{bmatrix}2\,\underline{/\,90^\circ}\\ 0\end{bmatrix} \]</div>
             </div>
           </div>
 
@@ -718,7 +824,7 @@ window.MathJax = {
             <span class="step-num">03</span>
             <div class="step-body">
               <div class="step-title">Inverter a matriz \(2\times2\)</div>
-              <div class="eq-block">\[ \begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \frac{1}{(3-j)(2+2j) - 2\cdot 2}\begin{bmatrix}2+2j & 2\\ 2 & 3-j\end{bmatrix}\begin{bmatrix}2\,\underline{/\,90^\circ}\\ 0\end{bmatrix} \]</div>
+              <div class="eq-block">\[ \begin{bmatrix}\hat I_1\\ \hat I_2\end{bmatrix} = \frac{1}{(3-j)(2+2j) - 2\cdot 2}\begin{bmatrix}2+2j &amp; 2\\ 2 &amp; 3-j\end{bmatrix}\begin{bmatrix}2\,\underline{/\,90^\circ}\\ 0\end{bmatrix} \]</div>
             </div>
           </div>
 
@@ -1395,6 +1501,368 @@ window.MathJax = {
       </div>
 
     </div>
+
+    <h3 style="margin-top:2rem;font-size:1.15rem">Exercícios da aula — o "Teoremão"</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o apelido</span>
+      <p>No quadro o professor não escreve "teorema do regime permanente senoidal": escreve <b>"Teoremão"</b>. O apelido é dele, e os quatro exercícios abaixo estão rotulados assim nas notas de aula — inclusive a pergunta que abre cada resolução, <em>"Vale o teoremão?"</em>. Vale usar o nome dele; é como a pergunta aparece na lousa e, provavelmente, como vai aparecer na sua cabeça na hora da prova.</p>
+    </div>
+
+    <div class="exercise-list">
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 1</span>Polo em \(s=-2\): o teoremão vale, e a conta são três linhas</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+
+        <p>Dados</p>
+        <div class="eq-block">\[ F(s) = \frac{s+5}{s+2}, \qquad e(t) = 5\cos t\ \ (\mathrm{V,s}) \]</div>
+        <p>calcular \(r(t)\), sendo \(R(s) = F(s)\,E(s)\).</p>
+
+        <div class="given-box">
+          <b>Dados.</b> \(\omega = 1\) rad/s · \(E_m = 5\) V · \(\theta = 0^\circ\) · polo único em \(s=-2\) · unidades \((\mathrm V,\mathrm s)\)
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — antes de qualquer número complexo, a pergunta do professor: <em>"Vale o teoremão?"</em>. Só depois de responder sim é que a multiplicação fasorial significa alguma coisa.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">"Vale o teoremão?" — o polo primeiro</div>
+              <p>O denominador de \(F(s)\) é \(s+2\), logo há uma única FCP:</p>
+              <div class="eq-block">\[ p_1 = -2 \quad\Longrightarrow\quad \operatorname{Re}\{p_1\} &lt; 0 \quad\checkmark \]</div>
+              <p>O professor escreve a pergunta e marca um visto ao lado. <b style="color:var(--ink)">Essa checagem é parte do procedimento, não formalidade de redação.</b> Ela é o que autoriza as linhas seguintes: se o visto não sai, tudo o que vem depois é aritmética sem significado físico — como o Exercício 2 mostra em duas linhas.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Fasor da excitação</div>
+              <div class="eq-block">\[ \hat E = 5\,\underline{/\,0^\circ}, \qquad \omega = 1\ \mathrm{rad/s} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">Avaliar \(F\) em \(s=j\omega=j\) e multiplicar</div>
+              <div class="eq-block">\[ \hat R = F(s)\Big|_{s=j}\cdot\hat E = \frac{j+5}{j+2}\cdot 5 = 5\sqrt{\tfrac{26}{5}}\ \underline{/\,\operatorname{arctg}\tfrac15 - \operatorname{arctg}\tfrac12} \]</div>
+              <p>Módulo: \(|j+5| = \sqrt{26}\) e \(|j+2| = \sqrt 5\), donde \(|\hat R| = 5\sqrt{26}/\sqrt5 = 5\sqrt{26/5}\). Fase: \(\angle(j+5) = \operatorname{arctg}\tfrac15\) e \(\angle(j+2) = \operatorname{arctg}\tfrac12\), e a divisão subtrai as fases.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">Voltar ao tempo</div>
+              <div class="eq-block">\[ r(t) = \sqrt{130}\,\cos\!\Big(t + \operatorname{arctg}\tfrac15 - \operatorname{arctg}\tfrac12\Big) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Conferência numérica</div>
+              <p>Primeiro o módulo, que muda de cara entre as duas linhas do quadro:</p>
+              <div class="eq-block">\[ 5\sqrt{\tfrac{26}{5}} = \sqrt{25\cdot\tfrac{26}{5}} = \sqrt{130} \cong 11{,}40 \]</div>
+              <p>São a mesma coisa — \(5\sqrt{26/5}\) é a forma que sai da divisão, \(\sqrt{130}\) é a forma limpa. Agora a fase:</p>
+              <div class="eq-block">\[ \operatorname{arctg}\tfrac15 - \operatorname{arctg}\tfrac12 \cong 11{,}31^\circ - 26{,}57^\circ = -15{,}26^\circ \]</div>
+              <p>Ou seja, \(r(t) \cong 11{,}40\cos(t - 15{,}26^\circ)\) \((\mathrm V,\mathrm s)\). O sinal negativo faz sentido: o polo em \(-2\) está mais perto de \(s=j\) do que o zero em \(-5\), então o denominador gira mais fase que o numerador e a saída <em>atrasa</em>.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">\( r(t) = \sqrt{130}\,\cos\!\big(t + \operatorname{arctg}\tfrac15 - \operatorname{arctg}\tfrac12\big) \cong 11{,}40\cos(t - 15{,}26^\circ)\ (\mathrm V,\mathrm s) \)</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Polo → visto → fasor → \(F(j\omega)\) em polar → multiplicar → tempo. Nessa ordem, sempre.</p>
+            <p><b>Erro típico 1.</b> Pular o passo 01. Aqui ele sai de graça, e por isso é tentador omitir; no Exercício 2 é a questão toda.</p>
+            <p><b>Erro típico 2.</b> Somar as fases em vez de subtrair. \(F(j)\) é um <em>quociente</em>: \(\angle F = \angle N - \angle D\).</p>
+            <p><b>Erro típico 3.</b> Achar que \(5\sqrt{26/5}\) e \(\sqrt{130}\) são resultados diferentes e procurar o erro que não existe.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 2</span>Um sinal trocado no denominador e não há mais resposta</span>
+          <span class="q-prova">Aula 21/09/2026</span>
+        </div>
+
+        <p>Nas mesmas condições do Exercício 1, com</p>
+        <div class="eq-block">\[ F(s) = \frac{s+5}{s-2}, \qquad e(t) = 5\cos t\ \ (\mathrm{V,s}) \]</div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — mesmo numerador, mesma excitação, mesmo \(\omega\). Mudou o sinal no denominador, e a conta fasorial não vale mais.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">O polo</div>
+              <div class="eq-block">\[ s - 2 = 0 \;\Longrightarrow\; p_1 = 2 \quad\Longrightarrow\quad \operatorname{Re}\{p_1\} &gt; 0 \]</div>
+              <p>Resposta do professor, escrita inteira:</p>
+              <div class="eq-block">\[ \textbf{“Não atinge o RPS.”} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step src-ext">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Por que acaba aqui</div>
+              <p>A parcela livre é \(c\,e^{+2t}\), que cresce sem limite; o limite \(r_p(t)=\lim_{t\to\infty}r(t)\) não existe e o passo 05 da <a href="#porque">demonstração</a> não se escreve. Nada impede você de calcular \(\frac{j+5}{j-2}\cdot 5\) e obter um número — mas esse número é só o resíduo dos polos da excitação, e a saída real é dominada pela exponencial crescente. É o mesmo critério do <a href="modulo-08.html#classificacao">módulo 08, seção de classificação</a>: rede instável, sem regime permanente.</p>
+            </div>
+          </div>
+
+          <div class="final-answer">Não há RPS — polo em \(s = +2\), rede instável</div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Duas linhas: raiz do denominador, sinal da parte real. Se for \(\ge 0\), a resposta é a justificativa.</p>
+            <p><b>Erro típico.</b> Entregar \(r(t) = 5\sqrt{26/5}\cos(t+\ldots)\) porque "a conta deu". Deu, e está errada. O par Exercício 1 / Exercício 2 existe justamente para separar quem checa o polo de quem fasoriza no automático.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 3</span>\(F(s)=1/s\): o fasor acerta \(r_p\) e erra a resposta</span>
+          <span class="q-prova">Aula · Teoremão</span>
+        </div>
+
+        <p>Diagrama de blocos do quadro:</p>
+
+        <div class="pz-widget">
+          <svg viewBox="0 0 560 150" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+            <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+              <path d="M40 80 L200 80"/>
+              <path d="M186 72 L200 80 L186 88"/>
+              <path d="M360 80 L520 80"/>
+              <path d="M506 72 L520 80 L506 88"/>
+            </g>
+            <rect x="200" y="46" width="160" height="68" fill="none" stroke="#4ade9a" stroke-width="2"/>
+            <text x="280" y="88" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="20" text-anchor="middle">F(s)</text>
+            <text x="40" y="64" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">e_s(t)</text>
+            <text x="520" y="64" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14" text-anchor="end">r(t) = ?</text>
+            <text x="280" y="138" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="middle">R(s) = F(s) · E_s(s)</text>
+          </svg>
+          <div class="pz-legend">O bloco é a função de rede; a pergunta é a saída no tempo.</div>
+        </div>
+
+        <div class="eq-block">\[ F(s) = \frac{1}{s}, \qquad e_s(t) = 5\,\mathrm{sen}\,t\ \ (\mathrm{V,s}) = 5\cos(t - 90^\circ) \]</div>
+
+        <div class="given-box">
+          <b>Dados.</b> \(\omega = 1\) rad/s · \(E_m = 5\) V · \(\theta = -90^\circ\) · \(F(s)\) com polo <b>na origem</b> · unidades \((\mathrm V,\mathrm s)\)
+        </div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o professor resolve pelos <b>dois caminhos</b> de propósito: o fasorial e o das frações parciais. Eles concordam na parcela \(r_p\) e discordam sobre o que é a resposta, porque o polo está na origem.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">a) Pelo Teoremão — o fasor da excitação</div>
+              <p>Reescrita como cosseno, \(5\,\mathrm{sen}\,t = 5\cos(t-90^\circ)\), donde</p>
+              <div class="eq-block">\[ \hat E_s = 5\,\underline{/\,-90^\circ} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">a) A transferência em \(s=j\omega\)</div>
+              <div class="eq-block">\[ F(s)\Big|_{s=j\omega} = F(j\omega) = F(j) = \frac{1}{j} = -j = 1\,\underline{/\,-90^\circ} \]</div>
+              <div class="eq-block">\[ \hat R_p = F(j\omega)\cdot\hat E_s = 1\,\underline{/\,-90^\circ}\times 5\,\underline{/\,-90^\circ} = 5\,\underline{/\,-180^\circ} \]</div>
+              <div class="eq-block">\[ r_p(t) = 5\cos(t - 180^\circ) = -5\cos t \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">b) Por frações parciais — montar \(R(s)\)</div>
+              <div class="eq-block">\[ F(s) = \frac{R(s)}{E_s(s)} \iff R(s) = F(s)\cdot E_s(s) \]</div>
+              <div class="eq-block">\[ E_s(s) = \frac{5}{s^2+1} \;\Longrightarrow\; R(s) = \frac{5}{s\,(s^2+1)} \]</div>
+              <div class="eq-block">\[ R(s) = \frac{B}{s} + \frac{A}{s-j} + \frac{A^{*}}{s+j} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">b) O resíduo no polo \(s=j\)</div>
+              <div class="eq-block">\[ A = \Big[R(s)(s-j)\Big]\Big|_{s=j} = \frac{5}{s\,(s+j)}\bigg|_{s=j} = \frac{5}{j\cdot 2j} \;\Longrightarrow\; A = -\frac52 \]</div>
+              <p class="dim">Porque \(j\cdot 2j = 2j^2 = -2\).</p>
+              <div class="eq-block">\[ R_p(s) = -\frac52\left[\frac{1}{s-j} + \frac{1}{s+j}\right] \;\xrightarrow{\;\mathcal{L}^{-1}\;}\; r_p(t) = -\frac52\left[e^{jt} + e^{-jt}\right] \]</div>
+              <div class="eq-block">\[ r_p(t) = -5\cos t \]</div>
+              <p><b style="color:var(--ink)">Os dois métodos concordam.</b></p>
+              <p class="dim">Anotações auxiliares no quadro, usadas nessas passagens: \(\dfrac{e^{jt}-e^{-jt}}{2j} = \mathrm{sen}\,t\) e \(j = e^{j90^\circ}\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">O resíduo \(B\) e a parcela transitória</div>
+              <div class="eq-block">\[ B = \Big[R(s)\cdot s\Big]\Big|_{s=0} = \frac{5}{s^2+1}\bigg|_{s=0} \;\Longrightarrow\; B = 5 \]</div>
+              <div class="eq-block">\[ R_T(s) = \frac{5}{s} \;\xrightarrow{\;\mathcal{L}^{-1}\;}\; r_T(t) = 5\,H(t) \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A resposta completa</div>
+              <div class="eq-block">\[ r(t) = r_T(t) + r_p(t) = 5 - 5\cos t, \qquad t\ge 0 \]</div>
+              <p>E o professor escreve ao lado:</p>
+              <div class="eq-block">\[ \textbf{“que não é RPS.”} \]</div>
+
+              <div class="pz-widget">
+                <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
+                  <path d="M60 250 L575 250" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+                  <path d="M60 40 L60 262" stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none"/>
+                  <path d="M60 155 L570 155" stroke="#5d6e67" stroke-width="1.6" stroke-dasharray="6 6" fill="none"/>
+                  <path d="M60 60 L570 60" stroke="#5d6e67" stroke-width="1.2" stroke-dasharray="3 7" fill="none"/>
+                  <text x="52" y="254" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="end">0</text>
+                  <text x="52" y="159" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="end">5</text>
+                  <text x="52" y="64" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12" text-anchor="end">10</text>
+                  <text x="578" y="254" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">t</text>
+                  <text x="66" y="36" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">r(t) = 5 − 5cos t</text>
+                  <text x="306" y="268" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">2π</text>
+                  <text x="556" y="268" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" text-anchor="middle">4π</text>
+                  <polyline fill="none" stroke="#f5b942" stroke-width="2" points="60,250 65,249 70,247 75,243 80,238 85,232 90,224 95,216 100,206 105,195 110,184 115,173 120,161 125,149 130,137 135,126 140,115 145,104 150,94 155,86 160,78 165,72 170,67 175,63 180,61 185,60 190,61 195,63 200,67 205,72 210,78 215,86 220,94 225,104 230,115 235,126 240,137 245,149 250,161 255,173 260,184 265,195 270,206 275,216 280,224 285,232 290,238 295,243 300,247 305,249 310,250 315,249 320,247 325,243 330,238 335,232 340,224 345,216 350,206 355,195 360,184 365,173 370,161 375,149 380,137 385,126 390,115 395,104 400,94 405,86 410,78 415,72 420,67 425,63 430,61 435,60 440,61 445,63 450,67 455,72 460,78 465,86 470,94 475,104 480,115 485,126 490,137 495,149 500,161 505,173 510,184 515,195 520,206 525,216 530,224 535,232 540,238 545,243 550,247 555,249 560,250"/>
+                  <text x="330" y="148" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="11">nível 5 — o degrau que não morre</text>
+                </svg>
+                <div class="pz-legend">A saída oscila em torno de 5, com amplitude 5, e não decai nunca: nem converge para uma senoide centrada em zero, nem para um valor constante.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">07</span>
+            <div class="step-body">
+              <div class="step-title">A segunda decomposição: livre e forçada</div>
+              <p>A mesma resposta completa também se decompõe como \(r(t) = r_L(t) + r_F(t)\). Aqui, com c.i.n.,</p>
+              <div class="eq-block">\[ r_L(t) = 0 \qquad\text{e}\qquad r_F(t) = r(t) \]</div>
+              <p class="dim">As duas decomposições são independentes: transitória + permanente é uma coisa, livre + forçada é outra. Neste exercício a livre é nula e toda a resposta é forçada — e ainda assim há uma parcela transitória \(5H(t)\).</p>
+            </div>
+          </div>
+
+          <div class="callout"><b>Este é o exercício que mostra onde a hipótese do teoremão mora.</b> \(F(s)=1/s\) tem polo <b>na origem</b>: \(\operatorname{Re}\{p_1\}=0\), não \(&lt;0\). A hipótese falha. E aí acontece a coisa curiosa: o fasor <em>ainda acerta</em> a parcela \(r_p(t)=-5\cos t\) — os dois métodos concordam nela, linha por linha. O que o fasor não vê é o resíduo \(B=5\) no polo da origem, que antitransforma num degrau \(5H(t)\) que nunca desaparece. A resposta completa \(5-5\cos t\) não é senoidal: é uma senoide montada num patamar. Moral: <b>"o fasor deu um número certo" não é o mesmo que "existe RPS"</b>.</div>
+
+          <div class="final-answer">\( r_p(t) = -5\cos t \) &nbsp;·&nbsp; \( r_T(t) = 5H(t) \) &nbsp;·&nbsp; \( r(t) = 5 - 5\cos t,\ t\ge 0 \) — <b>não é RPS</b></div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Quando o polo está sobre o eixo imaginário, resolva pelos dois caminhos. O fasorial dá \(r_p\) em três linhas; o das frações parciais diz se sobrou alguma coisa além dela. A conta que decide é o resíduo no polo que <em>não</em> é da excitação.</p>
+            <p><b>Erro típico 1.</b> Parar em \(r_p(t)=-5\cos t\) e chamar isso de \(r(t)\). Falta o degrau — e ele vale 5, tanto quanto a amplitude da oscilação.</p>
+            <p><b>Erro típico 2.</b> Concluir que "o teoremão não vale, então o fasor está errado". Não está errado como <em>parcela</em>; está errado como <em>resposta</em>. A distinção é a questão toda.</p>
+            <p><b>Erro típico 3.</b> Esquecer de converter \(5\,\mathrm{sen}\,t\) em cosseno antes de fasorizar. Sem o \(-90^\circ\), sai \(+5\cos t\) — sinal trocado.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="q-card src-prof">
+        <div class="q-head">
+          <span class="q-title"><span class="q-num">Aula · Exercício 4</span>\(F(s)=1/s^2\): polo duplo na origem e uma rampa na saída</span>
+          <span class="q-prova">Aula · Teoremão</span>
+        </div>
+
+        <p>Mesma excitação do Exercício 3, com</p>
+        <div class="eq-block">\[ F(s) = \frac{1}{s^2}, \qquad e_s(t) = 5\,\mathrm{sen}\,t\ \ (\mathrm{V,s}) = 5\cos(t - 90^\circ) \]</div>
+
+        <button class="sol-btn">Ver resolução ↓</button>
+        <div class="proof-block">
+          <div class="q-idea"><b>Ideia-chave</b> — o polo na origem agora é <b>duplo</b>. A expansão ganha dois termos em \(s\), e a parcela transitória deixa de ser um degrau: vira uma rampa.</div>
+
+          <div class="solve-step">
+            <span class="step-num">01</span>
+            <div class="step-body">
+              <div class="step-title">Montar \(R(s)\) e a expansão</div>
+              <div class="eq-block">\[ R(s) = F(s)\,E_s(s) = \frac{1}{s^2}\cdot\frac{5}{s^2+1} = \frac{5}{s^2\,(s^2+1)} \]</div>
+              <div class="eq-block">\[ R(s) = \frac{B_{11}}{s} + \frac{B_{12}}{s^2} + \frac{A}{s-j} + \frac{A^{*}}{s+j} \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">02</span>
+            <div class="step-body">
+              <div class="step-title">Os resíduos do polo duplo</div>
+              <div class="eq-block">\[ B_{12} = \Big[R(s)\cdot s^2\Big]\Big|_{s=0} = \frac{5}{s^2+1}\bigg|_{s=0} \;\Longrightarrow\; B_{12} = 5 \]</div>
+              <p>Para o de ordem 1, deriva-se antes de avaliar:</p>
+              <div class="eq-block">\[ B_{11} = \left[\frac{d}{ds}\,\frac{5}{s^2+1}\right]_{s=0} = \left[-\frac{10s}{(s^2+1)^2}\right]_{s=0} \;\Longrightarrow\; B_{11} = 0 \]</div>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">03</span>
+            <div class="step-body">
+              <div class="step-title">O resíduo no polo da excitação</div>
+              <div class="eq-block">\[ A = \Big[R(s)(s-j)\Big]\Big|_{s=j} = \frac{5}{s^2\,(s+j)}\bigg|_{s=j} = \frac{5}{-1\,(2j)} \;\Longrightarrow\; A = \frac52 j \]</div>
+              <p class="dim">Porque \(s^2 = j^2 = -1\) e \(s+j = 2j\), e \(\dfrac{5}{-2j} = \dfrac{5}{-2j}\cdot\dfrac{j}{j} = \dfrac{5j}{2}\).</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">04</span>
+            <div class="step-body">
+              <div class="step-title">A parcela permanente, pelo caminho do quadro</div>
+              <div class="eq-block">\[ r_p(t) = \frac52 j\,e^{jt} - \frac52 j\,e^{-jt} = \frac52 e^{j(t+90^\circ)} - \frac52 e^{-j(t+90^\circ)} \]</div>
+              <div class="eq-block">\[ r_p(t) = \frac52\Big[\cos(t+90^\circ) + j\,\mathrm{sen}(t+90^\circ)\Big] - \frac52\Big[\cos(t+90^\circ) - j\,\mathrm{sen}(t+90^\circ)\Big] = j\,2\,\mathrm{sen}(t+90^\circ) \]</div>
+              <div class="eq-block">\[ r_p(t) = -5\,\mathrm{sen}\,t = -5\cos(t - 90^\circ) \]</div>
+            </div>
+          </div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · nota de fidelidade</span>
+            <p>A penúltima linha do quadro, \(r_p(t) = j\,2\,\mathrm{sen}(t+90^\circ)\), está <b>sem o fator \(5/2\)</b> e com um <b>\(j\) sobrando</b>. O resultado da linha seguinte, \(-5\,\mathrm{sen}\,t\), está correto e confere com a verificação pelo Teoremão do passo 05 — o deslize é só na grafia da passagem intermediária. A conta limpa é</p>
+            <div class="eq-block">\[ r_p = \tfrac52 j\big(e^{jt} - e^{-jt}\big) = \tfrac52 j\cdot 2j\,\mathrm{sen}\,t = 5j^2\,\mathrm{sen}\,t = -5\,\mathrm{sen}\,t \]</div>
+            <p>usando \(e^{jt}-e^{-jt} = 2j\,\mathrm{sen}\,t\), que é a anotação auxiliar que o próprio professor deixou no canto do quadro no exercício anterior.</p>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">05</span>
+            <div class="step-body">
+              <div class="step-title">Verificação pelo Teoremão</div>
+              <div class="eq-block">\[ F(s)\Big|_{s=j\omega} = F(j\omega) = F(j) = \frac{1}{j^2} = -1 \]</div>
+              <div class="eq-block">\[ R_p(s) = -E_s(s) \]</div>
+              <div class="eq-block">\[ r_p(t) = -5\,\mathrm{sen}\,t = -5\cos(t - 90^\circ) \]</div>
+              <p>Multiplicar por \(-1\) é inverter o sinal e nada mais: mesma amplitude, mesma frequência, fase somada com \(180^\circ\). Confere com o passo 04.</p>
+            </div>
+          </div>
+
+          <div class="solve-step">
+            <span class="step-num">06</span>
+            <div class="step-body">
+              <div class="step-title">A parcela transitória — a rampa</div>
+              <p>Com \(B_{11}=0\), sobra só o termo de segunda ordem:</p>
+              <div class="eq-block">\[ R_T(s) = \frac{B_{12}}{s^2} = \frac{5}{s^2} \;\xrightarrow{\;\mathcal{L}^{-1}\;}\; r_T(t) = 5t, \qquad t\ge 0 \]</div>
+              <p>Não é um patamar como no Exercício 3: cresce indefinidamente, e a resposta completa \(r(t) = 5t - 5\,\mathrm{sen}\,t\) diverge.</p>
+              <p class="dim">Nota de fidelidade: ao lado desse resultado o professor desenhou uma carinha sorrindo.</p>
+            </div>
+          </div>
+
+          <div class="callout"><b>Polo duplo na origem ⟹ transitória em rampa ⟹ a resposta diverge.</b> A diferença em relação ao Exercício 3 não é de grau de gravidade, é de natureza. Com \(1/s\), a parcela que o fasor não vê é um degrau: fica, mas é limitada. Com \(1/s^2\), essa parcela é \(5t\) e <em>domina</em> a saída — em poucos segundos a oscilação de amplitude 5 é um detalhe sobre uma reta que sobe sem parar. Aqui não é só ausência de RPS: é divergência. E, mesmo assim, \(F(j\omega)\hat E_s\) continua devolvendo um fasor perfeitamente calculável, \(5\,\underline{/\,90^\circ}\). Continua inútil como resposta.</div>
+
+          <div class="final-answer">\( r_p(t) = -5\,\mathrm{sen}\,t \) &nbsp;·&nbsp; \( r_T(t) = 5t \) (rampa) &nbsp;·&nbsp; \( r(t) = 5t - 5\,\mathrm{sen}\,t \) — <b>diverge, não há RPS</b></div>
+
+          <div class="src-block src-ext">
+            <span class="src-kicker">complemento externo · método e onde se erra</span>
+            <p><b>Método.</b> Polo múltiplo exige a fórmula com derivada: \(B_{1k}\) de ordem menor que a multiplicidade sai derivando. Depois, sempre confira \(r_p\) pelo Teoremão — é grátis, e pega erro de sinal na exponencial complexa, como o do passo 04.</p>
+            <p><b>Erro típico 1.</b> Escrever \(B_{11}\) sem derivar, avaliando \(\frac{5}{s^2+1}\) em \(s=0\) duas vezes e obtendo \(5\) para os dois. A derivada é o que distingue os dois resíduos do polo duplo.</p>
+            <p><b>Erro típico 2.</b> Perder o fator \(5/2\) ou deixar um \(j\) sobrando na combinação das exponenciais — exatamente o que aconteceu no quadro. Use \(e^{jt}-e^{-jt}=2j\,\mathrm{sen}\,t\) e não expanda em cosseno e seno à mão.</p>
+            <p><b>Erro típico 3.</b> Tratar \(1/s\) e \(1/s^2\) como o mesmo caso ("polo na origem, não tem RPS"). Um dá saída limitada, o outro diverge; em prova, a palavra <em>rampa</em> é o que mostra que você viu a diferença.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <a class="next-module" href="modulo-12.html">
@@ -1416,7 +1884,7 @@ window.MathJax = {
         <div><b>T3</b>18/11</div>
         <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
       </div>
-      <p class="foot-note">Módulo 11 — Regime permanente senoidal a partir de Laplace. Exercícios da P2 2025 (1ª questão, item c), do formulário P2 (folha 1, Q08) e dos Testes 3 de 2023 e 2025 e Teste 4 de 2025.</p>
+      <p class="foot-note">Baseado nas notas de aula de 21/09/2026 e 24/09/2026 — item 2.4, Função de rede em RPS (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II. Exercícios da P2 2025 (1ª questão, item c), do formulário P2 (folha 1, Q08), dos Testes 3 de 2023 e 2025 e Teste 4 de 2025, e os quatro exercícios do "Teoremão" resolvidos no quadro em 21/09/2026.</p>
     </footer>
 
   </div>

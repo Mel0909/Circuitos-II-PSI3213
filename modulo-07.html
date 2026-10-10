@@ -126,8 +126,11 @@ window.MathJax = {
       <div class="tabs">
         <a href="#intro">Por que a matriz</a>
         <a href="#elementos">Elementos em s</a>
+        <a href="#topologia">Formulação topológica</a>
         <a href="#nodal">Matriz nodal</a>
+        <a href="#extensoes">Extensões da AN</a>
         <a href="#malhas">Matriz de malhas</a>
+        <a href="#dualidade">Dualidade e extensões da AM</a>
         <a href="#vinculadas">Fontes vinculadas</a>
         <a href="#ampop">Amp-op ideal</a>
         <a href="#reversa">Engenharia reversa</a>
@@ -226,11 +229,11 @@ window.MathJax = {
       </div>
       <div class="theorem-card">
         <span class="tag">(iv) dá para ler a matriz de trás para frente</span>
-        <p>Como cada posição da matriz tem um significado fixo, uma matriz pronta pode ser <b style="color:var(--ink)">decodificada</b>: diagonal, fora da diagonal e vetor dizem quais elementos existem, com que valores e com que c.i. É o assunto da <a href="#reversa">seção 7.7</a> e o formato favorito da P2.</p>
+        <p>Como cada posição da matriz tem um significado fixo, uma matriz pronta pode ser <b style="color:var(--ink)">decodificada</b>: diagonal, fora da diagonal e vetor dizem quais elementos existem, com que valores e com que c.i. É o assunto da <a href="#reversa">seção 7.10</a> e o formato favorito da P2.</p>
       </div>
     </div>
 
-    <div class="callout"><b>O que a máquina não faz.</b> Ela não escolhe o método por você. Nodal é boa quando há muitos ramos em paralelo e poucas fontes de tensão; malhas é boa quando há muitas fontes de tensão em série. E há casos em que o método puro <em>perde</em> FCPs — laço de indutores na nodal, corte de capacitores nas malhas. A saída é acrescentar uma incógnita extra, e isso está na <a href="#malhas">seção 7.4</a>.</div>
+    <div class="callout"><b>O que a máquina não faz.</b> Ela não escolhe o método por você. Nodal é boa quando há muitos ramos em paralelo e poucas fontes de tensão; malhas é boa quando há muitas fontes de tensão em série. E há casos em que o método puro <em>perde</em> FCPs — laço de indutores na nodal, corte de capacitores nas malhas. A saída é acrescentar uma incógnita extra, e isso está na <a href="#malhas">seção 7.6</a>.</div>
 
     <div class="flow-diagram">
       <div class="flow-box"><div class="big">1</div><div class="small">redesenhar em s<br>c.i. → fontes</div></div>
@@ -400,8 +403,304 @@ window.MathJax = {
     <div class="callout"><b>O sinal é metade da questão.</b> Nas quatro relações o termo de c.i. aparece com sinal <em>negativo</em> quando a incógnita é a grandeza derivada (\(I_C\) e \(V_L\)) e <em>positivo</em> quando é a integrada (\(V_C\) e \(I_L\)). Isso é consequência direta do teorema da derivada, \(\mathcal L[\dot f] = sF(s) - f(0^-)\). Decorar os quatro modelos é possível; reconstruí-los a partir desse único teorema é mais seguro.</div>
   </section>
 
-  <section id="nodal" class="panel src-prof">
+  <section id="topologia" class="panel src-prof">
     <span class="eyebrow">7.3</span>
+    <h2>De onde vem a regra de inspeção: \(G_n = A_p\,G\,A_p^{T}\)</h2>
+
+    <p>A seção seguinte ensina a <em>montar</em> a matriz nodal por inspeção: diagonal soma, fora da diagonal subtrai. A regra funciona, mas ela não cai do céu — é o resultado de um produto de três matrizes, e cada uma delas é uma das três famílias de equações que descrevem qualquer circuito. O professor abre o item 3 justamente por aqui, com uma recordação puramente resistiva.</p>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.1 — Recordação</span>
+      <p>Circuito da recordação: uma fonte de corrente \(i_s(t)\) no ramo mais à esquerda, em paralelo com \(R_1\); o nó superior esquerdo é \(e_1\). De \(e_1\) sai \(R_2\) até o nó \(e_2\); de \(e_2\) descem \(R_3\) e \(R_4\) para o nó de referência, que é o trilho inferior. As correntes de ramo são \(j_1, j_2, j_3, j_4\) e as tensões de ramo, \(v_1, v_2, v_3, v_4\).</p>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 700 320" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M70 100 L290 100"/>
+            <path d="M290 100 L350 100"/>
+            <path d="M406 100 L600 100"/>
+            <path d="M70 100 L70 161"/>
+            <path d="M70 209 L70 270"/>
+            <path d="M180 100 L180 161"/>
+            <path d="M180 209 L180 270"/>
+            <path d="M470 100 L470 161"/>
+            <path d="M470 209 L470 270"/>
+            <path d="M600 100 L600 161"/>
+            <path d="M600 209 L600 270"/>
+            <path d="M70 270 L600 270"/>
+          </g>
+
+          <!-- fonte de corrente is(t) -->
+          <circle cx="70" cy="185" r="24" fill="none" stroke="#f5b942" stroke-width="2"/>
+          <path d="M70 200 L70 172" stroke="#f5b942" stroke-width="2"/>
+          <path d="M65 178 L70 168 L75 178" fill="#f5b942"/>
+          <text x="6" y="240" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">i_s(t)</text>
+
+          <!-- resistores -->
+          <rect x="168" y="161" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="198" y="174" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₁</text>
+          <rect x="350" y="88" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="370" y="130" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₂</text>
+          <rect x="458" y="161" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="488" y="174" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₃</text>
+          <rect x="588" y="161" width="24" height="48" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="618" y="174" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">R₄</text>
+
+          <!-- nos -->
+          <circle cx="290" cy="100" r="4" fill="#f5b942"/>
+          <circle cx="470" cy="100" r="4" fill="#f5b942"/>
+          <text x="268" y="88" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">e₁</text>
+          <text x="478" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">e₂</text>
+
+          <!-- correntes de ramo -->
+          <g stroke="#f5b942" stroke-width="1.6" fill="none">
+            <path d="M200 222 L200 248"/>
+            <path d="M490 222 L490 248"/>
+            <path d="M620 222 L620 248"/>
+            <path d="M300 126 L332 126"/>
+          </g>
+          <path d="M195 242 L200 252 L205 242" fill="#f5b942"/>
+          <path d="M485 242 L490 252 L495 242" fill="#f5b942"/>
+          <path d="M615 242 L620 252 L625 242" fill="#f5b942"/>
+          <path d="M326 121 L336 126 L326 131" fill="#f5b942"/>
+          <text x="208" y="244" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₁</text>
+          <text x="498" y="244" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₃</text>
+          <text x="628" y="244" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₄</text>
+          <text x="306" y="146" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">j₂</text>
+
+          <!-- tensoes de ramo -->
+          <text x="148" y="160" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+          <text x="140" y="192" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁</text>
+          <text x="148" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+          <text x="340" y="74" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+          <text x="370" y="74" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂</text>
+          <text x="410" y="74" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+          <text x="438" y="160" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+          <text x="430" y="192" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₃</text>
+          <text x="438" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+          <text x="566" y="160" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+          <text x="558" y="192" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₄</text>
+          <text x="566" y="222" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+
+          <!-- terra -->
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M335 270 L335 288"/>
+            <path d="M317 288 L353 288"/>
+            <path d="M323 295 L347 295"/>
+            <path d="M329 302 L341 302"/>
+          </g>
+          <text x="362" y="298" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">nó de referência · e₀ = 0</text>
+        </svg>
+        <div class="pz-legend">Figura — o circuito do quadro. Verde: os elementos. Âmbar: as grandezas — a fonte \(i_s(t)\), os potenciais de nó \(e_1\) e \(e_2\), as correntes de ramo \(j_k\) e as tensões de ramo \(v_k\). Quatro ramos passivos (\(r = 4\)), três nós, logo \(n = q - 1 = 2\) incógnitas nodais.</div>
+      </div>
+
+      <p>Por inspeção, o sistema de equações nodais desse circuito é</p>
+      <div class="eq-block">\[
+        \begin{bmatrix} G_1+G_2 &amp; -G_2 \\ -G_2 &amp; G_2+G_3+G_4 \end{bmatrix}
+        \begin{bmatrix} e_1 \\ e_2 \end{bmatrix}
+        = \begin{bmatrix} i_s(t) \\ 0 \end{bmatrix}
+      \]</div>
+      <p>E o professor escreve, logo abaixo: <b style="color:var(--ink)">"Foram derivadas a partir de"</b> — seguido das três famílias de equações que vêm a seguir.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">i) Eqs. da 1ª lei de Kirchhoff — a matriz de incidência</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.1, família (i)</span>
+      <p>Escreva a 1ª LK nos dois nós de uma vez, em bloco. As colunas são rotuladas por \(i_s(t),\, j_1,\, j_2,\, j_3,\, j_4\) e as linhas, pelos nós \(e_1\) e \(e_2\):</p>
+      <div class="eq-block">\[
+        \begin{array}{c}\text{nó } e_1\\[2pt] \text{nó } e_2\end{array}\;
+        \underbrace{\begin{bmatrix} -1 &amp; 1 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; 0 &amp; -1 &amp; 1 &amp; 1 \end{bmatrix}}_{A}
+        \begin{bmatrix} i_s(t) \\ j_1 \\ j_2 \\ j_3 \\ j_4 \end{bmatrix}
+        = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+      \]</div>
+      <p>Essa matriz é chamada \(A\) no quadro. Separando a coluna da fonte e jogando-a para o lado direito, sobra a matriz só dos <b style="color:var(--ink)">ramos passivos</b>:</p>
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix} 1 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; -1 &amp; 1 &amp; 1 \end{bmatrix}}_{A_p}
+        \begin{bmatrix} j_1 \\ j_2 \\ j_3 \\ j_4 \end{bmatrix}
+        = \begin{bmatrix} i_s(t) \\ 0 \end{bmatrix} \tag{1}
+      \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · como se lê a matriz de incidência</span>
+      <p>\(A\) não tem nada de misterioso: é a <b style="color:var(--ink)">1ª LK escrita em bloco</b>, e só isso. Cada <em>linha</em> é um nó, cada <em>coluna</em> é um ramo, e o elemento \(a_{ik}\) diz como o ramo \(k\) toca o nó \(i\):</p>
+      <ul style="margin:0.6rem 0 0 1.2rem;line-height:1.8">
+        <li>\(a_{ik} = +1\) se a corrente do ramo \(k\) <b style="color:var(--ink)">sai</b> do nó \(i\);</li>
+        <li>\(a_{ik} = -1\) se ela <b style="color:var(--ink)">entra</b> no nó \(i\);</li>
+        <li>\(a_{ik} = 0\) se o ramo \(k\) não toca o nó \(i\).</li>
+      </ul>
+      <p>Confira na linha de \(e_1\): \(j_1\) desce por \(R_1\) e \(j_2\) segue para \(e_2\), ambas saindo, daí \(+1\) e \(+1\); \(i_s\) injeta, daí \(-1\); \(j_3\) e \(j_4\) não tocam \(e_1\), daí zeros. O produto \(A\,[\,i_s\;j_1\;j_2\;j_3\;j_4\,]^{T} = 0\) é exatamente "a soma das correntes no nó é zero", uma linha por nó — nenhuma informação sobre \(R\), \(L\) ou \(C\) entrou ainda. \(A_p\) é a mesma coisa, só sem as colunas das fontes, que viram excitação conhecida do lado direito.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">ii) Eqs. da 2ª lei de Kirchhoff — e o aparecimento de \(A_p^{T}\)</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.1, família (ii)</span>
+      <p>Tome um ramo genérico \(k\), de tensão \(v_k\), ligando o nó \(e_\ell\) ao nó \(e_m\), e percorra o laço que se fecha pelo nó de referência:</p>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 560 270" xmlns="http://www.w3.org/2000/svg">
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M150 80 L252 80"/>
+            <path d="M308 80 L410 80"/>
+          </g>
+          <g stroke="#5d6e67" stroke-width="1.6" fill="none" stroke-dasharray="6 5">
+            <path d="M150 80 L280 200"/>
+            <path d="M410 80 L280 200"/>
+          </g>
+
+          <rect x="252" y="68" width="56" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="266" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">ramo k</text>
+
+          <circle cx="150" cy="80" r="4" fill="#f5b942"/>
+          <circle cx="410" cy="80" r="4" fill="#f5b942"/>
+          <text x="112" y="72" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">e_ℓ</text>
+          <text x="420" y="72" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">e_m</text>
+
+          <path d="M244 46 L316 46" stroke="#f5b942" stroke-width="1.6" fill="none"/>
+          <path d="M310 41 L320 46 L310 51" fill="#f5b942"/>
+          <text x="232" y="50" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">+</text>
+          <text x="324" y="50" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="15">−</text>
+          <text x="268" y="32" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">v_k</text>
+
+          <path d="M226 134 q54 -24 108 0" fill="none" stroke="#5d6e67" stroke-width="1.4"/>
+          <path d="M328 127 L336 133 L327 137" fill="#5d6e67"/>
+          <text x="252" y="158" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">2ª LK</text>
+          <text x="104" y="140" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">resto da rede</text>
+          <text x="418" y="140" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">resto da rede</text>
+
+          <circle cx="280" cy="200" r="4" fill="#f5b942"/>
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M280 200 L280 216"/>
+            <path d="M262 216 L298 216"/>
+            <path d="M268 223 L292 223"/>
+            <path d="M274 230 L286 230"/>
+          </g>
+          <text x="306" y="226" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="12">nó de referência</text>
+        </svg>
+        <div class="pz-legend">Figura — o laço do quadro. \(e_\ell\) e \(e_m\) são potenciais medidos contra o nó de referência; \(v_k\) é a tensão do ramo que os liga. Tracejado: o resto da rede, que não importa aqui.</div>
+      </div>
+
+      <div class="eq-block">\[ -e_\ell + v_k + e_m = 0 \;\Longrightarrow\; v_k = e_\ell - e_m \]</div>
+      <p>Toda tensão de ramo é, portanto, uma <b style="color:var(--ink)">diferença de potenciais de nó</b>. Aplicando isso aos quatro ramos do circuito da recordação:</p>
+      <div class="eq-block">\[
+        \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ v_4 \end{bmatrix}
+        = B_p \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} \tag{2},
+        \qquad
+        B_p = \begin{bmatrix} 1 &amp; 0 \\ 1 &amp; -1 \\ 1 &amp; 0 \\ 1 &amp; 0 \end{bmatrix}
+      \]</div>
+    </div>
+
+    <div class="callout"><b>O resultado que sustenta toda a seção.</b> A matriz que aparece em (2) não é nova: é a transposta da que apareceu em (1).
+      <div class="eq-block">\[ \boxed{\;B_p = A_p^{T}\;} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade sobre \(B_p\)</span>
+      <p>No quadro as duas últimas linhas de \(B_p\) estão grafadas \(\begin{bmatrix} 1 &amp; 0\end{bmatrix}\). Pelo circuito, \(R_3\) e \(R_4\) ligam \(e_2\) ao terra, logo \(v_3 = v_4 = e_2\) e as duas últimas linhas coerentes são \(\begin{bmatrix} 0 &amp; 1\end{bmatrix}\) — que é também o que a própria identidade \(B_p = A_p^{T}\) exige:</p>
+      <div class="eq-block">\[ A_p^{T} = \begin{bmatrix} 1 &amp; 0 \\ 1 &amp; -1 \\ 0 &amp; 1 \\ 0 &amp; 1 \end{bmatrix} \]</div>
+      <p>Registrado sem corrigir em silêncio: o \(A_p^{T}\) acima é o que usamos no produto da montagem, mais adiante.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que a transposta não é coincidência</span>
+      <p>A mesma tabela de incidência serve às duas leis de Kirchhoff, mas em direções opostas. Lida por <em>linhas</em> (uma linha por nó), ela <b style="color:var(--ink)">soma correntes de ramo em cada nó</b> — é a 1ª LK, \(A_p\,j = i_{sn}\). Lida por <em>colunas</em> (uma coluna por ramo), a mesma tabela <b style="color:var(--ink)">monta cada tensão de ramo como diferença de potenciais de nó</b> — é a 2ª LK, \(v = A_p^{T} e\). Uma é a adjunta da outra porque ambas expressam a mesma informação topológica: quem toca quem, e com que sinal. É a dualidade entre as duas leis de Kirchhoff, e não um acidente de notação.</p>
+      <p>É exatamente daí que sai a <b style="color:var(--ink)">simetria</b> da matriz nodal. Se \(G\) é simétrica — e uma diagonal é —, então \(G_n^{T} = (A_p G A_p^{T})^{T} = A_p G^{T} A_p^{T} = A_p G A_p^{T} = G_n\). Nenhuma escolha esperta de numeração produz isso; é estrutural. E é por isso que a simetria se quebra quando entra uma <b style="color:var(--ink)">fonte vinculada</b>: o vinculado não é um ramo passivo, não cabe em \(G\), e o termo dele é acrescentado <em>depois</em> do produto, numa única posição — o que estraga a igualdade acima. Isso é o assunto da <a href="#vinculadas">seção 7.8</a>, e é a razão pela qual assimetria, no módulo, é sempre sintoma de vinculado.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">iii) Relações constitutivas dos elementos passivos</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.1, família (iii)</span>
+      <p>A terceira família é a única que sabe <em>o que</em> cada ramo é. Para os quatro resistores:</p>
+      <div class="eq-block">\[
+        \begin{bmatrix} j_1 \\ j_2 \\ j_3 \\ j_4 \end{bmatrix}
+        = \underbrace{\begin{bmatrix}
+          G_1 &amp; 0 &amp; 0 &amp; 0 \\
+          0 &amp; G_2 &amp; 0 &amp; 0 \\
+          0 &amp; 0 &amp; G_3 &amp; 0 \\
+          0 &amp; 0 &amp; 0 &amp; G_4
+        \end{bmatrix}}_{G}
+        \begin{bmatrix} v_1 \\ v_2 \\ v_3 \\ v_4 \end{bmatrix} \tag{3},
+        \qquad G = \operatorname{diag}(G_1, G_2, G_3, G_4)
+      \]</div>
+      <p>\(G\), de dimensão \(r\times r\), é a <b style="color:var(--ink)">matriz das condutâncias dos ramos</b>; \(r\) é o número de ramos. E o elemento genérico da matriz nodal, que o professor escreve dentro de uma caixa:</p>
+      <div class="eq-block">\[ g_{ij} = \sum_{k=1}^{r}\sum_{\ell=1}^{r} a_{ik}\,g_{k\ell}\,a_{j\ell} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · por que \(G\) é diagonal — e quando deixa de ser</span>
+      <p>\(G\) é diagonal aqui porque cada ramo é um resistor <b style="color:var(--ink)">isolado</b>: a corrente \(j_k\) depende só da tensão \(v_k\) do próprio ramo, de nenhum outro. A soma dupla do elemento genérico desmonta nesse caso: com \(g_{k\ell} = 0\) para \(k \neq \ell\), sobra uma soma simples,</p>
+      <div class="eq-block">\[ g_{ij} = \sum_{k=1}^{r} a_{ik}\,g_{kk}\,a_{jk} \]</div>
+      <p>que é a regra de inspeção em pessoa: para \(i = j\) todos os termos são \(a_{ik}^2 g_{kk} = g_{kk}\) dos ramos que tocam o nó \(i\) — soma positiva; para \(i \neq j\) só sobrevivem os ramos que tocam os <em>dois</em> nós, e nesses os sinais de \(a_{ik}\) e \(a_{jk}\) são opostos, o que produz o sinal de menos.</p>
+      <p>O que povoa a matriz <em>fora</em> da diagonal são os <b style="color:var(--ink)">elementos mútuos</b>: dois indutores acoplados têm \(g_{k\ell} \neq 0\) com \(k \neq \ell\), porque a corrente de um ramo depende da tensão do outro. A soma dupla do quadro está escrita em geral justamente para cobrir esse caso — assunto do <a href="modulo-10.html">módulo 10, acoplamento magnético</a>.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">A montagem: três substituições e acabou</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.1 — a montagem</span>
+      <p>Substituindo (2) em (3):</p>
+      <div class="eq-block">\[
+        \begin{bmatrix} j_1 \\ j_2 \\ j_3 \\ j_4 \end{bmatrix}
+        = G\,A_p^{T}\,e, \qquad \text{sendo } e = \begin{bmatrix} e_1 \\ e_2 \end{bmatrix} \tag{4}
+      \]</div>
+      <p>E substituindo (4) em (1):</p>
+      <div class="eq-block">\[
+        \boxed{\;A_p\,G\,A_p^{T}\,e = i_{sn}\;},
+        \qquad \text{sendo } i_{sn} = \begin{bmatrix} i_s(t) \\ 0 \end{bmatrix}
+      \]</div>
+      <div class="eq-block">\[ G_n = A_p\,G\,A_p^{T}, \quad n\times n, \ \text{matriz das condutâncias nodais} \]</div>
+      <p>\(n\) é o número de ramos de árvore, \(n = q - 1\).</p>
+      <div class="final-answer">\[ \therefore\quad \boxed{\;G_n\cdot e = i_{sn}\;} \quad\text{(AN)} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade</span>
+      <p>A etiqueta ao lado da caixa final está grafada no quadro de modo ambíguo e parece <b style="color:var(--ink)">"(AM)"</b>. Como a equação é a da análise <em>nodal</em> — incógnitas são potenciais de nó, matriz é de condutâncias —, a etiqueta coerente é <b style="color:var(--ink)">(AN)</b>, e é a que usamos acima. Registrado, e não corrigido em silêncio.</p>
+      <p>Na mesma linha: o número de nós está pouco legível no quadro. \(n\) é o <b style="color:var(--ink)">número de nós menos um</b> — um dos nós é o de referência e o potencial dele é fixado em zero, então ele não é incógnita. No circuito da recordação há três nós, logo \(n = 2\), e \(G_n\) é \(2\times 2\), como de fato é.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">A verificação: o produto, à mão</h3>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · a regra de inspeção é o produto, calculado</span>
+      <p>Vale fazer a conta uma vez na vida. Comece pelo produto \(A_p\,G\): multiplicar por uma diagonal à direita é <em>escalar cada coluna</em> pela condutância correspondente.</p>
+      <div class="eq-block">\[
+        A_p\,G =
+        \begin{bmatrix} 1 &amp; 1 &amp; 0 &amp; 0 \\ 0 &amp; -1 &amp; 1 &amp; 1 \end{bmatrix}
+        \begin{bmatrix}
+          G_1 &amp; 0 &amp; 0 &amp; 0 \\
+          0 &amp; G_2 &amp; 0 &amp; 0 \\
+          0 &amp; 0 &amp; G_3 &amp; 0 \\
+          0 &amp; 0 &amp; 0 &amp; G_4
+        \end{bmatrix}
+        = \begin{bmatrix} G_1 &amp; G_2 &amp; 0 &amp; 0 \\ 0 &amp; -G_2 &amp; G_3 &amp; G_4 \end{bmatrix}
+      \]</div>
+      <p>Agora multiplique por \(A_p^{T}\), que é \(4\times 2\):</p>
+      <div class="eq-block">\[
+        G_n = (A_p G)\,A_p^{T} =
+        \begin{bmatrix} G_1 &amp; G_2 &amp; 0 &amp; 0 \\ 0 &amp; -G_2 &amp; G_3 &amp; G_4 \end{bmatrix}
+        \begin{bmatrix} 1 &amp; 0 \\ 1 &amp; -1 \\ 0 &amp; 1 \\ 0 &amp; 1 \end{bmatrix}
+      \]</div>
+      <p>Posição por posição:</p>
+      <div class="eq-block">\[ g_{11} = G_1\cdot 1 + G_2\cdot 1 + 0\cdot 0 + 0\cdot 0 = G_1 + G_2 \]</div>
+      <div class="eq-block">\[ g_{12} = G_1\cdot 0 + G_2\cdot(-1) + 0\cdot 1 + 0\cdot 1 = -G_2 \]</div>
+      <div class="eq-block">\[ g_{21} = 0\cdot 1 + (-G_2)\cdot 1 + G_3\cdot 0 + G_4\cdot 0 = -G_2 \]</div>
+      <div class="eq-block">\[ g_{22} = 0\cdot 0 + (-G_2)\cdot(-1) + G_3\cdot 1 + G_4\cdot 1 = G_2 + G_3 + G_4 \]</div>
+      <p>Isto é, exatamente:</p>
+      <div class="eq-block">\[
+        G_n = \begin{bmatrix} G_1+G_2 &amp; -G_2 \\ -G_2 &amp; G_2+G_3+G_4 \end{bmatrix}
+      \]</div>
+      <p>a mesma matriz que a inspeção entrega. E a conta mostra <em>por que</em> a inspeção funciona: em \(g_{11}\) sobreviveram os ramos que tocam \(e_1\) (\(R_1\) e \(R_2\)), cada um com \(a_{1k}^2 = 1\), daí a <b style="color:var(--ink)">soma das condutâncias que chegam ao nó</b>; em \(g_{12}\) sobreviveu só \(R_2\), o único ramo que toca os dois nós, e com \(a_{11}a_{21} = (1)(-1) = -1\), daí <b style="color:var(--ink)">menos a condutância compartilhada</b>. Os zeros de \(g_{12}\) são os ramos que não fazem ponte.</p>
+    </div>
+
+    <div class="callout"><b>Em Laplace, nada muda de estrutura.</b> Troque \(G\) por \(Y(s) = \operatorname{diag}\big(Y_1(s),\dots,Y_r(s)\big)\) — com \(sC\) para o capacitor e \(1/sL\) para o indutor — e o produto vira \(Y_n(s) = A_p\,Y(s)\,A_p^{T}\), com o vetor do lado direito recebendo as fontes independentes <em>e</em> as fontes de c.i. da <a href="#elementos">seção 7.2</a>. A topologia (\(A_p\)) é a mesma; só a caixinha do meio passa a depender de \(s\). É essa matriz \(Y(s)\,E(s) = J(s)\) que a <a href="#nodal">seção 7.4</a> ensina a montar por inspeção — e que a prova ensina a ler de volta.</div>
+  </section>
+
+  <section id="nodal" class="panel src-prof">
+    <span class="eyebrow">7.4</span>
     <h2>Montagem da matriz nodal: \(Y(s)\,E(s) = J(s)\)</h2>
 
     <p>A análise nodal escolhe como incógnitas as <b style="color:var(--ink)">tensões nodais</b> \(E_1(s), E_2(s), \dots, E_n(s)\), medidas em relação a um nó de referência (o terra, \(E_0 = 0\)). Cada equação é a 1ª LK escrita num nó: a soma das correntes que saem é zero.</p>
@@ -465,7 +764,7 @@ window.MathJax = {
       <p class="dim">Fidelidade ao formulário: o elemento (1,1) está escrito lá como \(+\frac{1}{sL}\), sem o \(sC\); pela equação nodal ao lado, ele corresponde a \(sC + \frac1{sL}\).</p>
     </div>
 
-    <div class="callout"><b>Fonte vinculada quebra a simetria.</b> Repare no que aconteceu: a posição (1,2) ficou \(-1/sL\) e a posição (2,1) ficou \(-1/sL - g_m\). A matriz deixou de ser simétrica, e a assimetria é <em>exatamente</em> o ganho da fonte vinculada. Isso é a chave da engenharia reversa da <a href="#reversa">seção 7.7</a>: dada uma matriz nodal assimétrica, a diferença entre \(Y_{kj}\) e \(Y_{jk}\) entrega o ganho do vinculado, e a linha em que o termo extra aparece diz em qual nó a fonte está ligada.</div>
+    <div class="callout"><b>Fonte vinculada quebra a simetria.</b> Repare no que aconteceu: a posição (1,2) ficou \(-1/sL\) e a posição (2,1) ficou \(-1/sL - g_m\). A matriz deixou de ser simétrica, e a assimetria é <em>exatamente</em> o ganho da fonte vinculada. Isso é a chave da engenharia reversa da <a href="#reversa">seção 7.10</a>: dada uma matriz nodal assimétrica, a diferença entre \(Y_{kj}\) e \(Y_{jk}\) entrega o ganho do vinculado, e a linha em que o termo extra aparece diz em qual nó a fonte está ligada.</div>
 
     <h3 style="margin-top:1.8rem;font-size:1.1rem">Receita, passo a passo</h3>
 
@@ -497,8 +796,557 @@ window.MathJax = {
     </div>
   </section>
 
+  <section id="extensoes" class="panel">
+    <span class="eyebrow">7.5</span>
+    <h2>Extensões da AN: o que fazer quando a fonte não é de corrente</h2>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o pressuposto que se quebra</span>
+      <p>A análise nodal nasce assumindo fontes de <b>corrente</b>: cada nó recebe uma injeção conhecida, e a 1ª LK fecha sozinha. Fonte de tensão, fonte vinculada e amp-op quebram esse pressuposto de três maneiras diferentes — e cada uma tem um conserto próprio. O que distingue os quatro casos não é a álgebra: é <b>o que cada um faz com o tamanho do sistema</b>.</p>
+      <div class="roc-grid">
+        <div class="roc-card">
+          <span class="tag">caso 1 · fonte de tensão aterrada</span>
+          <p><b>Remove uma incógnita.</b> O nó da fonte tem tensão conhecida; escreve-se o sistema só para os outros nós e a coluna conhecida vai para o 2º membro. A matriz continua quadrada e simétrica, e menor.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">caso 2 · fonte de tensão flutuante</span>
+          <p><b>Acrescenta uma incógnita e uma equação.</b> Entra a corrente \(i_e\) que atravessa a fonte; entra junto a 2ª LK no laço. O sistema vai de \(n\) para \(n+1\) e a matriz perde a simetria.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">caso 3 · gerador vinculado</span>
+          <p><b>Não muda o tamanho.</b> A fonte entra primeiro no 2º membro, como se fosse independente; depois a variável de controle é deslocada para o 1º membro, onde deforma a matriz.</p>
+        </div>
+        <div class="roc-card">
+          <span class="tag">caso 4 · amp-op ideal</span>
+          <p><b>Substitui equações.</b> As relações \(i_1=0\) e \(v_1=0\) não se somam ao sistema: elas tomam o lugar das equações nodais que não podem ser escritas.</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Caso 1 — Gerador de tensão com terminal ligado ao nó de referência</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.4 — caso 1</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 720 340" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">CASO 1 — A FONTE DE TENSÃO TEM UM TERMINAL NO NÓ DE REFERÊNCIA</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M80 290 L80 227"/>
+            <path d="M80 183 L80 120"/>
+            <path d="M160 290 L160 214"/>
+            <path d="M160 198 L160 120"/>
+            <path d="M240 290 L240 227"/>
+            <path d="M240 183 L240 120"/>
+            <path d="M80 120 L335 120"/>
+            <path d="M405 120 L500 120"/>
+            <path d="M300 120 L300 185"/>
+            <path d="M300 185 L348 185"/>
+            <path d="M392 185 L440 185"/>
+            <path d="M440 185 L440 120"/>
+            <path d="M500 120 L500 176"/>
+            <path d="M500 232 L500 290"/>
+            <path d="M500 120 L556 120"/>
+            <path d="M570 120 L630 120"/>
+            <path d="M500 120 L500 56"/>
+            <path d="M500 56 L545 56"/>
+            <path d="M585 56 L630 56"/>
+            <path d="M630 56 L630 120"/>
+            <path d="M630 120 L630 183"/>
+            <path d="M630 227 L630 290"/>
+            <path d="M80 290 L630 290"/>
+          </g>
+
+          <circle cx="80" cy="205" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M80 217 L80 193" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M75 199 L80 191 L85 199" fill="#4ade9a"/>
+          <text x="16" y="210" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="146" y1="198" x2="174" y2="198"/>
+            <line x1="146" y1="214" x2="174" y2="214"/>
+          </g>
+          <text x="112" y="186" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+
+          <circle cx="240" cy="205" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M240 217 L240 193" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M235 199 L240 191 L245 199" fill="#4ade9a"/>
+          <text x="196" y="254" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₁v₁₀δ(t)</text>
+
+          <path d="M335 120 q 8.75 -18 17.5 0 q 8.75 -18 17.5 0 q 8.75 -18 17.5 0 q 8.75 -18 17.5 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+          <text x="356" y="98" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+
+          <circle cx="370" cy="185" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M358 185 L382 185" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M376 180 L384 185 L376 190" fill="#4ade9a"/>
+          <text x="336" y="228" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j₂₀H(t)</text>
+
+          <rect x="488" y="176" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="520" y="210" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₄</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="556" y1="102" x2="556" y2="138"/>
+            <line x1="570" y1="102" x2="570" y2="138"/>
+          </g>
+          <text x="552" y="162" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₃</text>
+
+          <circle cx="565" cy="56" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M576 56 L554 56" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M560 51 L552 56 L560 61" fill="#4ade9a"/>
+          <text x="396" y="52" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₃v₃₀δ(t)</text>
+
+          <circle cx="630" cy="205" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="625" y="198" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="625" y="220" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="660" y="210" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <circle cx="300" cy="120" r="4" fill="#f5b942"/>
+          <circle cx="440" cy="120" r="4" fill="#f5b942"/>
+          <circle cx="630" cy="120" r="4" fill="#f5b942"/>
+          <text x="276" y="104" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+          <text x="416" y="104" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₂(t)</text>
+          <text x="648" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₃(t)</text>
+
+          <path d="M340 290 L340 306" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+          <g stroke="#5d6e67" stroke-width="2" fill="none">
+            <line x1="322" y1="306" x2="358" y2="306"/>
+            <line x1="328" y1="313" x2="352" y2="313"/>
+            <line x1="334" y1="320" x2="346" y2="320"/>
+          </g>
+          <text x="368" y="318" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nó de referência</text>
+        </svg>
+        <div class="pz-legend">A fonte \(e_s(t)\) tem o terminal inferior no terra. Logo o nó superior dela não é incógnita: vale \(e_3(t)\).</div>
+      </div>
+
+      <p>"Notemos que o nó não-de-referência superior da fonte de tensão tem tensão conhecida, pois o outro terminal dessa fonte está ligado ao nó de referência. Assim, a tensão nodal do terminal superior da fonte de tensão é a tensão nominal dessa fonte, i.é, é \(e_3(t)\)."</p>
+
+      <p>"Escrevemos as equações nodais para os outros nós não-de-referência:"</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix}
+        sC_1 + \dfrac{1}{sL_2} &amp; -\dfrac{1}{sL_2} &amp; 0 \\[8pt]
+        -\dfrac{1}{sL_2} &amp; sC_3 + \dfrac{1}{sL_2} + G_4 &amp; -sC_3
+        \end{bmatrix}
+        \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \\[4pt] E_3(s) \end{bmatrix}
+        =
+        \begin{bmatrix} I_s(s) \\[4pt] C_3 v_{30} \end{bmatrix}
+      \]</div>
+
+      <p class="dim">Duas equações e três incógnitas aparentes — mas \(E_3(s)\) é conhecida, então a matriz \(2\times3\) não é um sistema indeterminado: é um sistema \(2\times2\) ainda não arrumado.</p>
+
+      <p>"Passamos \(E_3(s)\) conhecida ao 2º membro do sistema de eq.:"</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix}
+        sC_1 + \dfrac{1}{sL_2} &amp; -\dfrac{1}{sL_2} \\[8pt]
+        -\dfrac{1}{sL_2} &amp; sC_3 + \dfrac{1}{sL_2} + G_4
+        \end{bmatrix}
+        \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \end{bmatrix}
+        =
+        \begin{bmatrix}
+        I_s(s) + C_1 v_{10} - \dfrac{j_{20}}{s} \\[8pt]
+        C_3 v_{30} + \dfrac{j_{20}}{s} + sC_3\,E_3(s)
+        \end{bmatrix}
+      \]</div>
+    </div>
+
+    <div class="callout src-ext"><b>A fonte de tensão aterrada não custa nada — ela reduz o sistema.</b> O terminal no terra fixa o potencial do outro terminal, e um nó de potencial fixo deixa de ser incógnita. Por isso a escolha do terra não é indiferente: aterrar justamente o terminal de uma fonte de tensão independente elimina uma linha e uma coluna de graça, e a matriz que sobra continua simétrica. A contribuição da fonte não some — ela reaparece no 2º membro, multiplicada pela admitância do ramo que liga o nó conhecido ao nó em questão (aqui, \(sC_3 E_3(s)\)).</div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Caso 2 — Gerador de tensão entre dois nós não-de-referência</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.4 — caso 2</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 700 290" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="24" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">CASO 2 — A FONTE DE TENSÃO FLUTUA ENTRE DOIS NÓS NÃO-DE-REFERÊNCIA</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M70 250 L70 200"/>
+            <path d="M70 160 L70 110"/>
+            <path d="M145 250 L145 188"/>
+            <path d="M145 172 L145 110"/>
+            <path d="M215 250 L215 200"/>
+            <path d="M215 160 L215 110"/>
+            <path d="M70 110 L325 110"/>
+            <path d="M365 110 L440 110"/>
+            <path d="M500 110 L625 110"/>
+            <path d="M415 110 L415 175"/>
+            <path d="M415 175 L469 175"/>
+            <path d="M505 175 L560 175"/>
+            <path d="M560 175 L560 110"/>
+            <path d="M625 110 L625 160"/>
+            <path d="M625 216 L625 250"/>
+            <path d="M70 250 L625 250"/>
+          </g>
+
+          <circle cx="70" cy="180" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M70 191 L70 169" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M65 175 L70 167 L75 175" fill="#4ade9a"/>
+          <text x="10" y="186" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="131" y1="172" x2="159" y2="172"/>
+            <line x1="131" y1="188" x2="159" y2="188"/>
+          </g>
+          <text x="100" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₁</text>
+          <text x="98" y="214" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₁(t)</text>
+          <text x="170" y="242" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₁v₁₀δ(t)</text>
+
+          <circle cx="345" cy="110" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="330" y="116" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="352" y="117" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="324" y="156" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <path d="M288 78 L328 78" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M322 73 L332 78 L322 83" fill="#f5b942"/>
+          <text x="290" y="66" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">iₑ(t)</text>
+
+          <path d="M440 110 q 7.5 -17 15 0 q 7.5 -17 15 0 q 7.5 -17 15 0 q 7.5 -17 15 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+          <text x="460" y="88" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+
+          <circle cx="487" cy="175" r="18" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M476 175 L498 175" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M492 170 L500 175 L492 180" fill="#4ade9a"/>
+          <text x="452" y="212" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">j₂₀H(t)</text>
+
+          <rect x="613" y="160" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="646" y="194" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₄</text>
+
+          <circle cx="275" cy="110" r="4" fill="#f5b942"/>
+          <circle cx="415" cy="110" r="4" fill="#f5b942"/>
+          <circle cx="560" cy="110" r="4" fill="#f5b942"/>
+          <text x="252" y="98" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+          <text x="392" y="98" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₂(t)</text>
+          <text x="538" y="98" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₃(t)</text>
+
+          <path d="M340 250 L340 264" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+          <g stroke="#5d6e67" stroke-width="2" fill="none">
+            <line x1="322" y1="264" x2="358" y2="264"/>
+            <line x1="328" y1="271" x2="352" y2="271"/>
+            <line x1="334" y1="278" x2="346" y2="278"/>
+          </g>
+          <text x="368" y="276" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nó de referência</text>
+        </svg>
+        <div class="pz-legend">Nenhum terminal de \(e_s(t)\) está no terra. Os dois nós continuam incógnitos, e a corrente \(i_e(t)\) que atravessa a fonte vira uma incógnita nova.</div>
+      </div>
+
+      <p>"Escrevemos as equações nodais com a inclusão da corrente \(i_e(t)\) incógnita que atravessa a fonte de tensão. Para poder resolver essa incógnita, introduzimos a eq. da 2ª LK no laço formado pela fonte de tensão e dois dos nós do circuito:"</p>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 440 250" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">O GRAFO DO LAÇO</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M120 80 L198 80"/>
+            <path d="M238 80 L320 80"/>
+            <path d="M120 80 L220 196"/>
+            <path d="M320 80 L220 196"/>
+          </g>
+
+          <circle cx="218" cy="80" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="203" y="86" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="225" y="87" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="196" y="50" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <path d="M186 120 A 34 34 0 0 1 254 120" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M248 128 L254 116 L260 128 Z" fill="#f5b942"/>
+          <text x="202" y="148" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">iₑ(t)</text>
+
+          <circle cx="120" cy="80" r="5" fill="#f5b942"/>
+          <circle cx="320" cy="80" r="5" fill="#f5b942"/>
+          <circle cx="220" cy="196" r="5" fill="#f5b942"/>
+          <text x="84" y="68" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+          <text x="334" y="68" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₂(t)</text>
+
+          <path d="M220 196 L220 212" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+          <g stroke="#5d6e67" stroke-width="2" fill="none">
+            <line x1="202" y1="212" x2="238" y2="212"/>
+            <line x1="208" y1="219" x2="232" y2="219"/>
+            <line x1="214" y1="226" x2="226" y2="226"/>
+          </g>
+          <text x="248" y="224" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">referência</text>
+        </svg>
+        <div class="pz-legend">O laço é fechado por fora do circuito: a fonte no topo e os dois caminhos até o nó de referência. É nele que se escreve a 2ª LK que falta.</div>
+      </div>
+
+      <p>"Circulando com \(i_e(t)\), temos:"</p>
+
+      <div class="eq-block">\[ -e_1(t) + e_s(t) + e_2(t) = 0 \]</div>
+
+      <p>ou</p>
+
+      <div class="eq-block">\[ -e_1(t) + e_2(t) = -e_s(t) \]</div>
+
+      <p>ou ainda</p>
+
+      <div class="eq-block">\[ \boxed{\;e_1(t) - e_2(t) = e_s(t)\;} \]</div>
+
+      <p>"Escrevemos as eq. nodais e inserimos a eq. de 2ª LK:"</p>
+
+      <div class="eq-block">\[
+        \left[\begin{array}{ccc|c}
+        sC_1 &amp; 0 &amp; 0 &amp; 1 \\[6pt]
+        0 &amp; \dfrac{1}{sL_2} &amp; -\dfrac{1}{sL_2} &amp; -1 \\[6pt]
+        0 &amp; -\dfrac{1}{sL_2} &amp; \dfrac{1}{sL_2} + G_4 &amp; 0 \\[6pt]
+        \hline
+        1 &amp; -1 &amp; 0 &amp; 0
+        \end{array}\right]
+        \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \\[4pt] E_3(s) \\[4pt] I_e(s) \end{bmatrix}
+        =
+        \begin{bmatrix}
+        I_s(s) + C_1 v_{10} \\[6pt]
+        -\dfrac{j_{20}}{s} \\[6pt]
+        \dfrac{j_{20}}{s} \\[6pt]
+        E_s(s)
+        \end{bmatrix}
+      \]</div>
+
+      <p>Os rótulos que o professor escreve sobre a matriz particionada:</p>
+
+      <table class="ltable">
+        <thead><tr><th>bloco</th><th>o que é</th><th>valor neste exemplo</th></tr></thead>
+        <tbody>
+          <tr><td>\(Y_n(s)\)</td><td>bloco \(3\times3\) superior esquerdo — a matriz de admitâncias nodais de sempre</td><td>as três primeiras linhas e colunas</td></tr>
+          <tr><td>\(A\)</td><td>coluna extra à direita — como a corrente \(i_e\) entra na 1ª LK de cada nó</td><td>\(A = \begin{bmatrix} 1 &amp; -1 &amp; 0 \end{bmatrix}^{T}\)</td></tr>
+          <tr><td>\(B\)</td><td>linha extra embaixo — a 2ª LK do laço, escrita nas tensões nodais</td><td>\(B = \begin{bmatrix} 1 &amp; -1 &amp; 0 \end{bmatrix}\)</td></tr>
+          <tr><td>\(-Z(s)\)</td><td>canto inferior direito — a impedância interna da fonte, com sinal trocado</td><td>\(0\), porque a fonte é ideal</td></tr>
+        </tbody>
+      </table>
+
+      <div class="eq-block">\[
+        \begin{bmatrix} Y_n(s) &amp; A \\[4pt] B &amp; -Z(s) \end{bmatrix}
+        \begin{bmatrix} E(s) \\[4pt] I_e(s) \end{bmatrix}
+        =
+        \begin{bmatrix} J(s) \\[4pt] E_s(s) \end{bmatrix}
+      \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o nome disto é análise nodal modificada</span>
+      <p>Esse é o método que a literatura chama de <b>análise nodal modificada</b> (MNA, <em>modified nodal analysis</em>), e a estrutura \(\begin{bmatrix} Y_n &amp; A \\ B &amp; -Z\end{bmatrix}\) é exatamente o padrão que todo simulador de circuitos usa internamente. A razão é prática: um simulador não pode exigir que você escolha um terra conveniente nem inspecionar o circuito procurando fontes aterradas. Ele monta \(Y_n\) por estampagem, e cada elemento que não tem admitância — fonte de tensão, indutor em formulação de corrente, amp-op — acrescenta uma linha e uma coluna.</p>
+      <p>O preço: <b>uma incógnita a mais, uma equação a mais, empate</b>. O sistema cresce de \(n\) para \(n+1\), e a matriz <b>deixa de ser simétrica</b> — repare que \(A\) e \(B^{T}\) coincidem neste exemplo, mas o bloco \(-Z\) e a linha \(B\) nada têm a ver com admitâncias, então a simetria "diagonal positiva, fora da diagonal negativa" da seção 7.4 não vale mais. Em compensação, você ganha \(I_e(s)\) de graça: a corrente que atravessa a fonte, que na formulação reduzida do caso 1 teria de ser calculada depois.</p>
+      <p>Compare os dois caminhos: no caso 1 a fonte de tensão <em>encolhe</em> o sistema porque o terra foi bem escolhido; no caso 2 ela <em>infla</em> o sistema porque não havia escolha. Mesmo elemento, efeitos opostos — quem decide é a topologia.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Caso 3 — Circuitos com geradores vinculados</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.4 — caso 3</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="24" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">CASO 3 — FONTE VINCULADA β·iₑ(t), CONTROLADA PELA CORRENTE DO INDUTOR</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M80 250 L80 197"/>
+            <path d="M80 153 L80 100"/>
+            <path d="M80 100 L150 100"/>
+            <path d="M230 100 L370 100"/>
+            <path d="M370 100 L370 168"/>
+            <path d="M370 184 L370 250"/>
+            <path d="M370 100 L440 100"/>
+            <path d="M440 100 L440 155"/>
+            <path d="M440 195 L440 250"/>
+            <path d="M440 100 L540 100"/>
+            <path d="M540 100 L540 149"/>
+            <path d="M540 201 L540 250"/>
+            <path d="M80 250 L540 250"/>
+          </g>
+
+          <circle cx="80" cy="175" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="75" y="168" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="75" y="190" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="16" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <path d="M150 100 q 10 -20 20 0 q 10 -20 20 0 q 10 -20 20 0 q 10 -20 20 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+          <text x="182" y="76" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁</text>
+
+          <path d="M248 60 L300 60" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M294 55 L304 60 L294 65" fill="#f5b942"/>
+          <text x="250" y="48" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">iₑ(t)</text>
+          <text x="124" y="134" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">c.i.: j₁₀H(t)</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="356" y1="168" x2="384" y2="168"/>
+            <line x1="356" y1="184" x2="384" y2="184"/>
+          </g>
+          <text x="316" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+          <text x="310" y="206" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">v₂(t)</text>
+
+          <circle cx="440" cy="175" r="20" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M440 186 L440 164" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M435 170 L440 162 L445 170" fill="#4ade9a"/>
+          <text x="398" y="232" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">C₂v₂₀δ(t)</text>
+
+          <path d="M514 175 L540 149 L566 175 L540 201 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M540 188 L540 164" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M535 170 L540 162 L545 170" fill="#4ade9a"/>
+          <text x="578" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">β·iₑ(t)</text>
+
+          <circle cx="370" cy="100" r="4" fill="#f5b942"/>
+          <text x="348" y="86" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+
+          <path d="M300 250 L300 266" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+          <g stroke="#5d6e67" stroke-width="2" fill="none">
+            <line x1="282" y1="266" x2="318" y2="266"/>
+            <line x1="288" y1="273" x2="312" y2="273"/>
+            <line x1="294" y1="280" x2="306" y2="280"/>
+          </g>
+          <text x="328" y="278" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nó de referência</text>
+        </svg>
+        <div class="pz-legend">O losango é a fonte vinculada; a flecha dentro dele diz que é uma fonte de <em>corrente</em>. O controle é \(i_e(t)\), a corrente do indutor — que não é tensão nodal nenhuma.</div>
+      </div>
+
+      <p>"Escrevemos as eq. nodais como se as fontes vinculadas (dependentes) fossem independentes. Entretanto, neste caso, como \(i_e(t)\) é controladora do gerador vinculado, convém que ela apareça explicitamente pela eq. de 2ª LK:"</p>
+
+      <div class="eq-block">\[ -e_s(t) + L_1\frac{d}{dt}i_e(t) + e_1(t) = 0 \]</div>
+
+      <div class="eq-block">\[ e_1(t) + L_1\frac{d\,i_e(t)}{dt} = e_s(t) \]</div>
+
+      <div class="eq-block">\[ \xrightarrow{\;\mathcal{L}\;}\quad E_1(s) + sL_1 I_e(s) - L_1 j_{10} = E_s(s) \]</div>
+
+      <div class="eq-block">\[ \boxed{\;E_1(s) + sL_1 I_e(s) = E_s(s) + L_1 j_{10}\;} \]</div>
+
+      <p>Com isso, o sistema fica</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix} sC_2 &amp; -1 \\[4pt] 1 &amp; sL_1 \end{bmatrix}
+        \begin{bmatrix} E_1(s) \\[4pt] I_e(s) \end{bmatrix}
+        =
+        \begin{bmatrix} C_2 v_{20} + \beta\,I_e(s) \\[4pt] E_s(s) + L_1 j_{10} \end{bmatrix}
+      \]</div>
+
+      <p>"Passamos a incógnita \(I_e(s)\) do 2º membro ao 1º membro:"</p>
+
+      <div class="eq-block">\[
+        \underbrace{\begin{bmatrix} sC_2 &amp; -(\beta+1) \\[4pt] 1 &amp; sL_1 \end{bmatrix}}_{\textstyle T(s)}
+        \begin{bmatrix} E_1(s) \\[4pt] I_e(s) \end{bmatrix}
+        =
+        \begin{bmatrix} C_2 v_{20} \\[4pt] E_s(s) + L_1 j_{10} \end{bmatrix}
+      \]</div>
+
+      <p class="dim">O \(-1\) virou \(-(\beta+1)\): é essa passagem, e só ela, que deforma a matriz. A fonte vinculada não acrescentou linha nem coluna — ela mudou um elemento de lugar.</p>
+
+      <h3 style="margin-top:1.4rem;font-size:1rem">Estabilidade deste exemplo</h3>
+
+      <p>O determinante de \(T(s)\) é o polinômio característico \(P(s)\):</p>
+
+      <div class="eq-block">\[ \det\big(T(s)\big) = s^2 L_1 C_2 + \beta + 1 = L_1 C_2\left(s^2 + \frac{\beta+1}{L_1 C_2}\right) = P(s) \]</div>
+
+      <p>"Será que \(\operatorname{Re}\{p_k\} &lt; 0\)?"</p>
+
+      <p>"Se os coef. de \(P(s)\) tiverem o mesmo sinal (caso de 2ª ordem), as partes reais das FCPs são negativas. Mas o coeficiente de \(s\) é zero, i.é, não é nem positivo nem negativo. As duas FCPs estão no eixo \(j\omega\). O sistema é marginalmente estável."</p>
+
+      <div class="final-answer">\[ p_{1,2} = \pm\, j\sqrt{\frac{\beta+1}{L_1 C_2}} \quad\Longrightarrow\quad \text{marginalmente estável} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde este teste de estabilidade está desenvolvido</span>
+      <p>O critério que o professor usa aqui — <b>coeficientes de mesmo sinal e nenhum coeficiente faltando</b>, válido como condição necessária e suficiente para 2ª ordem — e a leitura "FCPs sobre o eixo \(j\omega\) \(\Rightarrow\) marginalmente estável" são o assunto do módulo 08: veja <a href="modulo-08.html#classificacao">a classificação estável / marginalmente estável / instável</a> e <a href="modulo-08.html#coeficientes">o teste dos sinais dos coeficientes</a>.</p>
+      <p>Repare no detalhe: um coeficiente nulo não é "sinal positivo" nem "sinal negativo" — por isso o professor não conclui instabilidade, conclui ausência de amortecimento. Sem termo em \(s\) não há dissipação no laço \(L_1\)–\(C_2\), e a resposta livre oscila para sempre. Note também que o ganho \(\beta\) entra no coeficiente independente: com \(\beta &lt; -1\) o termo \(\beta+1\) fica negativo, as raízes saem do eixo \(j\omega\) e uma delas vai para o semiplano direito — a rede fica <b>instável</b>. O vinculado controla a estabilidade.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Caso 4 — Circuitos com amplificador operacional ideal de ganho infinito</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro, item 3.4 — caso 4, Ex. 1 (integrador inversor)</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">
+          <text x="20" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">CASO 4, EX. 1 — INTEGRADOR INVERSOR</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M60 250 L60 197"/>
+            <path d="M60 153 L60 105"/>
+            <path d="M60 105 L140 105"/>
+            <path d="M200 105 L300 105"/>
+            <path d="M260 105 L260 40"/>
+            <path d="M260 40 L350 40"/>
+            <path d="M364 40 L460 40"/>
+            <path d="M460 40 L460 140"/>
+            <path d="M400 140 L530 140"/>
+            <path d="M300 175 L240 175"/>
+            <path d="M240 175 L240 250"/>
+            <path d="M60 250 L240 250"/>
+          </g>
+
+          <circle cx="60" cy="175" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="55" y="168" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="55" y="190" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="2" y="180" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <rect x="140" y="93" width="60" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="162" y="84" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="350" y1="22" x2="350" y2="58"/>
+            <line x1="364" y1="22" x2="364" y2="58"/>
+          </g>
+          <text x="348" y="78" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+          <text x="386" y="30" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">c.i.: Cv₂₀δ(t)</text>
+
+          <path d="M300 60 L300 220 L400 140 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="312" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="312" y="184" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="330" y="150" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="15">∞</text>
+
+          <path d="M274 88 L294 88" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M288 83 L298 88 L288 93" fill="#f5b942"/>
+          <text x="256" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t) = 0</text>
+
+          <circle cx="260" cy="105" r="4" fill="#f5b942"/>
+          <text x="222" y="126" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₁(t)</text>
+          <circle cx="460" cy="140" r="4" fill="#f5b942"/>
+          <text x="488" y="128" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v₂(t)</text>
+
+          <path d="M150 250 L150 264" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+          <g stroke="#5d6e67" stroke-width="2" fill="none">
+            <line x1="132" y1="264" x2="168" y2="264"/>
+            <line x1="138" y1="271" x2="162" y2="271"/>
+            <line x1="144" y1="278" x2="156" y2="278"/>
+          </g>
+          <text x="178" y="276" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nó de referência</text>
+        </svg>
+        <div class="pz-legend">Entrada não inversora no terra; capacitor \(C\) em realimentação, da entrada inversora para a saída. O nó \(v_1(t)\) é o terra virtual.</div>
+      </div>
+
+      <p>"Amp op ideal de ganho infinito tem relações conhecidas:"</p>
+
+      <div class="eq-block">\[ \begin{cases} i_1(t) = 0 \\[4pt] v_1(t) = 0 \end{cases} \]</div>
+
+      <p>"Escrevemos as eq. nodais:"</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix} -G &amp; G+sC &amp; -sC \end{bmatrix}
+        \begin{bmatrix} E_s(s) \\[4pt] V_1(s) \\[4pt] V_2(s) \end{bmatrix}
+        = \begin{bmatrix} -C v_{20} \end{bmatrix}
+      \]</div>
+
+      <p>"Notamos que \(V_1(s)=0\). Assim, temos"</p>
+
+      <div class="eq-block">\[ -G\,E_s(s) - sC\,V_2(s) = -C v_{20} \]</div>
+
+      <div class="eq-block">\[ V_2(s) = -\frac{G}{sC}\,E_s(s) + \frac{v_{20}}{s} \]</div>
+
+      <div class="final-answer">\[ \boxed{\;V_2(s) = -\frac{1}{sRC}\,E_s(s) + \frac{v_{20}}{s}\;} \]</div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · ler o resultado e a diferença estrutural</span>
+      <p>O \(1/s\) multiplicando \(E_s(s)\) <b>é a integração</b>: dividir por \(s\) no domínio da frequência é integrar no tempo, e o sinal negativo é o "inversor" do nome. A constante de tempo é \(RC\). O segundo termo, \(v_{20}/s\), antitransforma em \(v_{20}H(t)\) — é a <b>constante de integração</b>, e ela tem um significado físico exato: a carga inicial do capacitor. Um integrador que parte com o capacitor carregado começa deslocado, e fica deslocado para sempre.</p>
+      <div class="eq-block">\[ v_2(t) = -\frac{1}{RC}\int_{0}^{t} e_s(\tau)\,d\tau + v_{20}, \qquad t &gt; 0 \]</div>
+      <p>A diferença estrutural em relação aos casos 1 e 2 é o ponto a guardar: as duas relações do amp-op ideal <b>substituem</b> equações, não as acrescentam. Repare na linha que o professor escreve: é <em>uma só</em> equação nodal, a do nó \(v_1\), com três tensões aparecendo — e ela basta, porque \(V_1(s)=0\) e \(E_s(s)\) é dado. O nó de saída nunca recebe 1ª LK, exatamente pela razão da seção 7.9: ali entra a corrente de saída do operacional, que seria uma incógnita órfã.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · lacuna na fonte</span>
+      <p>Há no quadro um <b>Ex. 2</b> à direita, com outro circuito e o começo de uma solução (uma matriz que principia com \(G_1\)), mas ele está cortado na borda da foto e ficou ilegível. <b>Não foi transcrito</b> — o que está acima é apenas o Ex. 1.</p>
+    </div>
+  </section>
   <section id="malhas" class="panel src-prof">
-    <span class="eyebrow">7.4</span>
+    <span class="eyebrow">7.6</span>
     <h2>Montagem da matriz de malhas: \(Z(s)\,I(s) = E(s)\)</h2>
 
     <p>A análise de malhas é a dual exata da nodal. As incógnitas são as <b style="color:var(--ink)">correntes de malha</b> \(I_1(s), \dots, I_m(s)\) — por convenção do curso, todas no <b style="color:var(--ink)">mesmo sentido horário</b> — e cada equação é a 2ª LK percorrida ao longo de uma malha.</p>
@@ -586,13 +1434,510 @@ window.MathJax = {
         \begin{bmatrix} I_1(s) \\[3pt] I_2(s) \\[3pt] V_C(s) \end{bmatrix}
         = \begin{bmatrix} \text{f.e.m.} \\[3pt] 0 \\[3pt] -C\,v_C(0^-) \end{bmatrix}
       \]</div>
-      <p class="dim">A última linha é literalmente \(I_2(s) - sC\,V_C(s) = -C\,v_C(0^-)\), que é a relação \(I_C = sC V_C - C v_C(0^-)\) com o sinal trocado. O exercício da P2 2025 na <a href="#exercicios">seção 7.8</a> é exatamente a leitura dessa matriz.</p>
+      <p class="dim">A última linha é literalmente \(I_2(s) - sC\,V_C(s) = -C\,v_C(0^-)\), que é a relação \(I_C = sC V_C - C v_C(0^-)\) com o sinal trocado. O exercício da P2 2025 na <a href="#exercicios">seção 7.11</a> é exatamente a leitura dessa matriz.</p>
+    </div>
+  </section>
+
+  <section id="dualidade" class="panel">
+    <span class="eyebrow">7.7</span>
+    <h2>AN e AM são o mesmo método: dualidade e as extensões da AM</h2>
+
+    <p>A <a href="#malhas">seção 7.6</a> afirmou que a análise de malhas é a dual exata da nodal. Esta seção mostra isso com o exemplo que o professor montou no quadro — o mesmo circuito, duas vezes — e depois percorre as <b style="color:var(--ink)">extensões da AM</b>, que são, uma a uma, as duais das extensões da AN da <a href="#extensoes">seção 7.5</a>.</p>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Ex.: AN e AM duais</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro — "Ex. AN e AM duais"</span>
+
+      <p>"Para simplificar, assumimos c.i.n."</p>
+
+      <div class="roc-grid">
+
+        <div class="roc-card">
+          <span class="tag">lado AN · o circuito original</span>
+
+          <div class="pz-widget">
+            <svg viewBox="0 0 470 300" xmlns="http://www.w3.org/2000/svg">
+              <text x="16" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">ANÁLISE NODAL — O CIRCUITO ORIGINAL</text>
+
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M60 250 L60 192"/>
+                <path d="M60 148 L60 90"/>
+                <path d="M60 90 L186 90"/>
+                <path d="M130 90 L130 142"/>
+                <path d="M130 198 L130 250"/>
+                <path d="M200 90 L294 90"/>
+                <path d="M240 90 L240 140"/>
+                <path d="M240 200 L240 250"/>
+                <path d="M346 90 L400 90"/>
+                <path d="M400 90 L400 142"/>
+                <path d="M400 198 L400 250"/>
+                <path d="M60 250 L400 250"/>
+              </g>
+
+              <circle cx="60" cy="170" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M60 182 L60 158" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M55 164 L60 156 L65 164" fill="#4ade9a"/>
+              <text x="2" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+
+              <rect x="118" y="142" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="150" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+              <text x="68" y="176" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">v(t)</text>
+              <text x="106" y="150" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+              <text x="106" y="202" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+
+              <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+                <line x1="186" y1="72" x2="186" y2="108"/>
+                <line x1="200" y1="72" x2="200" y2="108"/>
+              </g>
+              <text x="178" y="62" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C₂</text>
+
+              <path d="M240 140 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+              <text x="262" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+              <path d="M218 148 L218 180" stroke="#f5b942" stroke-width="1.6"/>
+              <path d="M213 174 L218 182 L223 174" fill="#f5b942"/>
+              <text x="186" y="200" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">iₗ(t)</text>
+
+              <path d="M294 90 L320 64 L346 90 L320 116 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M308 90 L332 90" stroke="#4ade9a" stroke-width="2"/>
+              <path d="M326 85 L334 90 L326 95" fill="#4ade9a"/>
+              <text x="288" y="140" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">gₘ·v(t)</text>
+
+              <rect x="388" y="142" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="420" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+
+              <circle cx="130" cy="90" r="4" fill="#f5b942"/>
+              <circle cx="240" cy="90" r="4" fill="#f5b942"/>
+              <circle cx="400" cy="90" r="4" fill="#f5b942"/>
+              <text x="100" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₁(t)</text>
+              <text x="212" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₂(t)</text>
+              <text x="372" y="76" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">e₃(t)</text>
+
+              <path d="M320 250 L320 266" stroke="rgba(231,237,233,0.75)" stroke-width="2"/>
+              <g stroke="#5d6e67" stroke-width="2" fill="none">
+                <line x1="302" y1="266" x2="338" y2="266"/>
+                <line x1="308" y1="273" x2="332" y2="273"/>
+                <line x1="314" y1="280" x2="326" y2="280"/>
+              </g>
+              <text x="348" y="278" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">referência</text>
+            </svg>
+            <div class="pz-legend">Fonte de corrente, nós, condutâncias. O controle do losango é a tensão \(v(t)\) sobre \(R_1\) — ou seja, \(e_1(t)\).</div>
+          </div>
+
+          <p>"Montamos por inspeção o sistema de eqs. nodais"</p>
+
+          <div class="eq-block">\[
+            \begin{bmatrix}
+            G_1 + sC_2 &amp; -sC_2 &amp; 0 \\[4pt]
+            -sC_2 &amp; sC_2 + \dfrac{1}{sL} &amp; 0 \\[4pt]
+            0 &amp; 0 &amp; G_2 + sC_2
+            \end{bmatrix}
+            \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \\[4pt] E_3(s) \end{bmatrix}
+            =
+            \begin{bmatrix} I_s(s) \\[4pt] -g_m E_1(s) \\[4pt] g_m E_1(s) \end{bmatrix}
+          \]</div>
+
+          <p>E então, passando a fonte vinculada ao primeiro membro:</p>
+
+          <div class="eq-block">\[
+            \underbrace{\begin{bmatrix}
+            G_1 + sC_2 &amp; -sC_2 &amp; 0 \\[4pt]
+            g_m - sC_2 &amp; sC_2 + \dfrac{1}{sL} &amp; 0 \\[4pt]
+            -g_m &amp; 0 &amp; G_2 + sC_2
+            \end{bmatrix}}_{Y_n(s)}
+            \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \\[4pt] E_3(s) \end{bmatrix}
+            =
+            \begin{bmatrix} I_s(s) \\[4pt] 0 \\[4pt] 0 \end{bmatrix}
+          \]</div>
+        </div>
+
+        <div class="roc-card">
+          <span class="tag">lado AM · o circuito dual</span>
+
+          <div class="pz-widget">
+            <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+              <text x="16" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">ANÁLISE DE MALHAS — O CIRCUITO DUAL</text>
+
+              <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+                <path d="M60 250 L60 187"/>
+                <path d="M60 143 L60 80"/>
+                <path d="M60 80 L100 80"/>
+                <path d="M150 80 L258 80"/>
+                <path d="M272 80 L480 80"/>
+                <path d="M200 80 L200 140"/>
+                <path d="M200 200 L200 250"/>
+                <path d="M340 80 L340 140"/>
+                <path d="M340 200 L340 250"/>
+                <path d="M480 80 L480 118"/>
+                <path d="M480 168 L480 190"/>
+                <path d="M480 240 L480 250"/>
+                <path d="M60 250 L480 250"/>
+              </g>
+
+              <circle cx="60" cy="165" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+              <text x="54" y="184" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+              <text x="0" y="214" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+              <rect x="100" y="68" width="50" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="114" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+              <path d="M104 50 L144 50" stroke="#f5b942" stroke-width="1.6"/>
+              <path d="M138 45 L148 50 L138 55" fill="#f5b942"/>
+              <text x="106" y="40" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i(t)</text>
+
+              <path d="M200 140 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+              <text x="222" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₁</text>
+
+              <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+                <line x1="258" y1="62" x2="258" y2="98"/>
+                <line x1="272" y1="62" x2="272" y2="98"/>
+              </g>
+              <text x="256" y="52" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+
+              <path d="M340 140 L314 170 L340 200 L366 170 Z" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="333" y="164" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+              <text x="333" y="190" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+              <text x="296" y="234" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">rₘ·i(t)</text>
+
+              <rect x="468" y="118" width="24" height="50" fill="none" stroke="#4ade9a" stroke-width="2"/>
+              <text x="500" y="148" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+              <path d="M480 190 q 18 6.25 0 12.5 q 18 6.25 0 12.5 q 18 6.25 0 12.5 q 18 6.25 0 12.5" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+              <text x="502" y="222" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L₂</text>
+
+              <path d="M110 180 A 20 20 0 0 1 150 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+              <path d="M144 188 L150 176 L156 188 Z" fill="#f5b942"/>
+              <text x="112" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t)</text>
+
+              <path d="M250 180 A 20 20 0 0 1 290 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+              <path d="M284 188 L290 176 L296 188 Z" fill="#f5b942"/>
+              <text x="252" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₂(t)</text>
+
+              <path d="M390 180 A 20 20 0 0 1 430 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+              <path d="M424 188 L430 176 L436 188 Z" fill="#f5b942"/>
+              <text x="392" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₃(t)</text>
+            </svg>
+            <div class="pz-legend">Fonte de tensão, malhas, resistências. O controle do losango é a corrente \(i(t)\) em \(R_1\) — ou seja, \(i_1(t)\).</div>
+          </div>
+
+          <p>"Por inspeção, montamos as equações das malhas internas"</p>
+
+          <div class="eq-block">\[
+            \begin{bmatrix}
+            R_1 + sL_1 &amp; -sL_1 &amp; 0 \\[4pt]
+            -sL_1 &amp; sL_1 + \dfrac{1}{sC} &amp; 0 \\[4pt]
+            0 &amp; 0 &amp; R_2 + sL_2
+            \end{bmatrix}
+            \begin{bmatrix} I_1(s) \\[4pt] I_2(s) \\[4pt] I_3(s) \end{bmatrix}
+            =
+            \begin{bmatrix} E_s(s) \\[4pt] -r_m I_1(s) \\[4pt] r_m I_1(s) \end{bmatrix}
+          \]</div>
+
+          <p>E, passando a fonte vinculada ao primeiro membro:</p>
+
+          <div class="eq-block">\[
+            \underbrace{\begin{bmatrix}
+            R_1 + sL_1 &amp; -sL_1 &amp; 0 \\[4pt]
+            r_m - sL_1 &amp; sL_1 + \dfrac{1}{sC} &amp; 0 \\[4pt]
+            -r_m &amp; 0 &amp; R_2 + sL_2
+            \end{bmatrix}}_{Z_m(s)}
+            \begin{bmatrix} I_1(s) \\[4pt] I_2(s) \\[4pt] I_3(s) \end{bmatrix}
+            =
+            \begin{bmatrix} E_s(s) \\[4pt] 0 \\[4pt] 0 \end{bmatrix}
+          \]</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o dicionário da dualidade</span>
+      <p>Leia as duas colunas acima linha por linha: não há uma única diferença estrutural. O que muda é o nome de cada objeto.</p>
+
+      <table class="ltable">
+        <thead><tr><th>lado AN</th><th>lado AM</th><th>o que o par significa</th></tr></thead>
+        <tbody>
+          <tr><td>\(Y_n(s)\)</td><td>\(Z_m(s)\)</td><td>a matriz do método — admitâncias de nó · impedâncias de malha</td></tr>
+          <tr><td>\(G\)</td><td>\(R\)</td><td>o resistor, visto como condutância ou como resistência</td></tr>
+          <tr><td>\(sC\)</td><td>\(sL\)</td><td>o armazenador que entra <em>somando</em> na diagonal</td></tr>
+          <tr><td>\(1/sL\)</td><td>\(1/sC\)</td><td>o armazenador que entra <em>invertido</em></td></tr>
+          <tr><td>\(E(s)\)</td><td>\(I(s)\)</td><td>o vetor de incógnitas — tensões nodais · correntes de malha</td></tr>
+          <tr><td>\(I_s(s)\)</td><td>\(E_s(s)\)</td><td>a excitação independente, no 2º membro</td></tr>
+          <tr><td>\(g_m\)</td><td>\(r_m\)</td><td>o ganho do gerador vinculado, em S · em \(\Omega\)</td></tr>
+          <tr><td>nó</td><td>malha</td><td>onde a equação é escrita</td></tr>
+          <tr><td>corte</td><td>laço</td><td>o conjunto de ramos que gera a equação dependente</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout src-ext"><b>As duas matrizes têm exatamente a mesma forma.</b> Mesma diagonal positiva, mesmo acoplamento negativo fora dela, mesmo lugar para o vinculado — e a mesma assimetria depois de ele migrar para o primeiro membro. Quem entendeu um dos métodos entendeu os dois: basta trocar o dicionário. A consequência prática vem a seguir — <b>toda extensão da AN tem uma extensão dual da AM</b>, e é isso que o resto desta seção percorre.</div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade</span>
+      <p>O subscrito da condutância no elemento (1,1) está <b>ambíguo na foto</b>: lê-se algo entre \(G_1\) e \(G_2\). Pelo circuito, o nó 1 é o de \(R_1\), logo \(G_1 + sC_2\) é a leitura coerente — registrada aqui sem correção silenciosa. Pela mesma razão, o elemento (3,3) aparece como \(G_2 + sC_2\) no quadro, embora o ramo desenhado no nó 3 seja apenas \(R_2\); mantive o que está escrito.</p>
+      <p>Observe também que a variável de controle é \(E_1(s)\), e não \(E_2(s)\): é por isso que, ao passar a fonte vinculada para o primeiro membro, o \(g_m\) cai na <b>primeira coluna</b> das linhas 2 e 3, e não na diagonal. Mesma mecânica do lado AM, onde o controle é \(I_1(s)\) e o \(r_m\) cai na primeira coluna das mesmas duas linhas.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Extensão da AM com fonte de corrente na malha externa</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro — extensões da AM, caso 1</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+          <text x="16" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">EXT. AM — FONTE DE CORRENTE NO RAMO EXTERNO DA MALHA 2</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M60 250 L60 187"/>
+            <path d="M60 143 L60 80"/>
+            <path d="M60 80 L100 80"/>
+            <path d="M150 80 L248 80"/>
+            <path d="M292 80 L460 80"/>
+            <path d="M200 80 L200 140"/>
+            <path d="M200 200 L200 250"/>
+            <path d="M340 80 L340 162"/>
+            <path d="M340 178 L340 250"/>
+            <path d="M460 80 L460 145"/>
+            <path d="M460 201 L460 250"/>
+            <path d="M60 250 L460 250"/>
+          </g>
+
+          <circle cx="60" cy="165" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="54" y="184" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="0" y="214" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <rect x="100" y="68" width="50" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="114" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+
+          <circle cx="270" cy="80" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M258 80 L282 80" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M276 75 L284 80 L276 85" fill="#4ade9a"/>
+          <text x="244" y="44" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+
+          <path d="M200 140 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15 q 18 7.5 0 15" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+          <text x="222" y="176" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="326" y1="162" x2="354" y2="162"/>
+            <line x1="326" y1="178" x2="354" y2="178"/>
+          </g>
+          <text x="360" y="158" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+
+          <rect x="448" y="145" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="480" y="178" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+
+          <path d="M110 180 A 20 20 0 0 1 150 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M144 188 L150 176 L156 188 Z" fill="#f5b942"/>
+          <text x="112" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t)</text>
+
+          <path d="M250 180 A 20 20 0 0 1 290 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M284 188 L290 176 L296 188 Z" fill="#f5b942"/>
+          <text x="252" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₂(t)</text>
+
+          <path d="M380 180 A 20 20 0 0 1 420 180" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M414 188 L420 176 L426 188 Z" fill="#f5b942"/>
+          <text x="382" y="208" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₃(t)</text>
+        </svg>
+        <div class="pz-legend">A fonte de corrente está no ramo <em>externo</em> da malha 2: ela pertence a uma única malha, e por isso \(i_2(t) = i_s(t)\).</div>
+      </div>
+
+      <p>Escrevendo as três equações de malha como de costume:</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix}
+        R_1 + sL &amp; -sL &amp; 0 \\[4pt]
+        -sL &amp; sL + \dfrac{1}{sC} &amp; -\dfrac{1}{sC} \\[4pt]
+        0 &amp; -\dfrac{1}{sC} &amp; R_2 + \dfrac{1}{sC}
+        \end{bmatrix}
+        \begin{bmatrix} I_1(s) \\[4pt] I_2(s) \\[4pt] I_3(s) \end{bmatrix}
+        =
+        \begin{bmatrix} E_s(s) \\[4pt] \boxed{?} \\[4pt] 0 \end{bmatrix}
+      \]</div>
+
+      <p>No quadro, a <b style="color:var(--ink)">segunda linha está riscada</b> e o termo correspondente do segundo membro é um <b style="color:var(--ink)">ponto de interrogação</b>. A razão: a malha que contém a fonte de corrente tem, no segundo membro, a <b style="color:var(--ink)">tensão desconhecida</b> sobre a fonte — a 2ª LK dessa malha passa por um elemento cuja tensão ninguém sabe. A equação existe, mas é inutilizável: ela só acrescentaria uma incógnita nova.</p>
+    </div>
+
+    <div class="callout src-prof"><b>A saída.</b> A corrente de malha dessa malha é <b>conhecida</b> — é a própria \(i_s(t)\). Então descarta-se a equação ruim e passa-se a incógnita conhecida ao segundo membro.</div>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro — as duas matrizes seguintes</span>
+
+      <p>Riscada a segunda linha e reordenadas as colunas, com \(I_2(s)\) empurrada para a última posição:</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix}
+        R_1 + sL &amp; -sL &amp; 0 \\[4pt]
+        0 &amp; -\dfrac{1}{sC} &amp; R_2 + \dfrac{1}{sC}
+        \end{bmatrix}
+        \begin{bmatrix} I_1(s) \\[4pt] I_3(s) \\[4pt] I_2(s) \end{bmatrix}
+        =
+        \begin{bmatrix} E_s(s) \\[4pt] 0 \end{bmatrix}
+      \]</div>
+
+      <p>E, com \(I_2(s) = I_s(s)\) conhecida levada ao segundo membro, sobra um sistema \(2\times2\) em \(I_1(s)\) e \(I_3(s)\):</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix}
+        R_1 + sL &amp; 0 \\[4pt]
+        0 &amp; R_2 + \dfrac{1}{sC}
+        \end{bmatrix}
+        \begin{bmatrix} I_1(s) \\[4pt] I_3(s) \end{bmatrix}
+        =
+        \begin{bmatrix} E_s(s) + sL\,I_s(s) \\[6pt] \dfrac{1}{sC}\,I_s(s) \end{bmatrix}
+      \]</div>
+
+      <p class="dim">Repare que o sistema final é <em>diagonal</em>: removida a malha da fonte, as malhas 1 e 3 deixam de ter ramo comum, e cada corrente sai de uma divisão.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · nota de fidelidade</span>
+      <p>No elemento (1,1) da última matriz lê-se "\(R_2+sL\)" na foto. Pelo circuito — e pelas duas matrizes anteriores, em que a primeira linha é a da malha 1 — o coerente é \(R_1+sL\). Registrado sem correção silenciosa: a matriz acima traz \(R_1+sL\), mas o quadro traz o outro subscrito.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o dual do caso 1</span>
+      <p>Este é o <b>dual exato do caso 1</b> das extensões da AN (<a href="#extensoes">seção 7.5</a>, gerador de tensão com terminal no nó de referência). Lá, a fonte de tensão aterrada fixava uma tensão nodal e <b>removia</b> uma incógnita; aqui, a fonte de corrente numa malha externa fixa uma corrente de malha e <b>remove</b> uma incógnita. O sistema encolhe de \(3\times3\) para \(2\times2\), e a contribuição da fonte não some: reaparece no segundo membro multiplicada pela impedância do ramo comum — \(sL\,I_s(s)\) na linha 1 e \(\frac{1}{sC}I_s(s)\) na linha 3, exatamente como \(sC_3E_3(s)\) reaparecia lá.</p>
+      <p>A condição é a mesma dos dois lados: a fonte tem de pertencer a <b>uma única</b> malha, assim como a fonte de tensão tinha de ter um terminal no terra. Quando isso falha, cai-se no caso seguinte.</p>
+    </div>
+
+    <h3 style="margin-top:1.8rem;font-size:1.1rem">Extensão da AM com fonte de corrente entre malhas internas</h3>
+
+    <div class="src-block src-prof">
+      <span class="src-kicker">do professor · quadro — extensões da AM, caso 2</span>
+
+      <div class="pz-widget">
+        <svg viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+          <text x="16" y="22" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11" letter-spacing="1">EXT. AM — FONTE DE CORRENTE ENTRE AS MALHAS 1 E 2</text>
+
+          <g stroke="rgba(231,237,233,0.75)" stroke-width="2" fill="none">
+            <path d="M60 250 L60 187"/>
+            <path d="M60 143 L60 80"/>
+            <path d="M60 80 L120 80"/>
+            <path d="M170 80 L286 80"/>
+            <path d="M346 80 L520 80"/>
+            <path d="M240 80 L240 143"/>
+            <path d="M240 187 L240 250"/>
+            <path d="M400 80 L400 162"/>
+            <path d="M400 178 L400 250"/>
+            <path d="M520 80 L520 145"/>
+            <path d="M520 201 L520 250"/>
+            <path d="M60 250 L520 250"/>
+          </g>
+
+          <circle cx="60" cy="165" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="54" y="160" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="14">+</text>
+          <text x="54" y="184" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="16">−</text>
+          <text x="0" y="214" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">eₛ(t)</text>
+
+          <rect x="120" y="68" width="50" height="24" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="134" y="112" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₁</text>
+
+          <circle cx="240" cy="165" r="22" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M240 154 L240 176" stroke="#4ade9a" stroke-width="2"/>
+          <path d="M235 170 L240 178 L245 170" fill="#4ade9a"/>
+          <text x="180" y="170" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="13">iₛ(t)</text>
+
+          <circle cx="240" cy="80" r="4" fill="#f5b942"/>
+          <text x="196" y="56" fill="#5d6e67" font-family="IBM Plex Mono, monospace" font-size="11">nó da 1ª LK</text>
+
+          <path d="M286 80 q 7.5 -17 15 0 q 7.5 -17 15 0 q 7.5 -17 15 0 q 7.5 -17 15 0" fill="none" stroke="#4ade9a" stroke-width="2.4"/>
+          <text x="352" y="62" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">L</text>
+          <text x="284" y="112" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">jₗ(t), c.i. j₀</text>
+
+          <g stroke="#4ade9a" stroke-width="2.6" fill="none">
+            <line x1="386" y1="162" x2="414" y2="162"/>
+            <line x1="386" y1="178" x2="414" y2="178"/>
+          </g>
+          <text x="420" y="156" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">C</text>
+          <text x="414" y="196" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">vc(t), c.i. v₀</text>
+
+          <rect x="508" y="145" width="24" height="56" fill="none" stroke="#4ade9a" stroke-width="2"/>
+          <text x="540" y="178" fill="#4ade9a" font-family="IBM Plex Mono, monospace" font-size="13">R₂</text>
+
+          <path d="M130 185 A 20 20 0 0 1 170 185" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M164 193 L170 181 L176 193 Z" fill="#f5b942"/>
+          <text x="132" y="213" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₁(t)</text>
+
+          <path d="M300 185 A 20 20 0 0 1 340 185" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M334 193 L340 181 L346 193 Z" fill="#f5b942"/>
+          <text x="302" y="213" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₂(t)</text>
+
+          <path d="M440 185 A 20 20 0 0 1 480 185" fill="none" stroke="#f5b942" stroke-width="1.6"/>
+          <path d="M474 193 L480 181 L486 193 Z" fill="#f5b942"/>
+          <text x="442" y="213" fill="#f5b942" font-family="IBM Plex Mono, monospace" font-size="12">i₃(t)</text>
+        </svg>
+        <div class="pz-legend">Agora a fonte está no ramo <em>comum</em> às malhas 1 e 2. Nenhuma das duas correntes é conhecida isoladamente — só a diferença entre elas.</div>
+      </div>
+
+      <p>Condições iniciais:</p>
+
+      <div class="eq-block">\[ j_L(0_-) = j_0, \qquad v_C(0_-) = v_0 \]</div>
+
+      <p>"1ª LK no nó entre as malhas 1 e 2:"</p>
+
+      <div class="eq-block">\[ -i_1(t) + i_2(t) + i_s(t) = 0 \;\Longrightarrow\; \boxed{\;i_1(t) - i_2(t) = i_s(t)\;} \]</div>
+
+      <p>E o sistema fica, com a <b style="color:var(--ink)">tensão incógnita \(V_i(s)\) sobre a fonte de corrente</b> como quarta variável:</p>
+
+      <div class="eq-block">\[
+        \left[\begin{array}{ccc|c}
+        R_1 &amp; 0 &amp; 0 &amp; 1 \\[4pt]
+        0 &amp; sL + \dfrac{1}{sC} &amp; -\dfrac{1}{sC} &amp; -1 \\[4pt]
+        0 &amp; -\dfrac{1}{sC} &amp; R_2 + \dfrac{1}{sC} &amp; 0 \\[4pt]
+        \hline
+        1 &amp; -1 &amp; 0 &amp; 0
+        \end{array}\right]
+        \begin{bmatrix} I_1(s) \\[4pt] I_2(s) \\[4pt] I_3(s) \\[4pt] V_i(s) \end{bmatrix}
+        =
+        \begin{bmatrix}
+        E_s(s) \\[4pt]
+        L j_0 - \dfrac{v_0}{s} \\[6pt]
+        \dfrac{v_0}{s} \\[6pt]
+        I_s(s)
+        \end{bmatrix}
+      \]</div>
+
+      <p class="dim">A coluna extra diz como \(V_i\) entra na 2ª LK de cada malha: \(+1\) na malha 1, \(-1\) na malha 2, \(0\) na malha 3, que não toca a fonte. A linha extra, abaixo do traço, é a 1ª LK do nó.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · o dual do caso 2</span>
+      <p>Este é o <b>dual exato do caso 2</b> das extensões da AN (<a href="#extensoes">seção 7.5</a>, gerador de tensão entre dois nós não-de-referência — a <em>análise nodal modificada</em>). Lá, a fonte de tensão flutuante acrescentava a corrente \(i_e\) como incógnita e a 2ª LK do laço como equação; aqui, a fonte de corrente entre malhas internas acrescenta a tensão \(V_i\) como incógnita e a 1ª LK do nó como equação. <b>Uma incógnita a mais, uma equação a mais, empate</b> — e a mesma estrutura particionada:</p>
+
+      <div class="eq-block">\[
+        \begin{bmatrix} Z_m(s) &amp; A \\[4pt] B &amp; -Y(s) \end{bmatrix}
+        \begin{bmatrix} I(s) \\[4pt] V_i(s) \end{bmatrix}
+        =
+        \begin{bmatrix} E(s) \\[4pt] I_s(s) \end{bmatrix}
+      \]</div>
+
+      <p>Com \(A = \begin{bmatrix} 1 &amp; -1 &amp; 0 \end{bmatrix}^{T}\), \(B = \begin{bmatrix} 1 &amp; -1 &amp; 0 \end{bmatrix}\) e \(-Y(s) = 0\), porque a fonte é ideal. Troque \(Y_n\) por \(Z_m\) e admitância por impedância no bloco do canto, e é literalmente a matriz do caso 2 da AN.</p>
+    </div>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · as extensões, pareadas</span>
+      <p>O resumo da seção em uma tabela: cada conserto da AN tem um conserto dual na AM, e o efeito sobre o tamanho do sistema é o mesmo dos dois lados.</p>
+
+      <table class="ltable">
+        <thead><tr><th>situação na AN</th><th>situação na AM</th><th>efeito no sistema</th></tr></thead>
+        <tbody>
+          <tr><td>fonte de tensão com um terminal no nó de referência</td><td>fonte de corrente no ramo externo de uma malha</td><td><b>remove uma incógnita</b>; o sistema encolhe e a contribuição vai para o 2º membro</td></tr>
+          <tr><td>fonte de tensão entre dois nós não-de-referência</td><td>fonte de corrente entre duas malhas internas</td><td><b>acrescenta uma incógnita e uma equação</b>; matriz particionada, simetria perdida</td></tr>
+          <tr><td>gerador vinculado controlado por tensão nodal</td><td>gerador vinculado controlado por corrente de malha</td><td><b>não muda o tamanho</b>; o ganho migra para dentro da matriz e quebra a simetria</td></tr>
+          <tr><td>laço de indutores: manter \(I_L\) incógnita e somar \(V_L - sL\,I_L = 0\)</td><td>corte de capacitores: manter \(V_C\) incógnita e somar \(sC\,V_C - I_C = 0\)</td><td><b>acrescenta uma incógnita e uma equação</b>; recupera a FCP que o método puro perderia</td></tr>
+        </tbody>
+      </table>
     </div>
   </section>
 
   <section id="vinculadas" class="panel">
-    <span class="eyebrow">7.5</span>
+    <span class="eyebrow">7.8</span>
     <h2>Fontes vinculadas: escrever o controle nas incógnitas do método</h2>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde está o tratamento do quadro</span>
+      <p>O professor trata este tema no <a href="#extensoes">caso 3 da seção 7.5</a>, com o exemplo numérico completo: circuito com \(\beta\,i_e(t)\) em losango, a 2ª LK que faz \(i_e\) aparecer, a passagem de \(I_e(s)\) ao primeiro membro e a análise de estabilidade de \(\det T(s)\). Esta seção é o complemento: o catálogo dos quatro tipos de vinculado e as armadilhas de sinal.</p>
+    </div>
 
     <p>Uma fonte vinculada tem valor \(k\cdot x\), onde \(x\) é uma tensão ou corrente <em>do próprio circuito</em>. Ela não é uma excitação: é um elemento. Se ficar no vetor do lado direito, o sistema não se fecha — há mais incógnitas do que equações. A operação obrigatória é uma só:</p>
 
@@ -675,8 +2020,13 @@ window.MathJax = {
   </section>
 
   <section id="ampop" class="panel">
-    <span class="eyebrow">7.6</span>
+    <span class="eyebrow">7.9</span>
     <h2>Amp-op ideal em Laplace: e o nó que você não deve tocar</h2>
+
+    <div class="src-block src-ext">
+      <span class="src-kicker">complemento externo · onde está o tratamento do quadro</span>
+      <p>O professor trata este tema no <a href="#extensoes">caso 4 da seção 7.5</a>, com o exemplo numérico completo: o integrador inversor, as relações \(i_1=0\) e \(v_1=0\), a equação nodal em forma de linha e o resultado \(V_2(s) = -\frac{1}{sRC}E_s(s) + \frac{v_{20}}{s}\). Esta seção é o complemento: a regra do nó de saída e a contagem que fecha o sistema.</p>
+    </div>
 
     <p>O amplificador operacional ideal, não saturado, entra na análise nodal com <b style="color:var(--ink)">duas restrições</b> e nenhuma equação:</p>
 
@@ -730,7 +2080,7 @@ window.MathJax = {
   </section>
 
   <section id="reversa" class="panel src-ext">
-    <span class="eyebrow">7.7</span>
+    <span class="eyebrow">7.10</span>
     <h2>Engenharia reversa da matriz: o formato favorito da prova</h2>
 
     <p>Montar a matriz a partir do circuito é mecânico. A prova inverte: dá a matriz montada e o desenho, e pede os <b style="color:var(--ink)">valores</b> de \(R\), \(L\), \(C\), dos ganhos dos vinculados e das condições iniciais. É P2 2023 1ª questão item a), é P2 2025 2ª questão item a), e são as questões 03, 04, 06 e 07 do formulário.</p>
@@ -759,7 +2109,7 @@ window.MathJax = {
               <p>Indutor com \(s\) no numerador, capacitor com \(s\) no denominador.</p>
             </div>
           </div>
-          <p class="dim">O grau da matriz diz o número de nós (nodal) ou de malhas (malhas). E se houver uma linha com um \(1\) solto e um \(-sC\), é o caso da incógnita extra \(V_C\) da seção 7.4.</p>
+          <p class="dim">O grau da matriz diz o número de nós (nodal) ou de malhas (malhas). E se houver uma linha com um \(1\) solto e um \(-sC\), é o caso da incógnita extra \(V_C\) da seção 7.6.</p>
         </div>
       </div>
 
@@ -821,7 +2171,7 @@ window.MathJax = {
   </section>
 
   <section id="exercicios" class="panel">
-    <span class="eyebrow">7.8</span>
+    <span class="eyebrow">7.11</span>
     <h2>Exercícios de provas e testes</h2>
     <p class="dim">Estes exercícios treinam as duas direções: montar a matriz a partir do circuito e recuperar o circuito a partir da matriz. Todas as fontes vinculadas aparecem, e todas as condições iniciais estão não-nulas — que é como a prova pergunta.</p>
 
@@ -927,7 +2277,7 @@ window.MathJax = {
 
         <button class="sol-btn">Ver resolução ↓</button>
         <div class="proof-block">
-          <div class="q-idea"><b>Ideia-chave</b> — monte a matriz simbólica pela receita da seção 7.3 e encoste nela a matriz numérica. Cada posição vira uma equação de uma linha; não há nenhuma álgebra difícil, só bookkeeping de sinais.</div>
+          <div class="q-idea"><b>Ideia-chave</b> — monte a matriz simbólica pela receita da seção 7.4 e encoste nela a matriz numérica. Cada posição vira uma equação de uma linha; não há nenhuma álgebra difícil, só bookkeeping de sinais.</div>
 
           <div class="solve-step">
             <span class="step-num">01</span>
@@ -969,7 +2319,7 @@ window.MathJax = {
                 =
                 \begin{pmatrix} I_s - \dfrac{i_L(0^-)}{s} + C\,v_C(0^-) \\[6pt] \dfrac{i_L(0^-)}{s} \\[6pt] -C\,v_C(0^-) \end{pmatrix}
               \]</div>
-              <p class="dim">Confirme que a assimetria está só no par (2,3)/(3,2): \(Y_{23} = 0\) e \(Y_{32} = -g_m\). É a assinatura do vinculado, exatamente como na seção 7.7.</p>
+              <p class="dim">Confirme que a assimetria está só no par (2,3)/(3,2): \(Y_{23} = 0\) e \(Y_{32} = -g_m\). É a assinatura do vinculado, exatamente como na seção 7.10.</p>
             </div>
           </div>
 
@@ -1272,7 +2622,7 @@ window.MathJax = {
 
           <div class="src-block src-ext">
             <span class="src-kicker">complemento externo · onde se erra</span>
-            <p><b style="color:var(--ink)">Erro 1:</b> tentar ler a matriz como se fosse simétrica. As posições (2,1) e (1,2) valem \(-8\) e \(-10\) — não é assimetria por vinculado na acepção da seção 7.7, é porque a linha 2 já foi <em>organizada</em>, com \(r_m\) embutido. <b style="color:var(--ink)">Erro 2:</b> confundir \(E_g(s)\) com \(e_g(t)\) e esquecer de transformar o degrau, perdendo o \(2/s\). <b style="color:var(--ink)">Erro 3:</b> ler \(-0{,}5s\) como \(C = 2\ \mathrm F\), por inverter a relação \(-sC\).</p>
+            <p><b style="color:var(--ink)">Erro 1:</b> tentar ler a matriz como se fosse simétrica. As posições (2,1) e (1,2) valem \(-8\) e \(-10\) — não é assimetria por vinculado na acepção da seção 7.10, é porque a linha 2 já foi <em>organizada</em>, com \(r_m\) embutido. <b style="color:var(--ink)">Erro 2:</b> confundir \(E_g(s)\) com \(e_g(t)\) e esquecer de transformar o degrau, perdendo o \(2/s\). <b style="color:var(--ink)">Erro 3:</b> ler \(-0{,}5s\) como \(C = 2\ \mathrm F\), por inverter a relação \(-sC\).</p>
           </div>
         </div>
       </div>
@@ -1386,7 +2736,7 @@ window.MathJax = {
               <div class="eq-block">\[ \frac{E_1 - V_{in}}{R_1} + \frac{E_1}{R_2} + sC(E_1 - E_3) + sC(E_1 - E_2) = 0 \]</div>
               <p>Com \(E_2 = 0\) e agrupando:</p>
               <div class="eq-block">\[ \left(\frac{1}{R_1} + \frac{1}{R_2} + 2sC\right)E_1 - sC\,E_3 = \frac{V_{in}}{R_1} \]</div>
-              <p class="dim">Os dois capacitores dão o \(2sC\) da diagonal — é a soma das admitâncias do nó, pela regra da seção 7.3.</p>
+              <p class="dim">Os dois capacitores dão o \(2sC\) da diagonal — é a soma das admitâncias do nó, pela regra da seção 7.4.</p>
             </div>
           </div>
 
@@ -1397,7 +2747,7 @@ window.MathJax = {
               <div class="eq-block">\[ sC\,(E_2 - E_1) + \frac{E_2 - E_3}{R_3} = 0 \]</div>
               <p>Com \(E_2 = 0\):</p>
               <div class="eq-block">\[ -sC\,E_1 - \frac{E_3}{R_3} = 0 \]</div>
-              <p class="dim">Equação escrita num nó de tensão conhecida, e com incógnita nenhuma sua: ela existe só para relacionar \(E_1\) a \(E_3\). É a contagem da seção 7.6 funcionando.</p>
+              <p class="dim">Equação escrita num nó de tensão conhecida, e com incógnita nenhuma sua: ela existe só para relacionar \(E_1\) a \(E_3\). É a contagem da seção 7.9 funcionando.</p>
             </div>
           </div>
 
@@ -1574,7 +2924,7 @@ window.MathJax = {
             <span class="step-num">02</span>
             <div class="step-body">
               <div class="step-title">Escrever por inspeção, com o vinculado ainda à direita</div>
-              <p>Pela receita da seção 7.3, com \(G_1 = 1/R_1\) e \(G_2 = 1/R_2\), e a c.i. na forma paralelo (\(C v_0\) injetando em \(e_1\), retirando de \(e_2\)):</p>
+              <p>Pela receita da seção 7.4, com \(G_1 = 1/R_1\) e \(G_2 = 1/R_2\), e a c.i. na forma paralelo (\(C v_0\) injetando em \(e_1\), retirando de \(e_2\)):</p>
               <div class="eq-block">\[
                 \begin{bmatrix} G_1 + sC &amp; -sC \\[4pt] -sC &amp; G_2 + sC \end{bmatrix}
                 \begin{bmatrix} E_1(s) \\[4pt] E_2(s) \end{bmatrix}
@@ -1767,7 +3117,7 @@ window.MathJax = {
 
           <div class="src-block src-ext">
             <span class="src-kicker">complemento externo · onde se erra</span>
-            <p>As quatro alternativas erradas são um catálogo dos três erros da seção 7.5. <b style="color:var(--ink)">b)</b> usa \(-\frac2s(I_1-I_2)\): sentido invertido do ramo comum <em>e</em> c.i. esquecida. <b style="color:var(--ink)">c)</b> acerta a impedância e a corrente, mas erra a polaridade da fonte de c.i., devolvendo \(-1/s\). <b style="color:var(--ink)">d)</b> e <b style="color:var(--ink)">e)</b> trocam impedância por admitância: \(0{,}5s\) e \(s/0{,}5\) em vez de \(1/(0{,}5s) = 2/s\) — é o erro de usar a forma paralelo dentro de uma análise de malhas.</p>
+            <p>As quatro alternativas erradas são um catálogo dos três erros da seção 7.8. <b style="color:var(--ink)">b)</b> usa \(-\frac2s(I_1-I_2)\): sentido invertido do ramo comum <em>e</em> c.i. esquecida. <b style="color:var(--ink)">c)</b> acerta a impedância e a corrente, mas erra a polaridade da fonte de c.i., devolvendo \(-1/s\). <b style="color:var(--ink)">d)</b> e <b style="color:var(--ink)">e)</b> trocam impedância por admitância: \(0{,}5s\) e \(s/0{,}5\) em vez de \(1/(0{,}5s) = 2/s\) — é o erro de usar a forma paralelo dentro de uma análise de malhas.</p>
             <p>Observe que este teste é <em>só</em> o passo 4 da receita da seção 7.1, isolado. A prova cobra esse passo sozinho porque é onde a maioria trava: nada aqui exige resolver o circuito.</p>
           </div>
         </div>
@@ -1942,7 +3292,7 @@ window.MathJax = {
 
           <div class="src-block src-ext">
             <span class="src-kicker">complemento externo · onde se erra</span>
-            <p><b style="color:var(--ink)">Erro 1:</b> tentar montar uma matriz \(2\times2\) de malhas. Não dá: a malha 2 contém uma fonte de corrente ideal, e a 2ª LK nela introduziria a tensão da fonte como incógnita nova — é o análogo, nas malhas, do nó de saída do amp-op da seção 7.6. O caminho é reconhecer que \(I_2\) já está <em>dada</em>. <b style="color:var(--ink)">Erro 2:</b> errar o sinal de \(\beta\); com \(\beta = +1\) sai \(sC - \beta = s-1\) e a resposta tem polo no semiplano direito — nenhuma alternativa bate. <b style="color:var(--ink)">Erro 3:</b> escrever \(C v_0 = 2\) como \(v_0/s = 2/s\) dentro da expressão já multiplicada por \(sC\); a alternativa a), \(\frac{1-s}{s+2}\), é exatamente o que sai de perder um fator \(s\) nessa passagem.</p>
+            <p><b style="color:var(--ink)">Erro 1:</b> tentar montar uma matriz \(2\times2\) de malhas. Não dá: a malha 2 contém uma fonte de corrente ideal, e a 2ª LK nela introduziria a tensão da fonte como incógnita nova — é o análogo, nas malhas, do nó de saída do amp-op da seção 7.9. O caminho é reconhecer que \(I_2\) já está <em>dada</em>. <b style="color:var(--ink)">Erro 2:</b> errar o sinal de \(\beta\); com \(\beta = +1\) sai \(sC - \beta = s-1\) e a resposta tem polo no semiplano direito — nenhuma alternativa bate. <b style="color:var(--ink)">Erro 3:</b> escrever \(C v_0 = 2\) como \(v_0/s = 2/s\) dentro da expressão já multiplicada por \(sC\); a alternativa a), \(\frac{1-s}{s+2}\), é exatamente o que sai de perder um fator \(s\) nessa passagem.</p>
           </div>
         </div>
       </div>
@@ -2203,7 +3553,7 @@ window.MathJax = {
                 </div>
                 <div class="roc-card">
                   <span class="tag">\(r_m = 1/G\)</span>
-                  <p>O fator zera e resta \(G\,E_1 = I_g\): o ramo capacitivo fica <b style="color:var(--ink)">invisível</b>, a rede degenera para ordem zero e não há FCP. É o mecanismo de degeneração por vinculado da seção 7.5.</p>
+                  <p>O fator zera e resta \(G\,E_1 = I_g\): o ramo capacitivo fica <b style="color:var(--ink)">invisível</b>, a rede degenera para ordem zero e não há FCP. É o mecanismo de degeneração por vinculado da seção 7.8.</p>
                 </div>
               </div>
             </div>
@@ -2249,7 +3599,7 @@ window.MathJax = {
     <div><b>T3</b>18/11</div>
     <div><b>Nota final</b>0,42·P1 + 0,42·P2 + 0,16·MT</div>
   </div>
-  <p class="foot-note">Montado a partir do formulário oficial da P2 (Questões 03 a 07 e 09 da folha 1, caixas "Capacitor", "Indutor" e "Indutancia"), dos gabaritos da P2 de 2023 (1ª questão item a, 2ª questão, Testes 1, 6 e 7), da P2 de 2025 (2ª questão item a) e do 3º Teste de 2025 (questões 1 e 2) — PSI3213 Circuitos Elétricos II</p>
+  <p class="foot-note">Baseado nas notas de aula — item 3.1, Análise Nodal e Análise de Malhas: Recordação, com a formulação topológica \(G_n = A_p G A_p^{T}\) (Prof<sup>a</sup> Denise Consonni) — PSI3213 Circuitos Elétricos II. Montado também a partir do formulário oficial da P2 (Questões 03 a 07 e 09 da folha 1, caixas "Capacitor", "Indutor" e "Indutancia"), dos gabaritos da P2 de 2023 (1ª questão item a, 2ª questão, Testes 1, 6 e 7), da P2 de 2025 (2ª questão item a) e do 3º Teste de 2025 (questões 1 e 2)</p>
 </footer>
 
   </div><!-- /content-col -->
